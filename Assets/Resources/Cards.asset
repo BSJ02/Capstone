@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe5630e7516e9d4691a695748945425, type: 3}
+  m_Name: Cards
+  m_EditorClassIdentifier: 
+  baseCards:
+  - cardName: "\uC2AC\uB798\uC2DC"
+    cardDescription_1: "\uC801\uC5D0\uAC8C"
+    power: 10
+    cardDescription_2: "\uB9CC\uD07C \uD53C\uD574\uB97C \uC900\uB2E4."
+    cardSprite: {fileID: 21300000, guid: 2f81e93fe37683442b5cc30343e44762, type: 3}
+    percent: 0
+    cardType: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - cardName: "\uB3CC\uC9C4"
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 83d3aa78afe88eb49915a3b6c7edd2ee, type: 3}
+    percent: 0
+    cardType: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - cardName: 3333
+    cardDescription_1: 
+    power: 0
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 83d3aa78afe88eb49915a3b6c7edd2ee, type: 3}
+    percent: 0
+    cardType: 0
+    color: {r: 1, g: 1, b: 1, a: 0}
+  commonCards:
+  - cardName: C1
+    cardDescription_1: 
+    power: 1
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: faf3c54d2a2ca7f418437b0fb8ff9152, type: 3}
+    percent: 50
+    cardType: 0
+    color: {r: 0, g: 1, b: 0, a: 1}
+  - cardName: C2
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: f9a1f1b95d224a04b91f02d540dfcc93, type: 3}
+    percent: 50
+    cardType: 0
+    color: {r: 0, g: 1, b: 0, a: 1}
+  rareCards:
+  - cardName: R1
+    cardDescription_1: 
+    power: 1
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 2f81e93fe37683442b5cc30343e44762, type: 3}
+    percent: 30
+    cardType: 0
+    color: {r: 0, g: 0, b: 1, a: 1}
+  - cardName: R2
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 46d1e7910605efa4e8d56710d45c32b2, type: 3}
+    percent: 30
+    cardType: 0
+    color: {r: 0, g: 0, b: 1, a: 1}
+  epicCards:
+  - cardName: E1
+    cardDescription_1: 
+    power: 1
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: af686e1b4eee811408538480a094e605, type: 3}
+    percent: 15
+    cardType: 0
+    color: {r: 1, g: 0, b: 0, a: 1}
+  - cardName: E2
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 6d02e5f0eaf32044b9e20cec0dc50918, type: 3}
+    percent: 15
+    cardType: 0
+    color: {r: 1, g: 0, b: 0, a: 1}
+  legendCards:
+  - cardName: L1
+    cardDescription_1: 
+    power: 1
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: fc067b28309e97849a8fe98041f09a8c, type: 3}
+    percent: 5
+    cardType: 0
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - cardName: L2
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 2e9336257a6c1cc4b99a20551cbcdb7b, type: 3}
+    percent: 5
+    cardType: 0
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - cardName: L2
+    cardDescription_1: 
+    power: 2
+    cardDescription_2: 
+    cardSprite: {fileID: 21300000, guid: 2e9336257a6c1cc4b99a20551cbcdb7b, type: 3}
+    percent: 5
+    cardType: 0
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  commonPercent: 50
+  rarePercent: 30
+  epicPercent: 15
+  legendPercent: 5
+  commonColor: {r: 0, g: 1, b: 0, a: 1}
+  rareColor: {r: 0, g: 0, b: 1, a: 1}
+  epicColor: {r: 1, g: 0, b: 0, a: 1}
+  legendColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
