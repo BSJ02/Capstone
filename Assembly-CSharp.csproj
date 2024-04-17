@@ -60,49 +60,36 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\02.Scritps\BossMonsterData.cs" />
-    <Compile Include="Assets\03.Scripts\CardInform.cs" />
-    <Compile Include="Assets\Map\Scripts\Block.cs" />
-    <Compile Include="Assets\03.Scripts\CardColorChange.cs" />
-    <Compile Include="Assets\02.Scritps\GameEvent.cs" />
-    <Compile Include="Assets\02.Scritps\SkillData.cs" />
-    <Compile Include="Assets\Map\Sample\MapCreater.cs" />
-    <Compile Include="Assets\02.Scritps\Player.cs" />
-    <Compile Include="Assets\Map\Scripts\Board.cs" />
-    <Compile Include="Assets\03.Scripts\CardData.cs" />
-    <Compile Include="Assets\02.Scritps\MapEditor.cs" />
-    <Compile Include="Assets\02.Scritps\IDamageable.cs" />
-    <Compile Include="Assets\02.Scritps\Monster.cs" />
-    <Compile Include="Assets\ScriptsUI\RMovement.cs" />
-    <Compile Include="Assets\3.Script\Player.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\02.Scritps\GameEventListener.cs" />
-    <Compile Include="Assets\03.Scripts\CardOrder.cs" />
-    <Compile Include="Assets\02.Scritps\Tile.cs" />
-    <Compile Include="Assets\ScriptsUI\CardTest.cs" />
-    <Compile Include="Assets\Map\Sample\BlockItem.cs" />
-    <Compile Include="Assets\02.Scritps\MapGenerator.cs" />
-    <Compile Include="Assets\ScriptsUI\CardMove.cs" />
-    <Compile Include="Assets\ScriptsUI\GameManager.cs" />
-    <Compile Include="Assets\3.Script\ChangeColor.cs" />
-    <Compile Include="Assets\02.Scritps\MonsterMove.cs" />
-    <Compile Include="Assets\3.Script\PlayerMove.cs" />
-    <Compile Include="Assets\Map\Scripts\AStar.cs" />
-    <Compile Include="Assets\03.Scripts\CardManager.cs" />
-    <Compile Include="Assets\Map\Sample\Player.cs" />
-    <Compile Include="Assets\ScriptsUI\Singleton.cs" />
-    <Compile Include="Assets\02.Scritps\NormalMonsterData.cs" />
-    <Compile Include="Assets\ScriptsUI\Health.cs" />
-    <Compile Include="Assets\Map\Sample\Map.cs" />
+    <Compile Include="Assets\Scripts\CardMove.cs" />
+    <Compile Include="Assets\Scripts\CardTest.cs" />
+    <Compile Include="Assets\Scripts\CardInform.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Monster.cs" />
+    <Compile Include="Assets\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\GameEventListener.cs" />
+    <Compile Include="Assets\Scripts\CardOrder.cs" />
+    <Compile Include="Assets\Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\GameEvent.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
+    <Compile Include="Assets\Scripts\RMovement.cs" />
+    <Compile Include="Assets\Scripts\CardManager.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\StageManager.cs" />
+    <Compile Include="Assets\Scripts\CardData.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\RPGMonsterBundlePolyart\HowToTestHDRP_URP.txt" />
-    <None Include="Assets\04.Graphics\TCG_Template_04\ReadMe.txt" />
-    <None Include="Assets\RPGTinyHeroWavePolyart\HowToTestHDRP_URP.txt" />
-    <None Include="Assets\RPGTinyHeroWavePolyart\Shader\PolyartMaskTint.shader" />
-    <None Include="Assets\04.Graphics\RPG_Flat_Skills\ReadMe.txt" />
-    <None Include="Assets\RPGMonsterBundlePolyart\CommonStuffs\Shader\PAMaskTint.shader" />
-    <None Include="Assets\06.Shader" />
+    <None Include="Assets\Asset\Monster\HowToTestHDRP_URP.txt" />
+    <None Include="Assets\Asset\Card\ReadMe.txt" />
+    <None Include="Assets\Asset\Player\HowToTestHDRP_URP.txt" />
+    <None Include="Assets\Asset\Player\Shader\PolyartMaskTint.shader" />
+    <None Include="Assets\Asset\Card_Icon\ReadMe.txt" />
+    <None Include="Assets\Asset\Monster\CommonStuffs\Shader\PAMaskTint.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -443,18 +430,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Android.Types">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Android.Gradle">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Android.GradleProject">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
