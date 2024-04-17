@@ -60,26 +60,27 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CardMove.cs" />
     <Compile Include="Assets\Scripts\CardTest.cs" />
-    <Compile Include="Assets\Scripts\CardInform.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Monster.cs" />
     <Compile Include="Assets\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEventListener.cs" />
-    <Compile Include="Assets\Scripts\CardOrder.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEvent.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\RMovement.cs" />
-    <Compile Include="Assets\Scripts\CardManager.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardMove.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\StageManager.cs" />
-    <Compile Include="Assets\Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
   </ItemGroup>
