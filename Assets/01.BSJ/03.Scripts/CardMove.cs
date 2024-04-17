@@ -9,32 +9,29 @@ public class CardMove : MonoBehaviour
     private Vector3 offset;
     private float distanceToCamera;
 
-        //크기 저장
+    //크기 저장
     private Vector3 originalScale;
     private Vector3 originalPosition;
-    private int originalLayer;   
+    private int originalOrderInLayer;
   
     //아직 사용 안함 필요 없을 수 도 있음
     public bool dragdown = false;
 
-
-    public string sortingLayerName = "Default"; // 변경할 Sorting Layer의 이름
-    public int orderInLayer; // 변경할 Order in Layer 값
+    public string cardSortingLayerName = "Default"; // 변경할 Sorting Layer의 이름
+    public int changeOrderInLayer; // 변경할 Order in Layer 값
 
     private SpriteRenderer spriteRenderer = null;
 
-    private void Awake()
-    {
-        originalPosition = transform.position;  
-        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
-    }
+
     void Start()
     {
-        GetComponent<Renderer>().sortingLayerName = sortingLayerName;
-        originalScale = transform.localScale;
-        orderInLayer = spriteRenderer.sortingOrder;
-        originalLayer = gameObject.layer;
-        //originalPosition = transform.localPosition;
+        originalScale = this.transform.localScale;
+        originalPosition = this.transform.position;
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+
+        GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
+        changeOrderInLayer = spriteRenderer.sortingOrder;
+        originalOrderInLayer = gameObject.layer;
     }
 
     void Update()
@@ -43,11 +40,8 @@ public class CardMove : MonoBehaviour
 
 
         //크기 뿐만아니라 카드가 위로 살짝 올라오도록 할 필요가 있어보임
-
         if (IsMouseOverObject(this.gameObject))
         {
-            // 마우스가 오브젝트 위에 있을 때 크기를 2배로 변경
-            //this.gameObject.transform.localScale = originalScale * 2f;
             transform.DOKill();
             transform.DOScale(originalScale * 1.2f, 0.5f);
             transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + 1, originalPosition.z), 0.5f);
@@ -60,13 +54,11 @@ public class CardMove : MonoBehaviour
             // 마우스가 오브젝트 위에 없을 때 원래 크기로 돌아옴
             transform.DOScale(originalScale, 0.5f);
             transform.DOMove(originalPosition, 0.5f);
-            
-            this.spriteRenderer.sortingOrder = orderInLayer;
-            
+
+            this.spriteRenderer.sortingOrder = originalOrderInLayer;
+
             //this.gameObject.transform.localScale = originalScale;
         }
-
-
 
     }
 
@@ -78,8 +70,7 @@ public class CardMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-
-            if (hit.collider.gameObject == obj)
+            if (hit.collider.gameObject == obj && hit.collider.gameObject.layer == LayerMask.NameToLayer("Card"))
             {
                 return true;
             }
@@ -98,12 +89,12 @@ public class CardMove : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
     void OnMouseUp()
     {
         dragdown = false;
         transform.DOKill();
         transform.DOMove(originalPosition, 1f);
-
 
         // transform.position = Vector3.Lerp(transform.position, originalPosition, 1f);
 
@@ -137,6 +128,5 @@ public class CardMove : MonoBehaviour
         mousePoint.z = distanceToCamera;
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
-
 
 }

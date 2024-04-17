@@ -14,12 +14,12 @@ public class CardOrder : MonoBehaviour
     {
         int mulOrder = order * 5;
         
-
         backRenderer.sortingLayerName = sortingLayerName;
         backRenderer.sortingOrder = mulOrder;
-
+        
         imagebrderRenderer.sortingLayerName = sortingLayerName;
         imagebrderRenderer.sortingOrder = mulOrder + 1;
+
         if (bordersRenderers != null)
         {
             foreach (var renderer in bordersRenderers)
@@ -27,6 +27,7 @@ public class CardOrder : MonoBehaviour
                 renderer.sortingLayerName = sortingLayerName;
                 renderer.sortingOrder = mulOrder + 2;
             }
+
         }
         
         if (canvas != null)
