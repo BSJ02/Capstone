@@ -29,7 +29,7 @@ public class StageManager : MonoBehaviour
             // 인덱스 초기화
             if (currentMonsterIndex == monsters.Count - 1)
             {
-                monsters[currentMonsterIndex].GetComponent<MonsterData>().IncreaseDamage(1);
+            /*    monsters[currentMonsterIndex].GetComponent<MonsterData>().IncreaseDamage(1);*/
                 currentMonsterIndex = -1;
             }
         }
