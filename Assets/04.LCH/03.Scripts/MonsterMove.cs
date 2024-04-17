@@ -145,13 +145,20 @@ public class MonsterMove : MonoBehaviour
 
     public IEnumerator MoveSmoothly(List<Vector2Int> path) // 물리 이동 
     {
-        monster.state = MonsterState.Moving;
+        /*monster.state = State.Moving;*/
+
+        // 최대 이동 거리
+        int maxMoveDistance = monster.monsterData.MoveDistance;
+        Debug.Log("이동거리 :" + maxMoveDistance + "칸");
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f; // 몬스터 이동속도 설정(작을수록 빨라짐)
 
         for (int i = 0; i < path.Count - 1; i++)
         {
+            if (i >= maxMoveDistance)
+                break;
+
             Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y); // 현재 몬스터 좌표
             Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // 다음 몬스터 좌표 
 
@@ -164,18 +171,20 @@ public class MonsterMove : MonoBehaviour
 
                 // 몬스터 이동
                 transform.position = Vector3.Lerp(monsterPosition, nextPosition, weight);
-                // 몬스터 회전
+                // 몬스터 이동 좌표 방향 회전 
                 transform.LookAt(nextPosition);
                 yield return null;
             }
 
-            // 목표값 보정
+            // 목표값 및 회전값 보정
             transform.position = nextPosition;
+            // 회전값 보정 코드 필요
+
         }
 
         // Path의 최종 좌표
-        Vector2Int finalPosition = new Vector2Int(path[path.Count - 1].x, path[path.Count - 1].y);
-        
+        Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+
         // Player 감지
         GetSurroundingTiles(finalPosition);
 
@@ -213,7 +222,7 @@ public class MonsterMove : MonoBehaviour
                 {
                     // 플레이어가 있으면
                     monster.state = MonsterState.Attack;
-                    monster.Attack();
+                  /*  monster.Attack();*/
                 }
                 else
                 {
