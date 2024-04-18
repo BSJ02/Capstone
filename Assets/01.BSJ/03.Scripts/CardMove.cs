@@ -3,66 +3,65 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class CardMove : MonoBehaviour
 {
+    private CardManager cardManager;
     private Vector3 offset;
     private float distanceToCamera;
-
-    //크기 저장
-    private Vector3 originalScale;
-    private Vector3 originalPosition;
+    private Vector3 originalScale;  // 기본 크기
+    public Vector3 originalPosition;   // 기본 위치
     private int originalOrderInLayer;
-  
-    //아직 사용 안함 필요 없을 수 도 있음
-    public bool dragdown = false;
 
-    public string cardSortingLayerName = "Default"; // 변경할 Sorting Layer의 이름
-    public int changeOrderInLayer; // 변경할 Order in Layer 값
+    public string cardSortingLayerName = "Card";    // 변경할 Sorting Layer의 이름
+    private SpriteRenderer spriteRenderer;
 
-    private SpriteRenderer spriteRenderer = null;
+    private const float scaleFactor = 1.2f;
+    private const float animationDuration = 0.1f;
 
+    private bool clickOnCard = false;
 
     void Start()
     {
-        originalScale = this.transform.localScale;
-        originalPosition = this.transform.position;
-        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        cardManager = FindObjectOfType<CardManager>();
+
+        originalScale = this.transform.localScale;   // 기본 크기 저장
+        originalPosition = this.transform.position;  // 기본 위치 저장
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
-        changeOrderInLayer = spriteRenderer.sortingOrder;
-        originalOrderInLayer = gameObject.layer;
+        originalOrderInLayer = spriteRenderer.sortingOrder;
     }
+
 
     void Update()
     {
-        dragdown = false;
-
-
-        //크기 뿐만아니라 카드가 위로 살짝 올라오도록 할 필요가 있어보임
-        if (IsMouseOverObject(this.gameObject))
+        if (IsMouseOverCard(this.gameObject))
         {
-            transform.DOKill();
-            transform.DOScale(originalScale * 1.2f, 0.5f);
-            transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + 1, originalPosition.z), 0.5f);
-            this.spriteRenderer.sortingOrder = 10;
-            //레이어 정렬
+            AnimateCard(scaleFactor, originalPosition + Vector3.up);
+            spriteRenderer.sortingOrder = 10;
         }
         else
         {
-            transform.DOKill();
-            // 마우스가 오브젝트 위에 없을 때 원래 크기로 돌아옴
-            transform.DOScale(originalScale, 0.5f);
-            transform.DOMove(originalPosition, 0.5f);
-
-            this.spriteRenderer.sortingOrder = originalOrderInLayer;
-
-            //this.gameObject.transform.localScale = originalScale;
+            if (clickOnCard == false)
+            {
+                AnimateCard(1f, originalPosition);
+                spriteRenderer.sortingOrder = originalOrderInLayer;
+            }
         }
-
     }
 
-    bool IsMouseOverObject(GameObject obj)
+
+    private void AnimateCard(float scale, Vector3 position)
+    {
+        transform.DOKill();
+        transform.DOScale(originalScale * scale, animationDuration);
+        transform.DOMove(position, animationDuration);
+    }
+
+
+    private bool IsMouseOverCard(GameObject obj)
     {
         // 마우스 포인터 위치를 기준으로 Ray를 쏘아 충돌 체크
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -77,52 +76,66 @@ public class CardMove : MonoBehaviour
         }
         return false;
     }
-    
+
 
     //카드 패널과 충돌 처리
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        //임시
-        if (other.gameObject.tag == "Panel")
+        // addCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
+        bool isFound = false;
+        int index = -1;
+        for (int i = 0; i < cardManager.handCardObject.Count; i++)
         {
+            if (cardManager.handCardObject[i] == this.gameObject)
+            {
+                isFound = true;
+                index = i;
+                break;
+            }
+        }
 
-            Destroy(this.gameObject);
+        if (isFound)
+        {
+            if (other.gameObject.CompareTag("Panel"))
+            {
+                cardManager.UseToCard(this.gameObject);
+            }
+        }
+        
+    }
+
+    private void OnMouseUp()
+    {
+        clickOnCard = false;
+        //UnityEngine.Debug.Log(clickOnCard);
+        transform.DOKill();
+        transform.DOMove(originalPosition, animationDuration);
+    }
+
+
+    private void OnMouseDown()
+    {
+        if (IsMouseOverCard(gameObject))
+        {
+            clickOnCard = true;
+            //UnityEngine.Debug.Log(clickOnCard);
+            offset = transform.position - GetMouseWorldPosition();
+            cardManager.ChoiceCard(this.gameObject);
+        }
+    }
+  
+
+    private void OnMouseDrag()
+    {
+        if (clickOnCard)
+        {
+            transform.DOKill();
+            transform.position = GetMouseWorldPosition() + offset;
         }
     }
 
-    void OnMouseUp()
-    {
-        dragdown = false;
-        transform.DOKill();
-        transform.DOMove(originalPosition, 1f);
 
-        // transform.position = Vector3.Lerp(transform.position, originalPosition, 1f);
-
-        //카드의 원래 위치값 저장
-    }
-
-
-    void OnMouseDown()
-    {
-        
-        dragdown = true;
-        transform.DOKill();
-        //카드의 원래 위치값을 카드 정렬 코드에서 받을 필요가 있음 ( Error 마우스 광클시 위치값이 변경됨)
-        //originalPosition = transform.localPosition;
-        distanceToCamera = Vector3.Distance(transform.position, Camera.main.transform.position);
-        offset = transform.position - GetMouseWorldPosition();
-    }
-
-  
-
-    void OnMouseDrag()
-    {
-        transform.DOKill();
-        transform.position = GetMouseWorldPosition() + offset;  
-        
-    }
-
-    Vector3 GetMouseWorldPosition()
+    private Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = distanceToCamera;
