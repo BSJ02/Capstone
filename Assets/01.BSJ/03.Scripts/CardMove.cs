@@ -10,11 +10,11 @@ public class CardMove : MonoBehaviour
     private CardManager cardManager;
     private Vector3 offset;
     private float distanceToCamera;
-    private Vector3 originalScale;  // �⺻ ũ��
-    public Vector3 originalPosition;   // �⺻ ��ġ
+    private Vector3 originalScale;   // 기본 크기
+    [HideInInspector] public Vector3 originalPosition;   // 기본 위치
     private int originalOrderInLayer;
 
-    public string cardSortingLayerName = "Card";    // ������ Sorting Layer�� �̸�
+    private string cardSortingLayerName = "Card";    // 변경할 Sorting Layer의 이름
     private SpriteRenderer spriteRenderer;
 
     private const float scaleFactor = 1.2f;
@@ -26,8 +26,8 @@ public class CardMove : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
 
-        originalScale = this.transform.localScale;   // �⺻ ũ�� ����
-        originalPosition = this.transform.position;  // �⺻ ��ġ ����
+        originalScale = this.transform.localScale;   // 기본 크기 저장
+        originalPosition = this.transform.position;   // 기본 위치 저장
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
@@ -50,6 +50,11 @@ public class CardMove : MonoBehaviour
                 spriteRenderer.sortingOrder = originalOrderInLayer;
             }
         }
+
+        if (clickOnCard == true)
+        {
+
+        }
     }
 
 
@@ -63,15 +68,7 @@ public class CardMove : MonoBehaviour
 
     private bool IsMouseOverCard(GameObject obj)
     {
-        transform.DOKill();
-        transform.DOScale(originalScale * scale, animationDuration);
-        transform.DOMove(position, animationDuration);
-    }
-
-
-    private bool IsMouseOverCard(GameObject obj)
-    {
-        // ���콺 ������ ��ġ�� �������� Ray�� ��� �浹 üũ
+        // 마우스 포인터 위치를 기준으로 Ray를 쏘아 충돌 체크
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -86,10 +83,10 @@ public class CardMove : MonoBehaviour
     }
 
 
-    //ī�� �гΰ� �浹 ó��
+    //카드 패널과 충돌 처리
     private void OnTriggerEnter(Collider other)
     {
-        // addCardObject ����Ʈ�� ��ȸ�ϸ鼭 ������ cardObject�� �ִ��� Ȯ���մϴ�.
+        // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
         bool isFound = false;
         int index = -1;
         for (int i = 0; i < cardManager.handCardObject.Count; i++)

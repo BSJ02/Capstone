@@ -13,9 +13,9 @@ public class CardManager : MonoBehaviour
     private CardManager cardManager;
 
     // 카드 생성 위치
-    public Vector3 handCardPos = new Vector3(0, 5f, 0);
-    public Vector3 addCardPos = new Vector3(0, 11f, 0);
-    public Vector3 spawDeckPos = new Vector3(-3.6f, -5f, -3.6f);
+    [HideInInspector] public Vector3 handCardPos = new Vector3(0, 5f, 0);
+    [HideInInspector] public Vector3 addCardPos = new Vector3(0, 11f, 0);
+    [HideInInspector] public Vector3 spawDeckPos = new Vector3(-3.6f, -5f, -3.6f);
     private float handCardDistance = 0.8f;
     private float addCardDistance = 3f;
 
