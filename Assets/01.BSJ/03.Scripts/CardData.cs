@@ -17,10 +17,7 @@ public class CardData : MonoBehaviour
 
         cardInform = Resources.Load<CardInform>("Cards");
 
-        // 기본적인 카드 추가
         baseCardList.AddRange(cardInform.baseCards);
-
-        // 나머지 카드
         cardList.AddRange(cardInform.commonCards);
         cardList.AddRange(cardInform.rareCards);
         cardList.AddRange(cardInform.epicCards);

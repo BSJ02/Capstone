@@ -10,11 +10,11 @@ public class CardMove : MonoBehaviour
     private CardManager cardManager;
     private Vector3 offset;
     private float distanceToCamera;
-    private Vector3 originalScale;  // ±âº» Å©±â
-    public Vector3 originalPosition;   // ±âº» À§Ä¡
+    private Vector3 originalScale;  // ï¿½âº» Å©ï¿½ï¿½
+    public Vector3 originalPosition;   // ï¿½âº» ï¿½ï¿½Ä¡
     private int originalOrderInLayer;
 
-    public string cardSortingLayerName = "Card";    // º¯°æÇÒ Sorting LayerÀÇ ÀÌ¸§
+    public string cardSortingLayerName = "Card";    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Sorting Layerï¿½ï¿½ ï¿½Ì¸ï¿½
     private SpriteRenderer spriteRenderer;
 
     private const float scaleFactor = 1.2f;
@@ -26,8 +26,8 @@ public class CardMove : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
 
-        originalScale = this.transform.localScale;   // ±âº» Å©±â ÀúÀå
-        originalPosition = this.transform.position;  // ±âº» À§Ä¡ ÀúÀå
+        originalScale = this.transform.localScale;   // ï¿½âº» Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        originalPosition = this.transform.position;  // ï¿½âº» ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
@@ -63,7 +63,7 @@ public class CardMove : MonoBehaviour
 
     private bool IsMouseOverCard(GameObject obj)
     {
-        // ¸¶¿ì½º Æ÷ÀÎÅÍ À§Ä¡¸¦ ±âÁØÀ¸·Î Ray¸¦ ½î¾Æ Ãæµ¹ Ã¼Å©
+        // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Rayï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½æµ¹ Ã¼Å©
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -78,10 +78,10 @@ public class CardMove : MonoBehaviour
     }
 
 
-    //Ä«µå ÆÐ³Î°ú Ãæµ¹ Ã³¸®
+    //Ä«ï¿½ï¿½ ï¿½Ð³Î°ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
     private void OnTriggerEnter(Collider other)
     {
-        // addCardObject ¸®½ºÆ®¸¦ ¼øÈ¸ÇÏ¸é¼­ ¼±ÅÃÇÑ cardObject°¡ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+        // addCardObject ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ï¸é¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ cardObjectï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         bool isFound = false;
         int index = -1;
         for (int i = 0; i < cardManager.handCardObject.Count; i++)
@@ -109,7 +109,7 @@ public class CardMove : MonoBehaviour
         clickOnCard = false;
         //UnityEngine.Debug.Log(clickOnCard);
         transform.DOKill();
-        transform.DOMove(originalPosition, animationDuration);
+        transform.DOMove(originalPosition, animationDuration);  
     }
 
 

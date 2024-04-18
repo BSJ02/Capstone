@@ -12,31 +12,38 @@ public class CardColorChanger : MonoBehaviour
     // 리스트에 있는 카드들의 Renderer.material.Color의 색 변경
     public void ChangeCardColors(Card card)
     {
-        Color color;
-        switch (card.cardRank)
+        if (cardRenderers != null)
+        {
+            Color color = GetColorForCardRank(card.cardRank);
+            ApplyColorToRenderers(color);
+        }
+    }
+
+    private Color GetColorForCardRank(Card.CardRank rank)
+    {
+        switch (rank)
         {
             case Card.CardRank.commonCards:
-                color = cardInform.commonColor;
-                break;
+                return cardInform.commonColor;
             case Card.CardRank.rareCards:
-                color = cardInform.rareColor;
-                break;
+                return cardInform.rareColor;
             case Card.CardRank.epicCards:
-                color = cardInform.epicColor;
-                break;
+                return cardInform.epicColor;
             case Card.CardRank.legendCards:
-                color = cardInform.legendColor;
-                break;
+                return cardInform.legendColor;
             default:
-                color = Color.white;
-                break;
+                return Color.white;
         }
+    }
 
-        // 모든 렌더러의 색상 변경
+    private void ApplyColorToRenderers(Color color)
+    {
         foreach (Renderer renderer in cardRenderers)
         {
-            renderer.material.color = color;
+            if (renderer != null && renderer.material != null)
+            {
+                renderer.material.color = color;
+            }
         }
-
     }
 }

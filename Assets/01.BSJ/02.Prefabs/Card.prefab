@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: -5006354243697364448}
   - component: {fileID: 1086415367569938562}
   - component: {fileID: 5131212028735620783}
-  - component: {fileID: 3327980993126326040}
+  - component: {fileID: 5351037305592976181}
   m_Layer: 6
   m_Name: Card
   m_TagString: Card
@@ -961,15 +961,15 @@ SpriteRenderer:
   m_SortingLayerID: 1441561671
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0.5471698, b: 0, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.74635, y: 1.0856}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &-5006354243697364448
@@ -984,6 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ac932cdbd905e4bbf4bba3e5907a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardRenderer: {fileID: 5474442091712475893}
   backRenderer: {fileID: 6014666364519804663}
   imagebrderRenderer: {fileID: 4329658892422195772}
   bordersRenderers:
@@ -1032,7 +1033,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0731943, y: 3.0155554, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3327980993126326040
+--- !u!114 &5351037305592976181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1044,6 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7659c3f9427f0f4eb5c6be1c7fca8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
   dragdown: 0
   cardSortingLayerName: Default
   changeOrderInLayer: 0
