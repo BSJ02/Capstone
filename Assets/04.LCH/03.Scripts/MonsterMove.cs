@@ -19,12 +19,9 @@ public class MonsterMove : MonoBehaviour
     {
         mapGenerator = FindObjectOfType<MapGenerator>();
         monster = GetComponent<Monster>();
-
-        monster.state = MonsterState.Idle;
     }
 
 
-    // TurnManager에서 호출(Player Turn -> Enemy Turn)
     public void ButtonClick()
     {
         // 버튼 클릭마다 list 초기화 
@@ -35,8 +32,6 @@ public class MonsterMove : MonoBehaviour
         SetDestination();
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
-
-
 
         // 타일 정보 초기화
         mapGenerator.ResetTotalMap();
@@ -92,10 +87,10 @@ public class MonsterMove : MonoBehaviour
 
                 path.Reverse();
 
-                foreach (var position in path)
+                /*foreach (var pos in path)
                 {
-                    /*Debug.Log($"X:{position.x}, Y:{position.y}");*/
-                }
+                    Debug.Log("x:" + pos.x + "y:" + pos.y);
+                }*/
 
                 break;
             }
@@ -106,10 +101,8 @@ public class MonsterMove : MonoBehaviour
             OpenListAdd(CurrentNode.coord.x - 1, CurrentNode.coord.y);
         }
 
-
         if(path.Count > 0)
         path.RemoveAt(path.Count - 1); // Player 좌표 제거, 겹침 방지
-
 
         return path;
     }
@@ -145,7 +138,8 @@ public class MonsterMove : MonoBehaviour
 
     public IEnumerator MoveSmoothly(List<Vector2Int> path) // 물리 이동 
     {
-        /*monster.state = State.Moving;*/
+        monster.state = MonsterState.Moving;
+        monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
         // 최대 이동 거리
         int maxMoveDistance = monster.monsterData.MoveDistance;
@@ -221,16 +215,13 @@ public class MonsterMove : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
                     // 플레이어가 있으면
-                    monster.state = MonsterState.Attack;
-                  /*  monster.Attack();*/
+                    monster.ReadyToAttack();
+                    return;
                 }
-                else
-                {
-                    // 플레이어가 없으면 
-                    monster.state = MonsterState.Idle;
-                    // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
-                }
+                // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
             }
+
+
         }
     }
 

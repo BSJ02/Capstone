@@ -12,6 +12,11 @@ public class MapGenerator : MonoBehaviour
 
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
 
+    private void Start()
+    {
+        CreateMap(garo, sero);
+    }
+
     // 맵 생성
     public void CreateMap(int x, int y)
     {
@@ -21,7 +26,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < y; j++)
             {
-                if (transform.childCount == garo * sero)
+                if (transform.childCount >= garo * sero)
                     return;
 
                 int randValue = Mathf.FloorToInt(Random.Range(0, tilePrefab.Length));

@@ -8,6 +8,7 @@ public class MonsterData : ScriptableObject
     public string MonsterName; // 몬스터 이름
     public int Id; // 넘버링
     public float Hp; // 체력
+    public float MaxHp = 100f;
     public bool IsBoss = false;
     public int MoveDistance; // 몬스터 이동 거리(칸 당 = 1)
     [TextArea] public string Description;
