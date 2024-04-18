@@ -8,6 +8,7 @@ TagManager:
   - Panel
   - Monster
   - Tile
+  - CardPanel
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Panel
   - 
   - 
   - 
