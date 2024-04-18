@@ -13,111 +13,137 @@ MonoBehaviour:
   m_Name: Cards
   m_EditorClassIdentifier: 
   baseCards:
-  - cardName: "\uC2AC\uB798\uC2DC"
-    cardDescription_1: "\uC801\uC5D0\uAC8C"
-    power: 10
-    cardDescription_2: "\uB9CC\uD07C \uD53C\uD574\uB97C \uC900\uB2E4."
-    cardSprite: {fileID: 21300000, guid: 2f81e93fe37683442b5cc30343e44762, type: 3}
-    percent: 0
+  - cardName: Sword Slash
+    cardDescription: "\uC801\uC744 \uCE7C\uB85C \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    cardPower: 20
+    cardSprite: {fileID: 21300000, guid: fe9d7e3a4781e784ca6b245ac797d643, type: 3}
+    cardPercent: 0
     cardType: 0
-    color: {r: 1, g: 1, b: 1, a: 0}
-  - cardName: "\uB3CC\uC9C4"
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: 83d3aa78afe88eb49915a3b6c7edd2ee, type: 3}
-    percent: 0
+    cardRank: 0
+  - cardName: Healing Salve
+    cardDescription: "\uC57D\uCD08\uB97C \uC0AC\uC6A9\uD558\uC5EC \uCCB4\uB825\uC744
+      \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    cardPower: 20
+    cardSprite: {fileID: 21300000, guid: 56e32878f231ecf41aff7fb6db3c724e, type: 3}
+    cardPercent: 0
+    cardType: 1
+    cardRank: 0
+  - cardName: Sprint
+    cardDescription: "\uBE60\uB974\uAC8C \uC774\uB3D9\uD558\uC5EC \uC801\uC758 \uACF5\uACA9\uC744
+      \uD53C\uD569\uB2C8\uB2E4."
+    cardPower: 2
+    cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
+    cardPercent: 0
+    cardType: 2
+    cardRank: 0
+  - cardName: Basic Strike
+    cardDescription: "\uAC04\uB2E8\uD55C \uACF5\uACA9\uC744 \uAC00\uD574 \uC801\uC744
+      \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    cardPower: 15
+    cardSprite: {fileID: 21300000, guid: d2d734d7fb094e240915d71c663c8b57, type: 3}
+    cardPercent: 0
     cardType: 0
-    color: {r: 1, g: 1, b: 1, a: 0}
-  - cardName: 3333
-    cardDescription_1: 
-    power: 0
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: 83d3aa78afe88eb49915a3b6c7edd2ee, type: 3}
-    percent: 0
-    cardType: 0
-    color: {r: 1, g: 1, b: 1, a: 0}
+    cardRank: 0
+  - cardName: Shield Block
+    cardDescription: "\uBC29\uD328\uB85C \uACF5\uACA9\uC744 \uB9C9\uC544 \uBC1B\uB294
+      \uD53C\uD574\uB97C \uAC10\uC18C\uC2DC\uD0B5\uB2C8\uB2E4."
+    cardPower: 20
+    cardSprite: {fileID: 21300000, guid: 72d12fb7d88462048b18383296fad108, type: 3}
+    cardPercent: 0
+    cardType: 3
+    cardRank: 0
   commonCards:
-  - cardName: C1
-    cardDescription_1: 
-    power: 1
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: faf3c54d2a2ca7f418437b0fb8ff9152, type: 3}
-    percent: 50
+  - cardName: Ax Slash
+    cardDescription: "\uC801\uC744 \uB3C4\uB07C\uB85C \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    cardPower: 30
+    cardSprite: {fileID: 21300000, guid: 0cdc484fdd574b64b9ee9d503b86c8fc, type: 3}
+    cardPercent: 50
     cardType: 0
-    color: {r: 0, g: 1, b: 0, a: 1}
-  - cardName: C2
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
+    cardRank: 1
+  - cardName: Heal!!
+    cardDescription: "\uCD95\uBCF5\uC744 \uBC1B\uC544 \uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    cardPower: 40
+    cardSprite: {fileID: 21300000, guid: c581884bb67a44545bff4bf976c04cf4, type: 3}
+    cardPercent: 50
+    cardType: 1
+    cardRank: 1
+  - cardName: Teleport
+    cardDescription: "\uC6D0\uD558\uB294 \uC704\uCE58\uB85C \uC21C\uAC04\uC774\uB3D9\uD558\uC5EC
+      \uC774\uB3D9\uD569\uB2C8\uB2E4."
+    cardPower: 4
+    cardSprite: {fileID: 21300000, guid: 0ad28630a5cd17948966d487491b7432, type: 3}
+    cardPercent: 50
+    cardType: 2
+    cardRank: 1
+  - cardName: Swift Strike
+    cardDescription: "\uBE60\uB974\uACE0 \uAC15\uB825\uD55C \uACF5\uACA9\uC744 \uAC00\uD574
+      \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    cardPower: 25
     cardSprite: {fileID: 21300000, guid: f9a1f1b95d224a04b91f02d540dfcc93, type: 3}
-    percent: 50
+    cardPercent: 50
     cardType: 0
-    color: {r: 0, g: 1, b: 0, a: 1}
+    cardRank: 1
+  - cardName: Thunderstorm
+    cardDescription: "\uC8FC\uBCC0\uC5D0 \uBC88\uAC1C\uB97C \uB0B4\uB824 \uBAA8\uB4E0
+      \uC801\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4."
+    cardPower: 40
+    cardSprite: {fileID: 21300000, guid: f9a1f1b95d224a04b91f02d540dfcc93, type: 3}
+    cardPercent: 50
+    cardType: 0
+    cardRank: 1
   rareCards:
   - cardName: R1
-    cardDescription_1: 
-    power: 1
-    cardDescription_2: 
+    cardDescription: 
+    cardPower: 0
     cardSprite: {fileID: 21300000, guid: 2f81e93fe37683442b5cc30343e44762, type: 3}
-    percent: 30
+    cardPercent: 30
     cardType: 0
-    color: {r: 0, g: 0, b: 1, a: 1}
+    cardRank: 2
   - cardName: R2
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
+    cardDescription: 
+    cardPower: 0
     cardSprite: {fileID: 21300000, guid: 46d1e7910605efa4e8d56710d45c32b2, type: 3}
-    percent: 30
+    cardPercent: 30
     cardType: 0
-    color: {r: 0, g: 0, b: 1, a: 1}
+    cardRank: 2
   epicCards:
-  - cardName: E1
-    cardDescription_1: 
-    power: 1
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: af686e1b4eee811408538480a094e605, type: 3}
-    percent: 15
+  - cardName: Thunderstorm
+    cardDescription: "\uC8FC\uBCC0\uC5D0 \uBC88\uAC1C\uB97C \uB0B4\uB824 \uBAA8\uB4E0
+      \uC801\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4."
+    cardPower: 80
+    cardSprite: {fileID: 21300000, guid: 66955fd5a433a3042a8b02d30dac24f8, type: 3}
+    cardPercent: 15
     cardType: 0
-    color: {r: 1, g: 0, b: 0, a: 1}
-  - cardName: E2
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: 6d02e5f0eaf32044b9e20cec0dc50918, type: 3}
-    percent: 15
+    cardRank: 3
+  - cardName: Excalibur's Wrath
+    cardDescription: "\uC804\uC124\uC801\uC778 \uAC80\uC758 \uBD84\uB178\uB85C \uC801\uC744
+      \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    cardPower: 70
+    cardSprite: {fileID: 21300000, guid: 74090427b5078b64fa3b3cd44903425e, type: 3}
+    cardPercent: 15
     cardType: 0
-    color: {r: 1, g: 0, b: 0, a: 1}
+    cardRank: 3
   legendCards:
-  - cardName: L1
-    cardDescription_1: 
-    power: 1
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: fc067b28309e97849a8fe98041f09a8c, type: 3}
-    percent: 5
+  - cardName: Divine Retribution
+    cardDescription: "\uC2E0\uC131\uD55C \uBCF4\uBCF5\uC73C\uB85C \uC801\uC5D0\uAC8C
+      \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4."
+    cardPower: 200
+    cardSprite: {fileID: 21300000, guid: b5f507aa31003c44a9d147353746dc37, type: 3}
+    cardPercent: 5
     cardType: 0
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    cardRank: 4
   - cardName: L2
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
+    cardDescription: 
+    cardPower: 0
     cardSprite: {fileID: 21300000, guid: 2e9336257a6c1cc4b99a20551cbcdb7b, type: 3}
-    percent: 5
+    cardPercent: 5
     cardType: 0
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  - cardName: L2
-    cardDescription_1: 
-    power: 2
-    cardDescription_2: 
-    cardSprite: {fileID: 21300000, guid: 2e9336257a6c1cc4b99a20551cbcdb7b, type: 3}
-    percent: 5
-    cardType: 0
-    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    cardRank: 4
   commonPercent: 50
   rarePercent: 30
   epicPercent: 15
   legendPercent: 5
-  commonColor: {r: 0, g: 1, b: 0, a: 1}
-  rareColor: {r: 0, g: 0, b: 1, a: 1}
-  epicColor: {r: 1, g: 0, b: 0, a: 1}
+  commonColor: {r: 0.47843137, g: 1, b: 0.47843137, a: 1}
+  rareColor: {r: 0.3137255, g: 0.50980395, b: 1, a: 1}
+  epicColor: {r: 0.50980395, g: 0.50980395, b: 1, a: 1}
   legendColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

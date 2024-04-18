@@ -1,10 +1,13 @@
+
 using UnityEngine;
 using UnityEditor;
+
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
 {
     private MonsterMove monsterMove;
+
 
     public override void OnInspectorGUI()
     {
@@ -35,4 +38,5 @@ public class MapGeneratorEditor : Editor
 
         Handles.EndGUI();
     }
+
 }

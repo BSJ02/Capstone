@@ -18,7 +18,6 @@ public class CardManager : MonoBehaviour
     float addCardDistance = 3f;
 
     private CardData cardData;
-    private CardInform cardInform;
 
     [SerializeField] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
     [SerializeField] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
@@ -45,7 +44,7 @@ public class CardManager : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         // 카드를 담을 부모 오브젝트 생성
         deckObject = new GameObject("Cards");
@@ -57,37 +56,24 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        // cardData가 null인지 확인
-        if (cardData == null)
-        {
-            Debug.LogError("CardData    컴포넌트를 찾을 수 없음");
-        }
-
         handCardCount = cardData.baseCardList.Count;
+    }
 
+    private void Start()
+    {
         // 기본 카드 생성
         handCardList.AddRange(cardData.baseCardList);   // 값 추가
         CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
+
         // 카드 정렬
         isSortingInProgress = true;
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
         handCardCount = handCardList.Count;
-
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            press = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            isSortingInProgress = true;
-            StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
-        }
 
         if (press)
         {
@@ -143,6 +129,7 @@ public class CardManager : MonoBehaviour
         {
             addCardObject[i].SetActive(true);
             ApplyCardInfrom(addCardList[i], addCardObject[i]);
+            
 
             isSortingInProgress = true;
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
@@ -161,14 +148,14 @@ public class CardManager : MonoBehaviour
     {
         panelObject = Instantiate(panelObject, new Vector3(0, 2.25f, 0), Quaternion.identity);
         panelObject.SetActive(false);
-        panelObject.GetComponent<CardOrder>().SetOrder(19);
+        //panelObject.GetComponent<CardOrder>().SetOrder(19);
 
 
         int cardMaxCount = 13;
 
+        // 활성화된 카드 생성
         for (int i = 0 ; i < cards.Count; i++)
         {
-            // 게임 오브젝트 생성
             GameObject cardObject = Instantiate(handCardPrefab, spawPos, Quaternion.identity);
 
             cardObject.transform.SetParent(deckObject.transform, false);
@@ -178,9 +165,10 @@ public class CardManager : MonoBehaviour
 
             // 생성한 게임 오브젝트에 데이터 적용
             ApplyCardInfrom(cards[i], cardObject);
-
+            
         }
 
+        // 비활성화된 카드 오브젝트 생성
         for (int i = 0; i < cardMaxCount - cards.Count; i++)
         {
             GameObject cardObject = Instantiate(handCardPrefab, spawPos, Quaternion.identity);
@@ -198,9 +186,28 @@ public class CardManager : MonoBehaviour
 
         gameObject.name = card.cardName;
 
+
+        string cardEffect;
+        if (card.cardType == Card.CardType.Attack)
+        {
+            cardEffect = "(데미지: ";
+        }
+        else if (card.cardType == Card.CardType.Heal)
+        {
+            cardEffect = "(회복량: ";
+        }
+        else if (card.cardType == Card.CardType.Movement)
+        {
+            cardEffect = "(이동 칸: ";
+        }
+        else
+        {
+            cardEffect = "(피해 감소: -";
+        }
+
         Text[] texts = gameObject.GetComponentsInChildren<Text>();
         texts[0].text = card.cardName;
-        texts[1].text = card.cardDescription_1 + " " + card.power.ToString() + card.cardDescription_2;
+        texts[1].text = $"{ card.cardDescription}\n{cardEffect}{card.cardPower})";
 
         Image cardimage = gameObject.GetComponentInChildren<Image>();
 
@@ -209,14 +216,7 @@ public class CardManager : MonoBehaviour
             cardimage.sprite = card.cardSprite;
         }
 
-        //Renderer backRenderer = gameObject.GetComponent<Renderer>();
-        //Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
-
-        //if (cardInform.commonCards.Contains(card))
-        //{
-        //    renderers[0].material.color = Color.red;
-        //    renderers[1].material.color = Color.red;
-        //}
+        gameObject.GetComponent<CardColorChanger>().ChangeCardColors(card);
     }
 
     // 카드 정렬 (가져올 카드 리스트, 정렬할 카드 오브젝트, 좌표 값)
@@ -254,34 +254,6 @@ public class CardManager : MonoBehaviour
 
     }
 
-    // 카드 사용
-    void UseCard(Card card)
-    {
-        int power = card.power;
-
-        if (card.cardType == Card.CardType.Attack)
-        {
-            // 공격 타입의 카드 처리
-            
-            // 몬스터 체력 - power
-
-        }
-        else if (card.cardType == Card.CardType.Heal)
-        {
-            // 회복 타입의 카드 처리
-
-            // 플레이어 체력 + power
-        }
-        else if (card.cardType == Card.CardType.Movement)
-        {
-            // 이동 타입의 카드 처리
-
-            // 이동 거리 설정 / 이동하는 함수 다시 호출
-        }
-        else
-        {
-            // 다른 타입의 카드 처리
-        }
-    }
+   
     
 }

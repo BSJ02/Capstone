@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -507,7 +507,7 @@ SortingGroup:
   m_GameObject: {fileID: 61084158}
   m_Enabled: 1
   m_SortingLayerID: 11982589
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1000
   m_SortAtRoot: 0
 --- !u!1 &141001330
@@ -768,8 +768,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!212 &216575750
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -808,8 +808,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1441561671
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -831,7 +831,7 @@ Transform:
   m_GameObject: {fileID: 216575747}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.29, y: 0, z: 10}
+  m_LocalPosition: {x: -0.81999993, y: 0, z: 10}
   m_LocalScale: {x: 0.19245008, y: 0.19245008, z: 0.19245008}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1241,8 +1241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!65 &377034487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1276,7 +1276,7 @@ GameObject:
   - component: {fileID: 448211467}
   - component: {fileID: 448211469}
   - component: {fileID: 448211465}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Card_shirt_01 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1365,7 @@ Transform:
   m_GameObject: {fileID: 448211464}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.35, y: 0, z: 10}
+  m_LocalPosition: {x: 2.82, y: 0, z: 10}
   m_LocalScale: {x: 0.19245008, y: 0.19245008, z: 0.19245008}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1384,8 +1384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,6 +1396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
+  - component: {fileID: 705507996}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1480,6 +1481,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &705507996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &753644964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,7 +2004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99d6e5034d22614fbd9e010ac3f7b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 2005615410438473959, guid: 6394347ad86380c44875f7ceb20fab79, type: 3}
+  cardPrefab: {fileID: 2005615410438473959, guid: 6394347ad86380c44875f7ceb20fab79,
+    type: 3}
   cardSpawnPoint: {fileID: 61084162}
   cardOverlapOffset: 0.1
 --- !u!1 &1211565521
@@ -2082,8 +2107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!65 &1211565525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2204,8 +2229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!65 &1338921135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2239,7 +2264,7 @@ GameObject:
   - component: {fileID: 1375238260}
   - component: {fileID: 1375238259}
   - component: {fileID: 1375238258}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Card_shirt_01 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2280,8 +2305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!212 &1375238260
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2343,7 +2368,7 @@ Transform:
   m_GameObject: {fileID: 1375238257}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.13, y: 0, z: 10}
+  m_LocalPosition: {x: 1.6000001, y: 0, z: 10}
   m_LocalScale: {x: 0.19245008, y: 0.19245008, z: 0.19245008}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2770,8 +2795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!65 &1719154919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3008,8 +3033,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!212 &1767151631
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3048,8 +3073,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1441561671
+  m_SortingLayer: 2
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3071,7 +3096,7 @@ Transform:
   m_GameObject: {fileID: 1767151628}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.57, y: 0, z: 10}
+  m_LocalPosition: {x: -2.1, y: 0, z: 10}
   m_LocalScale: {x: 0.19245008, y: 0.19245008, z: 0.19245008}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3264,8 +3289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragdown: 0
-  sortingLayerName: Default
-  orderInLayer: 1
+  cardSortingLayerName: Default
+  changeOrderInLayer: 0
 --- !u!212 &1883039778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3327,7 +3352,7 @@ Transform:
   m_GameObject: {fileID: 1883039775}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.97, y: 0, z: 10}
+  m_LocalPosition: {x: 0.44000006, y: 0, z: 10}
   m_LocalScale: {x: 0.19245008, y: 0.19245008, z: 0.19245008}
   m_ConstrainProportionsScale: 0
   m_Children: []
