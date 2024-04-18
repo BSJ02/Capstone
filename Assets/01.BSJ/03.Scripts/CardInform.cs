@@ -28,10 +28,10 @@ public class CardInform : ScriptableObject
     // 확률 값 설정
     private void OnValidate()
     {
-        FixCardPersent(commonCards, commonPercent);
-        FixCardPersent(rareCards, rarePercent);
-        FixCardPersent(epicCards, epicPercent);
-        FixCardPersent(legendCards, legendPercent);
+        FixCardPercent(commonCards, commonPercent);
+        FixCardPercent(rareCards, rarePercent);
+        FixCardPercent(epicCards, epicPercent);
+        FixCardPercent(legendCards, legendPercent);
 
         ApplyCardRank(baseCards, Card.CardRank.baseCards);
         ApplyCardRank(commonCards, Card.CardRank.commonCards);
@@ -41,7 +41,7 @@ public class CardInform : ScriptableObject
     }
 
     // 리스트에 있는 카드들의 percent를 원하는 값으로 설정
-    private void FixCardPersent(List<Card> cards, float percent)
+    private void FixCardPercent(List<Card> cards, float percent)
     {
         foreach (Card card in cards)
         {

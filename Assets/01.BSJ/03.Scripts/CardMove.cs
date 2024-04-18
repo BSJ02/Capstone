@@ -18,11 +18,12 @@ public class CardMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private const float scaleFactor = 1.2f;
-    private const float animationDuration = 0.1f;
+    private const float animationDuration = 0.1f;   // 애니메이션 속도
 
-    private bool clickOnCard = false;
+    private bool clickOnCard = false;   // 마우스 클릭 여부
+    //private bool panelCollision = false;  // 충돌 여부
 
-    void Start()
+    private void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
 
@@ -35,26 +36,24 @@ public class CardMove : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
         if (IsMouseOverCard(this.gameObject))
         {
             AnimateCard(scaleFactor, originalPosition + Vector3.up);
-            spriteRenderer.sortingOrder = 10;
+            spriteRenderer.sortingOrder = 100;
+            //gameObject.GetComponent<CardOrder>().SetOrder(100);
         }
         else
         {
-            if (clickOnCard == false)
+            if (!clickOnCard)
             {
                 AnimateCard(1f, originalPosition);
                 spriteRenderer.sortingOrder = originalOrderInLayer;
+                //gameObject.GetComponent<CardOrder>().ResetOrder();
             }
         }
 
-        if (clickOnCard == true)
-        {
-
-        }
     }
 
 
@@ -84,37 +83,44 @@ public class CardMove : MonoBehaviour
 
 
     //카드 패널과 충돌 처리
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
-        bool isFound = false;
-        int index = -1;
-        for (int i = 0; i < cardManager.handCardObject.Count; i++)
+        if (!clickOnCard && cardManager != null && cardManager.handCardObject != null)
         {
-            if (cardManager.handCardObject[i] == this.gameObject)
+            // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
+            bool isFound = false;
+            int index = -1;
+            for (int i = 0; i < cardManager.handCardObject.Count; i++)
             {
-                isFound = true;
-                index = i;
-                break;
+                if (cardManager.handCardObject[i] == this.gameObject)
+                {
+                    isFound = true;
+                    index = i;
+                    break;
+                }
             }
-        }
 
-        if (isFound)
-        {
-            if (other.gameObject.CompareTag("Panel"))
+            if (isFound)
             {
-                cardManager.UseToCard(this.gameObject);
-            }
+                if (other.gameObject.CompareTag("CardPanel"))
+                {
+                    cardManager.UseToCard(this.gameObject);
+                    UnityEngine.Debug.Log("충돌함");
+                    cardManager.useCardPanelPrefab.SetActive(false);
+                }
+
+            }   
         }
-        
     }
 
     private void OnMouseUp()
     {
+        // 클릭 상태를 해제합니다.
         clickOnCard = false;
-        //UnityEngine.Debug.Log(clickOnCard);
+
+        // 카드를 기본 위치로 이동합니다.
         transform.DOKill();
-        transform.DOMove(originalPosition, animationDuration);  
+        transform.DOMove(originalPosition, animationDuration);
     }
 
 
@@ -123,9 +129,15 @@ public class CardMove : MonoBehaviour
         if (IsMouseOverCard(gameObject))
         {
             clickOnCard = true;
-            //UnityEngine.Debug.Log(clickOnCard);
             offset = transform.position - GetMouseWorldPosition();
-            cardManager.ChoiceCard(this.gameObject);
+            if (cardManager.addCardObject.Contains(this.gameObject))
+            {
+                cardManager.ChoiceCard(this.gameObject);
+            }
+            else
+            {
+                cardManager.useCardPanelPrefab.SetActive(true);
+            }
         }
     }
   
