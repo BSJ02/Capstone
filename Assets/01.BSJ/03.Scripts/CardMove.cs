@@ -3,68 +3,72 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class CardMove : MonoBehaviour
 {
+    private CardManager cardManager;
     private Vector3 offset;
     private float distanceToCamera;
-
-    //Å©±â ÀúÀå
-    private Vector3 originalScale;
-    private Vector3 originalPosition;
+    private Vector3 originalScale;   // ê¸°ë³¸ í¬ê¸°
+    [HideInInspector] public Vector3 originalPosition;   // ê¸°ë³¸ ìœ„ì¹˜
     private int originalOrderInLayer;
-  
-    //¾ÆÁ÷ »ç¿ë ¾ÈÇÔ ÇÊ¿ä ¾øÀ» ¼ö µµ ÀÖÀ½
-    public bool dragdown = false;
 
-    public string cardSortingLayerName = "Default"; // º¯°æÇÒ Sorting LayerÀÇ ÀÌ¸§
-    public int changeOrderInLayer; // º¯°æÇÒ Order in Layer °ª
+    private string cardSortingLayerName = "Card";    // ë³€ê²½í•  Sorting Layerì˜ ì´ë¦„
+    private SpriteRenderer spriteRenderer;
 
-    private SpriteRenderer spriteRenderer = null;
+    private const float scaleFactor = 1.2f;
+    private const float animationDuration = 0.1f;
 
+    private bool clickOnCard = false;
 
     void Start()
     {
-        originalScale = this.transform.localScale;
-        originalPosition = this.transform.position;
-        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        cardManager = FindObjectOfType<CardManager>();
+
+        originalScale = this.transform.localScale;   // ê¸°ë³¸ í¬ê¸° ì €ì¥
+        originalPosition = this.transform.position;   // ê¸°ë³¸ ìœ„ì¹˜ ì €ì¥
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
-        changeOrderInLayer = spriteRenderer.sortingOrder;
-        originalOrderInLayer = gameObject.layer;
+        originalOrderInLayer = spriteRenderer.sortingOrder;
     }
+
 
     void Update()
     {
-        dragdown = false;
-
-
-        //Å©±â »Ó¸¸¾Æ´Ï¶ó Ä«µå°¡ À§·Î »ìÂ¦ ¿Ã¶ó¿Àµµ·Ï ÇÒ ÇÊ¿ä°¡ ÀÖ¾îº¸ÀÓ
-        if (IsMouseOverObject(this.gameObject))
+        if (IsMouseOverCard(this.gameObject))
         {
-            transform.DOKill();
-            transform.DOScale(originalScale * 1.2f, 0.5f);
-            transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + 1, originalPosition.z), 0.5f);
-            this.spriteRenderer.sortingOrder = 10;
-            //·¹ÀÌ¾î Á¤·Ä
+            AnimateCard(scaleFactor, originalPosition + Vector3.up);
+            spriteRenderer.sortingOrder = 10;
         }
         else
         {
-            transform.DOKill();
-            // ¸¶¿ì½º°¡ ¿ÀºêÁ§Æ® À§¿¡ ¾øÀ» ¶§ ¿ø·¡ Å©±â·Î µ¹¾Æ¿È
-            transform.DOScale(originalScale, 0.5f);
-            transform.DOMove(originalPosition, 0.5f);
-
-            this.spriteRenderer.sortingOrder = originalOrderInLayer;
-
-            //this.gameObject.transform.localScale = originalScale;
+            if (clickOnCard == false)
+            {
+                AnimateCard(1f, originalPosition);
+                spriteRenderer.sortingOrder = originalOrderInLayer;
+            }
         }
 
+        if (clickOnCard == true)
+        {
+
+        }
     }
 
-    bool IsMouseOverObject(GameObject obj)
+
+    private void AnimateCard(float scale, Vector3 position)
     {
-        // ¸¶¿ì½º Æ÷ÀÎÅÍ À§Ä¡¸¦ ±âÁØÀ¸·Î Ray¸¦ ½î¾Æ Ãæµ¹ Ã¼Å©
+        transform.DOKill();
+        transform.DOScale(originalScale * scale, animationDuration);
+        transform.DOMove(position, animationDuration);
+    }
+
+
+    private bool IsMouseOverCard(GameObject obj)
+    {
+        // ë§ˆìš°ìŠ¤ í¬ì¸í„° ìœ„ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ Rayë¥¼ ì˜ì•„ ì¶©ëŒ ì²´í¬
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -77,52 +81,66 @@ public class CardMove : MonoBehaviour
         }
         return false;
     }
-    
 
-    //Ä«µå ÆĞ³Î°ú Ãæµ¹ Ã³¸®
-    void OnTriggerEnter(Collider other)
+
+    //ì¹´ë“œ íŒ¨ë„ê³¼ ì¶©ëŒ ì²˜ë¦¬
+    private void OnTriggerEnter(Collider other)
     {
-        //ÀÓ½Ã
-        if (other.gameObject.tag == "Panel")
+        // handCardObject ë¦¬ìŠ¤íŠ¸ë¥¼ ìˆœíšŒí•˜ë©´ì„œ ì„ íƒí•œ cardObjectê°€ ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+        bool isFound = false;
+        int index = -1;
+        for (int i = 0; i < cardManager.handCardObject.Count; i++)
         {
+            if (cardManager.handCardObject[i] == this.gameObject)
+            {
+                isFound = true;
+                index = i;
+                break;
+            }
+        }
 
-            Destroy(this.gameObject);
+        if (isFound)
+        {
+            if (other.gameObject.CompareTag("Panel"))
+            {
+                cardManager.UseToCard(this.gameObject);
+            }
+        }
+        
+    }
+
+    private void OnMouseUp()
+    {
+        clickOnCard = false;
+        //UnityEngine.Debug.Log(clickOnCard);
+        transform.DOKill();
+        transform.DOMove(originalPosition, animationDuration);  
+    }
+
+
+    private void OnMouseDown()
+    {
+        if (IsMouseOverCard(gameObject))
+        {
+            clickOnCard = true;
+            //UnityEngine.Debug.Log(clickOnCard);
+            offset = transform.position - GetMouseWorldPosition();
+            cardManager.ChoiceCard(this.gameObject);
+        }
+    }
+  
+
+    private void OnMouseDrag()
+    {
+        if (clickOnCard)
+        {
+            transform.DOKill();
+            transform.position = GetMouseWorldPosition() + offset;
         }
     }
 
-    void OnMouseUp()
-    {
-        dragdown = false;
-        transform.DOKill();
-        transform.DOMove(originalPosition, 1f);
 
-        // transform.position = Vector3.Lerp(transform.position, originalPosition, 1f);
-
-        //Ä«µåÀÇ ¿ø·¡ À§Ä¡°ª ÀúÀå
-    }
-
-
-    void OnMouseDown()
-    {
-        
-        dragdown = true;
-        transform.DOKill();
-        //Ä«µåÀÇ ¿ø·¡ À§Ä¡°ªÀ» Ä«µå Á¤·Ä ÄÚµå¿¡¼­ ¹ŞÀ» ÇÊ¿ä°¡ ÀÖÀ½ ( Error ¸¶¿ì½º ±¤Å¬½Ã À§Ä¡°ªÀÌ º¯°æµÊ)
-        //originalPosition = transform.localPosition;
-        distanceToCamera = Vector3.Distance(transform.position, Camera.main.transform.position);
-        offset = transform.position - GetMouseWorldPosition();
-    }
-
-  
-
-    void OnMouseDrag()
-    {
-        transform.DOKill();
-        transform.position = GetMouseWorldPosition() + offset;  
-        
-    }
-
-    Vector3 GetMouseWorldPosition()
+    private Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = distanceToCamera;
