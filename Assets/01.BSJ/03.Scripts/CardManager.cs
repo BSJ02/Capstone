@@ -9,13 +9,12 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    private CardInform cardInform;
-    private CardManager cardManager;
-
+    public CardInform cardInform;
+    
     // 카드 생성 위치
-    [HideInInspector] public Vector3 handCardPos = new Vector3(0, 5f, 0);
+    [HideInInspector] public Vector3 handCardPos = new Vector3(0, 7f, 0);
     [HideInInspector] public Vector3 addCardPos = new Vector3(0, 11f, 0);
-    [HideInInspector] public Vector3 spawDeckPos = new Vector3(-3.6f, -5f, -3.6f);
+    [HideInInspector] public Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
     private float handCardDistance = 0.8f;
     private float addCardDistance = 3f;
 
@@ -36,10 +35,13 @@ public class CardManager : MonoBehaviour
     private int handCardCount;
 
     [Header("카드 얻을 때 배경 Prefab")]
-    [SerializeField] private GameObject panelObject;
+    [SerializeField] private GameObject addCardPanelPrefab;
 
     [Header("카드 Prefab")]
     [SerializeField] private GameObject handCardPrefab;
+
+    [Header("카드 사용 패널 Prefab")]
+    [SerializeField] public GameObject useCardPanelPrefab;
 
     public bool addCard = false;
 
@@ -53,13 +55,19 @@ public class CardManager : MonoBehaviour
 
         // 각 컴포넌트를 가진 게임 오브젝트를 찾아서 참조
         cardData = FindObjectOfType<CardData>();
-        cardManager = FindObjectOfType<CardManager>();
 
         // 초기화
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
         handCardCount = cardData.baseCardList.Count;
+
+        // 카드
+        addCardPanelPrefab = Instantiate(addCardPanelPrefab, new Vector3(-3, 5.5f, -3), Quaternion.Euler(0, 45, 0));
+        addCardPanelPrefab.SetActive(false);
+
+        useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(0, 45, 0));
+        useCardPanelPrefab.SetActive(false);
     }
 
 
@@ -68,9 +76,7 @@ public class CardManager : MonoBehaviour
         // 기본 카드 생성
         handCardList.AddRange(cardData.baseCardList);   // 값 추가
         CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
-        
-        // 카드 정렬
-        StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
+        StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));   // 카드 정렬
 
         handCardCount = handCardList.Count;
     }
@@ -113,12 +119,12 @@ public class CardManager : MonoBehaviour
             handCardObject.RemoveAt(index); // index에 해당하는 오브젝트를 리스트에서 제거합니다.
 
 
-            gameObject.SetActive(false);
-            gameObject.transform.position = spawDeckPos;
+            cardObject.SetActive(false);
+            cardObject.transform.position = spawDeckPos;
         
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            panelObject.SetActive(false);
+            addCardPanelPrefab.SetActive(false);
         }
     }
 
@@ -158,15 +164,43 @@ public class CardManager : MonoBehaviour
 
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            panelObject.SetActive(false);
+            addCardPanelPrefab.SetActive(false);
         }
+    }
+
+
+    // 성정한 확률에 따라 카드 리스트를 가져와 그 리스트에 값을 랜덤하게 가져옴
+    private Card GetRandomCard()
+    {
+        // 랜덤한 카드 리스트 선택
+        List<Card> randomList = null;
+        int randNum = Random.Range(1, 101);
+        if (randNum <= cardInform.legendPercent)
+        {
+            randomList = cardInform.legendCards;
+        }
+        else if (randNum <= cardInform.epicPercent)
+        {
+            randomList = cardInform.epicCards;
+        }
+        else if (randNum <= cardInform.rarePercent)
+        {
+            randomList = cardInform.rareCards;
+        }
+        else
+        {
+            randomList = cardInform.commonCards;
+        }
+
+        // 랜덤한 카드 선택
+        return randomList[Random.Range(0, randomList.Count)];
     }
 
 
     // 랜덤 카드 생성
     private void CreateRandomCard()
     {
-        panelObject.SetActive(true);
+        addCardPanelPrefab.SetActive(true);
 
         addCardList = new List<Card>();
 
@@ -174,7 +208,7 @@ public class CardManager : MonoBehaviour
 
         while (dedupeCard.Count < 3)
         {
-            Card randomCard = cardData.GetRandomCard();
+            Card randomCard = GetRandomCard();
             dedupeCard.Add(randomCard); // 중복되면 추가되지 않음
         }
 
@@ -201,11 +235,6 @@ public class CardManager : MonoBehaviour
     // 카드 생성
     private void CreateCard(List<Card> cards)
     {
-        panelObject = Instantiate(panelObject, new Vector3(-3, 5.5f, -3), Quaternion.Euler(0, 45, 0));
-        panelObject.SetActive(false);
-        panelObject.GetComponent<CardOrder>().SetOrder(19);
-
-
         int cardMaxCount = 13;
 
         // 활성화된 카드 생성
@@ -281,8 +310,8 @@ public class CardManager : MonoBehaviour
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
-        // 부모 오브젝트를 기준으로 좌표를 변환
-        Vector3 parentPosition = deckObject.transform.position;
+
+        float deltaTime = Time.deltaTime; // deltaTime 한 번만 계산
 
         for (int i = 0; i < card.Count; i++)
         {
@@ -304,7 +333,7 @@ public class CardManager : MonoBehaviour
             {
                 float t = elapsedTime / duration;   // 보간에 사용될 비율 계산
                 cardObject[i].transform.position = Vector3.Lerp(cardObject[i].transform.position, targetPosition, t);   // 오브젝트 위치 변경
-                elapsedTime += Time.deltaTime;  // 경과 시간 업데이트
+                elapsedTime += deltaTime;  // 경과 시간 업데이트
                 yield return null;
             }
 

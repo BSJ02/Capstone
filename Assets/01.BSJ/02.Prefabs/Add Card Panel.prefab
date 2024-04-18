@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2584962862222680484}
   - component: {fileID: -5884643945563854572}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: Add Card Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
