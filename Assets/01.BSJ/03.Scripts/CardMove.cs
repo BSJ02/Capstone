@@ -63,6 +63,14 @@ public class CardMove : MonoBehaviour
 
     private bool IsMouseOverCard(GameObject obj)
     {
+        transform.DOKill();
+        transform.DOScale(originalScale * scale, animationDuration);
+        transform.DOMove(position, animationDuration);
+    }
+
+
+    private bool IsMouseOverCard(GameObject obj)
+    {
         // ���콺 ������ ��ġ�� �������� Ray�� ��� �浹 üũ
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
