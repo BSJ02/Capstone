@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
         Attack
     }
 
-    public Animator anim;
+    Animator anim;
     public PlayerState playerState;
 
     public int activePoint = 3;
