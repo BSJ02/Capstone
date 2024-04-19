@@ -15,7 +15,7 @@ public class CardData : MonoBehaviour
         {
             case "Sword Slash":
                 // SwordSlash 카드를 사용하는 로직을 호출
-                UseSwordSlash(target);
+                UseSwordSlash(card, target);
                 break;
             // 다른 카드 타입에 대한 처리를 추가
             default:
@@ -25,7 +25,7 @@ public class CardData : MonoBehaviour
     }
 
     // SwordSlash 카드를 사용하는 메서드
-    private void UseSwordSlash(GameObject target)
+    private void UseSwordSlash(Card card, GameObject target)
     {
         // SwordSlash 카드의 처리 코드를 작성
         Debug.Log("SwordSlash 카드를 사용");
@@ -33,12 +33,8 @@ public class CardData : MonoBehaviour
         // 대상의 값을 변경합니다. (예: 데미지를 적용)
         if (target != null)
         {
-            // 대상의 체력을 감소시킵니다. (예: Health 컴포넌트가 있다고 가정)
-            Health targetHealth = target.GetComponent<Health>();
-            if (targetHealth != null)
-            {
-
-            }
+            float hp = target.transform.GetComponent<MonsterData>().Hp;
+            hp -= card.cardPower[0];
         }
     }
 

@@ -65,7 +65,7 @@ public class Card
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
     public string cardDescription_Power;
-    public int[] cardPower;   // 공격력, 힐량, 이동거리
+    public float[] cardPower;   // 공격력, 힐량, 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardType cardType; // 카드 타입 (공격기, 회복기, 이동기)

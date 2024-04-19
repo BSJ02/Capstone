@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 12620
+  controlID: 51
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 12621
+  controlID: 52
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 12517
+  controlID: 28
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 12540
+  controlID: 53
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -319,8 +319,8 @@ MonoBehaviour:
     y: 0
     width: 449
     height: 987
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -940,7 +940,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 5ae6feff0ae7feff8654ffff8466ffff2a72ffff0e73ffff1c7effffe080ffff9294ffffce95ffff26aeffff3eaeffff7cb3ffff18b6ffff2ec8ffff4ac9ffffa0caffff56cbffff46deffffa2e0ffff70e5ffff24e6ffff3af8fffff0f8ffff2efbffffcac40000dcca000070dd00000ae40000ea140100
+      m_ExpandedIDs: cce5fffff2e6ffff2efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1010,7 +1010,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/00.Main
+    - Assets/01.BSJ/01.Scene
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1018,16 +1018,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/00.Main
+  - Assets/01.BSJ/01.Scene
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\USER\Desktop\Unity\Capstone
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 786b0000
-    m_LastClickedID: 27512
-    m_ExpandedIDs: 00000000f2690000f4690000f6690000f8690000fa690000fc69000000ca9a3b
+    m_SelectedIDs: a6880000
+    m_LastClickedID: 34982
+    m_ExpandedIDs: 00000000c2860000c4860000c6860000c8860000ca860000cc86000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1055,7 +1055,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: fc6b0000
     m_LastClickedID: 27644
-    m_ExpandedIDs: 00000000f2690000f4690000f6690000f8690000fa690000fc69000000ca9a3b
+    m_ExpandedIDs: 00000000c2860000c4860000c6860000c8860000ca860000cc860000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
