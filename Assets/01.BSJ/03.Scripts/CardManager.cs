@@ -12,7 +12,7 @@ public class CardManager : MonoBehaviour
     public CardInform cardInform;
     
     // 카드 생성 위치
-    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 5f, 0);   // 들고 있는 카드 위치
+    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4f, 0);   // 들고 있는 카드 위치
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
     [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);    // 덱 위치
     private float handCardDistance = 0.8f;  // 손에 있는 카드 간의 거리
