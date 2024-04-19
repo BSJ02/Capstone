@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
-  MonsterName: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
+  MonsterName: "\uC5B4\uB460 \uBC15\uC950"
   Id: 0
-  Hp: 100
+  Hp: 0
+  MaxHp: 100
   IsBoss: 0
   MoveDistance: 3
-  Description: "\uD14C\uC2A4\uD2B8\uC6A9 "
+  Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 10
   MaxDamage: 20
