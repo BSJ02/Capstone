@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
-  m_Name: Bat
+  m_Name: TurttleShell
   m_EditorClassIdentifier: 
-  MonsterName: "\uC5B4\uB460 \uBC15\uC950"
-  Id: 0
+  MonsterName: "\uAC00\uC2DC \uAC70\uBD81"
+  Id: 1
   Hp: 0
   MaxHp: 100
   IsBoss: 0
-  MoveDistance: 3
+  MoveDistance: 2
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  MinDamage: 10
-  MaxDamage: 20
+  MinDamage: 8
+  MaxDamage: 14
