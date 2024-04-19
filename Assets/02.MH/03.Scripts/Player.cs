@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
         Attack
     }
 
-    Animator anim;
+    public PlayerData playerData;
+
+    private Animator anim;
     public PlayerState playerState;
 
     public int activePoint = 3;
@@ -21,26 +23,5 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    void Update()
-    {
-        UpdateAnimation();
-    }
-
-    // 애니메이션 세팅
-    public void UpdateAnimation()
-    {
-        switch (playerState)
-        {
-            case PlayerState.Idle:
-                anim.SetInteger("State", 0);
-                break;
-            case PlayerState.Moving:
-                anim.SetInteger("State", 1);
-                break;
-            case PlayerState.Attack:
-                anim.SetInteger("State", 2);
-                break;
-        }
-    }
 
 }

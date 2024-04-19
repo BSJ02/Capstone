@@ -2,57 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static Card;
 
 public class CardData : MonoBehaviour
 {
-    private CardInform cardInform;
+    public CardInform cardInform;
 
-    [SerializeField] public List<Card> baseCardList;
-    [SerializeField] public List<Card> cardList;
-
-    private void Awake()
+    public void UseCard(Card card, GameObject target)
     {
-        baseCardList = new List<Card>();  // 기본적인 카드 리스트
-        cardList = new List<Card>(); // 나중에 추가할 카드 리스트
-
-        cardInform = Resources.Load<CardInform>("Cards");
-
-        // 기본적인 카드 추가
-        baseCardList.AddRange(cardInform.baseCards);
-
-        // 나머지 카드
-        cardList.AddRange(cardInform.commonCards);
-        cardList.AddRange(cardInform.rareCards);
-        cardList.AddRange(cardInform.epicCards);
-        cardList.AddRange(cardInform.legendCards);
-
+        // 카드 이름에 따라 처리할 내용을 구현.
+        switch (card.cardName)
+        {
+            case "Sword Slash":
+                // SwordSlash 카드를 사용하는 로직을 호출
+                UseSwordSlash(target);
+                break;
+            // 다른 카드 타입에 대한 처리를 추가
+            default:
+                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                break;
+        }
     }
 
-    // 성정한 확률에 따라 카드 리스트를 가져와 그 리스트에 값을 랜덤하게 가져옴
-    public Card GetRandomCard()
+    // SwordSlash 카드를 사용하는 메서드
+    private void UseSwordSlash(GameObject target)
     {
-        // 랜덤한 카드 리스트 선택
-        List<Card> randomList = null;
-        int randNum = Random.Range(1, 101);
-        if (randNum <= cardInform.legendPercent)
+        // SwordSlash 카드의 처리 코드를 작성
+        Debug.Log("SwordSlash 카드를 사용");
+
+        // 대상의 값을 변경합니다. (예: 데미지를 적용)
+        if (target != null)
         {
-            randomList = cardInform.legendCards;
+            // 대상의 체력을 감소시킵니다. (예: Health 컴포넌트가 있다고 가정)
+            Health targetHealth = target.GetComponent<Health>();
+            if (targetHealth != null)
+            {
+
+            }
         }
-        else if (randNum <= cardInform.epicPercent)
-        {
-            randomList = cardInform.epicCards;
-        }
-        else if (randNum <= cardInform.rarePercent)
-        {
-            randomList = cardInform.rareCards;
-        }
-        else
-        {
-            randomList = cardInform.commonCards;
-        }
-        
-        // 랜덤한 카드 선택
-        return randomList[Random.Range(0, randomList.Count)];
     }
 
+    // 카드 사용시 애니메이션
+    private void UseCardAnimation()
+    {
+
+    }
 }

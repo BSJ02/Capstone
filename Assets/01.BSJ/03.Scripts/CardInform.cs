@@ -28,20 +28,20 @@ public class CardInform : ScriptableObject
     // 확률 값 설정
     private void OnValidate()
     {
-        FixCardPersent(commonCards, commonPercent);
-        FixCardPersent(rareCards, rarePercent);
-        FixCardPersent(epicCards, epicPercent);
-        FixCardPersent(legendCards, legendPercent);
+        FixCardPercent(commonCards, commonPercent);
+        FixCardPercent(rareCards, rarePercent);
+        FixCardPercent(epicCards, epicPercent);
+        FixCardPercent(legendCards, legendPercent);
 
-        ApplyCardRank(baseCards);
-        ApplyCardRank(commonCards);
-        ApplyCardRank(rareCards);
-        ApplyCardRank(epicCards);
-        ApplyCardRank(legendCards);
+        ApplyCardRank(baseCards, Card.CardRank.baseCards);
+        ApplyCardRank(commonCards, Card.CardRank.commonCards);
+        ApplyCardRank(rareCards, Card.CardRank.rareCards);
+        ApplyCardRank(epicCards, Card.CardRank.epicCards);
+        ApplyCardRank(legendCards, Card.CardRank.legendCards);
     }
 
     // 리스트에 있는 카드들의 percent를 원하는 값으로 설정
-    private void FixCardPersent(List<Card> cards, float percent)
+    private void FixCardPercent(List<Card> cards, float percent)
     {
         foreach (Card card in cards)
         {
@@ -50,30 +50,11 @@ public class CardInform : ScriptableObject
     }
 
     // 각 카드 리스트에 따라 색상을 변경하는 메서드
-    public void ApplyCardRank(List<Card> cardList)
+    public void ApplyCardRank(List<Card> cardList, Card.CardRank rank)
     {
         foreach (Card card in cardList)
         {
-            if (cardList == commonCards)
-            {
-                card.cardRank = Card.CardRank.commonCards;
-            }
-            else if (cardList == rareCards)
-            {
-                card.cardRank = Card.CardRank.rareCards;
-            }
-            else if (cardList == epicCards)
-            {
-                card.cardRank = Card.CardRank.epicCards;
-            }
-            else if (cardList == legendCards)
-            {
-                card.cardRank = Card.CardRank.legendCards;
-            }
-            else
-            {
-                card.cardRank = Card.CardRank.baseCards;
-            }
+            card.cardRank = rank;
         }
     }
 }
@@ -83,7 +64,8 @@ public class Card
 {
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
-    public int cardPower;   // 공격력, 힐량, 이동거리
+    public string cardDescription_Power;
+    public int[] cardPower;   // 공격력, 힐량, 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardType cardType; // 카드 타입 (공격기, 회복기, 이동기)
@@ -94,7 +76,6 @@ public class Card
         Attack, // 공격
         Heal,   // 회복
         Movement, // 이동
-        Shiled   // 막기
     }
 
     public enum CardRank

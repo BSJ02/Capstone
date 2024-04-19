@@ -9,9 +9,10 @@ using UnityEngine;
 
 public enum MonsterState
 {
-    Idle, // 플레이어 턴 
-    Moving, // 플레이어 턴 종료 후 몬스터 이동
-    Attack // 이동한 위치의 사정거리 안에 플레이어가 있으면 공격
+    Idle = 0, 
+    Moving = 1, 
+    Attack = 2,
+    GetHit = 3
 }
 
 public enum MonsterType
@@ -22,121 +23,111 @@ public enum MonsterType
 
 public class Monster : MonoBehaviour
 {
-    private MapGenerator mapGenerator;
     public MonsterData monsterData; // 몬스터마다 해당하는 데이터 값 넣기
 
-    public MonsterState state = MonsterState.Idle;
+    public MonsterState state;
     public MonsterType monsterType;
 
+    public GameObject warning;
     private Animator anim;
 
-    protected bool isLive = true;
+    protected bool isLive;
+    private bool hasTarget;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
-        // 콜라이더(충돌 처리)
-
-        isLive = true;
-        state = MonsterState.Idle;
     }
 
-    public void OnEnable()
+    private void Start()
     {
-        Initialize();
+        isLive = true;
+        hasTarget = false;
+        warning.gameObject.SetActive(false);
+
+        monsterData.Hp = monsterData.MaxHp;
+
+        state = MonsterState.Idle;
+        anim.SetInteger("State", (int)state);
+
     }
+
 
     void Update()
     {
-        /*UpdateAnimation();*/
+        Debug.Log("현재 상태 :" + state);
     }
 
-    // 초기화
-    public void Initialize()
+    // [1] 일반 몬스터 공격
+    public void ReadyToAttack()
     {
-        switch (monsterType)
-        {
-            case MonsterType.Normal:
-                break;
-            case MonsterType.Boss:
+        hasTarget = true;
+        warning.gameObject.SetActive(true);
 
-                break;
-        }
+        state = MonsterState.Attack;
+        anim.SetInteger("State", (int)state);
+
     }
 
-    /*// 애니메이션
-    public void UpdateAnimation()
+    // [1-1] 일반 몬스터 공격 이벤트 처리
+    public void EventToAttack()
     {
-        switch (state)
+        if (hasTarget)
         {
-            // 애니메이션 loop 확인
-            case MonsterState.Idle:
-                anim.SetInteger("Idle", 0);
-                break;
-            case MonsterState.Moving:
-                anim.SetInteger("Moving", 1);
-                break;
-        }
-    }*/
+            Player player = FindObjectOfType<Player>();
+            float playerHp = player.playerData.Hp;
+            float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
 
-
-    /*// 일반 몬스터 공격
-    public void Attack()
-    {
-        if (state != MonsterState.Attack)
-            return;
-
-        // 애니메이션 loop 체크 해제
-        anim.SetInteger("Attack", 2);
-
-        float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-        *//*float playerHp = FindObjectOfType<Player>().hp; // PlayerData 받아올 예정*/
-
-     /*   // 플레이어 생존 여부
-        while(playerHp > 0)
-        {
             playerHp -= randDamage;
-            Debug.Log("Player HP:" + playerHp);
-            if (playerHp <= 0)
-            {
-                // 플레이어 Die 이벤트 호출
-                Debug.Log("Player Die!");
-                break;
-            }
-        }*//*
 
-        state = MonsterState.Idle;
-    }*/
+            state = MonsterState.Idle;
+            anim.SetInteger("State", (int)state);
 
-    // 몬스터 피격 처리
-    /*public void TakeDamage()
+            Debug.Log("플레이어 체력:" + playerHp);
+
+            warning.gameObject.SetActive(false);
+            hasTarget = false;
+        }
+
+    }
+
+    // [2] 몬스터 피격 처리
+    public void GetHit()
     {
         if (!isLive) // 몬스터 사망
             return;
 
-*//*        float playeDamage = FindObjectOfType<Player>().damage;*//*
-        
-        while(monsterData.Hp > 0)
+        float playerDamage = FindObjectOfType<Player>().playerData.Damage;
+        monsterData.Hp -= playerDamage;
+       
+        if(monsterData.Hp <= 0)
         {
-*//*            normalMonster.Hp -= playeDamage;*//*
-            if(monsterData.Hp <= 0)
-            {
-                Die();
-                break;
-            }
+            Die();
         }
     }
 
-    // 몬스터 사망 처리
+    // [2] 몬스터 피격 이벤트 처리
+    public void EventToGetHit()
+    {
+        // GetHit 사운드 재생
+        // 몬스터 피격 시 Color 변경 
+        
+    }
+
+
+    // [3] 몬스터 사망 처리
     public void Die()
     {
-        if (isLive) // 몬스터 생존
+        if (isLive) 
             return;
 
             anim.SetBool("Die", true);
+    }
 
-            // 파티클 생성
-            // 몬스터 사망 사운드 재생
-            // 풀링 오브젝트
-    }*/
+    // [3-1] 몬스터 사망 이벤트 처리
+    public void EventToDie()
+    {
+        // 파티클 생성
+        // 몬스터 사망 사운드 재생
+    }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Panel
   - Monster
   - Tile
+  - CardPanel
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,7 @@ TagManager:
   - 
   - Water
   - UI
+  - UIButton
   - Card
   - 
   - 
@@ -28,8 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Panel
   - 
   - 
   - 
@@ -48,6 +49,12 @@ TagManager:
   - name: Panel
     uniqueID: 497501861
     locked: 0
-  - name: Card
+  - name: UIButton
     uniqueID: 1441561671
+    locked: 0
+  - name: UI
+    uniqueID: 3779761805
+    locked: 0
+  - name: Card
+    uniqueID: 894933843
     locked: 0
