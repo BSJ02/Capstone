@@ -104,7 +104,7 @@ public class CardMove : MonoBehaviour
             {
                 if (other.gameObject.CompareTag("CardPanel"))
                 {
-                    cardManager.UseToCard(this.gameObject);
+                    cardManager.UpdateCardList(this.gameObject);
                     UnityEngine.Debug.Log("충돌함");
                     cardManager.useCardPanelPrefab.SetActive(false);
                 }

@@ -12,13 +12,11 @@ public class CardManager : MonoBehaviour
     public CardInform cardInform;
     
     // 카드 생성 위치
-    [HideInInspector] public Vector3 handCardPos = new Vector3(0, 7f, 0);
-    [HideInInspector] public Vector3 addCardPos = new Vector3(0, 11f, 0);
-    [HideInInspector] public Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
-    private float handCardDistance = 0.8f;
-    private float addCardDistance = 3f;
-
-    private CardData cardData;
+    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 5f, 0);   // 들고 있는 카드 위치
+    [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
+    [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);    // 덱 위치
+    private float handCardDistance = 0.8f;  // 손에 있는 카드 간의 거리
+    private float addCardDistance = 3f; // 카드 선택창에서의 카드 간의 거리
 
     [SerializeField] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
     [SerializeField] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
@@ -45,25 +43,30 @@ public class CardManager : MonoBehaviour
 
     public bool addCard = false;
 
+    // 사용한 카드
+    [HideInInspector] public Card useCard;
+
 
     private void Awake()
     {
         // 카드를 담을 부모 오브젝트 생성
-        deckObject = new GameObject("Cards");
+        deckObject = GameObject.Find("Cards");
+        if (deckObject == null)
+        {
+            // 기존의 Cards 오브젝트가 없으면 새로 생성
+            deckObject = new GameObject("Cards");
+        }
+        // 기존의 Cards 오브젝트가 있던 없던 위치를 설정
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
-
-        // 각 컴포넌트를 가진 게임 오브젝트를 찾아서 참조
-        cardData = FindObjectOfType<CardData>();
 
         // 초기화
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        handCardCount = cardData.baseCardList.Count;
+        handCardCount = cardInform.baseCards.Count;
 
-        // 카드
-        addCardPanelPrefab = Instantiate(addCardPanelPrefab, new Vector3(-3, 5.5f, -3), Quaternion.Euler(0, 45, 0));
+        addCardPanelPrefab = Instantiate(addCardPanelPrefab, new Vector3(-3, 6f, -3), Quaternion.Euler(0, 45, 0));
         addCardPanelPrefab.SetActive(false);
 
         useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(0, 45, 0));
@@ -74,7 +77,7 @@ public class CardManager : MonoBehaviour
     private void Start()
     {
         // 기본 카드 생성
-        handCardList.AddRange(cardData.baseCardList);   // 값 추가
+        handCardList.AddRange(cardInform.baseCards);   // 값 추가
         CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));   // 카드 정렬
 
@@ -93,7 +96,7 @@ public class CardManager : MonoBehaviour
 
 
     // 카드 사용
-    public void UseToCard(GameObject cardObject)
+    public void UpdateCardList(GameObject cardObject)
     {
         // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
         bool isFound = false;
@@ -111,16 +114,15 @@ public class CardManager : MonoBehaviour
         if (isFound)
         {
             // 선택한 오브젝트가 handCardObject 리스트 안에 있을 때만 해당 카드를 가져옵니다.
-            Card card = handCardList[index]; // index에 해당하는 카드를 가져옵니다.
-
-            addCardList.Add(card);
-            handCardList.RemoveAt(index); // index에 해당하는 카드를 리스트에서 제거합니다.
+            useCard = handCardList[index]; // index에 해당하는 카드를 가져옵니다.
+             
+            // 리스트 값 추가 및 제거
+            handCardList.RemoveAt(index);
             addCardObject.Add(cardObject);
-            handCardObject.RemoveAt(index); // index에 해당하는 오브젝트를 리스트에서 제거합니다.
-
+            handCardObject.RemoveAt(index);
 
             cardObject.SetActive(false);
-            cardObject.transform.position = spawDeckPos;
+            cardObject.transform.position = Vector3.zero;
         
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
@@ -150,10 +152,11 @@ public class CardManager : MonoBehaviour
             // 선택한 오브젝트가 addCardObject 리스트 안에 있을 때만 해당 카드를 가져옵니다.
             Card card = addCardList[index]; // index에 해당하는 카드를 가져옵니다.
 
+            // 리스트 값 추가 및 제거
             handCardList.Add(card);
-            addCardList.RemoveAt(index); // index에 해당하는 카드를 리스트에서 제거합니다.
+            addCardList.Clear();
             handCardObject.Add(cardObject);
-            addCardObject.RemoveAt(index); // index에 해당하는 오브젝트를 리스트에서 제거합니다.
+            addCardObject.RemoveAt(index);
 
             // 선택받지 못한 오브젝트 비활성화 / 위치 이동
             for (int i = 0; i < addCardObject.Count; i++)
@@ -242,24 +245,24 @@ public class CardManager : MonoBehaviour
         {
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
 
-            cardObject.transform.SetParent(deckObject.transform, false);
-
             handCardObject.Add(cardObject);
             handCardObject[i].SetActive(true);
 
             // 생성한 게임 오브젝트에 데이터 적용
             ApplyCardInfrom(cards[i], cardObject);
-            
+
+            cardObject.transform.SetParent(deckObject.transform, false);
         }
 
         // 비활성화된 카드 오브젝트 생성
         for (int i = 0; i < cardMaxCount - cards.Count; i++)
         {
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
-            cardObject.transform.SetParent(deckObject.transform, false);
 
             addCardObject.Add(cardObject);
             addCardObject[i].SetActive(false);
+
+            cardObject.transform.SetParent(deckObject.transform, false);
         }
     }
 
@@ -269,29 +272,12 @@ public class CardManager : MonoBehaviour
     {
         CardOrder cardOrder = gameObject.AddComponent<CardOrder>();
 
+        // gameObject 이름 설정
         gameObject.name = card.cardName;
-
-        string cardEffect;
-        if (card.cardType == Card.CardType.Attack)
-        {
-            cardEffect = "(데미지: ";
-        }
-        else if (card.cardType == Card.CardType.Heal)
-        {
-            cardEffect = "(회복량: ";
-        }
-        else if (card.cardType == Card.CardType.Movement)
-        {
-            cardEffect = "(이동 칸: ";
-        }
-        else
-        {
-            cardEffect = "(피해 감소: -";
-        }
 
         Text[] texts = gameObject.GetComponentsInChildren<Text>();
         texts[0].text = card.cardName;
-        texts[1].text = $"{ card.cardDescription}\n{cardEffect}{card.cardPower})";
+        texts[1].text = card.cardDescription + "\n" + card.cardDescription_Power;
 
         Image cardimage = gameObject.GetComponentInChildren<Image>();
 

@@ -14,10 +14,10 @@ public class CardInform : ScriptableObject
     [SerializeField] public List<Card> legendCards;
 
     [Header("카드 확률 값")]
-    [Range(0, 100)] public int commonPercent = 50;
-    [Range(0, 100)] public int rarePercent = 30;
-    [Range(0, 100)] public int epicPercent = 15;
-    [Range(0, 100)] public int legendPercent = 5;
+    public int commonPercent = 50;
+    public int rarePercent = 30;
+    public int epicPercent = 15;
+    public int legendPercent = 5;
 
     [Header("색상 정의")]
     public Color commonColor = Color.green;
@@ -64,9 +64,10 @@ public class Card
 {
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
-    public int cardPower;   // 공격력, 힐량, 이동거리
+    public string cardDescription_Power;
+    public int[] cardPower;   // 공격력, 힐량, 이동거리
     public Sprite cardSprite;   // 카드 이미지
-    [Range(0, 100)] public float cardPercent; // 카드 확률
+    public float cardPercent; // 카드 확률
     public CardType cardType; // 카드 타입 (공격기, 회복기, 이동기)
     public CardRank cardRank; // 카드 등급
 
@@ -75,7 +76,6 @@ public class Card
         Attack, // 공격
         Heal,   // 회복
         Movement, // 이동
-        Shiled   // 막기
     }
 
     public enum CardRank
