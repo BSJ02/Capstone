@@ -12,6 +12,7 @@ public class MapGenerator : MonoBehaviour
 
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
 
+    // 스테이지 생성 시 스크립트 호출로 수정 예정 
     private void Start()
     {
         CreateMap(garo, sero);

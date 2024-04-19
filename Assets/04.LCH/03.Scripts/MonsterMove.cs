@@ -58,7 +58,6 @@ public class MonsterMove : MonoBehaviour
         // 기존에 찾은 path 삭제(중복 방지) 
         path.Clear();
 
-
         while (OpenList.Count > 0)
         {
             CurrentNode = OpenList[0];
