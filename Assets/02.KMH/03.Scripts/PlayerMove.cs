@@ -130,8 +130,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, transform.position.y, path[i].y);
-            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y);
+            Vector3 playerPos = new Vector3(path[i].x, transform.position.y, path[i].y); // X와 Y 좌표를 Mathf.Round를 사용하여 가장 가까운 정수로 반올림
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // 도착지점 좌표도 정수로 반올림
 
             float startTime = Time.time;
 
@@ -160,6 +160,7 @@ public class PlayerMove : MonoBehaviour
 
         yield break;
     }
+
 
 
 
