@@ -18,7 +18,7 @@ public class CardMove : MonoBehaviour
     private string cardSortingLayerName = "Card";    // 변경할 Sorting Layer의 이름
     private SpriteRenderer spriteRenderer;
 
-    private const float scaleFactor = 1.2f;
+    private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
     private bool clickOnCard = false;   // 마우스 클릭 여부
@@ -30,9 +30,9 @@ public class CardMove : MonoBehaviour
         cardData = FindObjectOfType<CardData>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
-        originalPosition = this.transform.position;   // 기본 위치 저장
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalPosition = this.transform.position;
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
         originalOrderInLayer = spriteRenderer.sortingOrder;
     }
@@ -42,7 +42,8 @@ public class CardMove : MonoBehaviour
     {
         if (IsMouseOverCard(this.gameObject))
         {
-            AnimateCard(scaleFactor, originalPosition + Vector3.up);
+            MoveCardToPosition(originalPosition + Vector3.up);
+            MoveCardToScale(scaleFactor);
             spriteRenderer.sortingOrder = 100;
             //gameObject.GetComponent<CardOrder>().SetOrder(100);
         }
@@ -50,25 +51,26 @@ public class CardMove : MonoBehaviour
         {
             if (!clickOnCard)
             {
-                AnimateCard(1f, originalPosition);
+                MoveCardToPosition(originalPosition);
+                MoveCardToScale(1f);
                 spriteRenderer.sortingOrder = originalOrderInLayer;
                 //gameObject.GetComponent<CardOrder>().ResetOrder();
             }
         }
-
     }
 
-    private void AnimateCard(float scale, Vector3 position)
+    // Position 이동
+    private void MoveCardToPosition(Vector3 position)
     {
         transform.DOKill();
-        transform.DOScale(originalScale * scale, animationDuration);
         transform.DOMove(position, animationDuration);
     }
 
-    private void DisappearingAnimateCard()
+    // Scale 변경
+    private void MoveCardToScale(float scale)
     {
         transform.DOKill();
-        transform.DOScale(originalScale * 0, animationDuration);
+        transform.DOScale(originalScale * scale, animationDuration);
     }
 
     private bool IsMouseOverCard(GameObject obj)
@@ -88,46 +90,55 @@ public class CardMove : MonoBehaviour
     }
 
 
-    //카드 패널과 충돌 처리
-    private void OnTriggerStay(Collider other)
+    // 카드패널 충돌 확인
+    private void CardPanelCollision()
     {
-        if (!clickOnCard && cardManager != null && cardManager.handCardObject != null)
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject.CompareTag("CardPanel"))
+            {
+                ProcessingCard();
+            }
+        }
+        cardManager.useCardPanelPrefab.SetActive(false);
+    }
+
+    // 카드 처리 과정
+    private void ProcessingCard()
+    {
+        if (cardManager != null && cardManager.handCardObject != null)
         {
             int index = cardManager.handCardObject.IndexOf(this.gameObject);
-
-            if (index != -1 && other.gameObject.CompareTag("CardPanel"))
+            if (index != -1)
             {
-                // cardData가 null인 경우 GetComponent로 초기화
                 if (cardData == null)
                 {
                     cardData = GetComponent<CardData>();
-                }
-
-                if (cardData != null)
-                {
-                    DisappearingAnimateCard();
-                    cardManager.UpdateCardList(this.gameObject);
-                    cardData.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
-                    cardManager.useCardPanelPrefab.SetActive(false);
+                    UnityEngine.Debug.LogError("cardData가 초기화되지 않았습니다.");
                 }
                 else
                 {
-                    UnityEngine.Debug.LogError("cardData가 초기화되지 않았습니다.");
+                    MoveCardToScale(0f);
+                    cardManager.UpdateCardList(this.gameObject);
+                    cardData.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
                 }
-            } 
+            }
         }
     }
 
+
     private void OnMouseUp()
     {
-        // 클릭 상태를 해제합니다.
+        // 클릭 상태를 해제
         clickOnCard = false;
 
-        // 카드를 기본 위치로 이동합니다.
+        // 카드를 기본 위치로 이동
         transform.DOKill();
-        transform.DOMove(originalPosition, animationDuration);
+        MoveCardToPosition(originalPosition);
+        CardPanelCollision();
     }
-
 
     private void OnMouseDown()
     {
@@ -149,7 +160,7 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (clickOnCard)
+        if (clickOnCard && !cardData.waitForInput)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;

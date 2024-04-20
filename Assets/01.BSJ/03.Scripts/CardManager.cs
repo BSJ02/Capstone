@@ -87,6 +87,10 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            addCard = true;
+        }
         if (addCard)
         {
             CreateRandomCard();
@@ -98,10 +102,9 @@ public class CardManager : MonoBehaviour
     // 카드 사용
     public void UpdateCardList(GameObject cardObject)
     {
-
         int index = handCardObject.IndexOf(cardObject);
 
-        if (index >= 0)
+        if (index >= 0 && index < handCardList.Count)
         {
             // 선택한 오브젝트가 handCardObject 리스트 안에 있을 때만 해당 카드를 가져옵니다.
             useCard = handCardList[index]; // index에 해당하는 카드를 가져옵니다.
@@ -111,14 +114,11 @@ public class CardManager : MonoBehaviour
             addCardObject.Add(cardObject);
             handCardObject.RemoveAt(index);
 
-            cardObject.SetActive(false);
-            cardObject.transform.position = Vector3.zero;
+            //cardObject.SetActive(false);
+            cardObject.GetComponent<CardMove>().originalPosition = spawDeckPos;
+            cardObject.transform.position = spawDeckPos;
 
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
-        }
-        else
-        {
-            UnityEngine.Debug.LogError("index 값 이상함");
         }
     }
 
@@ -126,22 +126,10 @@ public class CardManager : MonoBehaviour
     // 카드 선택
     public void ChoiceCard(GameObject cardObject)
     {
-        // addCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
-        bool isFound = false;
-        int index = -1;
-        for (int i = 0; i < addCardObject.Count; i++)
-        {
-            if (addCardObject[i] == cardObject)
-            {
-                isFound = true;
-                index = i;
-                break;
-            }
-        }
+        int index = addCardObject.IndexOf(cardObject);
 
-        if (isFound)
+        if (index >= 0 && index < addCardList.Count)
         {
-            // 선택한 오브젝트가 addCardObject 리스트 안에 있을 때만 해당 카드를 가져옵니다.
             Card card = addCardList[index]; // index에 해당하는 카드를 가져옵니다.
 
             // 리스트 값 추가 및 제거
@@ -154,7 +142,7 @@ public class CardManager : MonoBehaviour
             for (int i = 0; i < addCardObject.Count; i++)
             {
                 addCardObject[i].SetActive(false);
-                addCardObject[i].transform.position = spawDeckPos;
+                addCardObject[i].GetComponent<CardMove>().originalPosition = spawDeckPos;
             }
 
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
@@ -262,8 +250,6 @@ public class CardManager : MonoBehaviour
     // 카드 정보 적용 (적용할 카드 값, 적용시킬 게임 오브젝트)
     public void ApplyCardInfrom(Card card, GameObject gameObject)
     {
-        CardOrder cardOrder = gameObject.AddComponent<CardOrder>();
-
         // gameObject 이름 설정
         gameObject.name = card.cardName;
 
@@ -296,8 +282,14 @@ public class CardManager : MonoBehaviour
             float elapsedTime = 0f; // 경과 시간
             float duration = 0.2f;  // 이동에 걸리는 시간
 
-            cardObject[i].GetComponent<CardOrder>().SetOrder(i);
-
+            CardOrder cardOrder = cardObject[i].GetComponent<CardOrder>();
+            if (cardOrder == null)
+            {
+                Debug.Log("없음");
+                cardOrder = cardObject[i].AddComponent<CardOrder>();
+            }
+            cardOrder.SetOrder(i);
+            
             float newPosX = startingPosX + i * cardToDistance;  // 새로운 X 좌표 계산
 
             // deckObject를 기준으로 로컬 좌표를 계산
@@ -316,8 +308,8 @@ public class CardManager : MonoBehaviour
             }
 
             cardObject[i].transform.position = targetPosition;  // 목표 위치로 정확히 이동
-            cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
-
+            //cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
+            //Debug.Log(cardObject[i].GetComponent<CardMove>().originalPosition);
         }
     }
 

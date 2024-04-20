@@ -7,9 +7,7 @@ using static Card;
 
 public class CardData : MonoBehaviour
 {
-    private bool waitForInput = false;  // 대기 상태 여부
-    private float animationDuration = 1.0f; // 카드 애니메이션 시간
-
+    [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
 
     // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
@@ -35,7 +33,7 @@ public class CardData : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("Monster"))
                     {
                         selectedTarget = hit.collider.gameObject;
                         Debug.Log(selectedTarget.name);
