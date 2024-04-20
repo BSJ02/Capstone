@@ -102,8 +102,7 @@ public class CardMove : MonoBehaviour
                 if (cardData != null)
                 {
                     cardManager.UpdateCardList(this.gameObject);
-                    cardData.UseCardToSelectTarget(cardManager.useCard);
-                    UnityEngine.Debug.Log("충돌함");
+                    cardData.UseCardAndSelectTarget(cardManager.useCard);
                     cardManager.useCardPanelPrefab.SetActive(false);
                 }
                 else
