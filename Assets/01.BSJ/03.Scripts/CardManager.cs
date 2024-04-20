@@ -69,7 +69,7 @@ public class CardManager : MonoBehaviour
         addCardPanelPrefab = Instantiate(addCardPanelPrefab, new Vector3(-3, 6f, -3), Quaternion.Euler(0, 45, 0));
         addCardPanelPrefab.SetActive(false);
 
-        useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(0, 45, 0));
+        useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(45, 45, 0));
         useCardPanelPrefab.SetActive(false);
     }
 
