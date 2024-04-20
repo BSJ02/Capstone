@@ -7,8 +7,12 @@ using static Card;
 
 public class CardData : MonoBehaviour
 {
-    private bool waitForInput = false;  // 대기 상태 여부
-    private float animationDuration = 1.0f; // 카드 애니메이션 시간
+    [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
 
 
     // 카드 사용 메서드
@@ -38,44 +42,40 @@ public class CardData : MonoBehaviour
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
                     {
                         selectedTarget = hit.collider.gameObject;
-                        Debug.Log(selectedTarget.name);
                         waitForInput = false;
                         break;
                     }
 
                 }
             }
-            
+
             yield return null; // 다음 프레임까지 대기
         }
 
         // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
-            // 대상에 따른 처리를 수행합니다.
+            // cardName을 사용하는 로직을 호출
             switch (card.cardName)
             {
                 case "Sword Slash":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseSwordSlash(card, selectedTarget);
                     break;
                 case "Healing Salve":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseHealingSalve(card, selectedTarget);
                     break;
                 case "Sprint":
-                    // SwordSlash 카드를 사용하는 로직을 호출
-                    UseSwordSlash(card, selectedTarget);
+                    UseSprint(card, selectedTarget);
                     break;
                 case "Basic Strike":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseBasicStrike(card, selectedTarget);
                     break;
                 case "Shield Block":
-                    // SwordSlash 카드를 사용하는 로직을 호출
-                    UseSwordSlash(card, selectedTarget);
+                    UseShieldBlock(card, selectedTarget);
                     break;
-                // 다른 카드 타입에 대한 처리를 추가
+                case "Ax Slash":
+                    UseShieldBlock(card, selectedTarget);
+                    break;
                 default:
                     Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                     break;
@@ -83,13 +83,14 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // SwordSlash 카드를 사용하는 메서드
+    // Base Cards --------------------------------
+    // Sword Slash 카드 (적을 칼로 공격합니다.)
     private void UseSwordSlash(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
 
         Debug.Log(card.cardName + " 카드를 사용");
-        
+
         // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -98,34 +99,39 @@ public class CardData : MonoBehaviour
             monster.monsterData.Hp -= card.cardPower[0];
             Debug.Log("Hp: " + monster.monsterData.Hp);
         }
-        else
-        {
-            Debug.LogError("monsterData 없음");
-        }
     }
 
-    // HealingSalve 카드를 사용하는 메서드
+    // Healing Salve 카드 (약초를 사용하여 체력을 회복합니다.)
     private void UseHealingSalve(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
 
-        Debug.Log("HealingSalve 카드를 사용");
+        Debug.Log(card.cardName + " 카드를 사용");
 
         // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log("Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
-            Debug.Log("Hp: " + monster.monsterData.Hp);
-        }
-        else
-        {
-            Debug.LogError("monsterData 없음");
+            // 플레이어 체력 회복
         }
     }
 
-    // HealingSalve 카드를 사용하는 메서드
+    // Sprint 카드 (빠르게 이동하여 적의 공격을 피합니다.)
+    private void UseSprint(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Sprint 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            // 플레이어 추가 이동
+        }
+    }
+
+    // Basic Strike 카드 (간단한 공격을 가해 적을 공격합니다.)
     private void UseBasicStrike(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
@@ -140,9 +146,104 @@ public class CardData : MonoBehaviour
             monster.monsterData.Hp -= card.cardPower[0];
             Debug.Log("Hp: " + monster.monsterData.Hp);
         }
-        else
+    }
+
+    // Shield Block 카드 (방패로 공격을 막아 받는 피해를 감소시킵니다.)
+    private void UseShieldBlock(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("ShieldBlock 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
         {
-            Debug.LogError("monsterData 없음");
+            // 플레이어 방어력 증가
         }
     }
+
+    // Common Cards --------------------------------
+    // Ax Slash 카드 (적을 도끼로 공격합니다.)
+    private void UseAxSlash(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Shield Block 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+            monster.monsterData.Hp -= card.cardPower[0];
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+        }
+    }
+
+    // Heal!! 카드 (축복을 받아 체력을 회복합니다.)
+    private void UseHeal(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Heal!! 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            // 플레이어 체력 회복
+        }
+    }
+
+    // Teleport 카드 (원하는 위치로 순간이동하여 이동합니다.)
+    private void UseTeleport(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Teleport 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            // 플레이어 추가 이동
+        }
+    }
+
+    // Swift Strike 카드 (빠르고 강력한 공격을 가해 적을 공격합니다.)
+    private void UseSwiftStrike(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Swift Strike 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+            monster.monsterData.Hp -= card.cardPower[0];
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+        }
+    }
+
+    // Thunderstorm 카드 (주변에 번개를 내려 모든 적에게 데미지를 입힙니다.)
+    private void UseThunderstorm(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("Thunderstorm 카드를 사용");
+
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+            monster.monsterData.Hp -= card.cardPower[0];
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+        }
+    }
+
+    // Rare Cards --------------------------------
 }

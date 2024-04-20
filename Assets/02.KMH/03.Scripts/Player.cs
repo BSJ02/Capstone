@@ -12,7 +12,7 @@ public enum PlayerState
 public class Player : MonoBehaviour
 {
 
-
+    public MonsterData monsterData;
     public PlayerData playerData;
 
     private Animator anim;
@@ -47,4 +47,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 플레이어 공격
+    public void ReadyToAttack()
+    {
+        Monster monster = FindObjectOfType<Monster>();
+
+        float monsterHp = monster.monsterData.Hp;
+        float randDamage = Random.Range(playerData.Damage, playerData.Damage);
+        //float critcalDamage = monsterData.MinDamage + addDamage;
+
+        monsterHp -= randDamage;
+
+        transform.LookAt(monster.transform);
+        playerState = PlayerState.Attack;
+        Debug.Log("몬스터 체력:" + (int)monsterHp + $"플레이어{(int)randDamage} 공격!");
+        return;
+    }
 }
