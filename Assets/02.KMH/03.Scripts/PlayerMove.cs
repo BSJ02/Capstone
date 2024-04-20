@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -123,7 +124,7 @@ public class PlayerMove : MonoBehaviour
     {
         isMoving = true;
         transform.gameObject.GetComponent<Collider>().enabled = false;
-        player.playerState = Player.PlayerState.Moving;
+        player.playerState = PlayerState.Moving;
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
@@ -156,7 +157,7 @@ public class PlayerMove : MonoBehaviour
 
         isMoving = false;
         transform.gameObject.GetComponent<Collider>().enabled = true;
-        player.playerState = Player.PlayerState.Idle;
+        player.playerState = PlayerState.Idle;
 
         yield break;
     }
@@ -200,6 +201,45 @@ public class PlayerMove : MonoBehaviour
         {
             // 플레이어를 클릭했을 때 이동 가능한 범위 표시
             mapGenerator.HighlightPlayerRange(transform.position, player.activePoint);
+        }
+    }
+
+    // 몬스터 감지(3x3 타일)
+    public void GetSurroundingTiles(Vector2Int playerPos)
+    {
+        // 플레이어 기준 좌표 생성
+        List<Tile> surroundingTiles = new List<Tile>();
+
+        for (int xOffset = -1; xOffset <= 1; xOffset++)
+        {
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                int x = playerPos.x + xOffset;
+                int y = playerPos.y + yOffset;
+
+                if (x >= 0 && x < mapGenerator.totalMap.GetLength(0) && y >= 0 && y < mapGenerator.totalMap.GetLength(1))
+                {
+                    surroundingTiles.Add(mapGenerator.totalMap[x, y]);
+                }
+            }
+        }
+
+        // Monster 확인
+        foreach (Tile tile in surroundingTiles)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(new Vector3(tile.coord.x, 0, tile.coord.y), Vector3.up, out hit, 2f))
+            {
+                if (hit.collider.gameObject.CompareTag("Monster"))
+                {
+                    // 몬스터가 있으면
+                    //playerState.ReadyToAttack();
+                    return;
+                }
+                // TurnManager 턴 바꾸기(Player Turn -> Monster Turn)
+            }
+
+
         }
     }
 }
