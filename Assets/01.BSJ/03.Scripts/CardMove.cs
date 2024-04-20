@@ -58,7 +58,6 @@ public class CardMove : MonoBehaviour
 
     }
 
-
     private void AnimateCard(float scale, Vector3 position)
     {
         transform.DOKill();
@@ -66,6 +65,11 @@ public class CardMove : MonoBehaviour
         transform.DOMove(position, animationDuration);
     }
 
+    private void DisappearingAnimateCard()
+    {
+        transform.DOKill();
+        transform.DOScale(originalScale * 0, animationDuration);
+    }
 
     private bool IsMouseOverCard(GameObject obj)
     {
@@ -101,8 +105,9 @@ public class CardMove : MonoBehaviour
 
                 if (cardData != null)
                 {
+                    DisappearingAnimateCard();
                     cardManager.UpdateCardList(this.gameObject);
-                    cardData.UseCardAndSelectTarget(cardManager.useCard);
+                    cardData.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
                     cardManager.useCardPanelPrefab.SetActive(false);
                 }
                 else

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public static MapGenerator instatnce;
+
     public Tile[,] totalMap; // 2차원 배열 좌표
     public Tile[] tilePrefab;
 
@@ -12,10 +14,17 @@ public class MapGenerator : MonoBehaviour
 
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
 
-    // 스테이지 생성 시 스크립트 호출로 수정 예정 
-    private void Start()
+    private void Awake()
     {
-        CreateMap(garo, sero);
+        if(instatnce == null)
+        {
+            instatnce = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // 맵 생성
@@ -35,15 +44,23 @@ public class MapGenerator : MonoBehaviour
                 var tile = GameObject.Instantiate(tilePrefab[randValue], transform); // MapGenerator를 부모로 설정
                 tile.transform.localPosition = new Vector3(i * 1, 0, j * 1);
 
-                // 좌표
+                // 전체 좌표 설정
                 tile.SetCoord(i, j, false);
+
+                // 타일 위에 몬스터가 있을 경우 
+                RaycastHit hit;
+                if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
+                {
+                    if (hit.collider.CompareTag("Monster"))
+                    {
+                        tile.SetCoord(i, j, true);
+                    }
+                }
+
                 totalMap[i, j] = tile;
-
-
             }
         }
     }
-
 
     // 타일 정보 초기화(중복 방지)
     public void ResetTotalMap()

@@ -11,6 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
     <ProjectGuid>{7F56E623-E214-5249-7A68-5A6003024663}</ProjectGuid>
+    <ProjectGuid>{3B818AB6-3A52-A22C-0CB3-9F171E3BE56F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
