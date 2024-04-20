@@ -30,7 +30,6 @@ public class CardMove : MonoBehaviour
         cardData = FindObjectOfType<CardData>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
-        originalPosition = this.transform.position;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
@@ -42,8 +41,7 @@ public class CardMove : MonoBehaviour
     {
         if (IsMouseOverCard(this.gameObject))
         {
-            MoveCardToPosition(originalPosition + Vector3.up);
-            MoveCardToScale(scaleFactor);
+            AnimateCard(scaleFactor, originalPosition + Vector3.up * 0.5f);
             spriteRenderer.sortingOrder = 100;
             //gameObject.GetComponent<CardOrder>().SetOrder(100);
         }
@@ -51,12 +49,19 @@ public class CardMove : MonoBehaviour
         {
             if (!clickOnCard)
             {
-                MoveCardToPosition(originalPosition);
-                MoveCardToScale(1f);
+
+                AnimateCard(1f, originalPosition);
                 spriteRenderer.sortingOrder = originalOrderInLayer;
                 //gameObject.GetComponent<CardOrder>().ResetOrder();
             }
         }
+    }
+
+    void AnimateCard(float scale, Vector3 position)
+    {
+        transform.DOKill();
+        transform.DOMove(position, animationDuration);
+        transform.DOScale(originalScale * scale, animationDuration);
     }
 
     // Position 이동
@@ -105,6 +110,7 @@ public class CardMove : MonoBehaviour
         cardManager.useCardPanelPrefab.SetActive(false);
     }
 
+
     // 카드 처리 과정
     private void ProcessingCard()
     {
@@ -116,7 +122,6 @@ public class CardMove : MonoBehaviour
                 if (cardData == null)
                 {
                     cardData = GetComponent<CardData>();
-                    UnityEngine.Debug.LogError("cardData가 초기화되지 않았습니다.");
                 }
                 else
                 {
@@ -131,12 +136,9 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseUp()
     {
-        // 클릭 상태를 해제
-        clickOnCard = false;
+        clickOnCard = false;    // 클릭 상태 해제
 
-        // 카드를 기본 위치로 이동
         transform.DOKill();
-        MoveCardToPosition(originalPosition);
         CardPanelCollision();
     }
 
@@ -160,7 +162,8 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (clickOnCard && !cardData.waitForInput)
+        // 카드 클릭 & 대상 선택 & 카드 선택
+        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard)  
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;

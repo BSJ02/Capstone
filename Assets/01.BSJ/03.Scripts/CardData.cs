@@ -9,6 +9,11 @@ public class CardData : MonoBehaviour
 {
     [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
@@ -36,7 +41,6 @@ public class CardData : MonoBehaviour
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("Monster"))
                     {
                         selectedTarget = hit.collider.gameObject;
-                        Debug.Log(selectedTarget.name);
                         waitForInput = false;
                         break;
                     }
@@ -50,27 +54,22 @@ public class CardData : MonoBehaviour
         // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
-            // 대상에 따른 처리를 수행합니다.
+            // cardName을 사용하는 로직을 호출
             switch (card.cardName)
             {
                 case "Sword Slash":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseSwordSlash(card, selectedTarget);
                     break;
                 case "Healing Salve":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseHealingSalve(card, selectedTarget);
                     break;
                 case "Sprint":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseSwordSlash(card, selectedTarget);
                     break;
                 case "Basic Strike":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseBasicStrike(card, selectedTarget);
                     break;
                 case "Shield Block":
-                    // SwordSlash 카드를 사용하는 로직을 호출
                     UseSwordSlash(card, selectedTarget);
                     break;
                 // 다른 카드 타입에 대한 처리를 추가

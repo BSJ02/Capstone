@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21151,6 +21151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f06810833cb7254991d1f836e58989c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleState: 0
+  player: {fileID: 0}
   monsters:
   - {fileID: 0}
 --- !u!4 &1189412518
@@ -26111,7 +26113,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 240eb807ea7f2414ca1462053704016e, type: 2}
   state: 0
   monsterType: 0
-  critcalDamage: 15
+  addDamage: 3
 --- !u!65 &1463314570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29755,6 +29757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1208bc245c9473e41b454dfd86963ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitForInput: 0
 --- !u!4 &1688736099
 Transform:
   m_ObjectHideFlags: 0
@@ -30225,7 +30228,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 1f0cbe711e3ba3347b4e9d619b5c74b7, type: 2}
   state: 0
   monsterType: 0
-  critcalDamage: 15
+  addDamage: 3
 --- !u!65 &1708039208
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38138,11 +38141,11 @@ SceneRoots:
   - {fileID: 725518040}
   - {fileID: 1189412518}
   - {fileID: 1624451458}
+  - {fileID: 1688736099}
   - {fileID: 834694063}
   - {fileID: 1367991249}
   - {fileID: 1664627030}
   - {fileID: 1203758329}
   - {fileID: 396492775}
-  - {fileID: 1688736099}
   - {fileID: 1463314572}
   - {fileID: 1708039210}
