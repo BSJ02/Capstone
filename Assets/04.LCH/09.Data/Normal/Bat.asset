@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterName: "\uC5B4\uB460 \uBC15\uC950"
   Id: 0
-  Hp: 0
+  Hp: 100
   MaxHp: 100
   IsBoss: 0
   MoveDistance: 3
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  MinDamage: 10
-  MaxDamage: 20
+  MinDamage: 4
+  MaxDamage: 17
