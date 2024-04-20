@@ -12,7 +12,7 @@ public class CardData : MonoBehaviour
 
 
     // 카드 사용 메서드
-    public void UseCardAndSelectTarget(Card card)
+    public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));   // 대기 코루틴 시작
     }
@@ -69,7 +69,7 @@ public class CardData : MonoBehaviour
                     break;
                 case "Basic Strike":
                     // SwordSlash 카드를 사용하는 로직을 호출
-                    UseSwordSlash(card, selectedTarget);
+                    UseBasicStrike(card, selectedTarget);
                     break;
                 case "Shield Block":
                     // SwordSlash 카드를 사용하는 로직을 호출
@@ -83,39 +83,14 @@ public class CardData : MonoBehaviour
         }
     }
 
-
-    // 카드 사라지는 애니메이션   
-    private IEnumerator AnimateCardDisappearance(GameObject cardObject)
-    {
-        float timer = 0;
-        Vector3 initialScale = cardObject.transform.localScale;
-
-        while (timer < animationDuration)
-        {
-            // 시간에 따라 스케일을 줄여서 카드를 사라지게 함
-            float scale = Mathf.Lerp(1.0f, 0.0f, timer / animationDuration);
-            cardObject.transform.localScale = initialScale * scale;
-
-            // 시간 업데이트
-            timer += Time.deltaTime;
-
-            yield return null;
-        }
-
-        // 카드 오브젝트 비활성화
-        cardObject.SetActive(false);
-    }
-
-
     // SwordSlash 카드를 사용하는 메서드
     private void UseSwordSlash(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
 
-        // SwordSlash 카드의 처리 코드를 작성
-        Debug.Log("SwordSlash 카드를 사용");
-
-        // 대상의 값을 변경합니다. (예: 데미지를 적용)
+        Debug.Log(card.cardName + " 카드를 사용");
+        
+        // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
@@ -129,14 +104,35 @@ public class CardData : MonoBehaviour
         }
     }
 
+    // HealingSalve 카드를 사용하는 메서드
     private void UseHealingSalve(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
 
-        // SwordSlash 카드의 처리 코드를 작성
-        Debug.Log("SwordSlash 카드를 사용");
+        Debug.Log("HealingSalve 카드를 사용");
 
-        // 대상의 값을 변경합니다. (예: 데미지를 적용)
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+            monster.monsterData.Hp -= card.cardPower[0];
+            Debug.Log("Hp: " + monster.monsterData.Hp);
+        }
+        else
+        {
+            Debug.LogError("monsterData 없음");
+        }
+    }
+
+    // HealingSalve 카드를 사용하는 메서드
+    private void UseBasicStrike(Card card, GameObject selectedTarget)
+    {
+        // 카드 사용 애니메이션
+
+        Debug.Log("BasicStrike 카드를 사용");
+
+        // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
