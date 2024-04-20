@@ -165,7 +165,7 @@ public class PlayerMove : MonoBehaviour
         // Path의 최종 좌표
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // Monster 감지
+        // Monster 감지 실행
         GetSurroundingTiles(finalPosition);
 
         yield break;
@@ -216,14 +216,19 @@ public class PlayerMove : MonoBehaviour
     // Monster 감지(3x3 타일)
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
+        // 몬스터 좌표
+        Vector3 monster = FindObjectOfType<Monster>().transform.position;
+        monsterPos = new Vector2Int((int)monster.x, (int)monster.z);
+
         int distacneX = Mathf.Abs(playerPos.x - monsterPos.x);
         int distacneY = Mathf.Abs(playerPos.y - monsterPos.y);
 
         if (distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            //// 몬스터 감지 O
-            //player.ReadyToAttack();
-            //return;
+            // 몬스터 감지 O
+            player.ReadyToAttack();
+            //Debug.Log("몬스터 좌표 : " + monsterPos);
+            return;
         }
         else
         {
