@@ -8,6 +8,8 @@ public class MonsterMove : MonoBehaviour
 
     private Monster monster;
 
+    public int detectionRange = 1;
+
     Tile StartNode, TargetNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
     List<Tile> CloseList = new List<Tile>();
@@ -188,40 +190,24 @@ public class MonsterMove : MonoBehaviour
     // Player 감지(3x3 타일)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
-        // 몬스터 기준 좌표 생성
-        List<Tile> surroundingTiles = new List<Tile>();
+        int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
+        int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        for (int xOffset = -1; xOffset <= 1; xOffset++)
+        if(distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            for (int yOffset = -1; yOffset <= 1; yOffset++)
-            {
-                int x = monsterPos.x + xOffset;
-                int y = monsterPos.y + yOffset;
-
-                if (x >= 0 && x < mapGenerator.totalMap.GetLength(0) && y >= 0 && y < mapGenerator.totalMap.GetLength(1))
-                {
-                    surroundingTiles.Add(mapGenerator.totalMap[x, y]);
-                }
-            }
+            // 플레이어 감지 O
+            monster.ReadyToAttack();
+            return;
+        }
+        else
+        {
+            // 플레이어 감지 X
+            monster.Init();
+            return;
         }
 
-        // Player 확인
-        foreach (Tile tile in surroundingTiles)
-        {
-            RaycastHit hit;
-            if(Physics.Raycast(new Vector3(tile.coord.x, 0, tile.coord.y), Vector3.up, out hit, 2f))
-            {
-                if (hit.collider.gameObject.CompareTag("Player"))
-                {
-                    // 플레이어가 있으면
-                    monster.ReadyToAttack();
-                    return;
-                }
-                // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
-            }
+        // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
 
-
-        }
     }
-
 }
+

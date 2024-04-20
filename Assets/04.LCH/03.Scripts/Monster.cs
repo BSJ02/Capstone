@@ -12,7 +12,8 @@ public enum MonsterState
     Idle = 0, 
     Moving = 1, 
     Attack = 2,
-    GetHit = 3
+    GetHit = 3,
+    CritcalAttack = 4 
 }
 
 public enum MonsterType
@@ -28,85 +29,95 @@ public class Monster : MonoBehaviour
     public MonsterState state;
     public MonsterType monsterType;
 
-    public GameObject warning;
     private Animator anim;
+    private SpriteRenderer warning;
 
     protected bool isLive;
-    private bool hasTarget;
+    public float critcalDamage = 15;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        warning = GetComponentInChildren<SpriteRenderer>();
+
+        isLive = true; // 오브젝트 활성화 시 
+        monsterData.Hp = monsterData.MaxHp; // 오브젝트 활성화 시 
+
     }
 
-    private void Start()
+    void Start()
     {
-        isLive = true;
-        hasTarget = false;
-        warning.gameObject.SetActive(false);
+        Init();
+    }
 
-        monsterData.Hp = monsterData.MaxHp;
 
+    // [0] 몬스터 초기화
+    public void Init()
+    {
         state = MonsterState.Idle;
         anim.SetInteger("State", (int)state);
-
     }
-
 
     void Update()
     {
-        Debug.Log("현재 상태 :" + state);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GetHit();
+        }
     }
 
     // [1] 일반 몬스터 공격
     public void ReadyToAttack()
     {
-        hasTarget = true;
-        warning.gameObject.SetActive(true);
+        warning.enabled = true;
+        warning.transform.position = transform.position;
+        warning.transform.rotation = Quaternion.identity;
 
-        state = MonsterState.Attack;
-        anim.SetInteger("State", (int)state);
+        Player player = FindObjectOfType<Player>();
+        float playerHp = player.playerData.Hp;
+        float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
 
-    }
+        playerHp -= randDamage;
 
-    // [1-1] 일반 몬스터 공격 이벤트 처리
-    public void EventToAttack()
-    {
-        if (hasTarget)
+        if(randDamage >= critcalDamage)
         {
-            Player player = FindObjectOfType<Player>();
-            float playerHp = player.playerData.Hp;
-            float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-
-            playerHp -= randDamage;
-
-            state = MonsterState.Idle;
+            state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
-
-            Debug.Log("플레이어 체력:" + playerHp);
-
-            warning.gameObject.SetActive(false);
-            hasTarget = false;
+            Debug.Log("플레이어 체력:" + playerHp + $"몬스터{(int)randDamage} 치명타 공격!");
+            return;
         }
-
+        else
+        {
+            state = MonsterState.Attack;
+            anim.SetInteger("State", (int)state);
+            Debug.Log("플레이어 체력:" + (int)playerHp + $"몬스터{(int)randDamage} 공격!");
+            return;
+        }
     }
+
 
     // [2] 몬스터 피격 처리
     public void GetHit()
     {
-        if (!isLive) // 몬스터 사망
+        if (!isLive) 
             return;
 
         float playerDamage = FindObjectOfType<Player>().playerData.Damage;
         monsterData.Hp -= playerDamage;
-       
-        if(monsterData.Hp <= 0)
+
+        Debug.Log("몬스터 체력" + (int)monsterData.Hp);
+
+        if (monsterData.Hp <= 0)
         {
             Die();
         }
+
+        state = MonsterState.GetHit;
+        anim.SetInteger("State", (int)state);
+
     }
 
-    // [2] 몬스터 피격 이벤트 처리
+    // [2] 몬스터 피격 후 이벤트 처리
     public void EventToGetHit()
     {
         // GetHit 사운드 재생
@@ -124,7 +135,7 @@ public class Monster : MonoBehaviour
             anim.SetBool("Die", true);
     }
 
-    // [3-1] 몬스터 사망 이벤트 처리
+    // [3-1] 몬스터 사망 후 이벤트 처리
     public void EventToDie()
     {
         // 파티클 생성

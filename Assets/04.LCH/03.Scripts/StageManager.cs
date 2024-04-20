@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    public static StageManager instance;
+
     public List<GameObject> monsters = new List<GameObject>();
 
     private int currentMonsterIndex = -1;
