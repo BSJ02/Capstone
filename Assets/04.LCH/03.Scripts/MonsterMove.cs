@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MonsterMove : MonoBehaviour
 {
-    private MapGenerator mapGenerator;
-
     private Monster monster;
 
     public int detectionRange = 1;
@@ -19,7 +17,6 @@ public class MonsterMove : MonoBehaviour
 
     private void Awake()
     {
-        mapGenerator = FindObjectOfType<MapGenerator>();
         monster = GetComponent<Monster>();
     }
 
@@ -36,19 +33,25 @@ public class MonsterMove : MonoBehaviour
         StartCoroutine(MoveSmoothly(move));
 
         // 타일 정보 초기화
-        mapGenerator.ResetTotalMap();
-
+        MapGenerator.instatnce.ResetTotalMap();
     }
 
 
     public void SetDestination() // StartNode, TargetNode 초기화
     {
-        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z); // 현재 몬스터의 Vector3 X,Z 값
-        playerPos = new Vector2Int((int)FindObjectOfType<Player>().transform.position.x,
-            (int)FindObjectOfType<Player>().transform.position.z);  // Player 컴포넌트를 가져옴
+        
+        // 몬스터 좌표
+        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        StartNode = mapGenerator.totalMap[monsterPos.x, monsterPos.y];
-        TargetNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
+        // 플레이어 좌표
+        Vector3 player = FindObjectOfType<Player>().transform.position;
+        playerPos = new Vector2Int((int)player.x, (int)player.z);
+
+        // 이동 전 
+        MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
+
+        StartNode = MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y];
+        TargetNode = MapGenerator.instatnce.totalMap[playerPos.x, playerPos.y];
     }
 
     public List<Vector2Int> PathFinding() // 길찾기
@@ -88,11 +91,6 @@ public class MonsterMove : MonoBehaviour
 
                 path.Reverse();
 
-                /*foreach (var pos in path)
-                {
-                    Debug.Log("x:" + pos.x + "y:" + pos.y);
-                }*/
-
                 break;
             }
 
@@ -110,30 +108,31 @@ public class MonsterMove : MonoBehaviour
 
     public void OpenListAdd(int checkX, int checkY) // CurrentNode 체크
     {
-        if (checkX < 0 || checkX >= mapGenerator.totalMap.GetLength(0) || checkY < 0 || checkY >= mapGenerator.totalMap.GetLength(1))
+        if (checkX < 0 || checkX >= MapGenerator.instatnce.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instatnce.totalMap.GetLength(1))
             return;
 
-        if (CloseList.Contains(mapGenerator.totalMap[checkX, checkY]))
+        if (CloseList.Contains(MapGenerator.instatnce.totalMap[checkX, checkY]))
             return;
 
-        if (mapGenerator.totalMap[checkX, checkY].coord.isWall)
+        if (MapGenerator.instatnce.totalMap[checkX, checkY].coord.isWall)
             return;
 
-        if (OpenList.Contains(mapGenerator.totalMap[checkX, checkY]))
+
+        if (OpenList.Contains(MapGenerator.instatnce.totalMap[checkX, checkY]))
         {
             int newG = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            if (newG < mapGenerator.totalMap[checkX, checkY].coord.G)
+            if (newG < MapGenerator.instatnce.totalMap[checkX, checkY].coord.G)
             {
-                mapGenerator.totalMap[checkX, checkY].coord.G = newG;
-                mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+                MapGenerator.instatnce.totalMap[checkX, checkY].coord.G = newG;
+                MapGenerator.instatnce.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
             }
         }
         else
         {
-            mapGenerator.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            mapGenerator.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - TargetNode.coord.x) + Mathf.Abs(checkY - TargetNode.coord.y)) * 10;
-            mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
-            OpenList.Add(mapGenerator.totalMap[checkX, checkY]);
+            MapGenerator.instatnce.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
+            MapGenerator.instatnce.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - TargetNode.coord.x) + Mathf.Abs(checkY - TargetNode.coord.y)) * 10;
+            MapGenerator.instatnce.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+            OpenList.Add(MapGenerator.instatnce.totalMap[checkX, checkY]);
         }
     }
 
@@ -179,6 +178,9 @@ public class MonsterMove : MonoBehaviour
 
         // Path의 최종 좌표
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+
+        // 몬스터 겹침 방지
+        MapGenerator.instatnce.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // 현재 타일 isWalㅣ
 
         // Player 감지
         GetSurroundingTiles(finalPosition);
