@@ -69,7 +69,7 @@ public class CardManager : MonoBehaviour
         addCardPanelPrefab = Instantiate(addCardPanelPrefab, new Vector3(-3, 6f, -3), Quaternion.Euler(0, 45, 0));
         addCardPanelPrefab.SetActive(false);
 
-        useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(0, 45, 0));
+        useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(45, 45, 0));
         useCardPanelPrefab.SetActive(false);
     }
 
@@ -98,24 +98,14 @@ public class CardManager : MonoBehaviour
     // 카드 사용
     public void UpdateCardList(GameObject cardObject)
     {
-        // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
-        bool isFound = false;
-        int index = -1;
-        for (int i = 0; i < handCardObject.Count; i++)
-        {
-            if (handCardObject[i] == cardObject)
-            {
-                isFound = true;
-                index = i;
-                break;
-            }
-        }
 
-        if (isFound)
+        int index = handCardObject.IndexOf(cardObject);
+
+        if (index >= 0)
         {
             // 선택한 오브젝트가 handCardObject 리스트 안에 있을 때만 해당 카드를 가져옵니다.
             useCard = handCardList[index]; // index에 해당하는 카드를 가져옵니다.
-             
+
             // 리스트 값 추가 및 제거
             handCardList.RemoveAt(index);
             addCardObject.Add(cardObject);
@@ -123,10 +113,12 @@ public class CardManager : MonoBehaviour
 
             cardObject.SetActive(false);
             cardObject.transform.position = Vector3.zero;
-        
-            StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            addCardPanelPrefab.SetActive(false);
+            StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("index 값 이상함");
         }
     }
 
