@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class CardMove : MonoBehaviour
 {
+    private CardData cardData;
     private CardManager cardManager;
     private Vector3 offset;
     private float distanceToCamera;
@@ -26,6 +27,7 @@ public class CardMove : MonoBehaviour
     private void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
+        cardData = FindObjectOfType<CardData>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
         originalPosition = this.transform.position;   // 기본 위치 저장
@@ -87,29 +89,27 @@ public class CardMove : MonoBehaviour
     {
         if (!clickOnCard && cardManager != null && cardManager.handCardObject != null)
         {
-            // handCardObject 리스트를 순회하면서 선택한 cardObject가 있는지 확인합니다.
-            bool isFound = false;
-            int index = -1;
-            for (int i = 0; i < cardManager.handCardObject.Count; i++)
-            {
-                if (cardManager.handCardObject[i] == this.gameObject)
-                {
-                    isFound = true;
-                    index = i;
-                    break;
-                }
-            }
+            int index = cardManager.handCardObject.IndexOf(this.gameObject);
 
-            if (isFound)
+            if (index != -1 && other.gameObject.CompareTag("CardPanel"))
             {
-                if (other.gameObject.CompareTag("CardPanel"))
+                // cardData가 null인 경우 GetComponent로 초기화
+                if (cardData == null)
+                {
+                    cardData = GetComponent<CardData>();
+                }
+
+                if (cardData != null)
                 {
                     cardManager.UpdateCardList(this.gameObject);
-                    UnityEngine.Debug.Log("충돌함");
+                    cardData.UseCardAndSelectTarget(cardManager.useCard);
                     cardManager.useCardPanelPrefab.SetActive(false);
                 }
-
-            }   
+                else
+                {
+                    UnityEngine.Debug.LogError("cardData가 초기화되지 않았습니다.");
+                }
+            } 
         }
     }
 
