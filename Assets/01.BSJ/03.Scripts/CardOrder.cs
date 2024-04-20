@@ -11,26 +11,10 @@ public class CardOrder : MonoBehaviour
     [SerializeField] private Canvas[] canvas;
     [SerializeField] private string sortingLayerName;
 
-    private int originalOrder;
-
-    public int OriginalOrder
-    {
-        get
-        {
-            return originalOrder;
-        }
-        set
-        {
-            originalOrder = value;
-        }
-    }
-
 
     public void SetOrder(int order)
     {
         int mulOrder = (order + 1) * 5;
-
-        OriginalOrder = mulOrder;
 
         // CardRenderer 처리
         if (cardRenderer != null)
@@ -80,45 +64,4 @@ public class CardOrder : MonoBehaviour
         }
     }
 
-
-    // 원래의 Order 값으로 돌아가는 메서드
-    public void ResetOrder()
-    {
-        if (cardRenderer != null)
-        {
-            cardRenderer.sortingOrder = originalOrder;
-        }
-
-        if (backRenderer != null)
-        {
-            backRenderer.sortingOrder = originalOrder + 1;
-        }
-
-        if (imagebrderRenderer != null)
-        {
-            imagebrderRenderer.sortingOrder = originalOrder + 2;
-        }
-
-        if (bordersRenderers != null)
-        {
-            foreach (var renderer in bordersRenderers)
-            {
-                if (renderer != null)
-                {
-                    renderer.sortingOrder = originalOrder + 3;
-                }
-            }
-        }
-
-        if (canvas != null)
-        {
-            foreach (var renderer in canvas)
-            {
-                if (renderer != null)
-                {
-                    renderer.sortingOrder = originalOrder + 4;
-                }
-            }
-        }
-    }
 }

@@ -33,7 +33,7 @@ public class Monster : MonoBehaviour
     private SpriteRenderer warning;
 
     protected bool isLive;
-    public float critcalDamage = 15;
+    public float addDamage = 3;
 
     void Awake()
     {
@@ -62,20 +62,20 @@ public class Monster : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetHit();
+            /*GetHit();*/
+            Die();
         }
+        
     }
 
     // [1] 일반 몬스터 공격
     public void ReadyToAttack()
     {
-        warning.enabled = true;
-        warning.transform.position = transform.position;
-        warning.transform.rotation = Quaternion.identity;
-
         Player player = FindObjectOfType<Player>();
+
         float playerHp = player.playerData.Hp;
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
+        float critcalDamage = monsterData.MinDamage + addDamage;
 
         playerHp -= randDamage;
 
@@ -129,10 +129,14 @@ public class Monster : MonoBehaviour
     // [3] 몬스터 사망 처리
     public void Die()
     {
-        if (isLive) 
-            return;
+        /*if (isLive) 
+            return;*/
 
-            anim.SetBool("Die", true);
+        // 몬스터 사망 시 isWall 해제
+        MapGenerator.instatnce.totalMap[(int)transform.position.x, (int)transform.position.z]
+            .SetCoord((int)transform.position.x, (int)transform.position.z, false);
+
+            anim.SetTrigger("Die");
     }
 
     // [3-1] 몬스터 사망 후 이벤트 처리
