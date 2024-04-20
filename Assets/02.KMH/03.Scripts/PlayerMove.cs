@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -9,10 +10,13 @@ public class PlayerMove : MonoBehaviour
 
     Vector2Int playerPos;
     Vector2Int targetPos;
+    Vector2Int monsterPos;
 
     Tile StartNode, EndNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
     List<Tile> CloseList = new List<Tile>();
+
+    public int detectionRange = 1;
 
     private bool isMoving = false; // 이동 중인지 여부
 
@@ -123,7 +127,7 @@ public class PlayerMove : MonoBehaviour
     {
         isMoving = true;
         transform.gameObject.GetComponent<Collider>().enabled = false;
-        player.playerState = Player.PlayerState.Moving;
+        player.playerState = PlayerState.Moving;
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
@@ -156,7 +160,13 @@ public class PlayerMove : MonoBehaviour
 
         isMoving = false;
         transform.gameObject.GetComponent<Collider>().enabled = true;
-        player.playerState = Player.PlayerState.Idle;
+        player.playerState = PlayerState.Idle;
+
+        // Path의 최종 좌표
+        Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+
+        // Monster 감지
+        GetSurroundingTiles(finalPosition);
 
         yield break;
     }
@@ -201,5 +211,28 @@ public class PlayerMove : MonoBehaviour
             // 플레이어를 클릭했을 때 이동 가능한 범위 표시
             mapGenerator.HighlightPlayerRange(transform.position, player.activePoint);
         }
+    }
+
+    // Monster 감지(3x3 타일)
+    public void GetSurroundingTiles(Vector2Int playerPos)
+    {
+        int distacneX = Mathf.Abs(playerPos.x - monsterPos.x);
+        int distacneY = Mathf.Abs(playerPos.y - monsterPos.y);
+
+        if (distacneX <= detectionRange && distacneY <= detectionRange)
+        {
+            //// 몬스터 감지 O
+            //player.ReadyToAttack();
+            //return;
+        }
+        else
+        {
+            //// 몬스터 감지 X
+            //player.Init();
+            //return;
+        }
+
+        // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
+
     }
 }
