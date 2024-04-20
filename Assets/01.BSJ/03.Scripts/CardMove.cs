@@ -4,6 +4,7 @@ using System.Diagnostics;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using System;
 
 public class CardMove : MonoBehaviour
 {
@@ -13,16 +14,13 @@ public class CardMove : MonoBehaviour
     private float distanceToCamera;
     private Vector3 originalScale;   // 기본 크기
     [HideInInspector] public Vector3 originalPosition;   // 기본 위치
-    private int originalOrderInLayer;
-
-    private string cardSortingLayerName = "Card";    // 변경할 Sorting Layer의 이름
-    private SpriteRenderer spriteRenderer;
 
     private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
     private bool clickOnCard = false;   // 마우스 클릭 여부
-    //private bool panelCollision = false;  // 충돌 여부
+
+    private int index;
 
     private void Start()
     {
@@ -30,29 +28,24 @@ public class CardMove : MonoBehaviour
         cardData = FindObjectOfType<CardData>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        GetComponent<Renderer>().sortingLayerName = cardSortingLayerName;
-        originalOrderInLayer = spriteRenderer.sortingOrder;
     }
 
 
     private void Update()
     {
-        if (IsMouseOverCard(this.gameObject))
+        if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
         {
+            index = cardManager.handCardObject.IndexOf(gameObject) + 1;
             AnimateCard(scaleFactor, originalPosition + Vector3.up * 0.5f);
-            spriteRenderer.sortingOrder = 100;
-            //gameObject.GetComponent<CardOrder>().SetOrder(100);
+            gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
         }
         else
         {
-            if (!clickOnCard)
+            index = cardManager.handCardObject.IndexOf(gameObject) + 1;
+            if (!clickOnCard && cardManager.handCardObject.IndexOf(gameObject) >= 0)
             {
-
+                gameObject.GetComponent<CardOrder>().SetOrder(index);
                 AnimateCard(1f, originalPosition);
-                spriteRenderer.sortingOrder = originalOrderInLayer;
-                //gameObject.GetComponent<CardOrder>().ResetOrder();
             }
         }
     }
@@ -100,14 +93,13 @@ public class CardMove : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && !cardData.waitForInput)
         {
             if (hit.collider.gameObject.CompareTag("CardPanel"))
             {
                 ProcessingCard();
             }
         }
-        cardManager.useCardPanelPrefab.SetActive(false);
     }
 
 
@@ -126,6 +118,7 @@ public class CardMove : MonoBehaviour
                 else
                 {
                     MoveCardToScale(0f);
+                    cardManager.useCardPanelPrefab.SetActive(false);
                     cardManager.UpdateCardList(this.gameObject);
                     cardData.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
                 }
@@ -152,7 +145,7 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else
+            else if (!cardData.waitForInput)
             {
                 cardManager.useCardPanelPrefab.SetActive(true);
             }

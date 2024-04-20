@@ -46,8 +46,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] public GameObject handCardPanelPrefab;
 
 
-    public bool waitAddCard = false;    // 카드 선택 여부
-
+    [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
     [HideInInspector] public Card useCard;
