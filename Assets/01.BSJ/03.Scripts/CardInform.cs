@@ -68,15 +68,7 @@ public class Card
     public float[] cardPower;   // 공격력, 힐량, 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
-    public CardType cardType; // 카드 타입 (공격기, 회복기, 이동기)
     public CardRank cardRank; // 카드 등급
-
-    public enum CardType
-    {
-        Attack, // 공격
-        Heal,   // 회복
-        Movement, // 이동
-    }
 
     public enum CardRank
     {
