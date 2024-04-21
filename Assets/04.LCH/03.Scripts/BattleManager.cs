@@ -9,7 +9,13 @@ public enum BattleState
     PlayerTurn,
     MonsterTurn,
     Won, // ���� �������� �� �ε� 
-    Lost // �й� �� UI ���?
+    Lost // �й� �� UI ���?
+}
+
+public class BattleManager : MonoBehaviour
+{
+    Won,
+    Lost 
 }
 
 public class BattleManager : MonoBehaviour
@@ -25,6 +31,7 @@ public class BattleManager : MonoBehaviour
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
+    public bool isPlayerMove = false;
 
     [Header("# UI ������Ʈ")]
     public GameObject[] ui;
@@ -47,48 +54,48 @@ public class BattleManager : MonoBehaviour
     public void Start()
     {
         battleState = BattleState.Start;
-        // Fade �ִϸ��̼� ���?
+        // Fade �ִϸ��̼� ���?
 
-        // �÷��̾� �� ���� Ȱ��ȭ
         player.gameObject.SetActive(true);
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
         }
 
-        // �� ����
-        MapGenerator.instatnce.CreateMap(MapGenerator.instatnce.garo, MapGenerator.instatnce.sero);
 
-        // �÷��̾� ���� 
+        MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
+
+
         PlayerTurn();
     }
 
-    
-    // �÷��̾� ��
+
     public void PlayerTurn()
     {
+        isPlayerMove = true;
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
-        turnEnd.interactable = true;  // ��ư ����
+        turnEnd.interactable = true;
+
     }
 
 
-    // ���� ��
+
     public void MonsterTurn()
     {
         battleState = BattleState.MonsterTurn;
         ui[1].gameObject.SetActive(true);
         ui[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
-        turnEnd.interactable = false;  // ��ư ����
+        turnEnd.interactable = false;  
         StartCoroutine(NextMonster());
     }
 
 
-    // ���� �ൿ ����
     IEnumerator NextMonster()
     {
-        // ���?���?
+        // ���?���?
+
         yield return new WaitForSeconds(delay);
 
         if (currentMonsterIndex < monsters.Count - 1)
@@ -96,7 +103,7 @@ public class BattleManager : MonoBehaviour
             currentMonsterIndex++;
             monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
 
-            // �ε��� �ʱ�ȭ
+
             if (currentMonsterIndex == monsters.Count - 1)
             {
                 /*monsters[currentMonsterIndex].GetComponent<MonsterData>().IncreaseDamage(1);*/

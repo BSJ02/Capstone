@@ -536,10 +536,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d074474a72d9542ae9de520edd32b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterData: {fileID: 0}
   playerData: {fileID: 11400000, guid: bc1caf33aa36c514698b9b64d4e2878b, type: 2}
   playerState: 0
   activePoint: 3
-  turnExit: {fileID: 0}
 --- !u!54 &175316854
 Rigidbody:
   m_ObjectHideFlags: 0

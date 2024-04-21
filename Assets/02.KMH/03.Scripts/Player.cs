@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         UpdateAnimation();
     }
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç ¼¼ÆÃ
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void UpdateAnimation()
     {
         switch (playerState)
@@ -47,11 +47,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î °ø°Ý
-    public void ReadyToAttack()
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public void ReadyToAttack(Monster monster)
     {
-        Monster monster = FindObjectOfType<Monster>();
-
         float monsterHp = monster.monsterData.Hp;
         float randDamage = Random.Range(playerData.Damage, playerData.Damage);
         //float critcalDamage = monsterData.MinDamage + addDamage;
@@ -60,7 +58,11 @@ public class Player : MonoBehaviour
 
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack;
-        Debug.Log("¸ó½ºÅÍ Ã¼·Â:" + (int)monsterHp + $"ÇÃ·¹ÀÌ¾î{(int)randDamage} °ø°Ý!");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½:" + (int)monsterHp + $"ï¿½Ã·ï¿½ï¿½Ì¾ï¿½{(int)randDamage} ï¿½ï¿½ï¿½ï¿½!");
+
+
+        monster.GetHit(playerData.Damage);
+
         return;
     }
 }
