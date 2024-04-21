@@ -2945,6 +2945,7 @@ MonoBehaviour:
   waitAnim: 0
   player: {fileID: 1025462522}
   mapGenerator: {fileID: 1577556406}
+  playerData: {fileID: 0}
   playerObject: {fileID: 1025462523}
   playerActionPoint: 5
   usingCard: 0
@@ -3828,6 +3829,12 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1025462522}
+    - target: {fileID: -4650269602606204629, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: bc1caf33aa36c514698b9b64d4e2878b,
+        type: 2}
     - target: {fileID: -4650269602606204629, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: mapGenerator

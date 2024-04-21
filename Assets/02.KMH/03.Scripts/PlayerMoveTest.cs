@@ -8,7 +8,7 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
-    public PlayerData playerData;
+    private PlayerData playerData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;

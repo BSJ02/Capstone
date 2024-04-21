@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     //public MapGenerator mapGenerator;
     public Player player;
-    private PlayerData playerData;
+    public PlayerData playerData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;

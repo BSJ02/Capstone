@@ -31,6 +31,7 @@ public class BattleManager : MonoBehaviour
 
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
+    private bool firstTurn = false;
 
     [Header("# UI")]
     public GameObject[] ui;
@@ -67,13 +68,18 @@ public class BattleManager : MonoBehaviour
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
 
 
-        MonsterTurn();
+        PlayerTurn();
     }
 
-
+    
     public void PlayerTurn()
     {
-        cardManager.CreateRandomCard();
+        if (firstTurn)
+        {
+            cardManager.CreateRandomCard();
+        }
+        firstTurn = true;
+
         isPlayerTurn = true;
 
         battleState = BattleState.PlayerTurn;

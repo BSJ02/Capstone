@@ -13,8 +13,7 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
-
-    public MonsterData monsterData;
+    private MonsterData monsterData;
     public PlayerData playerData;
 
     private Animator anim;
