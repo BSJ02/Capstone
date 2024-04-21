@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,10 +9,21 @@ using static Card;
 public class CardData : MonoBehaviour
 {
     [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
+    [HideInInspector] public bool waitAnim = false;
+
+    public PlayerAnimationEvents playerAnimationEvents;
+
+    [Header("Animation 적용 할 캐릭터")]
+    public GameObject playerObject;
 
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Start()
+    {
+        playerAnimationEvents = playerObject.GetComponent<PlayerAnimationEvents>();
     }
 
 
@@ -39,7 +51,7 @@ public class CardData : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster") || hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
                         selectedTarget = hit.collider.gameObject;
                         waitForInput = false;
@@ -55,6 +67,7 @@ public class CardData : MonoBehaviour
         // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
+            waitAnim = true;
             // cardName을 사용하는 로직을 호출
             switch (card.cardName)
             {
@@ -87,33 +100,51 @@ public class CardData : MonoBehaviour
     // Sword Slash 카드 (적을 칼로 공격합니다.)
     private void UseSwordSlash(Card card, GameObject selectedTarget)
     {
-        // 카드 사용 애니메이션
-
         Debug.Log(card.cardName + " 카드를 사용");
 
         // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
+
         if (monster != null)
         {
             Debug.Log("Hp: " + monster.monsterData.Hp);
             monster.monsterData.Hp -= card.cardPower[0];
             Debug.Log("Hp: " + monster.monsterData.Hp);
         }
+        else
+        {
+            Debug.Log("대상을 다시 선택하세요.");
+            StartCoroutine(WaitForTargetSelection(card));
+        }
+
+        // 카드 사용 애니메이션
+        playerAnimationEvents.SlashAnim();
+        waitAnim = false;
     }
 
     // Healing Salve 카드 (약초를 사용하여 체력을 회복합니다.)
     private void UseHealingSalve(Card card, GameObject selectedTarget)
     {
-        // 카드 사용 애니메이션
-
         Debug.Log(card.cardName + " 카드를 사용");
 
         // 대상의 값을 변경
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Player player = selectedTarget.GetComponent<Player>();
+
+        if (player != null)
         {
-            // 플레이어 체력 회복
+            Debug.Log("Hp: " + player.playerData.Hp);
+            player.playerData.Hp += card.cardPower[0];
+            Debug.Log("Hp: " + player.playerData.Hp);
         }
+        else
+        {
+            Debug.Log("대상을 다시 선택하세요.");
+            StartCoroutine(WaitForTargetSelection(card));
+        }
+
+        // 카드 사용 애니메이션
+        playerAnimationEvents.ChargeAnim();
+        waitAnim = false;
     }
 
     // Sprint 카드 (빠르게 이동하여 적의 공격을 피합니다.)
@@ -129,12 +160,14 @@ public class CardData : MonoBehaviour
         {
             // 플레이어 추가 이동
         }
+        waitAnim = false;
     }
 
     // Basic Strike 카드 (간단한 공격을 가해 적을 공격합니다.)
     private void UseBasicStrike(Card card, GameObject selectedTarget)
     {
         // 카드 사용 애니메이션
+        playerAnimationEvents.SlashAnim();
 
         Debug.Log("BasicStrike 카드를 사용");
 
@@ -146,6 +179,7 @@ public class CardData : MonoBehaviour
             monster.monsterData.Hp -= card.cardPower[0];
             Debug.Log("Hp: " + monster.monsterData.Hp);
         }
+        waitAnim = false;
     }
 
     // Shield Block 카드 (방패로 공격을 막아 받는 피해를 감소시킵니다.)
@@ -161,6 +195,7 @@ public class CardData : MonoBehaviour
         {
             // 플레이어 방어력 증가
         }
+        waitAnim = false;
     }
 
     // Common Cards --------------------------------
