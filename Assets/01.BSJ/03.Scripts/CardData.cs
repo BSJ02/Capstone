@@ -5,20 +5,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Card;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardData : MonoBehaviour
 {
     [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
     [HideInInspector] public bool waitAnim = false;
 
-    private PlayerAnimationEvents playerAnimationEvents;
-    private PlayerMove playerMove;
+    private PlayerMoveTest playerMoveTest;
     private BattleManager battleManager;
-    private Player player;
+    public Player player;
+    public MapGenerator mapGenerator;
 
     [Header("Animation 적용 할 캐릭터")]
     public GameObject playerObject;
 
+    //private float maxAttackRange = 3.0f;
+    public int playerActionPoint = 5;
+
+    public bool usingCard = false;
+    public bool coroutineStop = false;
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -26,20 +32,28 @@ public class CardData : MonoBehaviour
 
     private void Start()
     {
-        playerAnimationEvents = playerObject.GetComponent<PlayerAnimationEvents>();
         battleManager = FindObjectOfType<BattleManager>();
         player = playerObject.GetComponent<Player>();
+
     }
 
+    private void Update()
+    {
+        if (usingCard)
+        {
+            mapGenerator.PlayerAttackRange(playerObject.transform.position, 1);
+        }
 
-    private Coroutine currentCoroutine; // 현재 실행 중인 코루틴
+    }
 
     // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
+        playerActionPoint = player.activePoint;
         StartCoroutine(WaitForTargetSelection(card));
     }
-
+    //if (Vector3.Distance(player.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) <= maxAttackRange)
+    //            {
 
     // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
@@ -55,6 +69,7 @@ public class CardData : MonoBehaviour
             // 대상 선택이 완료될 때까지 반복합니다.
             while (waitForInput)
             {
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -68,10 +83,19 @@ public class CardData : MonoBehaviour
                             waitForInput = false;
                         }
                     }
+                
                 }
                 yield return null; // 다음 프레임까지 대기
             }
+            if (coroutineStop)
+            {
+                coroutineStop = false;
+                mapGenerator.ClearHighlightedTiles();
+                yield break;
+            }
+
             UseCard(card, selectedTarget);
+
             if (waitForInput)
             {
                 Debug.Log("대상을 다시 선택하세요.");
@@ -109,12 +133,41 @@ public class CardData : MonoBehaviour
                     UseShieldBlock(card, selectedTarget);
                     break;
                 case "Ax Slash":
-                    UseShieldBlock(card, selectedTarget);
+                    UseAxSlash(card, selectedTarget);
+                    break;
+                case "Heal!!":
+                    UseHeal(card, selectedTarget);
+                    break;
+                case "Teleport":
+                    UseTeleport(card, selectedTarget);
+                    break;
+                case "Guardian Spirit":
+                    UseGuardianSpirit(card, selectedTarget);
+                    break;
+                case "Holy Nova":
+                    UseHolyNova(card, selectedTarget);
+                    break;
+                case "Fireball":
+                    UseFireball(card, selectedTarget);
+                    break;
+                case "Lightning Strike":
+                    UseLightningStrike(card, selectedTarget);
+                    break;
+                case "Excalibur's Wrath":
+                    UseExcalibursWrath(card, selectedTarget);
+                    break;
+                case "Divine Intervention":
+                    UseDivineIntervention(card, selectedTarget);
+                    break;
+                case "Soul Siphon":
+                    UseSoulSiphon(card, selectedTarget);
                     break;
                 default:
                     Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                     break;
             }
+            usingCard = false;
+            mapGenerator.ClearHighlightedTiles();
         }
     }
 
@@ -127,14 +180,11 @@ public class CardData : MonoBehaviour
 
         if (monster != null)
         {
-            Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-
+            Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
-
             // 카드 사용 애니메이션
-            playerAnimationEvents.SlashAnim();
+
             waitAnim = false;
         }
         else
@@ -151,12 +201,10 @@ public class CardData : MonoBehaviour
 
         if (player != null)
         {
-            Debug.Log(card.cardName + " 카드를 사용 / " + player + " Hp: " + player.playerData.Hp);
             player.playerData.Hp += card.cardPower[0];
-            Debug.Log(player +  "Hp: " + player.playerData.Hp);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.ChargeAnim();
+
             waitAnim = false;
         }
         else
@@ -170,14 +218,13 @@ public class CardData : MonoBehaviour
     private void UseSprint(Card card, GameObject selectedTarget)
     {
         // 대상의 값을 변경
-        Monster monster = selectedTarget.GetComponent<Monster>();
-
-        if (monster != null)
+        Player player = selectedTarget.GetComponent<Player>();
+        if (player != null)
         {
             Debug.Log("Sprint 카드를 사용");
 
             // 플레이어 추가 이동
-            //playerMove.isMoving = true;
+            player.activePoint += (int)card.cardPower[0];
 
             // 카드 사용 애니메이션
             waitAnim = false;
@@ -195,12 +242,11 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
-            Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.StabAnim();
+
             waitAnim = false;
         }
         else
@@ -221,7 +267,7 @@ public class CardData : MonoBehaviour
             Debug.Log(player + "Armor: " + player.playerData.Armor);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.DefendAnim();
+
             waitAnim = false;
         }
         else
@@ -238,12 +284,11 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
-            Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.SlashAnim();
+
             waitAnim = false;
         }
         else
@@ -264,7 +309,7 @@ public class CardData : MonoBehaviour
             Debug.Log(player + "Hp: " + player.playerData.Hp);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.ChargeAnim();
+
             waitAnim = false;
         }
         else
@@ -293,44 +338,18 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Swift Strike 카드 (빠르고 강력한 공격을 가해 적을 공격합니다.)
-    private void UseSwiftStrike(Card card, GameObject selectedTarget)
+    // Guardian Spirit 카드 (수호 정령을 소환하여 플레이어의 방어력을 증가시킵니다.)
+    private void UseGuardianSpirit(Card card, GameObject selectedTarget)
     {
         // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log("Swift Strike 카드를 사용");
-
-            Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
-            Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-            playerAnimationEvents.StabAnim();
-            waitAnim = false;
-        }
-        else
-        {
-            waitForInput = true;
-        }
-    }
 
-    // Thunderstorm 카드 (주변에 번개를 내려 모든 적에게 데미지를 입힙니다.)
-    private void UseThunderstorm(Card card, GameObject selectedTarget)
-    {
-        // 대상의 값을 변경
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log("Thunderstorm 카드를 사용");
-
-            Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
-            Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
-
-            // 카드 사용 애니메이션
-            playerAnimationEvents.ChargeAnim();
             waitAnim = false;
         }
         else
@@ -340,4 +359,125 @@ public class CardData : MonoBehaviour
     }
 
     // Rare Cards --------------------------------
+    // Holy Nova 카드 (주변 적에게 신성한 빛을 내리며 강력한 데미지를 입힙니다.)
+    private void UseHolyNova(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
+
+    // Fireball 카드 (화염구를 발사하여 적에게 강력한 데미지를 입힙니다.)
+    private void UseFireball(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
+
+    // Lightning Strike (손에 번개를 모아 적에게 일격을 가해 강력한 데미지를 입힙니다.)
+    private void UseLightningStrike(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
+
+    // Epic Cards --------------------------------
+    // Excalibur's Wrath (전설적인 검의 분노로 적을 공격합니다.)
+    private void UseExcalibursWrath(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
+
+    // Divine Intervention (신의 개입으로 플레이어를 보호하고 회복시킵니다.)
+    private void UseDivineIntervention(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
+
+    // Legend Cards --------------------------------
+    // Soul Siphon (영혼을 흡수하여 주변 적의 생명력을 흡수하고 회복합니다.)
+    private void UseSoulSiphon(Card card, GameObject selectedTarget)
+    {
+        // 대상의 값을 변경
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            // 카드 사용 애니메이션
+
+            waitAnim = false;
+        }
+        else
+        {
+            waitForInput = true;
+        }
+    }
 }

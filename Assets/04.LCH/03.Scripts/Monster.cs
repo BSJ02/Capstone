@@ -105,7 +105,6 @@ public class Monster : MonoBehaviour
         if (!isLive) 
             return;
 
-        damage = FindObjectOfType<Player>().playerData.Damage;
         monsterData.Hp -= damage;
 
         Debug.Log("���� ü��" + (int)monsterData.Hp);

@@ -20,7 +20,7 @@ public class CardMove : MonoBehaviour
     private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
-    private bool clickOnCard = false;   // 마우스 클릭 여부
+    //private bool cardMoveAble = false;
 
     private int index;
 
@@ -45,7 +45,7 @@ public class CardMove : MonoBehaviour
         else
         {
             index = cardManager.handCardObject.IndexOf(gameObject) + 1;
-            if (!clickOnCard && cardManager.handCardObject.IndexOf(gameObject) >= 0)
+            if (cardManager.handCardObject.IndexOf(gameObject) >= 0)
             {
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
                 AnimateCard(1f, originalPosition);
@@ -82,7 +82,7 @@ public class CardMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.gameObject == obj && hit.collider.gameObject.layer == LayerMask.NameToLayer("Card"))
+            if (hit.collider.gameObject == obj && hit.collider.CompareTag("Card"))
             {
                 return true;
             }
@@ -100,7 +100,12 @@ public class CardMove : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("CardPanel"))
             {
+                cardData.usingCard = true;
                 ProcessingCard();
+            }
+            else
+            {
+                cardManager.useCardPanelPrefab.SetActive(false);
             }
         }
     }
@@ -127,42 +132,57 @@ public class CardMove : MonoBehaviour
                 }
             }
         }
+        
     }
 
 
     private void OnMouseUp()
     {
-        clickOnCard = false;    // 클릭 상태 해제
-
         transform.DOKill();
-        CardPanelCollision();
+
+        if (battleManager.isPlayerTurn)
+        {
+            CardPanelCollision();
+        }
+        
     }
 
     private void OnMouseDown()
     {
         if (IsMouseOverCard(gameObject))
         {
-            clickOnCard = true;
             offset = transform.position - GetMouseWorldPosition();
             if (cardManager.addCardObject.Contains(this.gameObject))
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardData.waitForInput && !cardManager.waitAddCard)
+            else if (!cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim)
             {
                 cardManager.useCardPanelPrefab.SetActive(true);
             }
+        }
+        if (cardData.waitForInput)
+        {
+            UnityEngine.Debug.Log("cardData.waitForInput" + cardData.waitAnim + battleManager.isPlayerTurn);
+        }
+        if (cardManager.waitAddCard)
+        {
+            UnityEngine.Debug.Log("cardManager.waitAddCard" + cardData.waitAnim + battleManager.isPlayerTurn);
         }
     }
   
 
     private void OnMouseDrag()
     {
-        // 카드 클릭 & 대상 선택 & 카드 선택
-        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim && !battleManager.isPlayerMove)
+        // 카드 클릭 & !대상 선택 & !카드 선택
+        if (!cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim && battleManager.isPlayerTurn)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
+        }
+        else
+        {
+            return;
         }
     }
 

@@ -30,6 +30,12 @@ public class Player : MonoBehaviour
         UpdateAnimation();
     }
 
+    public int ActivePointReset()
+    {
+        activePoint = 5;
+        return activePoint;
+    }
+
     // 애니메이션 세팅
     public void UpdateAnimation()
     {

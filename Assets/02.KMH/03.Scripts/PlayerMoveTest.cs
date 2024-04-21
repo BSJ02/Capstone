@@ -21,7 +21,7 @@ public class PlayerMoveTest : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>(); // 감지된 몬스터 리스트
     private Monster clickedMonster; // 클릭된 몬스터 저장 변수
 
-    private bool isMoving = false; // 이동 중인지 여부
+    public bool isMoving = false; // 이동 중인지 여부
 
     public void SetDestination(Vector2Int clickedTargetPos)
     {
@@ -39,7 +39,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving && battleManager.isPlayerMove)
+        if (Input.GetMouseButtonDown(0) && !isMoving && player.activePoint > 0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

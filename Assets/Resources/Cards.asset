@@ -18,8 +18,9 @@ MonoBehaviour:
     cardDescription_Power: "(\uB370\uBBF8\uC9C0: 20)"
     cardPower:
     - 20
+    - 1
     cardSprite: {fileID: 21300000, guid: fe9d7e3a4781e784ca6b245ac797d643, type: 3}
-    cardPercent: 0
+    cardPercent: 35
     cardRank: 0
   - cardName: Healing Salve
     cardDescription: "\uC57D\uCD08\uB97C \uC0AC\uC6A9\uD558\uC5EC \uCCB4\uB825\uC744
@@ -28,7 +29,7 @@ MonoBehaviour:
     cardPower:
     - 20
     cardSprite: {fileID: 21300000, guid: 56e32878f231ecf41aff7fb6db3c724e, type: 3}
-    cardPercent: 0
+    cardPercent: 35
     cardRank: 0
   - cardName: Sprint
     cardDescription: "\uBE60\uB974\uAC8C \uC774\uB3D9\uD558\uC5EC \uC801\uC758 \uACF5\uACA9\uC744
@@ -37,7 +38,7 @@ MonoBehaviour:
     cardPower:
     - 2
     cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
-    cardPercent: 0
+    cardPercent: 35
     cardRank: 0
   - cardName: Basic Strike
     cardDescription: "\uAC04\uB2E8\uD55C \uACF5\uACA9\uC744 \uAC00\uD574 \uC801\uC744
@@ -46,7 +47,7 @@ MonoBehaviour:
     cardPower:
     - 15
     cardSprite: {fileID: 21300000, guid: d2d734d7fb094e240915d71c663c8b57, type: 3}
-    cardPercent: 0
+    cardPercent: 35
     cardRank: 0
   - cardName: Shield Block
     cardDescription: "\uBC29\uD328\uB85C \uACF5\uACA9\uC744 \uB9C9\uC544 \uBC1B\uB294
@@ -55,7 +56,7 @@ MonoBehaviour:
     cardPower:
     - 20
     cardSprite: {fileID: 21300000, guid: 72d12fb7d88462048b18383296fad108, type: 3}
-    cardPercent: 0
+    cardPercent: 35
     cardRank: 0
   commonCards:
   - cardName: Ax Slash
@@ -64,7 +65,7 @@ MonoBehaviour:
     cardPower:
     - 30
     cardSprite: {fileID: 21300000, guid: 0cdc484fdd574b64b9ee9d503b86c8fc, type: 3}
-    cardPercent: 50
+    cardPercent: 25
     cardRank: 1
   - cardName: Heal!!
     cardDescription: "\uCD95\uBCF5\uC744 \uBC1B\uC544 \uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
@@ -72,7 +73,7 @@ MonoBehaviour:
     cardPower:
     - 40
     cardSprite: {fileID: 21300000, guid: c581884bb67a44545bff4bf976c04cf4, type: 3}
-    cardPercent: 50
+    cardPercent: 25
     cardRank: 1
   - cardName: Teleport
     cardDescription: "\uC6D0\uD558\uB294 \uC704\uCE58\uB85C \uC21C\uAC04\uC774\uB3D9\uD558\uC5EC
@@ -81,25 +82,16 @@ MonoBehaviour:
     cardPower:
     - 4
     cardSprite: {fileID: 21300000, guid: 0ad28630a5cd17948966d487491b7432, type: 3}
-    cardPercent: 50
+    cardPercent: 25
     cardRank: 1
-  - cardName: Swift Strike
-    cardDescription: "\uBE60\uB974\uACE0 \uAC15\uB825\uD55C \uACF5\uACA9\uC744 \uAC00\uD574
-      \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
-    cardDescription_Power: "(\uB370\uBBF8\uC9C0: 25)"
+  - cardName: Guardian Spirit
+    cardDescription: "\uC218\uD638 \uC815\uB839\uC744 \uC18C\uD658\uD558\uC5EC \uD50C\uB808\uC774\uC5B4\uC758
+      \uBC29\uC5B4\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
+    cardDescription_Power: "(\uBC29\uC5B4\uB825: 30%)"
     cardPower:
-    - 25
-    cardSprite: {fileID: 21300000, guid: 2f81e93fe37683442b5cc30343e44762, type: 3}
-    cardPercent: 50
-    cardRank: 1
-  - cardName: Thunderstorm
-    cardDescription: "\uC8FC\uBCC0\uC5D0 \uBC88\uAC1C\uB97C \uB0B4\uB824 \uBAA8\uB4E0
-      \uC801\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4."
-    cardDescription_Power: "(\uB370\uBBF8\uC9C0: 40)"
-    cardPower:
-    - 40
-    cardSprite: {fileID: 21300000, guid: 66955fd5a433a3042a8b02d30dac24f8, type: 3}
-    cardPercent: 50
+    - 30
+    cardSprite: {fileID: 21300000, guid: fb8e867be399868479605f71cf95021a, type: 3}
+    cardPercent: 25
     cardRank: 1
   rareCards:
   - cardName: Holy Nova
@@ -109,7 +101,7 @@ MonoBehaviour:
     cardPower:
     - 50
     cardSprite: {fileID: 21300000, guid: c581884bb67a44545bff4bf976c04cf4, type: 3}
-    cardPercent: 30
+    cardPercent: 20
     cardRank: 2
   - cardName: Fireball
     cardDescription: "\uD654\uC5FC\uAD6C\uB97C \uBC1C\uC0AC\uD558\uC5EC \uC801\uC5D0\uAC8C
@@ -118,7 +110,7 @@ MonoBehaviour:
     cardPower:
     - 50
     cardSprite: {fileID: 21300000, guid: b227bc84d5a73df478000e171622c240, type: 3}
-    cardPercent: 30
+    cardPercent: 20
     cardRank: 2
   - cardName: Lightning Strike
     cardDescription: "\uC190\uC5D0 \uBC88\uAC1C\uB97C \uBAA8\uC544 \uC801\uC5D0\uAC8C
@@ -128,28 +120,9 @@ MonoBehaviour:
     cardPower:
     - 60
     cardSprite: {fileID: 21300000, guid: 66955fd5a433a3042a8b02d30dac24f8, type: 3}
-    cardPercent: 30
-    cardRank: 2
-  - cardName: Guardian Spirit
-    cardDescription: "\uC218\uD638 \uC815\uB839\uC744 \uC18C\uD658\uD558\uC5EC \uD50C\uB808\uC774\uC5B4\uC758
-      \uBC29\uC5B4\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
-    cardDescription_Power: "(\uBC29\uC5B4\uB825: 30%)"
-    cardPower:
-    - 30
-    cardSprite: {fileID: 21300000, guid: fb8e867be399868479605f71cf95021a, type: 3}
-    cardPercent: 30
+    cardPercent: 20
     cardRank: 2
   epicCards:
-  - cardName: Meteor Shower
-    cardDescription: "\uD558\uB298\uC5D0\uC11C \uC720\uC131\uC6B0\uB97C \uC18C\uD658\uD558\uC5EC
-      \uC9C0\uC5ED \uC804\uCCB4\uC5D0 \uAC15\uB825\uD55C \uB370\uBBF8\uC9C0\uB97C
-      \uC785\uD799\uB2C8\uB2E4. "
-    cardDescription_Power: "(\uB370\uBBF8\uC9C0:80)"
-    cardPower:
-    - 80
-    cardSprite: {fileID: 21300000, guid: 2385d0b60df8ba94982b7dcc78a9cc3f, type: 3}
-    cardPercent: 15
-    cardRank: 3
   - cardName: Excalibur's Wrath
     cardDescription: "\uC804\uC124\uC801\uC778 \uAC80\uC758 \uBD84\uB178\uB85C \uC801\uC744
       \uACF5\uACA9\uD569\uB2C8\uB2E4."
@@ -170,15 +143,6 @@ MonoBehaviour:
     cardPercent: 15
     cardRank: 3
   legendCards:
-  - cardName: Avatar of Vengeance
-    cardDescription: "\uBCF5\uC218\uC758 \uD654\uC2E0\uC73C\uB85C \uBCC0\uC2E0\uD558\uC5EC
-      \uBAA8\uB4E0 \uC801\uC5D0\uAC8C \uBCF5\uC218\uC758 \uC77C\uACA9\uC744 \uAC00\uD569\uB2C8\uB2E4."
-    cardDescription_Power: "(\uB370\uBBF8\uC9C0: 200)"
-    cardPower:
-    - 200
-    cardSprite: {fileID: 21300000, guid: 31206e3ab58bc394b960f9a53c6972b1, type: 3}
-    cardPercent: 5
-    cardRank: 4
   - cardName: Soul Siphon
     cardDescription: "\uC601\uD63C\uC744 \uD761\uC218\uD558\uC5EC \uC8FC\uBCC0 \uC801\uC758
       \uC0DD\uBA85\uB825\uC744 \uD761\uC218\uD558\uACE0 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
@@ -189,8 +153,9 @@ MonoBehaviour:
     cardSprite: {fileID: 21300000, guid: e243f03ce5e6d8648b91243e27c1ecbf, type: 3}
     cardPercent: 5
     cardRank: 4
-  commonPercent: 50
-  rarePercent: 30
+  basePercent: 35
+  commonPercent: 25
+  rarePercent: 20
   epicPercent: 15
   legendPercent: 5
   commonColor: {r: 0.47843137, g: 1, b: 0.47843137, a: 1}

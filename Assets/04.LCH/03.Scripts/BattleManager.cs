@@ -16,6 +16,9 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
+    private Player playerScript;
+    private CardManager cardManager;
+
     public BattleState battleState;
 
     [Header("# �÷��̾� �� ����")]
@@ -26,6 +29,7 @@ public class BattleManager : MonoBehaviour
     private float delay = 1.5f;
 
     public bool isPlayerMove = false;
+    public bool isPlayerTurn = false;
 
     [Header("# UI ������Ʈ")]
     public GameObject[] ui;
@@ -47,6 +51,9 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
+        cardManager = FindObjectOfType<CardManager>();
+        playerScript = FindObjectOfType<Player> ();
+
         battleState = BattleState.Start;
 
         player.gameObject.SetActive(true);
@@ -59,13 +66,16 @@ public class BattleManager : MonoBehaviour
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
 
 
-        PlayerTurn();
+        MonsterTurn();
     }
 
 
     public void PlayerTurn()
     {
-        isPlayerMove = true;
+        //playerScript.ActivePointReset();
+        cardManager.CreateRandomCard();
+        isPlayerTurn = true;
+
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
@@ -77,6 +87,7 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
+        isPlayerTurn = false;
         battleState = BattleState.MonsterTurn;
         ui[1].gameObject.SetActive(true);
         ui[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
