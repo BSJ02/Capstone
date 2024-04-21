@@ -13,10 +13,11 @@ public class CardData : MonoBehaviour
 
     private PlayerAnimationEvents playerAnimationEvents;
     private PlayerMove playerMove;
+    private BattleManager battleManager;
+    private Player player;
 
     [Header("Animation 적용 할 캐릭터")]
     public GameObject playerObject;
-
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class CardData : MonoBehaviour
     private void Start()
     {
         playerAnimationEvents = playerObject.GetComponent<PlayerAnimationEvents>();
+        battleManager = FindObjectOfType<BattleManager>();
+        player = playerObject.GetComponent<Player>();
     }
 
 
@@ -41,6 +44,8 @@ public class CardData : MonoBehaviour
     // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
     {
+        battleManager.isPlayerMove = false;
+        player.activePoint = 0;
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
@@ -158,6 +163,7 @@ public class CardData : MonoBehaviour
         {
             waitForInput = true;
         }
+        
     }
 
     // Sprint 카드 (빠르게 이동하여 적의 공격을 피합니다.)

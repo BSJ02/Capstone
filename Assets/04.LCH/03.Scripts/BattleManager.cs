@@ -25,6 +25,7 @@ public class BattleManager : MonoBehaviour
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
+    public bool isPlayerMove = false;
 
     [Header("# UI ������Ʈ")]
     public GameObject[] ui;
@@ -61,15 +62,14 @@ public class BattleManager : MonoBehaviour
         PlayerTurn();
     }
 
-    
 
     public void PlayerTurn()
     {
+        isPlayerMove = true;
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd.interactable = true;
-
 
     }
 
