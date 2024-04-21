@@ -13,23 +13,24 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
-
-    public MonsterData monsterData;
+    private MonsterData monsterData;
     public PlayerData playerData;
 
     private Animator anim;
     public PlayerState playerState;
 
-    public int activePoint = 3;
-
     protected bool isLive;
+
+    private void Awake()
+    {
+        playerData.Hp = playerData.MaxHp;
+    }
 
     void Start()
     {
         anim = GetComponent<Animator>();
 
         isLive = true;
-        playerData.Hp = playerData.MaxHp;
     }
 
     private void Update()
@@ -41,6 +42,11 @@ public class Player : MonoBehaviour
         {
             GetHit(1);
         }
+    }
+
+    public void ResetPlayerActivePoint()
+    {
+        playerData.activePoint = 4;
     }
 
     // �ִϸ��̼� ����
@@ -74,7 +80,7 @@ public class Player : MonoBehaviour
 
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack;
-        Debug.Log("���� ü��:" + (int)monsterHp + $"�÷��̾�{(int)randDamage} ����!");
+        Debug.Log("몬스터 체력:" + (int)monsterHp + $"데미지{(int)randDamage}!");
 
 
         monster.GetHit(playerData.Damage);
@@ -96,7 +102,6 @@ public class Player : MonoBehaviour
         if (!isLive)
             return;
 
-        damage = FindObjectOfType<Monster>().monsterData.MaxDamage;
         playerData.Hp -= damage;
 
         Debug.Log("남은 체력 : " + (int)playerData.Hp);

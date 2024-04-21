@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +10,9 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     public CardInform cardInform;
-    
+    public Player player;
+    private CardData cardData;
+
     // 카드 생성 위치
     [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // 들고 있는 카드 위치
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
@@ -49,7 +51,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
-    [HideInInspector] public Card useCard;
+    [HideInInspector] public Card useCard = null;
 
 
     private void Awake()
@@ -85,6 +87,8 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
+        cardData = FindObjectOfType<CardData>();
+
         // 기본 카드 생성
         handCardList.AddRange(cardInform.baseCards);   // 값 추가
         CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
@@ -99,6 +103,31 @@ public class CardManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateRandomCard();
+        }
+    }
+
+    // 카드 사용 취소
+    public void CardCancle()
+    {
+        if (useCard != null && cardData.usingCard)
+        {
+            Card card = useCard;
+            GameObject cardObject = addCardObject[addCardObject.Count - 1];
+
+            handCardList.Add(card);
+            handCardObject.Add(cardObject);
+            addCardList.Remove(card);
+            addCardObject.Remove(cardObject);
+
+            ApplyCardInfrom(card, cardObject);
+            StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
+
+            //PlayerData.activePoint = cardData.playerActionPoint;
+
+            cardData.usingCard = false;
+            cardData.waitForInput = false;
+            cardData.coroutineStop = true;
+            useCard = null;
         }
     }
 
@@ -165,7 +194,7 @@ public class CardManager : MonoBehaviour
 
         // 랜덤한 카드 리스트 선택
         List<Card> randomList = null;
-        int randNum = Random.Range(1, 101);
+        int randNum = UnityEngine.Random.Range(1, 101);
         if (randNum <= cardInform.legendPercent)
         {
             randomList = cardInform.legendCards;
@@ -178,18 +207,22 @@ public class CardManager : MonoBehaviour
         {
             randomList = cardInform.rareCards;
         }
-        else
+        else if (randNum <= cardInform.commonPercent)
         {
             randomList = cardInform.commonCards;
         }
+        else
+        {
+            randomList = cardInform.baseCards;
+        }
 
         // 랜덤한 카드 선택
-        return randomList[Random.Range(0, randomList.Count)];
+        return randomList[UnityEngine.Random.Range(0, randomList.Count)];
     }
 
 
     // 랜덤 카드 생성
-    private void CreateRandomCard()
+    public void CreateRandomCard()
     {
         addCardPanelPrefab.SetActive(true);
 

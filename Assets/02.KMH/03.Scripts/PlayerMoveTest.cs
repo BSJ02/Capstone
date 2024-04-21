@@ -8,6 +8,7 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
+    private PlayerData playerData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -32,14 +33,9 @@ public class PlayerMoveTest : MonoBehaviour
         EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
     }
 
-    private void Start()
-    {
-        battleManager = FindObjectOfType<BattleManager>();
-    }
-
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving && battleManager.isPlayerMove)
+        if (Input.GetMouseButtonDown(0) && !isMoving)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -175,10 +171,10 @@ public class PlayerMoveTest : MonoBehaviour
 
             transform.position = nextPosition;
 
-            player.activePoint--;
+            playerData.activePoint--;
 
             // ��� Ÿ���� �̵��ߴ��� Ȯ��
-            if (0 >= player.activePoint)
+            if (0 >= playerData.activePoint)
                 break;
         }
 
@@ -233,7 +229,7 @@ public class PlayerMoveTest : MonoBehaviour
         if (!isMoving)
         {
             // �÷��̾ Ŭ������ �� �̵� ������ ���� ǥ��
-            mapGenerator.HighlightPlayerRange(transform.position, player.activePoint);
+            mapGenerator.HighlightPlayerRange(transform.position, playerData.activePoint);
         }
     }
 

@@ -14,8 +14,9 @@ public class CardInform : ScriptableObject
     [SerializeField] public List<Card> legendCards;
 
     [Header("Ä«µå È®·ü °ª")]
-    public int commonPercent = 50;
-    public int rarePercent = 30;
+    public int basePercent = 35;
+    public int commonPercent = 25;
+    public int rarePercent = 20;
     public int epicPercent = 15;
     public int legendPercent = 5;
 
@@ -28,6 +29,7 @@ public class CardInform : ScriptableObject
     // È®·ü °ª ¼³Á¤
     private void OnValidate()
     {
+        FixCardPercent(baseCards, basePercent);
         FixCardPercent(commonCards, commonPercent);
         FixCardPercent(rareCards, rarePercent);
         FixCardPercent(epicCards, epicPercent);

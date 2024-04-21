@@ -8,18 +8,21 @@ public enum BattleState
     Start,
     PlayerTurn,
     MonsterTurn,
-    Won, // 다음 씬 로드
-    Lost // 패배 시 UI 
+    Won,
+    Lost 
 }
-
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
 
+    private Player playerScript;
+    private CardManager cardManager;
+    private PlayerData playerData;
+
     public BattleState battleState;
 
-    [Header("플레이어 및 몬스터")]
+    [Header("# 플레이어 및 몬스터")]
     public GameObject player;
     public List<GameObject> monsters = new List<GameObject>();
 
@@ -27,6 +30,8 @@ public class BattleManager : MonoBehaviour
     private float delay = 1.5f;
 
     public bool isPlayerMove = false;
+    public bool isPlayerTurn = false;
+    private bool firstTurn = false;
 
     [Header("# UI")]
     public GameObject[] ui;
@@ -48,6 +53,9 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
+        cardManager = FindObjectOfType<CardManager>();
+        playerScript = FindObjectOfType<Player> ();
+
         battleState = BattleState.Start;
 
         player.gameObject.SetActive(true);
@@ -56,15 +64,24 @@ public class BattleManager : MonoBehaviour
             monster.gameObject.SetActive(true);
         }
 
+
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
+
 
         PlayerTurn();
     }
 
-
+    
     public void PlayerTurn()
     {
-        isPlayerMove = true;
+        if (firstTurn)
+        {
+            cardManager.CreateRandomCard();
+        }
+        firstTurn = true;
+
+        isPlayerTurn = true;
+
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
@@ -75,6 +92,7 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
+        isPlayerTurn = false;
         battleState = BattleState.MonsterTurn;
         ui[1].gameObject.SetActive(true);
         ui[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
@@ -85,6 +103,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator NextMonster()
     {
+
         yield return new WaitForSeconds(delay);
 
         if (currentMonsterIndex < monsters.Count - 1)
