@@ -242,7 +242,7 @@ public class CardManager : MonoBehaviour
         {
             addCardObject[i].SetActive(true);
             ApplyCardInfrom(addCardList[i], addCardObject[i]);
-            
+
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
