@@ -22,16 +22,16 @@ public class MonsterMove : MonoBehaviour
 
     public void MoveStart()
     {
-        // ¸®½ºÆ® ÃÊ±âÈ­ 
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­ 
         OpenList.Clear();
         CloseList.Clear();
 
-        // ±æÃ£±â 
+        // ï¿½ï¿½Ã£ï¿½ï¿½ 
         SetDestination();
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
 
-        // Å¸ÀÏ ÁÂÇ¥ ÃÊ±âÈ­
+        // Å¸ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Ê±ï¿½È­
         MapGenerator.instance.ResetTotalMap();
 
     }
@@ -56,7 +56,7 @@ public class MonsterMove : MonoBehaviour
         
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ¸®½ºÆ® Áßº¹ ¹æÁö
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -74,7 +74,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ¸ðµç ±æÀ» ´Ù Ã£À½
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
@@ -96,7 +96,7 @@ public class MonsterMove : MonoBehaviour
             OpenListAdd(CurrentNode.coord.x - 1, CurrentNode.coord.y);
         }
 
-        // ÇÃ·¹ÀÌ¾î ÁÂÇ¥ »èÁ¦(°ãÄ§ ¹æÁö)
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½)
         if(path.Count > 0)
         path.RemoveAt(path.Count - 1); 
 
@@ -104,7 +104,7 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    // ÇöÀç ³ëµå Ã¼Å©
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¼Å©
     public void OpenListAdd(int checkX, int checkY) 
     {
         if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
@@ -136,13 +136,13 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    // ¸ó½ºÅÍ ÀÌµ¿
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // ¸ó½ºÅÍ ÀÌµ¿°Å¸®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Å¸ï¿½
         int maxMoveDistance = monster.monsterData.MoveDistance;
 
         float moveSpeed = 1f;
@@ -150,7 +150,7 @@ public class MonsterMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            // ¸ó½ºÅÍ ÀÌµ¿°Å¸®¿¡ ¸Â°Ô ¼³Á¤
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (i >= maxMoveDistance)
                 break;
 
@@ -169,26 +169,26 @@ public class MonsterMove : MonoBehaviour
                 yield return null;
             }
 
-            // ¸ó½ºÅÍ À§Ä¡ °ª º¸Á¤ 
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             transform.position = nextPosition;
 
         }
 
-        // ¸ó½ºÅÍ ÃÖÁ¾ À§Ä¡
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ÃÖÁ¾ À§Ä¡¿¡ isWall Ã¼Å©(°ãÄ§ ¹æÁö)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ isWall Ã¼Å©(ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½)
         MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
 
-        // ÃÖÁ¾ À§Ä¡ ±âÁØÀ¸·Î ÇÃ·¹ÀÌ¾î °¨Áö
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
         GetSurroundingTiles(finalPosition);
 
-        // ¸ó½ºÅÍ ÅÏ Á¾·á
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(EscapeMonsterTurn());
         yield break;
     }
 
-    // ¸ó½ºÅÍ ÁÖº¯ Å¸ÀÏ °¨Áö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Öºï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
         int detectionRange = monster.monsterData.DetectionRagne;
@@ -198,20 +198,20 @@ public class MonsterMove : MonoBehaviour
 
         if(distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            // °¨Áö O
+            // ï¿½ï¿½ï¿½ï¿½ O
             Player player = FindObjectOfType<Player>();
             monster.ReadyToAttack(player);
             return;
         }
         else
         {
-            // °¨Áö X
+            // ï¿½ï¿½ï¿½ï¿½ X
             monster.Init();
             return;
         }
     }
 
-    // Player ÅÏ ³Ñ±è
+    // Player ï¿½ï¿½ ï¿½Ñ±ï¿½
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
