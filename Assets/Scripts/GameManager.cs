@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
 
     
 
+    public GameObject[] windowUI;
     public GameObject objectUIPanel;
+    private GameObject currentlyActiveWindow;
+
+
     public Text objectNameText;
     public Text objectHealthText;
 
@@ -84,10 +88,30 @@ public class GameManager : MonoBehaviour
             objectHealthText.text = "Ã¼·Â : N/A";
         }
 
+
+
+
+
         objectUIPanel.SetActive(true);
 
     }
 
+    public void ShowLayerWindow(int index)
+    {
+        if(currentlyActiveWindow != null)
+        {
+            currentlyActiveWindow.SetActive(false);
+        }
+
+
+        windowUI[index].gameObject.SetActive(true);
+        currentlyActiveWindow = windowUI[index];
+    }
+
+    public void ExitWindow(int index)
+    {
+        windowUI[index].gameObject.SetActive(false);
+    }
 
     public void ShowTurn()
     {
