@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMoveTest : MonoBehaviour
 {
     public MapGenerator mapGenerator;
     public Player player;
@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour
     List<Tile> CloseList = new List<Tile>();
 
     public int detectionRange = 1;
+    private List<Monster> detectedMonsters = new List<Monster>(); // 감지된 몬스터 리스트
+    private Monster clickedMonster; // 클릭된 몬스터 저장 변수
 
     private bool isMoving = false; // 이동 중인지 여부
 
@@ -53,6 +55,21 @@ public class PlayerMove : MonoBehaviour
                     StartCoroutine(MoveSmoothly(move));
                     mapGenerator.ResetTotalMap();
                 }
+
+                // 클릭된 것이 몬스터인지 확인
+                if (hit.collider.CompareTag("Monster"))
+                {
+                    // 클릭된 몬스터 저장
+                    clickedMonster = hit.collider.GetComponent<Monster>();
+
+                    // 감지된 몬스터 리스트에 있는지 확인
+                    if (detectedMonsters.Contains(clickedMonster))
+                    {
+                        // 클릭된 몬스터에게 일정한 함수 실행
+                        player.ReadyToAttack(clickedMonster); 
+                    }
+                }
+
             }
         }
 
@@ -214,30 +231,34 @@ public class PlayerMove : MonoBehaviour
     }
 
     // Monster 감지(3x3 타일)
+
+    // 플레이어 주변의 타일을 검사하여 몬스터를 감지
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
-        // 몬스터 좌표
-        Vector3 monster = FindObjectOfType<Monster>().transform.position;
-        monsterPos = new Vector2Int((int)monster.x, (int)monster.z);
+        // 감지된 몬스터 리스트 초기화
+        detectedMonsters.Clear();
 
-        int distacneX = Mathf.Abs(playerPos.x - monsterPos.x);
-        int distacneY = Mathf.Abs(playerPos.y - monsterPos.y);
+        // 모든 몬스터 찾기
+        Monster[] monsters = FindObjectsOfType<Monster>();
 
-        if (distacneX <= detectionRange && distacneY <= detectionRange)
+        foreach (Monster m in monsters)
         {
-            // 몬스터 감지 O
-//            player.ReadyToAttack();
-            //Debug.Log("몬스터 좌표 : " + monsterPos);
-            return;
-        }
-        else
-        {
-            //// 몬스터 감지 X
-            //player.Init();
-            //return;
+            // 몬스터 위치
+            Vector3 monsterPosition = m.transform.position;
+            Vector2Int monsterPos = new Vector2Int((int)monsterPosition.x, (int)monsterPosition.z);
+
+            // 플레이어와 몬스터 간의 거리 계산
+            int distanceX = Mathf.Abs(playerPos.x - monsterPos.x);
+            int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
+
+            // 거리가 감지 범위 이내라면 몬스터를 리스트에 추가
+            if (distanceX <= detectionRange && distanceY <= detectionRange)
+            {
+                detectedMonsters.Add(m);
+                Debug.Log(m);
+            }
         }
 
-        // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
-
+        // 감지된 몬스터에 대한 추가적인 처리 수행 가능
     }
 }
