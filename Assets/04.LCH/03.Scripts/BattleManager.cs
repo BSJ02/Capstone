@@ -8,9 +8,10 @@ public enum BattleState
     Start,
     PlayerTurn,
     MonsterTurn,
-    Won,
-    Lost 
+    Won, // 다음 씬 로드
+    Lost // 패배 시 UI 
 }
+
 
 public class BattleManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class BattleManager : MonoBehaviour
 
     public BattleState battleState;
 
-    [Header("# �÷��̾� �� ����")]
+    [Header("플레이어 및 몬스터")]
     public GameObject player;
     public List<GameObject> monsters = new List<GameObject>();
 
@@ -27,7 +28,7 @@ public class BattleManager : MonoBehaviour
 
     public bool isPlayerMove = false;
 
-    [Header("# UI ������Ʈ")]
+    [Header("# UI")]
     public GameObject[] ui;
     public Button turnEnd;
 
@@ -55,9 +56,7 @@ public class BattleManager : MonoBehaviour
             monster.gameObject.SetActive(true);
         }
 
-
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
-
 
         PlayerTurn();
     }
@@ -74,7 +73,6 @@ public class BattleManager : MonoBehaviour
     }
 
 
-
     public void MonsterTurn()
     {
         battleState = BattleState.MonsterTurn;
@@ -87,7 +85,6 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator NextMonster()
     {
-
         yield return new WaitForSeconds(delay);
 
         if (currentMonsterIndex < monsters.Count - 1)

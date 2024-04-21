@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a94fdc2bd86fc7845bf2ce18f3597543,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -199,6 +204,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DownPlatform1_LP
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94bd9f5d8ce33e34b9b782fd12261d13,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

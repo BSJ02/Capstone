@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ��ü ���� ��� Ŭ����
+/// 몬스터 담당 클래스
 /// </summary>
 /// 
 
@@ -24,25 +24,22 @@ public enum MonsterType
 
 public class Monster : MonoBehaviour
 {
-    public MonsterData monsterData; // ���͸��� �ش��ϴ� ������ �� �ֱ�
+    public MonsterData monsterData; 
 
     public MonsterState state;
     public MonsterType monsterType;
 
     private Animator anim;
-    private SpriteRenderer warning;
 
     protected bool isLive;
-    public float addDamage = 3;
+    public float critaical = 3; // CriticalDamage = MinDamage + critcal
 
     void Awake()
     {
         anim = GetComponent<Animator>();
-        warning = GetComponentInChildren<SpriteRenderer>();
 
-        isLive = true; // ������Ʈ Ȱ��ȭ �� 
-        monsterData.Hp = monsterData.MaxHp; // ������Ʈ Ȱ��ȭ �� 
-
+        isLive = true; 
+        monsterData.Hp = monsterData.MaxHp; 
     }
 
     void Start()
@@ -51,64 +48,46 @@ public class Monster : MonoBehaviour
     }
 
 
-    // [0] ���� �ʱ�ȭ
+    // [0] 애니메이션 초기화
     public void Init()
     {
         state = MonsterState.Idle;
         anim.SetInteger("State", (int)state);
     }
 
-    void Update()
+    // [1] 몬스터 공격 
+    public void ReadyToAttack(Player player)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            /*GetHit();*/
-            Die();
-        }
-        
-    }
-
-    // [1] �Ϲ� ���� ����
-    public void ReadyToAttack()
-    {
-        Player player = FindObjectOfType<Player>();
-
-        float playerHp = player.playerData.Hp;
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-        float critcalDamage = monsterData.MinDamage + addDamage;
+        float critcalDamage = monsterData.MinDamage + critaical;
 
-        playerHp -= randDamage;
-        
-        // ũ��Ƽ�� ����
-        if(randDamage >= critcalDamage)
+        player.playerData.Hp -= randDamage;
+
+        if (randDamage >= critcalDamage)
         {
             state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("�÷��̾� ü��:" + playerHp + $", ����{(int)randDamage} ġ��Ÿ ����!");
-            // ȿ���� + ��ƼŬ �� ȿ�� �ֱ�
+            Debug.Log("플레이어 체력:" + player.playerData.Hp + $", 크리티컬 공격:{(int)randDamage}");
             return;
         }
         else
         {
             state = MonsterState.Attack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("�÷��̾� ü��:" + (int)playerHp + $", ����{(int)randDamage} ����!");
-            // ȿ���� + ��ƼŬ �� ȿ�� �ֱ�
+            Debug.Log("플레이어 체력:" + (int)player.playerData.Hp + $", 일반 공격:{(int)randDamage}");
             return;
         }
     }
 
 
-    // [2] ���� �ǰ� ó��
+    // [2] 몬스터 피격
     public void GetHit(float damage)
     {
-        if (!isLive) 
+        if (!isLive)
             return;
 
         damage = FindObjectOfType<Player>().playerData.Damage;
         monsterData.Hp -= damage;
-
-        Debug.Log("���� ü��" + (int)monsterData.Hp);
 
         if (monsterData.Hp <= 0)
         {
@@ -117,33 +96,34 @@ public class Monster : MonoBehaviour
 
         state = MonsterState.GetHit;
         anim.SetInteger("State", (int)state);
+
     }
 
-    // [2-1] ���� �ǰ� �� �̺�Ʈ ó��
+    // [2-1] 피격 시 이벤트
     public void EventToGetHit()
     {
-        // GetHit ���� ���
-        // ���� �ǰ� �� Color ���� 
+        // 사운드 재생
+        // 피격 효과 
     }
 
 
-    // [3] ���� ��� ó��
+    // [3] 몬스터 사망
     public void Die()
     {
-        /*if (isLive) 
-            return;*/
+        if (isLive)
+            return;
 
-        // ���� ��� �� isWall ����
+        // isWall 해제
         MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
             anim.SetTrigger("Die");
     }
 
-    // [3-1] ���� ��� �� �̺�Ʈ ó��
+    // [3-1] 사망 후 이벤트
     public void EventToDie()
     {
-        // ��ƼŬ ����
-        // ���� ��� ���� ���
+        // 사운드 재생
+        // 사망 효과
     }
 }
