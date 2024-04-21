@@ -6,7 +6,6 @@ public class MonsterMove : MonoBehaviour
 {
     private Monster monster;
 
-    public int detectionRange = 1;
 
     Tile StartNode, TargetNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
@@ -23,7 +22,7 @@ public class MonsterMove : MonoBehaviour
 
     public void MoveStart()
     {
-        // ��ư Ŭ������ list �ʱ�ȭ 
+        // ����Ʈ �ʱ�ȭ 
         OpenList.Clear();
         CloseList.Clear();
 
@@ -32,36 +31,32 @@ public class MonsterMove : MonoBehaviour
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
 
-        // Ÿ�� ���� �ʱ�ȭ
+        // Ÿ�� ��ǥ �ʱ�ȭ
         MapGenerator.instance.ResetTotalMap();
 
     }
 
 
-    public void SetDestination() // StartNode, TargetNode �ʱ�ȭ
+    public void SetDestination() 
     {
-        
-        // ���� ��ǥ
         monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
-
-        // �÷��̾� ��ǥ
+      
         Vector3 player = FindObjectOfType<Player>().transform.position;
         playerPos = new Vector2Int((int)player.x, (int)player.z);
 
-        // �̵� �� 
         MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
 
         StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
         TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
 
-    public List<Vector2Int> PathFinding() // ��ã��
+    public List<Vector2Int> PathFinding() 
     {
         OpenList.Add(StartNode);
         
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ������ ã�� path ����(�ߺ� ����) 
+        // ����Ʈ �ߺ� ����
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -79,7 +74,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ��� �� ã��
+            // ��� ���� �� ã��
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
@@ -101,13 +96,16 @@ public class MonsterMove : MonoBehaviour
             OpenListAdd(CurrentNode.coord.x - 1, CurrentNode.coord.y);
         }
 
+        // �÷��̾� ��ǥ ����(��ħ ����)
         if(path.Count > 0)
-        path.RemoveAt(path.Count - 1); // Player ��ǥ ����, ��ħ ����
+        path.RemoveAt(path.Count - 1); 
 
         return path;
     }
 
-    public void OpenListAdd(int checkX, int checkY) // CurrentNode üũ
+
+    // ���� ��� üũ
+    public void OpenListAdd(int checkX, int checkY) 
     {
         if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
             return;
@@ -137,25 +135,27 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveSmoothly(List<Vector2Int> path) // ���� �̵� 
+
+    // ���� �̵�
+    public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // �ִ� �̵� �Ÿ�
+        // ���� �̵��Ÿ�
         int maxMoveDistance = monster.monsterData.MoveDistance;
-        Debug.Log("�̵��Ÿ� :" + maxMoveDistance + "ĭ");
 
         float moveSpeed = 1f;
-        float lerpMaxTime = 0.2f; // ���� �̵��ӵ� ����(�������� ������)
+        float lerpMaxTime = 0.2f; 
 
         for (int i = 0; i < path.Count - 1; i++)
         {
+            // ���� �̵��Ÿ��� �°� ����
             if (i >= maxMoveDistance)
                 break;
 
-            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y); // ���� ���� ��ǥ
-            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // ���� ���� ��ǥ 
+            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y); 
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y);
 
             float startTime = Time.time;
 
@@ -164,49 +164,48 @@ public class MonsterMove : MonoBehaviour
                 float currentTime = (Time.time - startTime) * moveSpeed;
                 float weight = currentTime / lerpMaxTime;
 
-                // ���� �̵�
                 transform.position = Vector3.Lerp(monsterPosition, nextPosition, weight);
-                // ���� �̵� ��ǥ ���� ȸ�� 
                 transform.LookAt(nextPosition);
                 yield return null;
             }
 
-            // ��ǥ�� �� ȸ���� ����
+            // ���� ��ġ �� ���� 
             transform.position = nextPosition;
-            // ȸ���� ���� �ڵ� �ʿ�
 
         }
 
-        // Path�� ���� ��ǥ
+        // ���� ���� ��ġ
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ���� ��ħ ����
-        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // ���� Ÿ�� isWal��
+        // ���� ��ġ�� isWall üũ(��ħ ����)
+        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
 
-        // Player ����
+        // ���� ��ġ �������� �÷��̾� ����
         GetSurroundingTiles(finalPosition);
 
+        // ���� �� ����
         StartCoroutine(EscapeMonsterTurn());
-
-        // �ڷ�ƾ ���� & �̵� ����
         yield break;
     }
 
-    // Player ����(3x3 Ÿ��)
+    // ���� �ֺ� Ÿ�� ����
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
+        int detectionRange = monster.monsterData.DetectionRagne;
+
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
         if(distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            // �÷��̾� ���� O
-            monster.ReadyToAttack();
+            // ���� O
+            Player player = FindObjectOfType<Player>();
+            monster.ReadyToAttack(player);
             return;
         }
         else
         {
-            // �÷��̾� ���� X
+            // ���� X
             monster.Init();
             return;
         }
