@@ -71,6 +71,8 @@
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEventListener.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEvent.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />

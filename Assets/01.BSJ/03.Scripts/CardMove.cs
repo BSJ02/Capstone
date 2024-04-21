@@ -156,7 +156,7 @@ public class CardMove : MonoBehaviour
     private void OnMouseDrag()
     {
         // 카드 클릭 & 대상 선택 & 카드 선택
-        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard)  
+        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim)  
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
