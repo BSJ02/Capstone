@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TurttleShell
   m_EditorClassIdentifier: 
   MonsterName: "\uAC00\uC2DC \uAC70\uBD81"
-  Id: 1
+  Id: 2
   Hp: 100
   MaxHp: 100
   IsBoss: 0
-  MoveDistance: 1
+  MoveDistance: 2
+  DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 2
   MaxDamage: 10
