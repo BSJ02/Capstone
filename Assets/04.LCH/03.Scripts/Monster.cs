@@ -41,7 +41,7 @@ public class Monster : MonoBehaviour
         warning = GetComponentInChildren<SpriteRenderer>();
 
         isLive = true; // ������Ʈ Ȱ��ȭ �� 
-        monsterData.Hp = monsterData.MaxHp; // ������Ʈ Ȱ��ȭ �� 
+        monsterData.Hp = monsterData.MaxHp; // ������Ʈ Ȱ��ȭ ��
 
     }
 
