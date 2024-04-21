@@ -72,8 +72,8 @@ public class BattleManager : MonoBehaviour
 
     public void PlayerTurn()
     {
-        //playerScript.ActivePointReset();
         cardManager.CreateRandomCard();
+
         isPlayerTurn = true;
 
         battleState = BattleState.PlayerTurn;
