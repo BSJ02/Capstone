@@ -10,7 +10,6 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{7F56E623-E214-5249-7A68-5A6003024663}</ProjectGuid>
     <ProjectGuid>{3B818AB6-3A52-A22C-0CB3-9F171E3BE56F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -974,17 +973,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Runtime.csproj">
-      <Project>{1E43A89D-88DE-E9DD-85B9-50563888E289}</Project>
-      <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Demo.csproj">
-      <Project>{FA33F588-D01F-4B7E-9E7A-472109C48276}</Project>
-      <Name>OccaSoftware.SuperSimpleSkybox.Demo</Name>
-    </ProjectReference>
-    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Editor.csproj">
-      <Project>{FE0BD25A-5864-13D6-C85D-9CE8DB78CC0B}</Project>
-      <Name>OccaSoftware.SuperSimpleSkybox.Editor</Name>
     <ProjectReference Include="Unity.Burst.Editor.csproj">
       <Project>{8D769A60-7956-EA2D-0D9B-05AF6069BC85}</Project>
       <Name>Unity.Burst.Editor</Name>
@@ -1004,6 +992,10 @@
     <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
       <Project>{B28A9D09-5F7C-2A8A-C62E-52C99E662559}</Project>
       <Name>Unity.VisualScripting.Shared.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Runtime.csproj">
+      <Project>{4A7DCDA0-412C-E24C-2B81-02A1EC641570}</Project>
+      <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
@@ -1061,6 +1053,10 @@
       <Project>{5A018995-AC8C-FB7C-2A88-814FC5F78DDF}</Project>
       <Name>Unity.Searcher.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Demo.csproj">
+      <Project>{63BB7A0B-B52A-9364-9933-C7378882FB90}</Project>
+      <Name>OccaSoftware.SuperSimpleSkybox.Demo</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
       <Project>{270D5960-7AA4-9615-C6BC-FF649A782134}</Project>
       <Name>Unity.VisualScripting.State</Name>
@@ -1068,6 +1064,10 @@
     <ProjectReference Include="Unity.VSCode.Editor.csproj">
       <Project>{BDEC6256-41FB-428E-7BAA-A1C535AD9547}</Project>
       <Name>Unity.VSCode.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Editor.csproj">
+      <Project>{5722E06C-C1D0-FF50-5C2B-2CB49C77BD63}</Project>
+      <Name>OccaSoftware.SuperSimpleSkybox.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

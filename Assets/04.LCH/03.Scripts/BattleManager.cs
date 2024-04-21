@@ -9,7 +9,7 @@ public enum BattleState
     PlayerTurn,
     MonsterTurn,
     Won, // ���� �������� �� �ε� 
-    Lost // �й� �� UI ���
+    Lost // �й� �� UI ���?
 }
 
 public class BattleManager : MonoBehaviour
@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
     public void Start()
     {
         battleState = BattleState.Start;
-        // Fade �ִϸ��̼� ���
+        // Fade �ִϸ��̼� ���?
 
         // �÷��̾� �� ���� Ȱ��ȭ
         player.gameObject.SetActive(true);
@@ -88,7 +88,7 @@ public class BattleManager : MonoBehaviour
     // ���� �ൿ ����
     IEnumerator NextMonster()
     {
-        // ��� ���
+        // ���?���?
         yield return new WaitForSeconds(delay);
 
         if (currentMonsterIndex < monsters.Count - 1)

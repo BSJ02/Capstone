@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ��ü ���� ��� Ŭ����
+/// ��ü ���� ���?Ŭ����
 /// </summary>
 /// 
 
@@ -65,7 +65,7 @@ public class Monster : MonoBehaviour
             /*GetHit();*/
             Die();
         }
-        
+
     }
 
     // [1] �Ϲ� ���� ����
@@ -78,14 +78,12 @@ public class Monster : MonoBehaviour
         float critcalDamage = monsterData.MinDamage + addDamage;
 
         playerHp -= randDamage;
-        
-        // ũ��Ƽ�� ����
-        if(randDamage >= critcalDamage)
+
+        if (randDamage >= critcalDamage)
         {
             state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("�÷��̾� ü��:" + playerHp + $", ����{(int)randDamage} ġ��Ÿ ����!");
-            // ȿ���� + ��ƼŬ �� ȿ�� �ֱ�
+            Debug.Log("�÷��̾�:" + playerHp + $", ����{(int)randDamage} ġ��Ÿ ����!");
             return;
         }
         else
@@ -93,7 +91,6 @@ public class Monster : MonoBehaviour
             state = MonsterState.Attack;
             anim.SetInteger("State", (int)state);
             Debug.Log("�÷��̾� ü��:" + (int)playerHp + $", ����{(int)randDamage} ����!");
-            // ȿ���� + ��ƼŬ �� ȿ�� �ֱ�
             return;
         }
     }
@@ -102,7 +99,7 @@ public class Monster : MonoBehaviour
     // [2] ���� �ǰ� ó��
     public void GetHit()
     {
-        if (!isLive) 
+        if (!isLive)
             return;
 
         float playerDamage = FindObjectOfType<Player>().playerData.Damage;
@@ -123,28 +120,28 @@ public class Monster : MonoBehaviour
     // [2-1] ���� �ǰ� �� �̺�Ʈ ó��
     public void EventToGetHit()
     {
-        // GetHit ���� ���
+        // GetHit ���� ���?
         // ���� �ǰ� �� Color ���� 
     }
 
 
-    // [3] ���� ��� ó��
+    // [3] ���� ���?ó��
     public void Die()
     {
         /*if (isLive) 
             return;*/
 
-        // ���� ��� �� isWall ����
+        // ���� ���?�� isWall ����
         MapGenerator.instatnce.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
-            anim.SetTrigger("Die");
+        anim.SetTrigger("Die");
     }
 
-    // [3-1] ���� ��� �� �̺�Ʈ ó��
+    // [3-1] ���� ���?�� �̺�Ʈ ó��
     public void EventToDie()
     {
         // ��ƼŬ ����
-        // ���� ��� ���� ���
+        // ���� ���?���� ���?    
     }
 }

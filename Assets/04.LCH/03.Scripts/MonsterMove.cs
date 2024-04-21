@@ -79,7 +79,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ��� �� ã��
+            // ���?�� ã��
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
