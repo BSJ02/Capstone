@@ -78,19 +78,22 @@ public class Monster : MonoBehaviour
         float critcalDamage = monsterData.MinDamage + addDamage;
 
         playerHp -= randDamage;
-
+        
+        // 크리티컬 공격
         if(randDamage >= critcalDamage)
         {
             state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("플레이어 체력:" + playerHp + $"몬스터{(int)randDamage} 치명타 공격!");
+            Debug.Log("플레이어 체력:" + playerHp + $", 몬스터{(int)randDamage} 치명타 공격!");
+            // 효과음 + 파티클 등 효과 넣기
             return;
         }
         else
         {
             state = MonsterState.Attack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("플레이어 체력:" + (int)playerHp + $"몬스터{(int)randDamage} 공격!");
+            Debug.Log("플레이어 체력:" + (int)playerHp + $", 몬스터{(int)randDamage} 공격!");
+            // 효과음 + 파티클 등 효과 넣기
             return;
         }
     }
@@ -117,12 +120,11 @@ public class Monster : MonoBehaviour
 
     }
 
-    // [2] 몬스터 피격 후 이벤트 처리
+    // [2-1] 몬스터 피격 후 이벤트 처리
     public void EventToGetHit()
     {
         // GetHit 사운드 재생
         // 몬스터 피격 시 Color 변경 
-        
     }
 
 

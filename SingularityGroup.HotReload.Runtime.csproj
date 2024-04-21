@@ -9,11 +9,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
-    <ProjectGuid>{3B818AB6-3A52-A22C-0CB3-9F171E3BE56F}</ProjectGuid>
+    <RootNamespace>SingularityGroup.HotReload</RootNamespace>
+    <ProjectGuid>{196C217A-CB47-2C5F-43F8-B0EC9130F6A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
+    <AssemblyName>SingularityGroup.HotReload.Runtime</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -27,7 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -50,7 +50,7 @@
     <UnityProjectGenerator>Package</UnityProjectGenerator>
     <UnityProjectGeneratorVersion>2.0.22</UnityProjectGeneratorVersion>
     <UnityProjectGeneratorStyle>Legacy</UnityProjectGeneratorStyle>
-    <UnityProjectType>GamePlugins:3</UnityProjectType>
+    <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2022.3.14f1</UnityVersion>
   </PropertyGroup>
@@ -60,19 +60,51 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
-    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\PersistencePaths.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MonoBehaviours\RetryDialog.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MonoBehaviours\QuestionDialog.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MethodCompatiblity.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\RequestHelper.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\PlayerCodePatcher.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\TaskExtensions.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\SymbolResolver.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\OnHotReloadDispatch.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MonoMethod.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\AppCallbackListener.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\CodePatcher.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MonoBehaviours\ConnectionDialog.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\IServerHealthCheck.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MethodUtils.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\ServerHandshake.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\PlayerEntrypoint.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\ServerHealthCheck.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Demo\Scripts\HotReloadBurstJobsDemo.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\PackageConst.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Demo\Scripts\IDemo.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MonoBehaviours\Prompts.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\BuildInfo.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\ThreadUtility.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\HotReloadSettingsObject.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\PatchServerInfo.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\UnityHelper.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\BurstChecker.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\IpHelper.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\MethodPatchResponsesConverter.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Demo\Scripts\HotReloadBasicDemo.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Burst\JobHotReloadUtility.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\InstallQRDialog.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\SymbolResolvingFailedException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.XML" />
-    <None Include="Assets\Plugins\Demigiant\DOTween\DOTween.dll" />
-    <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\OnDevice\SingularityGroup.HotReload.RuntimeDependencies.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\OnDevice\SingularityGroup.HotReload.RuntimeDependencies2020.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\SingularityGroup.HotReload.Runtime.asmdef" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2020.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2019.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\OnDevice\SingularityGroup.HotReload.RuntimeDependencies2022.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2022.dll" />
+    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Libs\OnDevice\SingularityGroup.HotReload.RuntimeDependencies2019.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -407,12 +439,20 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    <Reference Include="SingularityGroup.HotReload.RuntimeDependencies">
+      <HintPath>Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    <Reference Include="SingularityGroup.HotReload.RuntimeDependencies2019">
+      <HintPath>Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2019.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SingularityGroup.HotReload.RuntimeDependencies2022">
+      <HintPath>Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2022.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SingularityGroup.HotReload.RuntimeDependencies2020">
+      <HintPath>Packages\com.singularitygroup.hotreload\Runtime\Libs\EditorOnly\SingularityGroup.HotReload.RuntimeDependencies2020.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Android.Types">
@@ -915,22 +955,6 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
       <Private>False</Private>
@@ -939,123 +963,11 @@
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PPv2URPConverters">
-      <HintPath>Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{8D769A60-7956-EA2D-0D9B-05AF6069BC85}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{889C699D-9B1C-4301-086E-80B4571A3197}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{F67E9715-A330-E330-092E-46E10DB07B9C}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{D4856B63-6835-527E-9454-8599BD1515B1}</Project>
-      <Name>Unity.Timeline.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
-      <Project>{B28A9D09-5F7C-2A8A-C62E-52C99E662559}</Project>
-      <Name>Unity.VisualScripting.Shared.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
-      <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
-      <Name>Unity.VisualStudio.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.csproj">
-      <Project>{92CE7846-4FBB-84BE-240C-DF20FEA8E892}</Project>
-      <Name>Unity.VisualScripting.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj">
-      <Project>{CEB58528-C4F0-5C44-802A-BC5238E9B1E1}</Project>
-      <Name>Unity.VisualScripting.Core.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{13213BE4-2023-A275-6D78-4594A2A8637E}</Project>
-      <Name>Unity.Rider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
-      <Project>{7EE384B3-D289-A4BC-8509-8A40DBF0971A}</Project>
-      <Name>Unity.VisualScripting.Flow</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj">
-      <Project>{628C4619-0400-02BD-A6F0-C1692E3B6520}</Project>
-      <Name>Unity.VisualScripting.Flow.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
-      <Project>{4DAC98EC-554B-6D24-5F0F-34601CCDCCE8}</Project>
-      <Name>Unity.Mathematics.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{847CB78C-CE26-3B65-1918-F76E4E17C84C}</Project>
-      <Name>Unity.Timeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj">
-      <Project>{854701F2-91DB-0143-498F-1454EBA695C6}</Project>
-      <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
-      <Project>{13448129-0462-3867-7326-75C5B35C5E69}</Project>
-      <Name>Unity.VisualScripting.State.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{16AFEA09-33B0-2F74-E772-AB91D4D96425}</Project>
-      <Name>Unity.Mathematics</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{CCABE9F5-A600-E2F0-7815-E0F7B194F035}</Project>
-      <Name>Unity.TextMeshPro</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
-      <Project>{7EE499AB-519D-DFE8-EF82-394B7EEF8DEF}</Project>
-      <Name>Unity.TextMeshPro.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Searcher.Editor.csproj">
-      <Project>{5A018995-AC8C-FB7C-2A88-814FC5F78DDF}</Project>
-      <Name>Unity.Searcher.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.State.csproj">
-      <Project>{270D5960-7AA4-9615-C6BC-FF649A782134}</Project>
-      <Name>Unity.VisualScripting.State</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VSCode.Editor.csproj">
-      <Project>{BDEC6256-41FB-428E-7BAA-A1C535AD9547}</Project>
-      <Name>Unity.VSCode.Editor</Name>
+    <ProjectReference Include="SingularityGroup.HotReload.Runtime.Public.csproj">
+      <Project>{68935E6F-7396-574E-D04E-7A449144B7D7}</Project>
+      <Name>SingularityGroup.HotReload.Runtime.Public</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

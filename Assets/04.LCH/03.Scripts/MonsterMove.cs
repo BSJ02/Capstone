@@ -21,7 +21,7 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    public void ButtonClick()
+    public void MoveStart()
     {
         // 버튼 클릭마다 list 초기화 
         OpenList.Clear();
@@ -34,6 +34,7 @@ public class MonsterMove : MonoBehaviour
 
         // 타일 정보 초기화
         MapGenerator.instatnce.ResetTotalMap();
+
     }
 
 
@@ -185,6 +186,8 @@ public class MonsterMove : MonoBehaviour
         // Player 감지
         GetSurroundingTiles(finalPosition);
 
+        StartCoroutine(EscapeMonsterTurn());
+
         // 코루틴 종료 & 이동 종료
         yield break;
     }
@@ -207,9 +210,14 @@ public class MonsterMove : MonoBehaviour
             monster.Init();
             return;
         }
+    }
 
-        // TurnManager 턴 바꾸기(Monster Turn -> Player Turn)
-
+    // Player 턴 넘김
+    IEnumerator EscapeMonsterTurn()
+    {
+        yield return new WaitForSeconds(2f);
+        BattleManager.instance.ui[1].gameObject.SetActive(false);
+        BattleManager.instance.PlayerTurn();
     }
 }
 
