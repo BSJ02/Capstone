@@ -84,7 +84,6 @@ public class BattleManager : MonoBehaviour
     }
 
 
-
     public void MonsterTurn()
     {
         isPlayerTurn = false;

@@ -18,10 +18,10 @@ public class PlayerMoveTest : MonoBehaviour
     List<Tile> CloseList = new List<Tile>();
 
     public int detectionRange = 1;
-    private List<Monster> detectedMonsters = new List<Monster>(); // °¨ÁöµÈ ¸ó½ºÅÍ ¸®½ºÆ®
-    private Monster clickedMonster; // Å¬¸¯µÈ ¸ó½ºÅÍ ÀúÀå º¯¼ö
+    private List<Monster> detectedMonsters = new List<Monster>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    private Monster clickedMonster; // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    public bool isMoving = false; // ÀÌµ¿ ÁßÀÎÁö ¿©ºÎ
+    private bool isMoving = false; // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public void SetDestination(Vector2Int clickedTargetPos)
     {
@@ -39,7 +39,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving && player.activePoint > 0)
+        if (Input.GetMouseButtonDown(0) && !isMoving && battleManager.isPlayerMove)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -48,11 +48,11 @@ public class PlayerMoveTest : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
-                    // Å¸ÀÏÀ» Å¬¸¯ÇßÀ» ¶§ ÇÃ·¹ÀÌ¾î ÀÌµ¿
+                    // Å¸ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
 
-                    // targetÀÇ À§Ä¡ ¼³Á¤
-                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord); // Å¬¸¯ÇÑ ÁÂÇ¥°ª = targetPos
+                    // targetï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord); // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ = targetPos
 
                     OpenList.Clear();
                     CloseList.Clear();
@@ -62,16 +62,16 @@ public class PlayerMoveTest : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
 
-                // Å¬¸¯µÈ °ÍÀÌ ¸ó½ºÅÍÀÎÁö È®ÀÎ
+                // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
                 if (hit.collider.CompareTag("Monster"))
                 {
-                    // Å¬¸¯µÈ ¸ó½ºÅÍ ÀúÀå
+                    // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     clickedMonster = hit.collider.GetComponent<Monster>();
 
-                    // °¨ÁöµÈ ¸ó½ºÅÍ ¸®½ºÆ®¿¡ ÀÖ´ÂÁö È®ÀÎ
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-                        // Å¬¸¯µÈ ¸ó½ºÅÍ¿¡°Ô ÀÏÁ¤ÇÑ ÇÔ¼ö ½ÇÇà
+                        // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
                         player.ReadyToAttack(clickedMonster);
                     }
                 }
@@ -88,7 +88,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ±âÁ¸¿¡ Ã£Àº path »èÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ path ï¿½ï¿½ï¿½ï¿½
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -106,7 +106,7 @@ public class PlayerMoveTest : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ¸ðµç ±æ Ã£À½
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½
             if (CurrentNode == EndNode)
             {
                 Tile currentNode = EndNode;
@@ -119,9 +119,9 @@ public class PlayerMoveTest : MonoBehaviour
 
                 path.Reverse();
 
-                //foreach (var pos in path) // ÁÂÇ¥ ÃøÁ¤
+                //foreach (var pos in path) // ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
                 //{
-                //    Debug.Log("XÃà:" + pos.x + "YÃà:" + pos.y);
+                //    Debug.Log("Xï¿½ï¿½:" + pos.x + "Yï¿½ï¿½:" + pos.y);
                 //}
 
                 break;
@@ -138,7 +138,7 @@ public class PlayerMoveTest : MonoBehaviour
 
 
 
-    // Å¬¸¯ÇÑ ÁÂÇ¥ ¹ÝÈ¯
+    // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½È¯
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
@@ -158,8 +158,8 @@ public class PlayerMoveTest : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, transform.position.y, path[i].y); // X¿Í Y ÁÂÇ¥¸¦ Mathf.Round¸¦ »ç¿ëÇÏ¿© °¡Àå °¡±î¿î Á¤¼ö·Î ¹Ý¿Ã¸²
-            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // µµÂøÁöÁ¡ ÁÂÇ¥µµ Á¤¼ö·Î ¹Ý¿Ã¸²
+            Vector3 playerPos = new Vector3(path[i].x, transform.position.y, path[i].y); // Xï¿½ï¿½ Y ï¿½ï¿½Ç¥ï¿½ï¿½ Mathf.Roundï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿Ã¸ï¿½
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿Ã¸ï¿½
 
             float startTime = Time.time;
 
@@ -177,7 +177,7 @@ public class PlayerMoveTest : MonoBehaviour
 
             player.activePoint--;
 
-            // ¸ðµç Å¸ÀÏÀ» ÀÌµ¿Çß´ÂÁö È®ÀÎ
+            // ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ß´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             if (0 >= player.activePoint)
                 break;
         }
@@ -186,10 +186,10 @@ public class PlayerMoveTest : MonoBehaviour
         transform.gameObject.GetComponent<Collider>().enabled = true;
         player.playerState = PlayerState.Idle;
 
-        // PathÀÇ ÃÖÁ¾ ÁÂÇ¥
+        // Pathï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // Monster °¨Áö ½ÇÇà
+        // Monster ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GetSurroundingTiles(finalPosition);
 
         yield break;
@@ -229,36 +229,36 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ ÁßÀÌ ¾Æ´Ï¶ó¸é Å¬¸¯ ÀÌº¥Æ®¸¦ Ã³¸® (¼öÁ¤ Ç×¸ñ)
+        // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½)
         if (!isMoving)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ Å¬¸¯ÇßÀ» ¶§ ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ Ç¥½Ã
+            // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
             mapGenerator.HighlightPlayerRange(transform.position, player.activePoint);
         }
     }
 
-    // Monster °¨Áö(3x3 Å¸ÀÏ)
+    // Monster ï¿½ï¿½ï¿½ï¿½(3x3 Å¸ï¿½ï¿½)
 
-    // ÇÃ·¹ÀÌ¾î ÁÖº¯ÀÇ Å¸ÀÏÀ» °Ë»çÇÏ¿© ¸ó½ºÅÍ¸¦ °¨Áö
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Öºï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
-        // °¨ÁöµÈ ¸ó½ºÅÍ ¸®½ºÆ® ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         detectedMonsters.Clear();
 
-        // ¸ðµç ¸ó½ºÅÍ Ã£±â
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
         Monster[] monsters = FindObjectsOfType<Monster>();
 
         foreach (Monster m in monsters)
         {
-            // ¸ó½ºÅÍ À§Ä¡
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
             Vector3 monsterPosition = m.transform.position;
             Vector2Int monsterPos = new Vector2Int((int)monsterPosition.x, (int)monsterPosition.z);
 
-            // ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍ °£ÀÇ °Å¸® °è»ê
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
             int distanceX = Mathf.Abs(playerPos.x - monsterPos.x);
             int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
 
-            // °Å¸®°¡ °¨Áö ¹üÀ§ ÀÌ³»¶ó¸é ¸ó½ºÅÍ¸¦ ¸®½ºÆ®¿¡ Ãß°¡
+            // ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
             if (distanceX <= detectionRange && distanceY <= detectionRange)
             {
                 detectedMonsters.Add(m);
@@ -266,6 +266,6 @@ public class PlayerMoveTest : MonoBehaviour
             }
         }
 
-        // °¨ÁöµÈ ¸ó½ºÅÍ¿¡ ´ëÇÑ Ãß°¡ÀûÀÎ Ã³¸® ¼öÇà °¡´É
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 }
