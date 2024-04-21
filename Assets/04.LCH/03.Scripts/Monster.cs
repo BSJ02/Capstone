@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÀüÃ¼ ¸ó½ºÅÍ ´ã´ç Å¬·¡½º
+/// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 /// 
 
@@ -24,7 +24,7 @@ public enum MonsterType
 
 public class Monster : MonoBehaviour
 {
-    public MonsterData monsterData; // ¸ó½ºÅÍ¸¶´Ù ÇØ´çÇÏ´Â µ¥ÀÌÅÍ °ª ³Ö±â
+    public MonsterData monsterData; // ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö±ï¿½
 
     public MonsterState state;
     public MonsterType monsterType;
@@ -40,8 +40,8 @@ public class Monster : MonoBehaviour
         anim = GetComponent<Animator>();
         warning = GetComponentInChildren<SpriteRenderer>();
 
-        isLive = true; // ¿ÀºêÁ§Æ® È°¼ºÈ­ ½Ã 
-        monsterData.Hp = monsterData.MaxHp; // ¿ÀºêÁ§Æ® È°¼ºÈ­ ½Ã 
+        isLive = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È°ï¿½ï¿½È­ ï¿½ï¿½ 
+        monsterData.Hp = monsterData.MaxHp; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È°ï¿½ï¿½È­ ï¿½ï¿½ 
 
     }
 
@@ -51,7 +51,7 @@ public class Monster : MonoBehaviour
     }
 
 
-    // [0] ¸ó½ºÅÍ ÃÊ±âÈ­
+    // [0] ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
     public void Init()
     {
         state = MonsterState.Idle;
@@ -68,7 +68,7 @@ public class Monster : MonoBehaviour
         
     }
 
-    // [1] ÀÏ¹Ý ¸ó½ºÅÍ °ø°Ý
+    // [1] ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void ReadyToAttack()
     {
         Player player = FindObjectOfType<Player>();
@@ -79,27 +79,27 @@ public class Monster : MonoBehaviour
 
         playerHp -= randDamage;
         
-        // Å©¸®Æ¼ÄÃ °ø°Ý
+        // Å©ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(randDamage >= critcalDamage)
         {
             state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â:" + playerHp + $", ¸ó½ºÅÍ{(int)randDamage} Ä¡¸íÅ¸ °ø°Ý!");
-            // È¿°úÀ½ + ÆÄÆ¼Å¬ µî È¿°ú ³Ö±â
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½:" + playerHp + $", ï¿½ï¿½ï¿½ï¿½{(int)randDamage} Ä¡ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½!");
+            // È¿ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½Ö±ï¿½
             return;
         }
         else
         {
             state = MonsterState.Attack;
             anim.SetInteger("State", (int)state);
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â:" + (int)playerHp + $", ¸ó½ºÅÍ{(int)randDamage} °ø°Ý!");
-            // È¿°úÀ½ + ÆÄÆ¼Å¬ µî È¿°ú ³Ö±â
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½:" + (int)playerHp + $", ï¿½ï¿½ï¿½ï¿½{(int)randDamage} ï¿½ï¿½ï¿½ï¿½!");
+            // È¿ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ È¿ï¿½ï¿½ ï¿½Ö±ï¿½
             return;
         }
     }
 
 
-    // [2] ¸ó½ºÅÍ ÇÇ°Ý Ã³¸®
+    // [2] ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ Ã³ï¿½ï¿½
     public void GetHit()
     {
         if (!isLive) 
@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour
         float playerDamage = FindObjectOfType<Player>().playerData.Damage;
         monsterData.Hp -= playerDamage;
 
-        Debug.Log("¸ó½ºÅÍ Ã¼·Â" + (int)monsterData.Hp);
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½" + (int)monsterData.Hp);
 
         if (monsterData.Hp <= 0)
         {
@@ -120,31 +120,31 @@ public class Monster : MonoBehaviour
 
     }
 
-    // [2-1] ¸ó½ºÅÍ ÇÇ°Ý ÈÄ ÀÌº¥Æ® Ã³¸®
+    // [2-1] ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® Ã³ï¿½ï¿½
     public void EventToGetHit()
     {
-        // GetHit »ç¿îµå Àç»ý
-        // ¸ó½ºÅÍ ÇÇ°Ý ½Ã Color º¯°æ 
+        // GetHit ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½ï¿½ Color ï¿½ï¿½ï¿½ï¿½ 
     }
 
 
-    // [3] ¸ó½ºÅÍ »ç¸Á Ã³¸®
+    // [3] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     public void Die()
     {
         /*if (isLive) 
             return;*/
 
-        // ¸ó½ºÅÍ »ç¸Á ½Ã isWall ÇØÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ isWall ï¿½ï¿½ï¿½ï¿½
         MapGenerator.instatnce.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
             anim.SetTrigger("Die");
     }
 
-    // [3-1] ¸ó½ºÅÍ »ç¸Á ÈÄ ÀÌº¥Æ® Ã³¸®
+    // [3-1] ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® Ã³ï¿½ï¿½
     public void EventToDie()
     {
-        // ÆÄÆ¼Å¬ »ý¼º
-        // ¸ó½ºÅÍ »ç¸Á »ç¿îµå Àç»ý
+        // ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
 }

@@ -8,8 +8,8 @@ public enum BattleState
     Start,
     PlayerTurn,
     MonsterTurn,
-    Won, // ´ÙÀ½ ½ºÅ×ÀÌÁö ¾À ·Îµå 
-    Lost // ÆÐ¹è ½Ã UI ¶ç¿ò
+    Won, // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ 
+    Lost // ï¿½Ð¹ï¿½ ï¿½ï¿½ UI ï¿½ï¿½ï¿½
 }
 
 public class BattleManager : MonoBehaviour
@@ -18,7 +18,7 @@ public class BattleManager : MonoBehaviour
 
     public BattleState battleState;
 
-    [Header("# ÇÃ·¹ÀÌ¾î ¹× ¸ó½ºÅÍ")]
+    [Header("# ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public GameObject player;
     public List<GameObject> monsters = new List<GameObject>();
 
@@ -26,7 +26,7 @@ public class BattleManager : MonoBehaviour
     private float delay = 1.5f;
 
 
-    [Header("# UI ¿ÀºêÁ§Æ®")]
+    [Header("# UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®")]
     public GameObject[] ui;
     public Button turnEnd;
 
@@ -47,48 +47,48 @@ public class BattleManager : MonoBehaviour
     public void Start()
     {
         battleState = BattleState.Start;
-        // Fade ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        // Fade ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
 
-        // ÇÃ·¹ÀÌ¾î ¹× ¸ó½ºÅÍ È°¼ºÈ­
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         player.gameObject.SetActive(true);
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
         }
 
-        // ¸Ê »ý¼º
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         MapGenerator.instatnce.CreateMap(MapGenerator.instatnce.garo, MapGenerator.instatnce.sero);
 
-        // ÇÃ·¹ÀÌ¾î ½ÃÀÛ 
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         PlayerTurn();
     }
 
     
-    // ÇÃ·¹ÀÌ¾î ÅÏ
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½
     public void PlayerTurn()
     {
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
-        turnEnd.interactable = true;  // ¹öÆ° Á¦¾î
+        turnEnd.interactable = true;  // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½
     }
 
 
-    // ¸ó½ºÅÍ ÅÏ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     public void MonsterTurn()
     {
         battleState = BattleState.MonsterTurn;
         ui[1].gameObject.SetActive(true);
         ui[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
-        turnEnd.interactable = false;  // ¹öÆ° Á¦¾î
+        turnEnd.interactable = false;  // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(NextMonster());
     }
 
 
-    // ¸ó½ºÅÍ Çàµ¿ ½ÃÀÛ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
     IEnumerator NextMonster()
     {
-        // Àá½Ã ´ë±â
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(delay);
 
         if (currentMonsterIndex < monsters.Count - 1)
@@ -96,7 +96,7 @@ public class BattleManager : MonoBehaviour
             currentMonsterIndex++;
             monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
 
-            // ÀÎµ¦½º ÃÊ±âÈ­
+            // ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
             if (currentMonsterIndex == monsters.Count - 1)
             {
                 /*monsters[currentMonsterIndex].GetComponent<MonsterData>().IncreaseDamage(1);*/
