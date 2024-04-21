@@ -291,11 +291,6 @@ public class CardManager : MonoBehaviour
             float duration = 0.2f;  // 이동에 걸리는 시간
 
             CardOrder cardOrder = cardObject[i].GetComponent<CardOrder>();
-            if (cardOrder == null)
-            {
-                Debug.Log("없음");
-                cardOrder = cardObject[i].AddComponent<CardOrder>();
-            }
             cardOrder.SetOrder(i);
             
             float newPosX = startingPosX + i * cardToDistance;  // 새로운 X 좌표 계산

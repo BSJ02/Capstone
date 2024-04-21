@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
     // 플레이어 공격
     public void ReadyToAttack(Monster monster)
     {
-
         float monsterHp = monster.monsterData.Hp;
         float randDamage = Random.Range(playerData.Damage, playerData.Damage);
         //float critcalDamage = monsterData.MinDamage + addDamage;
@@ -60,6 +59,9 @@ public class Player : MonoBehaviour
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack;
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"플레이어{(int)randDamage} 공격!");
+
+
+        monster.GetHit(playerData.Damage);
 
         return;
     }

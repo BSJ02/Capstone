@@ -7,6 +7,7 @@ public class PlayerMoveTest : MonoBehaviour
 {
     public MapGenerator mapGenerator;
     public Player player;
+    private BattleManager battleManager;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -31,9 +32,14 @@ public class PlayerMoveTest : MonoBehaviour
         EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
     }
 
+    private void Start()
+    {
+        battleManager = FindObjectOfType<BattleManager>();
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving)
+        if (Input.GetMouseButtonDown(0) && !isMoving && battleManager.isPlayerMove)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -66,11 +72,12 @@ public class PlayerMoveTest : MonoBehaviour
                     if (detectedMonsters.Contains(clickedMonster))
                     {
                         // 클릭된 몬스터에게 일정한 함수 실행
-                        player.ReadyToAttack(clickedMonster); 
+                        player.ReadyToAttack(clickedMonster);
                     }
                 }
 
             }
+            
         }
 
     }

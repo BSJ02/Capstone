@@ -20,4 +20,21 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         animator.SetTrigger("Charge");
     }
+
+    public void DashAnim()
+    {
+        animator.SetTrigger("Defend");
+    }
+
+    public void StabAnim()
+    {
+        animator.SetTrigger("Stab");
+    }
+
+    public void DefendAnim()
+    {
+        animator.SetTrigger("Defend");
+    }
+
+    
 }

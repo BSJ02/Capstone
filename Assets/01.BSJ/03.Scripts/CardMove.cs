@@ -10,6 +10,8 @@ public class CardMove : MonoBehaviour
 {
     private CardData cardData;
     private CardManager cardManager;
+    private BattleManager battleManager;
+
     private Vector3 offset;
     private float distanceToCamera;
     private Vector3 originalScale;   // 기본 크기
@@ -26,6 +28,7 @@ public class CardMove : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
         cardData = FindObjectOfType<CardData>();
+        battleManager = FindObjectOfType<BattleManager>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
@@ -145,7 +148,7 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardData.waitForInput)
+            else if (!cardData.waitForInput && !cardManager.waitAddCard)
             {
                 cardManager.useCardPanelPrefab.SetActive(true);
             }
@@ -156,7 +159,7 @@ public class CardMove : MonoBehaviour
     private void OnMouseDrag()
     {
         // 카드 클릭 & 대상 선택 & 카드 선택
-        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim)  
+        if (clickOnCard && !cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim && !battleManager.isPlayerMove)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
