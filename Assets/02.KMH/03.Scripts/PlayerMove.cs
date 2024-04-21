@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public MapGenerator mapGenerator;
+    //public MapGenerator mapGenerator;
     public Player player;
 
     Vector2Int playerPos;
@@ -25,8 +25,8 @@ public class PlayerMove : MonoBehaviour
         playerPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
 
-        StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
-        EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
+        StartNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
+        EndNode = MapGenerator.instance.totalMap[targetPos.x, targetPos.y];
     }
 
     private void Update()
@@ -38,7 +38,7 @@ public class PlayerMove : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
+                if (hit.collider.CompareTag("Tile") && MapGenerator.instance.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
                     // 타일을 클릭했을 때 플레이어 이동
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
@@ -51,7 +51,7 @@ public class PlayerMove : MonoBehaviour
                     SetDestination(targetPos);
                     List<Vector2Int> move = PathFinding();
                     StartCoroutine(MoveSmoothly(move));
-                    mapGenerator.ResetTotalMap();
+                    MapGenerator.instance.ResetTotalMap();
                 }
             }
         }
@@ -118,7 +118,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
-        mapGenerator.ClearHighlightedTiles();
+        MapGenerator.instance.ClearHighlightedTiles();
         return clickedCoord;
     }
 
@@ -176,30 +176,30 @@ public class PlayerMove : MonoBehaviour
 
     public void OpenListAdd(int checkX, int checkY)
     {
-        if (checkX < 0 || checkX >= mapGenerator.totalMap.GetLength(0) || checkY < 0 || checkY >= mapGenerator.totalMap.GetLength(1))
+        if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
             return;
 
-        if (CloseList.Contains(mapGenerator.totalMap[checkX, checkY]))
+        if (CloseList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
             return;
 
-        if (mapGenerator.totalMap[checkX, checkY].coord.isWall)
+        if (MapGenerator.instance.totalMap[checkX, checkY].coord.isWall)
             return;
 
-        if (OpenList.Contains(mapGenerator.totalMap[checkX, checkY]))
+        if (OpenList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
         {
             int newG = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            if (newG < mapGenerator.totalMap[checkX, checkY].coord.G)
+            if (newG < MapGenerator.instance.totalMap[checkX, checkY].coord.G)
             {
-                mapGenerator.totalMap[checkX, checkY].coord.G = newG;
-                mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.G = newG;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
             }
         }
         else
         {
-            mapGenerator.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            mapGenerator.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - EndNode.coord.x) + Mathf.Abs(checkY - EndNode.coord.y)) * 10;
-            mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
-            OpenList.Add(mapGenerator.totalMap[checkX, checkY]);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - EndNode.coord.x) + Mathf.Abs(checkY - EndNode.coord.y)) * 10;
+            MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+            OpenList.Add(MapGenerator.instance.totalMap[checkX, checkY]);
         }
     }
 
@@ -209,7 +209,7 @@ public class PlayerMove : MonoBehaviour
         if (!isMoving)
         {
             // 플레이어를 클릭했을 때 이동 가능한 범위 표시
-            mapGenerator.HighlightPlayerRange(transform.position, player.activePoint);
+            MapGenerator.instance.HighlightPlayerRange(transform.position, player.activePoint);
         }
     }
 

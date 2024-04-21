@@ -33,7 +33,7 @@ public class MonsterMove : MonoBehaviour
         StartCoroutine(MoveSmoothly(move));
 
         // Ÿ�� ���� �ʱ�ȭ
-        MapGenerator.instatnce.ResetTotalMap();
+        MapGenerator.instance.ResetTotalMap();
 
     }
 
@@ -49,10 +49,10 @@ public class MonsterMove : MonoBehaviour
         playerPos = new Vector2Int((int)player.x, (int)player.z);
 
         // �̵� �� 
-        MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
 
-        StartNode = MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y];
-        TargetNode = MapGenerator.instatnce.totalMap[playerPos.x, playerPos.y];
+        StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
+        TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
 
     public List<Vector2Int> PathFinding() // ��ã��
@@ -109,31 +109,31 @@ public class MonsterMove : MonoBehaviour
 
     public void OpenListAdd(int checkX, int checkY) // CurrentNode üũ
     {
-        if (checkX < 0 || checkX >= MapGenerator.instatnce.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instatnce.totalMap.GetLength(1))
+        if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
             return;
 
-        if (CloseList.Contains(MapGenerator.instatnce.totalMap[checkX, checkY]))
+        if (CloseList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
             return;
 
-        if (MapGenerator.instatnce.totalMap[checkX, checkY].coord.isWall)
+        if (MapGenerator.instance.totalMap[checkX, checkY].coord.isWall)
             return;
 
 
-        if (OpenList.Contains(MapGenerator.instatnce.totalMap[checkX, checkY]))
+        if (OpenList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
         {
             int newG = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            if (newG < MapGenerator.instatnce.totalMap[checkX, checkY].coord.G)
+            if (newG < MapGenerator.instance.totalMap[checkX, checkY].coord.G)
             {
-                MapGenerator.instatnce.totalMap[checkX, checkY].coord.G = newG;
-                MapGenerator.instatnce.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.G = newG;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
             }
         }
         else
         {
-            MapGenerator.instatnce.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            MapGenerator.instatnce.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - TargetNode.coord.x) + Mathf.Abs(checkY - TargetNode.coord.y)) * 10;
-            MapGenerator.instatnce.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
-            OpenList.Add(MapGenerator.instatnce.totalMap[checkX, checkY]);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - TargetNode.coord.x) + Mathf.Abs(checkY - TargetNode.coord.y)) * 10;
+            MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+            OpenList.Add(MapGenerator.instance.totalMap[checkX, checkY]);
         }
     }
 
@@ -181,7 +181,7 @@ public class MonsterMove : MonoBehaviour
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
         // ���� ��ħ ����
-        MapGenerator.instatnce.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // ���� Ÿ�� isWal��
+        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // ���� Ÿ�� isWal��
 
         // Player ����
         GetSurroundingTiles(finalPosition);

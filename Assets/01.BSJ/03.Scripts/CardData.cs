@@ -123,7 +123,9 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " 카드를 사용 / " + monster + " Hp: " + monster.monsterData.Hp);
-            monster.monsterData.Hp -= card.cardPower[0];
+
+            monster.GetHit(card.cardPower[0]);
+
             Debug.Log(monster + " Hp: " + monster.monsterData.Hp);
 
             // 카드 사용 애니메이션
