@@ -71,6 +71,8 @@
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEventListener.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameEvent.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerMoveTest.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
@@ -434,6 +437,18 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

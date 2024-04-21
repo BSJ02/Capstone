@@ -21,46 +21,47 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    public void ButtonClick()
+    public void MoveStart()
     {
-        // ¹öÆ° Å¬¸¯¸¶´Ù list ÃÊ±âÈ­ 
+        // ï¿½ï¿½Æ° Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ list ï¿½Ê±ï¿½È­ 
         OpenList.Clear();
         CloseList.Clear();
 
-        // ±æÃ£±â 
+        // ï¿½ï¿½Ã£ï¿½ï¿½ 
         SetDestination();
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
 
-        // Å¸ÀÏ Á¤º¸ ÃÊ±âÈ­
+        // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         MapGenerator.instatnce.ResetTotalMap();
+
     }
 
 
-    public void SetDestination() // StartNode, TargetNode ÃÊ±âÈ­
+    public void SetDestination() // StartNode, TargetNode ï¿½Ê±ï¿½È­
     {
         
-        // ¸ó½ºÅÍ ÁÂÇ¥
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
         monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ÇÃ·¹ÀÌ¾î ÁÂÇ¥
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ç¥
         Vector3 player = FindObjectOfType<Player>().transform.position;
         playerPos = new Vector2Int((int)player.x, (int)player.z);
 
-        // ÀÌµ¿ Àü 
+        // ï¿½Ìµï¿½ ï¿½ï¿½ 
         MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
 
         StartNode = MapGenerator.instatnce.totalMap[monsterPos.x, monsterPos.y];
         TargetNode = MapGenerator.instatnce.totalMap[playerPos.x, playerPos.y];
     }
 
-    public List<Vector2Int> PathFinding() // ±æÃ£±â
+    public List<Vector2Int> PathFinding() // ï¿½ï¿½Ã£ï¿½ï¿½
     {
         OpenList.Add(StartNode);
         
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ±âÁ¸¿¡ Ã£Àº path »èÁ¦(Áßº¹ ¹æÁö) 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ path ï¿½ï¿½ï¿½ï¿½(ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½) 
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -78,7 +79,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ¸ðµç ±æ Ã£À½
+            // ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
@@ -101,7 +102,7 @@ public class MonsterMove : MonoBehaviour
         }
 
         if(path.Count > 0)
-        path.RemoveAt(path.Count - 1); // Player ÁÂÇ¥ Á¦°Å, °ãÄ§ ¹æÁö
+        path.RemoveAt(path.Count - 1); // Player ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½
 
         return path;
     }
@@ -136,25 +137,25 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveSmoothly(List<Vector2Int> path) // ¹°¸® ÀÌµ¿ 
+    public IEnumerator MoveSmoothly(List<Vector2Int> path) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ 
     {
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // ÃÖ´ë ÀÌµ¿ °Å¸®
+        // ï¿½Ö´ï¿½ ï¿½Ìµï¿½ ï¿½Å¸ï¿½
         int maxMoveDistance = monster.monsterData.MoveDistance;
-        Debug.Log("ÀÌµ¿°Å¸® :" + maxMoveDistance + "Ä­");
+        Debug.Log("ï¿½Ìµï¿½ï¿½Å¸ï¿½ :" + maxMoveDistance + "Ä­");
 
         float moveSpeed = 1f;
-        float lerpMaxTime = 0.2f; // ¸ó½ºÅÍ ÀÌµ¿¼Óµµ ¼³Á¤(ÀÛÀ»¼ö·Ï »¡¶óÁü)
+        float lerpMaxTime = 0.2f; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
         for (int i = 0; i < path.Count - 1; i++)
         {
             if (i >= maxMoveDistance)
                 break;
 
-            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y); // ÇöÀç ¸ó½ºÅÍ ÁÂÇ¥
-            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // ´ÙÀ½ ¸ó½ºÅÍ ÁÂÇ¥ 
+            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ 
 
             float startTime = Time.time;
 
@@ -163,33 +164,35 @@ public class MonsterMove : MonoBehaviour
                 float currentTime = (Time.time - startTime) * moveSpeed;
                 float weight = currentTime / lerpMaxTime;
 
-                // ¸ó½ºÅÍ ÀÌµ¿
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
                 transform.position = Vector3.Lerp(monsterPosition, nextPosition, weight);
-                // ¸ó½ºÅÍ ÀÌµ¿ ÁÂÇ¥ ¹æÇâ È¸Àü 
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ 
                 transform.LookAt(nextPosition);
                 yield return null;
             }
 
-            // ¸ñÇ¥°ª ¹× È¸Àü°ª º¸Á¤
+            // ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             transform.position = nextPosition;
-            // È¸Àü°ª º¸Á¤ ÄÚµå ÇÊ¿ä
+            // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Ê¿ï¿½
 
         }
 
-        // PathÀÇ ÃÖÁ¾ ÁÂÇ¥
+        // Pathï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ¸ó½ºÅÍ °ãÄ§ ¹æÁö
-        MapGenerator.instatnce.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // ÇöÀç Å¸ÀÏ isWal¤Ó
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½
+        MapGenerator.instatnce.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ isWalï¿½ï¿½
 
-        // Player °¨Áö
+        // Player ï¿½ï¿½ï¿½ï¿½
         GetSurroundingTiles(finalPosition);
 
-        // ÄÚ·çÆ¾ Á¾·á & ÀÌµ¿ Á¾·á
+        StartCoroutine(EscapeMonsterTurn());
+
+        // ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½ & ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
         yield break;
     }
 
-    // Player °¨Áö(3x3 Å¸ÀÏ)
+    // Player ï¿½ï¿½ï¿½ï¿½(3x3 Å¸ï¿½ï¿½)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
@@ -197,19 +200,24 @@ public class MonsterMove : MonoBehaviour
 
         if(distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            // ÇÃ·¹ÀÌ¾î °¨Áö O
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ O
             monster.ReadyToAttack();
             return;
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î °¨Áö X
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ X
             monster.Init();
             return;
         }
+    }
 
-        // TurnManager ÅÏ ¹Ù²Ù±â(Monster Turn -> Player Turn)
-
+    // Player ï¿½ï¿½ ï¿½Ñ±ï¿½
+    IEnumerator EscapeMonsterTurn()
+    {
+        yield return new WaitForSeconds(2f);
+        BattleManager.instance.ui[1].gameObject.SetActive(false);
+        BattleManager.instance.PlayerTurn();
     }
 }
 

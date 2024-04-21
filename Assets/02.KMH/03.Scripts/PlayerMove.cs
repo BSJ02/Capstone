@@ -95,10 +95,10 @@ public class PlayerMove : MonoBehaviour
 
                 path.Reverse();
 
-                foreach (var pos in path) // 좌표 측정
-                {
-                    Debug.Log("X축:" + pos.x + "Y축:" + pos.y);
-                }
+                //foreach (var pos in path) // 좌표 측정
+                //{
+                //    Debug.Log("X축:" + pos.x + "Y축:" + pos.y);
+                //}
 
                 break;
             }
@@ -226,7 +226,7 @@ public class PlayerMove : MonoBehaviour
         if (distacneX <= detectionRange && distacneY <= detectionRange)
         {
             // 몬스터 감지 O
-            player.ReadyToAttack();
+//            player.ReadyToAttack();
             //Debug.Log("몬스터 좌표 : " + monsterPos);
             return;
         }

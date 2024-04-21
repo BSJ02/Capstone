@@ -48,9 +48,8 @@ public class Player : MonoBehaviour
     }
 
     // 플레이어 공격
-    public void ReadyToAttack()
+    public void ReadyToAttack(Monster monster)
     {
-        Monster monster = FindObjectOfType<Monster>();
 
         float monsterHp = monster.monsterData.Hp;
         float randDamage = Random.Range(playerData.Damage, playerData.Damage);
@@ -61,6 +60,7 @@ public class Player : MonoBehaviour
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack;
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"플레이어{(int)randDamage} 공격!");
+
         return;
     }
 }
