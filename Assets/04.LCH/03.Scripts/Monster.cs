@@ -100,13 +100,13 @@ public class Monster : MonoBehaviour
 
 
     // [2] ���� �ǰ� ó��
-    public void GetHit()
+    public void GetHit(float damage)
     {
         if (!isLive) 
             return;
 
-        float playerDamage = FindObjectOfType<Player>().playerData.Damage;
-        monsterData.Hp -= playerDamage;
+        damage = FindObjectOfType<Player>().playerData.Damage;
+        monsterData.Hp -= damage;
 
         Debug.Log("���� ü��" + (int)monsterData.Hp);
 
@@ -117,7 +117,6 @@ public class Monster : MonoBehaviour
 
         state = MonsterState.GetHit;
         anim.SetInteger("State", (int)state);
-
     }
 
     // [2-1] ���� �ǰ� �� �̺�Ʈ ó��
@@ -135,7 +134,7 @@ public class Monster : MonoBehaviour
             return;*/
 
         // ���� ��� �� isWall ����
-        MapGenerator.instatnce.totalMap[(int)transform.position.x, (int)transform.position.z]
+        MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
             anim.SetTrigger("Die");

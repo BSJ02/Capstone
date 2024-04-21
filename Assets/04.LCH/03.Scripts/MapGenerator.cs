@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public static MapGenerator instatnce;
+    public static MapGenerator instance;
 
     public Tile[,] totalMap; // 2차원 배열 좌표
     public Tile[] tilePrefab;
@@ -16,9 +16,9 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
-        if(instatnce == null)
+        if(instance == null)
         {
-            instatnce = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
