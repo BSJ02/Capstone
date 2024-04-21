@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
         playerState = PlayerState.Attack;
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"플레이어{(int)randDamage} 공격!");
 
+        monster.GetHit();
+
         return;
     }
 }
