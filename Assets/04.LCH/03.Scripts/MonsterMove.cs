@@ -211,12 +211,13 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-    // Player �� �ѱ�
+    
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
         BattleManager.instance.ui[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
+
     }
 }
 

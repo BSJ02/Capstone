@@ -8,7 +8,6 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
-    public PlayerData playerData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -23,6 +22,12 @@ public class PlayerMoveTest : MonoBehaviour
     private Monster clickedMonster; // Ŭ���� ���� ���� ����
 
     private bool isMoving = false; // �̵� ������ ����
+
+    private void Awake()
+    {
+        Player currentPoint = FindObjectOfType<Player>();
+        
+    }
 
     public void SetDestination(Vector2Int clickedTargetPos)
     {
@@ -171,10 +176,11 @@ public class PlayerMoveTest : MonoBehaviour
 
             transform.position = nextPosition;
 
-            playerData.activePoint--;
+
+            player.playerData.activePoint--;
 
             // ��� Ÿ���� �̵��ߴ��� Ȯ��
-            if (0 >= playerData.activePoint)
+            if (0 >= player.playerData.activePoint)
                 break;
         }
 
@@ -225,11 +231,9 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // �÷��̾ �̵� ���� �ƴ϶�� Ŭ�� �̺�Ʈ�� ó�� (���� �׸�)
         if (!isMoving)
         {
-            // �÷��̾ Ŭ������ �� �̵� ������ ���� ǥ��
-            mapGenerator.HighlightPlayerRange(transform.position, playerData.activePoint);
+            mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
         }
     }
 

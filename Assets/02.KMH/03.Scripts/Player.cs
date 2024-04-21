@@ -13,8 +13,6 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
-
-    public MonsterData monsterData;
     public PlayerData playerData;
 
     private Animator anim;
@@ -25,6 +23,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerData.Hp = playerData.MaxHp;
+        playerData.activePoint = 4;
     }
 
     void Start()
@@ -45,10 +44,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ResetPlayerActivePoint()
-    {
-        playerData.activePoint = 4;
-    }
 
     // �ִϸ��̼� ����
     public void UpdateAnimation()
