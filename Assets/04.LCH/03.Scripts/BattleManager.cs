@@ -18,10 +18,11 @@ public class BattleManager : MonoBehaviour
 
     private Player playerScript;
     private CardManager cardManager;
+    private PlayerData playerData;
 
     public BattleState battleState;
 
-    [Header("# �÷��̾� �� ����")]
+    [Header("# 플레이어 및 몬스터")]
     public GameObject player;
     public List<GameObject> monsters = new List<GameObject>();
 
@@ -31,7 +32,7 @@ public class BattleManager : MonoBehaviour
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
 
-    [Header("# UI ������Ʈ")]
+    [Header("# UI")]
     public GameObject[] ui;
     public Button turnEnd;
 
@@ -73,7 +74,6 @@ public class BattleManager : MonoBehaviour
     public void PlayerTurn()
     {
         cardManager.CreateRandomCard();
-
         isPlayerTurn = true;
 
         battleState = BattleState.PlayerTurn;

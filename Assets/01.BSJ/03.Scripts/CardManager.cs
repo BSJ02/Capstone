@@ -122,7 +122,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            player.activePoint = cardData.playerActionPoint;
+            //PlayerData.activePoint = cardData.playerActionPoint;
 
             cardData.usingCard = false;
             cardData.waitForInput = false;

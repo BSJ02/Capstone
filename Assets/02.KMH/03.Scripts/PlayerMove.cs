@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     //public MapGenerator mapGenerator;
     public Player player;
+    private PlayerData playerData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -151,10 +152,10 @@ public class PlayerMove : MonoBehaviour
 
             transform.position = nextPosition;
 
-            player.activePoint--;
+            playerData.activePoint--;
 
             // 모든 타일을 이동했는지 확인
-            if (0 >= player.activePoint)
+            if (0 >= playerData.activePoint)
                 break;
         }
 
@@ -209,7 +210,7 @@ public class PlayerMove : MonoBehaviour
         if (!isMoving)
         {
             // 플레이어를 클릭했을 때 이동 가능한 범위 표시
-            MapGenerator.instance.HighlightPlayerRange(transform.position, player.activePoint);
+            MapGenerator.instance.HighlightPlayerRange(transform.position, playerData.activePoint);
         }
     }
 

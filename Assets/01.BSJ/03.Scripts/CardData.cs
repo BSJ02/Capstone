@@ -16,6 +16,7 @@ public class CardData : MonoBehaviour
     private BattleManager battleManager;
     public Player player;
     public MapGenerator mapGenerator;
+    public PlayerData playerData;
 
     [Header("Animation 적용 할 캐릭터")]
     public GameObject playerObject;
@@ -49,7 +50,7 @@ public class CardData : MonoBehaviour
     // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
-        playerActionPoint = player.activePoint;
+        //playerActionPoint = playerData.activePoint;
         StartCoroutine(WaitForTargetSelection(card));
     }
     //if (Vector3.Distance(player.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) <= maxAttackRange)
@@ -59,7 +60,7 @@ public class CardData : MonoBehaviour
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        player.activePoint = 0;
+        //playerData.activePoint = 0;
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
@@ -224,7 +225,7 @@ public class CardData : MonoBehaviour
             Debug.Log("Sprint 카드를 사용");
 
             // 플레이어 추가 이동
-            player.activePoint += (int)card.cardPower[0];
+            playerData.activePoint += (int)card.cardPower[0];
 
             // 카드 사용 애니메이션
             waitAnim = false;
