@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour
 
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
+    private bool firstTurn = false;
 
     [Header("# UI")]
     public GameObject[] ui; // 턴 UI
@@ -67,7 +68,7 @@ public class BattleManager : MonoBehaviour
         PlayerTurn();
     }
 
-
+    
     public void PlayerTurn()
     {
         /*if (isRandomCard)
