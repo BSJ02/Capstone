@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -112,6 +113,37 @@ public class MapGenerator : MonoBehaviour
             CheckAdjacentTiles(currentTile, queue, visited, maxDistance, currentDistance + 1);
         }
     }
+
+    public void PlayerAttackRange(Vector3 playerPosition, int distance)
+    {
+        // 초기화
+        ClearHighlightedTiles();
+
+        // 플레이어 위치의 타일을 찾음
+        int playerX = Mathf.RoundToInt(playerPosition.x);
+        int playerZ = Mathf.RoundToInt(playerPosition.z);
+        Tile playerTile = totalMap[playerX, playerZ];
+
+        // 플레이어를 중심으로 distance 범위 내의 타일을 찾아 색깔을 변경
+        for (int x = playerX - distance; x <= playerX + distance; x++)
+        {
+            for (int z = playerZ - distance; z <= playerZ + distance; z++)
+            {
+                // 해당 타일이 맵 범위 내에 있는지 확인
+                if (x >= 0 && x < garo && z >= 0 && z < sero)
+                {
+                    Tile currentTile = totalMap[x, z];
+                    // 플레이어 위치를 중심으로 distance 범위 내의 타일만 색깔을 변경
+                    if (!currentTile.coord.isWall)
+                    {
+                        currentTile.GetComponent<Renderer>().material.color = Color.red;
+                        highlightedTiles.Add(currentTile);
+                    }
+                }
+            }
+        }
+    }
+
 
     // 상하좌우 이동 가능한 타일 확인 및 큐에 추가
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)

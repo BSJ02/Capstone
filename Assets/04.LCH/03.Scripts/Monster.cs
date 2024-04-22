@@ -61,13 +61,12 @@ public class Monster : MonoBehaviour
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
         float critcalDamage = monsterData.MinDamage + critaical;
 
-        player.playerData.Hp -= randDamage;
-
         if (randDamage >= critcalDamage)
         {
             state = MonsterState.CritcalAttack;
             anim.SetInteger("State", (int)state);
             Debug.Log("플레이어 체력:" + player.playerData.Hp + $", 크리티컬 공격:{(int)randDamage}");
+            player.GetHit(randDamage);
             return;
         }
         else
@@ -75,6 +74,7 @@ public class Monster : MonoBehaviour
             state = MonsterState.Attack;
             anim.SetInteger("State", (int)state);
             Debug.Log("플레이어 체력:" + (int)player.playerData.Hp + $", 일반 공격:{(int)randDamage}");
+            player.GetHit(randDamage);
             return;
         }
     }

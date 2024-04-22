@@ -1,16 +1,19 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    public CardInform cardInform;
+    [Header(" # Card Inform")] public CardInform cardInform;
+    [Header(" # Player Scripts")] public Player player;
+    private CardData cardData;
     
+
     // 카드 생성 위치
     [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // 들고 있는 카드 위치
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
@@ -19,37 +22,33 @@ public class CardManager : MonoBehaviour
     private float handCardDistance = 0.8f;  // 손에 있는 카드 간의 거리
     private float addCardDistance = 3f; // 카드 선택창에서의 카드 간의 거리
 
-    [SerializeField] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
-    [SerializeField] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
+    [HideInInspector] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
+    [HideInInspector] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
 
     // 카드를 담을 부모 오브젝트
     private GameObject deckObject;
 
     // 생성한 카드 오브젝트를 담을 리스트
-    [SerializeField] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
-    [SerializeField] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
+    [HideInInspector] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
+    [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
 
 
     // 손에 들고 있는 카드 개수
     private int handCardCount;
 
-    [Header("카드 얻을 때 배경 Prefab")]
-    [SerializeField] private GameObject addCardPanelPrefab;
-
-    [Header("카드 Prefab")]
+    [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
 
-    [Header("카드 사용 패널 Prefab")]
+    [Header(" # Panel Prefab")]
+    [SerializeField] private GameObject addCardPanelPrefab;
     [SerializeField] public GameObject useCardPanelPrefab;
-
-    [Header("카드 사용 패널 Prefab")]
     [SerializeField] public GameObject handCardPanelPrefab;
 
 
     [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
-    [HideInInspector] public Card useCard;
+    [HideInInspector] public Card useCard = null;
 
 
     private void Awake()
@@ -85,6 +84,8 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
+        cardData = FindObjectOfType<CardData>();
+
         // 기본 카드 생성
         handCardList.AddRange(cardInform.baseCards);   // 값 추가
         CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
@@ -99,6 +100,31 @@ public class CardManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CreateRandomCard();
+        }
+    }
+
+    // 카드 사용 취소
+    public void CardCancle()
+    {
+        if (useCard != null && cardData.usingCard)
+        {
+            Card card = useCard;
+            GameObject cardObject = addCardObject[addCardObject.Count - 1];
+
+            handCardList.Add(card);
+            handCardObject.Add(cardObject);
+            addCardList.Remove(card);
+            addCardObject.Remove(cardObject);
+
+            ApplyCardInfrom(card, cardObject);
+            StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
+
+            player.playerData.activePoint = cardData.TempActivePoint;
+
+            cardData.usingCard = false;
+            cardData.waitForInput = false;
+            cardData.coroutineStop = true;
+            useCard = null;
         }
     }
 
@@ -159,13 +185,14 @@ public class CardManager : MonoBehaviour
 
 
     // 성정한 확률에 따라 카드 리스트를 가져와 그 리스트에 값을 랜덤하게 가져옴
-    private Card GetRandomCard()
+    public Card GetRandomCard()
     {
+
         waitAddCard = true;
 
         // 랜덤한 카드 리스트 선택
         List<Card> randomList = null;
-        int randNum = Random.Range(1, 101);
+        int randNum = UnityEngine.Random.Range(1, 101);
         if (randNum <= cardInform.legendPercent)
         {
             randomList = cardInform.legendCards;
@@ -178,18 +205,23 @@ public class CardManager : MonoBehaviour
         {
             randomList = cardInform.rareCards;
         }
-        else
+        else if (randNum <= cardInform.commonPercent)
         {
             randomList = cardInform.commonCards;
         }
+        else
+        {
+            randomList = cardInform.baseCards;
+        }
 
         // 랜덤한 카드 선택
-        return randomList[Random.Range(0, randomList.Count)];
+        return randomList[UnityEngine.Random.Range(0, randomList.Count)];
+    
     }
 
 
     // 랜덤 카드 생성
-    private void CreateRandomCard()
+    public void CreateRandomCard()
     {
         addCardPanelPrefab.SetActive(true);
 
@@ -209,7 +241,7 @@ public class CardManager : MonoBehaviour
         {
             addCardObject[i].SetActive(true);
             ApplyCardInfrom(addCardList[i], addCardObject[i]);
-            
+
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
@@ -234,7 +266,7 @@ public class CardManager : MonoBehaviour
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
 
             handCardObject.Add(cardObject);
-            handCardObject[i].SetActive(true);
+            handCardObject[i].SetActive(false);
 
             // 생성한 게임 오브젝트에 데이터 적용
             ApplyCardInfrom(cards[i], cardObject);
@@ -309,7 +341,7 @@ public class CardManager : MonoBehaviour
                 elapsedTime += deltaTime;  // 경과 시간 업데이트
                 yield return null;
             }
-
+            cardObject[i].SetActive(true);
             cardObject[i].transform.position = targetPosition;  // 목표 위치로 정확히 이동
             cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
         }
