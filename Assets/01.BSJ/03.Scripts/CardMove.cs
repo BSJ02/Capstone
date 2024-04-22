@@ -161,14 +161,14 @@ public class CardMove : MonoBehaviour
                 cardManager.useCardPanelPrefab.SetActive(true);
             }
         }
-        if (cardData.waitForInput)
-        {
-            UnityEngine.Debug.Log("cardData.waitForInput" + cardData.waitAnim + battleManager.isPlayerTurn);
-        }
-        if (cardManager.waitAddCard)
-        {
-            UnityEngine.Debug.Log("cardManager.waitAddCard" + cardData.waitAnim + battleManager.isPlayerTurn);
-        }
+        //if (cardData.waitForInput)
+        //{
+        //    UnityEngine.Debug.Log("cardData.waitForInput" + cardData.waitAnim + battleManager.isPlayerTurn);
+        //}
+        //if (cardManager.waitAddCard)
+        //{
+        //    UnityEngine.Debug.Log("cardManager.waitAddCard" + cardData.waitAnim + battleManager.isPlayerTurn);
+        //}
     }
   
 

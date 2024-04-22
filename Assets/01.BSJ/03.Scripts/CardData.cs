@@ -16,16 +16,17 @@ public class CardData : MonoBehaviour
     private BattleManager battleManager;
     public Player player;
     public MapGenerator mapGenerator;
-    public PlayerData playerData;
+
+    private PlayerState playerState;
 
     [Header("Animation 적용 할 캐릭터")]
     public GameObject playerObject;
 
     //private float maxAttackRange = 3.0f;
-    public int playerActionPoint = 5;
 
     public bool usingCard = false;
     public bool coroutineStop = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -50,7 +51,6 @@ public class CardData : MonoBehaviour
     // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
-        //playerActionPoint = playerData.activePoint;
         StartCoroutine(WaitForTargetSelection(card));
     }
     //if (Vector3.Distance(player.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) <= maxAttackRange)
@@ -60,7 +60,7 @@ public class CardData : MonoBehaviour
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        //playerData.activePoint = 0;
+        player.playerData.activePoint = 0;
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
@@ -185,8 +185,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
-            waitAnim = false;
+            player.AttackTwoAnim();
         }
         else
         {
@@ -205,8 +204,7 @@ public class CardData : MonoBehaviour
             player.playerData.Hp += card.cardPower[0];
 
             // 카드 사용 애니메이션
-
-            waitAnim = false;
+            player.ChargeAnim();
         }
         else
         {
@@ -225,10 +223,9 @@ public class CardData : MonoBehaviour
             Debug.Log("Sprint 카드를 사용");
 
             // 플레이어 추가 이동
-            playerData.activePoint += (int)card.cardPower[0];
+            player.playerData.activePoint += (int)card.cardPower[0];
 
             // 카드 사용 애니메이션
-            waitAnim = false;
         }
         else
         {
@@ -246,9 +243,8 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // 카드 사용 애니메이션
-
-            waitAnim = false;
+            player.StabAnim();
+            
         }
         else
         {
@@ -269,7 +265,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -290,7 +285,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -311,7 +305,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -331,7 +324,7 @@ public class CardData : MonoBehaviour
             // 플레이어 추가 이동
 
             // 카드 사용 애니메이션
-            waitAnim = false;
+
         }
         else
         {
@@ -351,7 +344,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -372,7 +364,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -392,7 +383,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -412,7 +402,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -433,7 +422,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -453,7 +441,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
@@ -474,7 +461,6 @@ public class CardData : MonoBehaviour
 
             // 카드 사용 애니메이션
 
-            waitAnim = false;
         }
         else
         {
