@@ -23,6 +23,10 @@ public class BattleManager : MonoBehaviour
     public Player playerData;
     public List<GameObject> monsters = new List<GameObject>();
 
+    [Header("# 몬스터 버프")]
+    public float damage = 5f;
+
+
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
@@ -60,6 +64,7 @@ public class BattleManager : MonoBehaviour
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
+            Debug.Log("현재 몬스터:" + monster.name);
         }
 
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
@@ -102,11 +107,16 @@ public class BattleManager : MonoBehaviour
         {
             currentMonsterIndex++;
             monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
-
-
+            
+            // 몬스터 1차 순회
             if (currentMonsterIndex == monsters.Count - 1)
             {
-                /*monsters[currentMonsterIndex].GetComponent<MonsterData>().IncreaseDamage(1);*/
+                // 몬스터 버프 시스템 적용
+                for (int i = 0; i < monsters.Count - 1; i++)
+                {
+                    
+                }
+                // 초기화 
                 currentMonsterIndex = -1;
             }
         }
