@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public Player player;
 
-    
+    public Text remainingDistance;
 
     public GameObject[] windowUI;
     public GameObject objectUIPanel;
@@ -71,30 +72,11 @@ public class GameManager : MonoBehaviour
        
     }
 
-
-
-    public void ShowObjectUI(GameObject obj)
+    private void Update()
     {
-        objectNameText.text = obj.name;
-        Health healthComponent = obj.GetComponent<Health>();
-
-
-        if (healthComponent != null) 
-        { 
-            objectHealthText.text = "체력 : " + healthComponent.health.ToString();
-        }
-        else
-        {
-            objectHealthText.text = "체력 : N/A";
-        }
-
-
-
-
-
-        objectUIPanel.SetActive(true);
-
+        remainingDistance.text = player.playerData.activePoint.ToString();
     }
+
 
     public void ShowLayerWindow(int index)
     {

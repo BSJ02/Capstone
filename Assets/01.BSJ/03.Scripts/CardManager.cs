@@ -9,8 +9,8 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    public CardInform cardInform;
-    public Player player;
+    [Header(" # Card Inform")] public CardInform cardInform;
+    [Header(" # Player Scripts")] public Player player;
     private CardData cardData;
     
 
@@ -36,16 +36,12 @@ public class CardManager : MonoBehaviour
     // 손에 들고 있는 카드 개수
     private int handCardCount;
 
-    [Header("카드 얻을 때 배경 Prefab")]
-    [SerializeField] private GameObject addCardPanelPrefab;
-
-    [Header("카드 Prefab")]
+    [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
 
-    [Header("카드 사용 패널 Prefab")]
+    [Header(" # Panel Prefab")]
+    [SerializeField] private GameObject addCardPanelPrefab;
     [SerializeField] public GameObject useCardPanelPrefab;
-
-    [Header("카드 사용 패널 Prefab")]
     [SerializeField] public GameObject handCardPanelPrefab;
 
 
@@ -123,7 +119,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            //PlayerData.activePoint = cardData.playerActionPoint;
+            player.playerData.activePoint = cardData.TempActivePoint;
 
             cardData.usingCard = false;
             cardData.waitForInput = false;

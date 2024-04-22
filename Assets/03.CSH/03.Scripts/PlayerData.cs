@@ -10,6 +10,7 @@ public class PlayerData : ScriptableObject
     public float Damage = 20f;
     public float Armor = 100f;
     public float CriticalHit = 0f;
-    public int activePoint = 4;
-    public int currentActivePoint;
+    public int activePoint;
+    public int MaxActivePoint = 4;
+    
 }

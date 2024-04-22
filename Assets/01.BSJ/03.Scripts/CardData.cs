@@ -14,18 +14,19 @@ public class CardData : MonoBehaviour
 
     private PlayerMoveTest playerMoveTest;
     private BattleManager battleManager;
-    public Player player;
-    public MapGenerator mapGenerator;
+    [Header(" # Player Scripts")] public Player player;
+    [Header(" # Map Scripts")] public MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
-    [Header("Animation 적용 할 캐릭터")]
-    public GameObject playerObject;
+    [Header(" # Player Object")] public GameObject playerObject;
 
     //private float maxAttackRange = 3.0f;
 
-    public bool usingCard = false;
-    public bool coroutineStop = false;
+    [HideInInspector] public bool usingCard = false;
+    [HideInInspector] public bool coroutineStop = false;
+
+    [HideInInspector] public int TempActivePoint;
 
     private void Awake()
     {
@@ -36,7 +37,6 @@ public class CardData : MonoBehaviour
     {
         battleManager = FindObjectOfType<BattleManager>();
         player = playerObject.GetComponent<Player>();
-
     }
 
     private void Update()
@@ -53,13 +53,16 @@ public class CardData : MonoBehaviour
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
+
     //if (Vector3.Distance(player.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) <= maxAttackRange)
     //            {
+
 
     // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
+        TempActivePoint = player.playerData.activePoint;
         player.playerData.activePoint = 0;
         while (true)
         {
@@ -226,6 +229,7 @@ public class CardData : MonoBehaviour
             player.playerData.activePoint += (int)card.cardPower[0];
 
             // 카드 사용 애니메이션
+            player.ChargeAnim();
         }
         else
         {
