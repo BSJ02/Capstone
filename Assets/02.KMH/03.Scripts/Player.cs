@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerState
@@ -8,12 +9,16 @@ public enum PlayerState
     Idle,
     Moving,
     Attack,
-    GetHit
+    GetHit,
+    Attack2,
+    Stab,
+    Charge
 }
 
 public class Player : MonoBehaviour
 {
     public PlayerData playerData;
+    private CardData cardData;
 
     private Animator anim;
     public PlayerState playerState;
@@ -23,12 +28,13 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerData.Hp = playerData.MaxHp;
-        playerData.activePoint = 4;
+        ResetActivePoint();
     }
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        cardData = FindObjectOfType<CardData>();
 
         isLive = true;
     }
@@ -42,6 +48,11 @@ public class Player : MonoBehaviour
         {
             GetHit(1);
         }
+    }
+
+    public void ResetActivePoint()
+    {
+         playerData.activePoint = playerData.currentActivePoint;
     }
 
 
@@ -62,7 +73,46 @@ public class Player : MonoBehaviour
             case PlayerState.GetHit:
                 anim.SetInteger("State", 3);
                 break;
+            case PlayerState.Attack2:
+                anim.SetInteger("State", 4);
+                break;
+            case PlayerState.Stab:
+                anim.SetInteger("State", 5);
+                break;
+            case PlayerState.Charge:
+                anim.SetInteger("State", 6);
+                break;
         }
+    }
+
+    public void AttackTwoAnim()
+    {
+        playerState = PlayerState.Attack2;
+        cardData.waitAnim = false;
+
+        StartCoroutine(ChangeStateDelayed(0));
+
+        return;
+    }
+
+    public void StabAnim()
+    {
+        playerState = PlayerState.Stab;
+        cardData.waitAnim = false;
+
+        StartCoroutine(ChangeStateDelayed(0));
+
+        return;
+    }
+
+    public void ChargeAnim()
+    {
+        playerState = PlayerState.Charge;
+        cardData.waitAnim = false;
+
+        StartCoroutine(ChangeStateDelayed(0));
+
+        return;
     }
 
     // �÷��̾� ����

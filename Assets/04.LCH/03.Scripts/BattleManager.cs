@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("# 플레이어 및 몬스터")]
     public GameObject player;
+    public Player playerData;
     public List<GameObject> monsters = new List<GameObject>();
 
     private int currentMonsterIndex = -1;
@@ -27,15 +28,15 @@ public class BattleManager : MonoBehaviour
 
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
-    private bool firstTurn = false;
+
 
     [Header("# UI")]
     public GameObject[] ui; // 턴 UI
     public Button turnEnd; // Turn End 버튼
 
-
-    bool isRandomCard = false;
     private CardManager cardManager;
+
+    public bool isRandomCard = false;
 
 
     private void Awake()
@@ -71,12 +72,9 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
-        /*if (isRandomCard)
-        {
-            cardManager.CreateRandomCard();
-        }
-        isRandomCard = true;
-        isPlayerTurn = true;*/
+        isPlayerTurn = true;
+        playerData.ResetActivePoint();
+        cardManager.CreateRandomCard();
 
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);

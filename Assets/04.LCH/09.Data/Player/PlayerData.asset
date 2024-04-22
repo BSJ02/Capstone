@@ -15,6 +15,7 @@ MonoBehaviour:
   Hp: 100
   MaxHp: 100
   Damage: 20
-  Armor: 100
+  Armor: 120
   CriticalHit: 0
-  activePoint: 4
+  activePoint: 0
+  currentActivePoint: 4
