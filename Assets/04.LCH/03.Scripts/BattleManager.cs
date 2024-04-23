@@ -20,19 +20,18 @@ public class BattleManager : MonoBehaviour
 
     [Header("# 플레이어 및 몬스터")]
     public GameObject player;
-    public Player playerData;
+    private PlayerData playerData;
     public List<GameObject> monsters = new List<GameObject>();
 
     [Header("# 몬스터 버프")]
     public float damage = 5f;
-
+    // 추가 예정
 
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
-
 
     [Header("# UI")]
     public GameObject[] ui; // 턴 UI
@@ -77,8 +76,7 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
-        isPlayerTurn = true;
-        playerData.ResetActivePoint();
+        
         cardManager.CreateRandomCard();
 
         battleState = BattleState.PlayerTurn;
@@ -111,11 +109,11 @@ public class BattleManager : MonoBehaviour
             // 몬스터 1차 순회
             if (currentMonsterIndex == monsters.Count - 1)
             {
-                // 몬스터 버프 시스템 적용
+                /* 몬스터 버프 시스템 적용 예정
                 for (int i = 0; i < monsters.Count - 1; i++)
                 {
                     
-                }
+                }*/
                 // 초기화 
                 currentMonsterIndex = -1;
             }
