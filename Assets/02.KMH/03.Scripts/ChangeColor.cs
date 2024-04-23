@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChangeColor : MonoBehaviour
 {
-    public Tile tile;
+//    public Tile tile;
     public Color[] color; // 0 = red(FF0000) / 1 = blue(0030FF) / 2 = 
 
     void Start()
@@ -15,10 +15,10 @@ public class ChangeColor : MonoBehaviour
     void Update()
     {
 
-        if(tile.coord.isWall == true)
-        {
-            GetComponent<Renderer>().material.color = Color.gray;
-        }
+//        if(tile.coord.isWall == true)
+//        {
+//           GetComponent<Renderer>().material.color = Color.gray;
+//        }
 
     }
 
