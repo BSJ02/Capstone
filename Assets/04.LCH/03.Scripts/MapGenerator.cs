@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -114,7 +115,8 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void PlayerAttackRange(Vector3 playerPosition, int distance)
+    // 카드 사용 범위
+    public void CardUseRange(Vector3 playerPosition, int distance)
     {
         // 초기화
         ClearHighlightedTiles();
@@ -132,11 +134,15 @@ public class MapGenerator : MonoBehaviour
                 // 해당 타일이 맵 범위 내에 있는지 확인
                 if (x >= 0 && x < garo && z >= 0 && z < sero)
                 {
+                    // 대각선 방향에 있는 타일은 건너뜀
+                    if ((x == playerX - distance || x == playerX + distance) && (z == playerZ - distance || z == playerZ + distance))
+                        continue;
+
                     Tile currentTile = totalMap[x, z];
                     // 플레이어 위치를 중심으로 distance 범위 내의 타일만 색깔을 변경
                     if (!currentTile.coord.isWall)
                     {
-                        currentTile.GetComponent<Renderer>().material.color = Color.red;
+                        currentTile.GetComponent<Renderer>().material.color = Color.black;
                         highlightedTiles.Add(currentTile);
                     }
                 }
