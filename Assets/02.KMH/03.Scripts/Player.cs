@@ -12,7 +12,11 @@ public enum PlayerState
     GetHit,
     Attack2,
     Stab,
-    Charge
+    Charge,
+    SpinAttack,
+    MacigAttack01,
+    MacigAttack02,
+    MacigAttack03
 }
 
 public class Player : MonoBehaviour
@@ -82,6 +86,18 @@ public class Player : MonoBehaviour
             case PlayerState.Charge:
                 anim.SetInteger("State", 6);
                 break;
+            case PlayerState.SpinAttack:
+                anim.SetInteger("State", 7);
+                break;
+            case PlayerState.MacigAttack01:
+                anim.SetInteger("State", 8);
+                break;
+            case PlayerState.MacigAttack02:
+                anim.SetInteger("State", 9);
+                break;
+            case PlayerState.MacigAttack03:
+                anim.SetInteger("State", 10);
+                break;
         }
     }
 
@@ -89,9 +105,7 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Attack2;
         cardData.waitAnim = false;
-
         StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
 
@@ -99,9 +113,7 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Stab;
         cardData.waitAnim = false;
-
         StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
 
@@ -109,11 +121,42 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Charge;
         cardData.waitAnim = false;
-
         StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
+
+    public void SpinAttackAnim()
+    {
+        playerState = PlayerState.SpinAttack;
+        cardData.waitAnim = false;
+        StartCoroutine(ChangeStateDelayed(0));
+        return;
+    }
+
+    public void MacigAttack01Anim()
+    {
+        playerState = PlayerState.MacigAttack01;
+        cardData.waitAnim = false;
+        StartCoroutine(ChangeStateDelayed(0));
+        return;
+    }
+
+    public void MacigAttack02Anim()
+    {
+        playerState = PlayerState.MacigAttack02;
+        cardData.waitAnim = false;
+        StartCoroutine(ChangeStateDelayed(0));
+        return;
+    }
+
+    public void MacigAttack03Anim()
+    {
+        playerState = PlayerState.MacigAttack03;
+        cardData.waitAnim = false;
+        StartCoroutine(ChangeStateDelayed(0));
+        return;
+    }
+
 
     // �÷��̾� ����
     public void ReadyToAttack(Monster monster)
@@ -148,7 +191,17 @@ public class Player : MonoBehaviour
         if (!isLive)
             return;
 
-        playerData.Hp -= damage;
+        int randNum = Random.Range(0, 100);
+        
+        if (randNum > playerData.CriticalHit)
+        {
+            Debug.Log("Critical!");
+            playerData.Hp -= damage * (float)1.5;
+        }
+        else
+        {
+            playerData.Hp -= damage;
+        }
 
         Debug.Log("남은 체력 : " + (int)playerData.Hp);
 

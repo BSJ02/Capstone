@@ -245,7 +245,6 @@ public class CardManager : MonoBehaviour
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
-        // Order In Layer 값 변경 (왜 안돼!!!!)
         for (int i = 0; i < 3; i++)
         {
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
