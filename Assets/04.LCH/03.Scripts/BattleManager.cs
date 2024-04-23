@@ -76,7 +76,6 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
-        
         cardManager.CreateRandomCard();
 
         battleState = BattleState.PlayerTurn;
