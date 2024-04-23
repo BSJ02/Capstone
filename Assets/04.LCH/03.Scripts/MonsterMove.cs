@@ -6,7 +6,6 @@ public class MonsterMove : MonoBehaviour
 {
     private Monster monster;
 
-
     Tile StartNode, TargetNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
     List<Tile> CloseList = new List<Tile>();
@@ -20,23 +19,24 @@ public class MonsterMove : MonoBehaviour
     }
 
 
+    // 플레이어 턴 종료 후 호출[몬스터 턴]
     public void MoveStart()
     {
-        // ����Ʈ �ʱ�ȭ 
+        // 초기화
         OpenList.Clear();
         CloseList.Clear();
 
-        // ��ã�� 
+        // 길찾기 시작
         SetDestination();
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
 
-        // Ÿ�� ��ǥ �ʱ�ȭ
+        // 타일 좌표 초기화 
         MapGenerator.instance.ResetTotalMap();
-
     }
 
 
+    // 플레이어 및 몬스터 초기 좌표 설정
     public void SetDestination() 
     {
         monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
@@ -50,13 +50,14 @@ public class MonsterMove : MonoBehaviour
         TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
 
+
+    // 길찾기 시작
     public List<Vector2Int> PathFinding() 
     {
         OpenList.Add(StartNode);
         
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ����Ʈ �ߺ� ����
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -104,7 +105,7 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    // ���� ��� üũ
+    // 이동비용 연산
     public void OpenListAdd(int checkX, int checkY) 
     {
         if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
@@ -136,13 +137,13 @@ public class MonsterMove : MonoBehaviour
     }
 
 
-    // ���� �̵�
+    // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // ���� �̵��Ÿ�
+        // 몬스터 최대 이동 거리(moveDistance 만큼 리스트 반환)
         int maxMoveDistance = monster.monsterData.MoveDistance;
 
         float moveSpeed = 1f;
@@ -150,7 +151,7 @@ public class MonsterMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            // ���� �̵��Ÿ��� �°� ����
+            // 몬스터의 moveDistacne 값이 최대이면 종료
             if (i >= maxMoveDistance)
                 break;
 
@@ -169,26 +170,27 @@ public class MonsterMove : MonoBehaviour
                 yield return null;
             }
 
-            // ���� ��ġ �� ���� 
+            // 다음 좌표 transform값 보정
             transform.position = nextPosition;
-
         }
 
-        // ���� ���� ��ġ
+        // 최종 플레이어 좌표
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ���� ��ġ�� isWall üũ(��ħ ����)
+        // 최종 좌표 isWall 설정(몬스터 및 플레이어 겹침 방지)
         MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
 
-        // ���� ��ġ �������� �÷��̾� ����
+        // 플레이어 감지 후 공격
         GetSurroundingTiles(finalPosition);
 
-        // ���� �� ����
+        // 몬스터 턴 종료
         StartCoroutine(EscapeMonsterTurn());
         yield break;
     }
 
-    // ���� �ֺ� Ÿ�� ����
+
+
+    // 플레이어 감지 및 공격
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
         int detectionRange = monster.monsterData.DetectionRagne;
@@ -198,26 +200,26 @@ public class MonsterMove : MonoBehaviour
 
         if(distacneX <= detectionRange && distacneY <= detectionRange)
         {
-            // ���� O
+            // 감지 O
             Player player = FindObjectOfType<Player>();
             monster.ReadyToAttack(player);
             return;
         }
         else
         {
-            // ���� X
+            // 감지 X
             monster.Init();
             return;
         }
     }
 
     
+    // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
         BattleManager.instance.ui[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
-
     }
 }
 
