@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
     public void ResetActivePoint()
     {
-         playerData.activePoint = playerData.currentActivePoint;
+        playerData.activePoint = playerData.MaxActivePoint;
     }
 
 
