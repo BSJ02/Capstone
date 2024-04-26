@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
+  m_IndirectSpecularColor: {r: 0.07079832, g: 0.16074449, b: 0.18547891, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3476,7 +3476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1158601559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8460,6 +8460,19 @@ MonoBehaviour:
   - {fileID: 624648965016542229, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
   - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
   - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 7284856300908179813, guid: 0cff5f4d963d0ab47a4635729d70be48, type: 3}
+  - {fileID: 4268123180812608762, guid: b9dd35bf5635c134a8095336f6ee3bff, type: 3}
+  - {fileID: 1474524636015859751, guid: c948571b5be2fdd41aab5eedb270e73d, type: 3}
+  - {fileID: 708975767838100973, guid: 348ce404fdc8d3b49bff04baa69a5423, type: 3}
+  - {fileID: 1573064817867448636, guid: fc5121c3e3001244983024401f1fce3f, type: 3}
+  - {fileID: 7357713987075281806, guid: e59f2f2fc16b79b41a088e66a507acb0, type: 3}
+  - {fileID: 9191114879412576129, guid: 348ae33dc1c05794491394784e1c2e8b, type: 3}
+  - {fileID: 11239846055912105, guid: 939c25db21f9ee6469342fb8938c2c87, type: 3}
+  - {fileID: 1118813982218620538, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
   garo: 10
   sero: 10
 --- !u!4 &2082544544
@@ -8848,12 +8861,12 @@ SceneRoots:
   - {fileID: 1820781256}
   - {fileID: 1664038494}
   - {fileID: 1329013518}
-  - {fileID: 1158601560}
-  - {fileID: 401504239}
-  - {fileID: 615802234}
   - {fileID: 1422773952}
-  - {fileID: 2082544544}
   - {fileID: 1350508652}
   - {fileID: 513620028}
   - {fileID: 1884863713}
   - {fileID: 602341941}
+  - {fileID: 1158601560}
+  - {fileID: 2082544544}
+  - {fileID: 401504239}
+  - {fileID: 615802234}

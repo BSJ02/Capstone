@@ -54,9 +54,9 @@ public class MonsterMove : MonoBehaviour
     // 길찾기 시작
     public List<Vector2Int> PathFinding() 
     {
-        OpenList.Add(StartNode);
+        OpenList.Add(StartNode); 
         
-        List<Vector2Int> path = new List<Vector2Int>();
+        List<Vector2Int> path = new List<Vector2Int>(); // 좌표가 담길 리스트
 
         path.Clear();
 
@@ -64,6 +64,7 @@ public class MonsterMove : MonoBehaviour
         {
             CurrentNode = OpenList[0];
 
+            // 연산 비용 계산
             for (int i = 1; i < OpenList.Count; i++)
             {
                 if (OpenList[i].coord.F <= CurrentNode.coord.F && OpenList[i].coord.H < CurrentNode.coord.H)
@@ -75,7 +76,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ��� ���� �� ã��
+            // 좌표 전부 찾음
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
@@ -86,26 +87,27 @@ public class MonsterMove : MonoBehaviour
                     currentNode = currentNode.coord.parentNode;
                 }
 
-                path.Reverse();
+                path.Reverse(); // 플레이어 기준 좌표 -> 몬스터 기준 좌표[순서 정리]
 
                 break;
             }
 
+            // 
             OpenListAdd(CurrentNode.coord.x, CurrentNode.coord.y + 1);
             OpenListAdd(CurrentNode.coord.x + 1, CurrentNode.coord.y);
             OpenListAdd(CurrentNode.coord.x, CurrentNode.coord.y - 1);
             OpenListAdd(CurrentNode.coord.x - 1, CurrentNode.coord.y);
         }
 
-        // �÷��̾� ��ǥ ����(��ħ ����)
-        if(path.Count > 0)
+        // 플레이어 겹침 방지
+        if (path.Count > 0)
         path.RemoveAt(path.Count - 1); 
 
+        // 경로 반환 
         return path;
     }
 
-
-    // 이동비용 연산
+    // 노드 연산 비용
     public void OpenListAdd(int checkX, int checkY) 
     {
         if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
