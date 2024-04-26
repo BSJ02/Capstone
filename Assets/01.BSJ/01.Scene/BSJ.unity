@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
+  m_IndirectSpecularColor: {r: 0.07079832, g: 0.16074449, b: 0.18547891, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3458,7 +3458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1158601559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7210,7 +7210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleState: 0
   player: {fileID: 301803543}
-  playerData: {fileID: 301803549}
   monsters:
   - {fileID: 1359625719}
   - {fileID: 1629993931}
@@ -7909,31 +7908,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab:
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 4952380534849485741, guid: 4005c83163cfd574eb6dde2df7985c82, type: 3}
-  - {fileID: 3190760011829419382, guid: 85f9dfb460e480e4ba3630fa71d10d23, type: 3}
-  - {fileID: 2061050301493775873, guid: 0d1f0966b5d8fbf478a17f06e85c3c8d, type: 3}
-  - {fileID: 6295541277732897268, guid: 953e58cbfd3a1ed4c8e731bf8b1e7780, type: 3}
-  - {fileID: 3495067033411339927, guid: 8aa93f36d701ac24980a876fc0bbc5b3, type: 3}
-  - {fileID: 8926646481136535707, guid: c53ca47f864d9014e92682fd57093bcf, type: 3}
-  - {fileID: 6401674023999078618, guid: b52b38180cd41514986fcb12b3a5004a, type: 3}
-  - {fileID: 8779686657556151950, guid: 85d793aad78111d418e71e7eccf23b38, type: 3}
-  - {fileID: 7704905326114076265, guid: aba571f1aafd3a3499bc6e93d7f4b576, type: 3}
-  - {fileID: 4796066834466991590, guid: 352bc4c106f36e64cac3c0fee88cefd2, type: 3}
-  - {fileID: 2950845936340731081, guid: fad9b7088618fa844b568191b79722b7, type: 3}
-  - {fileID: -6419840065421506524, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
-  - {fileID: 8360416698087754585, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
-  - {fileID: 4126882791157839235, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
-  - {fileID: 2657789800304004502, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 7284856300908179813, guid: 0cff5f4d963d0ab47a4635729d70be48, type: 3}
+  - {fileID: 4268123180812608762, guid: b9dd35bf5635c134a8095336f6ee3bff, type: 3}
+  - {fileID: 1474524636015859751, guid: c948571b5be2fdd41aab5eedb270e73d, type: 3}
+  - {fileID: 708975767838100973, guid: 348ce404fdc8d3b49bff04baa69a5423, type: 3}
+  - {fileID: 1573064817867448636, guid: fc5121c3e3001244983024401f1fce3f, type: 3}
+  - {fileID: 7357713987075281806, guid: e59f2f2fc16b79b41a088e66a507acb0, type: 3}
+  - {fileID: 9191114879412576129, guid: 348ae33dc1c05794491394784e1c2e8b, type: 3}
+  - {fileID: 11239846055912105, guid: 939c25db21f9ee6469342fb8938c2c87, type: 3}
+  - {fileID: 1118813982218620538, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
   garo: 10
   sero: 10
 --- !u!4 &2082544544
@@ -8322,12 +8312,12 @@ SceneRoots:
   - {fileID: 1820781256}
   - {fileID: 1664038494}
   - {fileID: 1329013518}
-  - {fileID: 1158601560}
-  - {fileID: 401504239}
-  - {fileID: 615802234}
   - {fileID: 1422773952}
-  - {fileID: 2082544544}
   - {fileID: 1350508652}
   - {fileID: 513620028}
   - {fileID: 1884863713}
   - {fileID: 602341941}
+  - {fileID: 1158601560}
+  - {fileID: 2082544544}
+  - {fileID: 401504239}
+  - {fileID: 615802234}

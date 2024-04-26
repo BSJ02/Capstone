@@ -88,6 +88,7 @@ public class Monster : MonoBehaviour
 
         damage = FindObjectOfType<Player>().playerData.Damage;
         monsterData.Hp -= damage;
+        Debug.Log("몬스터 피격 당한 데미지:" + damage);
 
         if (monsterData.Hp <= 0)
         {

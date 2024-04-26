@@ -63,7 +63,6 @@ public class BattleManager : MonoBehaviour
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
-            Debug.Log("현재 몬스터:" + monster.name);
         }
 
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
@@ -77,7 +76,7 @@ public class BattleManager : MonoBehaviour
     public void PlayerTurn()
     {
         cardManager.CreateRandomCard();
-
+        isPlayerTurn = true;
         battleState = BattleState.PlayerTurn;
         ui[0].gameObject.SetActive(true);
         ui[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
