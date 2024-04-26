@@ -9,9 +9,10 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    public CardInform cardInform;
-    public Player player;
+    [Header(" # Card Inform")] public CardInform cardInform;
+    [Header(" # Player Scripts")] public Player player;
     private CardData cardData;
+    
 
     // 카드 생성 위치
     [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // 들고 있는 카드 위치
@@ -21,30 +22,26 @@ public class CardManager : MonoBehaviour
     private float handCardDistance = 0.8f;  // 손에 있는 카드 간의 거리
     private float addCardDistance = 3f; // 카드 선택창에서의 카드 간의 거리
 
-    [SerializeField] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
-    [SerializeField] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
+    [HideInInspector] public List<Card> handCardList = new List<Card>(); // 사용할 수 있는 카드 리스트
+    [HideInInspector] public List<Card> addCardList = new List<Card>();   // 추가할 카드 리스트
 
     // 카드를 담을 부모 오브젝트
     private GameObject deckObject;
 
     // 생성한 카드 오브젝트를 담을 리스트
-    [SerializeField] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
-    [SerializeField] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
+    [HideInInspector] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
+    [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
 
 
     // 손에 들고 있는 카드 개수
     private int handCardCount;
 
-    [Header("카드 얻을 때 배경 Prefab")]
-    [SerializeField] private GameObject addCardPanelPrefab;
-
-    [Header("카드 Prefab")]
+    [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
 
-    [Header("카드 사용 패널 Prefab")]
+    [Header(" # Panel Prefab")]
+    [SerializeField] private GameObject addCardPanelPrefab;
     [SerializeField] public GameObject useCardPanelPrefab;
-
-    [Header("카드 사용 패널 Prefab")]
     [SerializeField] public GameObject handCardPanelPrefab;
 
 
@@ -97,15 +94,6 @@ public class CardManager : MonoBehaviour
         handCardCount = handCardList.Count;
     }
     
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomCard();
-        }
-    }
-
     // 카드 사용 취소
     public void CardCancle()
     {
@@ -122,7 +110,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            //PlayerData.activePoint = cardData.playerActionPoint;
+            player.playerData.activePoint = cardData.TempActivePoint;
 
             cardData.usingCard = false;
             cardData.waitForInput = false;
@@ -188,8 +176,9 @@ public class CardManager : MonoBehaviour
 
 
     // 성정한 확률에 따라 카드 리스트를 가져와 그 리스트에 값을 랜덤하게 가져옴
-    private Card GetRandomCard()
+    public Card GetRandomCard()
     {
+
         waitAddCard = true;
 
         // 랜덤한 카드 리스트 선택
@@ -218,6 +207,7 @@ public class CardManager : MonoBehaviour
 
         // 랜덤한 카드 선택
         return randomList[UnityEngine.Random.Range(0, randomList.Count)];
+    
     }
 
 
@@ -246,7 +236,6 @@ public class CardManager : MonoBehaviour
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
-        // Order In Layer 값 변경 (왜 안돼!!!!)
         for (int i = 0; i < 3; i++)
         {
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
@@ -267,7 +256,7 @@ public class CardManager : MonoBehaviour
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
 
             handCardObject.Add(cardObject);
-            handCardObject[i].SetActive(true);
+            handCardObject[i].SetActive(false);
 
             // 생성한 게임 오브젝트에 데이터 적용
             ApplyCardInfrom(cards[i], cardObject);
@@ -342,7 +331,7 @@ public class CardManager : MonoBehaviour
                 elapsedTime += deltaTime;  // 경과 시간 업데이트
                 yield return null;
             }
-
+            cardObject[i].SetActive(true);
             cardObject[i].transform.position = targetPosition;  // 목표 위치로 정확히 이동
             cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
         }

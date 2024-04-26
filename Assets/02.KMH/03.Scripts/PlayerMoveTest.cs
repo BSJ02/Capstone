@@ -8,6 +8,7 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
+    private CardData cardData;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -26,7 +27,7 @@ public class PlayerMoveTest : MonoBehaviour
     private void Awake()
     {
         Player currentPoint = FindObjectOfType<Player>();
-        
+        cardData = FindObjectOfType<CardData>();
     }
 
     public void SetDestination(Vector2Int clickedTargetPos)
@@ -40,7 +41,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving)
+        if (Input.GetMouseButtonDown(0) && !isMoving && !cardData.usingCard)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -63,19 +64,19 @@ public class PlayerMoveTest : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
 
-                // Ŭ���� ���� �������� Ȯ��
-                if (hit.collider.CompareTag("Monster"))
-                {
-                    // Ŭ���� ���� ����
-                    clickedMonster = hit.collider.GetComponent<Monster>();
+                //// Ŭ���� ���� �������� Ȯ��
+                //if (hit.collider.CompareTag("Monster"))
+                //{
+                //    // Ŭ���� ���� ����
+                //    clickedMonster = hit.collider.GetComponent<Monster>();
 
-                    // ������ ���� ����Ʈ�� �ִ��� Ȯ��
-                    if (detectedMonsters.Contains(clickedMonster))
-                    {
-                        // Ŭ���� ���Ϳ��� ������ �Լ� ����
-                        player.ReadyToAttack(clickedMonster);
-                    }
-                }
+                //    // ������ ���� ����Ʈ�� �ִ��� Ȯ��
+                //    if (detectedMonsters.Contains(clickedMonster))
+                //    {
+                //        // Ŭ���� ���Ϳ��� ������ �Լ� ����
+                //        player.ReadyToAttack(clickedMonster);
+                //    }
+                //}
 
             }
             
