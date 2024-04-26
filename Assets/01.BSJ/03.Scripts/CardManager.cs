@@ -94,15 +94,6 @@ public class CardManager : MonoBehaviour
         handCardCount = handCardList.Count;
     }
     
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomCard();
-        }
-    }
-
     // 카드 사용 취소
     public void CardCancle()
     {

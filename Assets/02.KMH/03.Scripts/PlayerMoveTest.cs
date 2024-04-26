@@ -64,19 +64,19 @@ public class PlayerMoveTest : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
 
-                // Ŭ���� ���� �������� Ȯ��
-                if (hit.collider.CompareTag("Monster"))
-                {
-                    // Ŭ���� ���� ����
-                    clickedMonster = hit.collider.GetComponent<Monster>();
+                //// Ŭ���� ���� �������� Ȯ��
+                //if (hit.collider.CompareTag("Monster"))
+                //{
+                //    // Ŭ���� ���� ����
+                //    clickedMonster = hit.collider.GetComponent<Monster>();
 
-                    // ������ ���� ����Ʈ�� �ִ��� Ȯ��
-                    if (detectedMonsters.Contains(clickedMonster))
-                    {
-                        // Ŭ���� ���Ϳ��� ������ �Լ� ����
-                        player.ReadyToAttack(clickedMonster);
-                    }
-                }
+                //    // ������ ���� ����Ʈ�� �ִ��� Ȯ��
+                //    if (detectedMonsters.Contains(clickedMonster))
+                //    {
+                //        // Ŭ���� ���Ϳ��� ������ �Լ� ����
+                //        player.ReadyToAttack(clickedMonster);
+                //    }
+                //}
 
             }
             

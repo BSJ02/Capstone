@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
     public GameObject player;
     private PlayerData playerData;
     public List<GameObject> monsters = new List<GameObject>();
+    private Player playerScripts;
 
     [Header("# 몬스터 버프")]
     public float damage = 5f;
@@ -57,6 +58,8 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
+        playerScripts = player.GetComponent<Player>();
+
         battleState = BattleState.Start;
 
         player.gameObject.SetActive(true);
@@ -76,7 +79,8 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
-        
+        isPlayerTurn = true;
+        playerScripts.ResetActivePoint();
         cardManager.CreateRandomCard();
 
         battleState = BattleState.PlayerTurn;
