@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
+  m_Name: Orc
+  m_EditorClassIdentifier: 
+  MonsterName: "\uC624\uD06C"
+  Id: 4
+  Hp: 200
+  MaxHp: 200
+  CurrentDamage: 0
+  IsBoss: 1
+  MoveDistance: 3
+  DetectionRagne: 1
+  Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130"
+  MinDamage: 10
+  MaxDamage: 18

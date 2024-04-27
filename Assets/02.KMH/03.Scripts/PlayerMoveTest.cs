@@ -238,28 +238,20 @@ public class PlayerMoveTest : MonoBehaviour
         }
     }
 
-    // Monster ����(3x3 Ÿ��)
-
-    // �÷��̾� �ֺ��� Ÿ���� �˻��Ͽ� ���͸� ����
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
-        // ������ ���� ����Ʈ �ʱ�ȭ
         detectedMonsters.Clear();
 
-        // ��� ���� ã��
         Monster[] monsters = FindObjectsOfType<Monster>();
 
         foreach (Monster m in monsters)
         {
-            // ���� ��ġ
             Vector3 monsterPosition = m.transform.position;
             Vector2Int monsterPos = new Vector2Int((int)monsterPosition.x, (int)monsterPosition.z);
-
-            // �÷��̾�� ���� ���� �Ÿ� ���
+        
             int distanceX = Mathf.Abs(playerPos.x - monsterPos.x);
             int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
 
-            // �Ÿ��� ���� ���� �̳���� ���͸� ����Ʈ�� �߰�
             if (distanceX <= detectionRange && distanceY <= detectionRange)
             {
                 detectedMonsters.Add(m);
@@ -267,6 +259,5 @@ public class PlayerMoveTest : MonoBehaviour
             }
         }
 
-        // ������ ���Ϳ� ���� �߰����� ó�� ���� ����
     }
 }
