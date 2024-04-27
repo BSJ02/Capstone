@@ -8,8 +8,8 @@ public class WeaponController : MonoBehaviour
     private GameObject weapon_r;
     private GameObject weapon_l;
 
-    private List<GameObject> rightHandWeaponList;
-    private List<GameObject> leftHandWeaponList;
+    public List<GameObject> rightHandWeaponList;
+    public List<GameObject> leftHandWeaponList;
 
     [Header("# Weapon Type")]
     public List<GameObject> swordList;
