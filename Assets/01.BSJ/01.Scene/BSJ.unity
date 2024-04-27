@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07079832, g: 0.16074449, b: 0.18547891, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1116,6 +1116,7 @@ MonoBehaviour:
   bowList: []
   hammerList: []
   wandList: []
+  shieldList: []
 --- !u!1 &328140820
 GameObject:
   m_ObjectHideFlags: 0
@@ -6021,7 +6022,7 @@ PrefabInstance:
     - target: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8192300620582832796, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}

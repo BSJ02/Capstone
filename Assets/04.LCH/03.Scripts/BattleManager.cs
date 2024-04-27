@@ -24,24 +24,21 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> monsters = new List<GameObject>();
     private Player playerScripts;
 
-    [Header("# 몬스터 버프")]
+    [Header("# 몬스터 버프")] // 추가 예정
     public float damage = 5f;
-    // 추가 예정
+
+    [Header("# UI")]
+    public GameObject[] ui; // 턴 UI
+    public Button turnEnd; // Turn End 버튼
 
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
     public bool isPlayerMove = false;
     public bool isPlayerTurn = false;
-
-    [Header("# UI")]
-    public GameObject[] ui; // 턴 UI
-    public Button turnEnd; // Turn End 버튼
-
-    private CardManager cardManager;
-
     public bool isRandomCard = false;
 
+    private CardManager cardManager;
 
     private void Awake()
     {
@@ -108,7 +105,8 @@ public class BattleManager : MonoBehaviour
         {
             currentMonsterIndex++;
             monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
-            
+  /*          monsters[currentMonsterIndex].GetComponent<RangeMoveTest>().MoveStart();*/ // 원거리 이동 알고리즘 테스트 중 
+
             // 몬스터 1차 순회
             if (currentMonsterIndex == monsters.Count - 1)
             {

@@ -188,7 +188,7 @@ public class Player : MonoBehaviour
             return;
 
         int randNum = Random.Range(0, 100);
-        
+
         if (randNum > playerData.CriticalHit)
         {
             Debug.Log("Critical!");
@@ -216,10 +216,6 @@ public class Player : MonoBehaviour
     {
         /*if (isLive) 
             return;*/
-
-        // ���� ��� �� isWall ����
-        MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
-            .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
         anim.SetTrigger("Die");
     }

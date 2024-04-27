@@ -49,7 +49,7 @@ public class MapGenerator : MonoBehaviour
                 // 전체 좌표 설정
                 tile.SetCoord(i, j, false);
 
-                // 타일 위에 몬스터가 있을 경우 
+                // 타일 위에 몬스터가 있을 경우(몬스터 겹침 방지)
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {

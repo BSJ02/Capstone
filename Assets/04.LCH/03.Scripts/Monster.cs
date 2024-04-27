@@ -18,13 +18,14 @@ public enum MonsterState
 
 public enum MonsterType
 {
-    Normal,
-    Boss
+    Short,
+    Long
 }
 
 public class Monster : MonoBehaviour
 {
-    public MonsterData monsterData; 
+    public MonsterData monsterData;
+    private MonsterUI monster_UI;
 
     public MonsterState state;
     public MonsterType monsterType;
@@ -37,16 +38,18 @@ public class Monster : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        monster_UI = GetComponent<MonsterUI>();
 
         isLive = true; 
-        monsterData.Hp = monsterData.MaxHp; 
+
+        monsterData.Hp = monsterData.MaxHp;
+        monsterData.CurrentDamage = 0;
     }
 
     void Start()
     {
         Init();
     }
-
 
     // [0] 애니메이션 초기화
     public void Init()
@@ -59,26 +62,34 @@ public class Monster : MonoBehaviour
     public void ReadyToAttack(Player player)
     {
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
+        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage);
         float critcalDamage = monsterData.MinDamage + critaical;
 
         if (randDamage >= critcalDamage)
         {
-            state = MonsterState.CritcalAttack;
-            anim.SetInteger("State", (int)state);
-            Debug.Log("플레이어 체력:" + player.playerData.Hp + $", 크리티컬 공격:{(int)randDamage}");
+            // 크리티컬 공격
             player.GetHit(randDamage);
+
+            state = MonsterState.CritcalAttack; // 애니메이션
+            anim.SetInteger("State", (int)state);
+
+            monster_UI.GetMonsterDamage(); // UI 업데이트
+            Debug.Log("플레이어 체력:" + player.playerData.Hp + $", 크리티컬 공격:{(int)randDamage}");
             return;
         }
         else
         {
-            state = MonsterState.Attack;
-            anim.SetInteger("State", (int)state);
-            Debug.Log("플레이어 체력:" + (int)player.playerData.Hp + $", 일반 공격:{(int)randDamage}");
+            // 일반 공격
             player.GetHit(randDamage);
+
+            state = MonsterState.Attack; // 애니메이션
+            anim.SetInteger("State", (int)state);
+
+            monster_UI.GetMonsterDamage(); // UI 업데이트
+            Debug.Log("플레이어 체력:" + (int)player.playerData.Hp + $", 일반 공격:{(int)randDamage}");
             return;
         }
     }
-
 
     // [2] 몬스터 피격
     public void GetHit(float damage)
@@ -87,24 +98,20 @@ public class Monster : MonoBehaviour
             return;
 
         damage = FindObjectOfType<Player>().playerData.Damage;
-        monsterData.Hp -= damage;
-        Debug.Log("몬스터 피격 당한 데미지:" + damage);
+        monsterData.Hp -= Mathf.FloorToInt(damage);
+        monster_UI.GetMonsterHp();
+        Debug.Log("몬스터 피격 당한 데미지:" + (int)damage);
 
+        // 몬스터 사망
         if (monsterData.Hp <= 0)
         {
+            isLive = false;
             Die();
         }
 
         state = MonsterState.GetHit;
         anim.SetInteger("State", (int)state);
 
-    }
-
-    // [2-1] 피격 시 이벤트
-    public void EventToGetHit()
-    {
-        // 사운드 재생
-        // 피격 효과 
     }
 
 
@@ -121,10 +128,28 @@ public class Monster : MonoBehaviour
             anim.SetTrigger("Die");
     }
 
-    // [3-1] 사망 후 이벤트
+
+    // 후처리(사운드 및 이펙트)
+
+    // 공격 시 이벤트
+    public void EventToAttack()
+    {
+        // 공격 사운드 재생
+        // 공격 효과
+    }
+
+    // 피격 시 이벤트
+    public void EventToGetHit()
+    {
+        // ShowFloatingText();
+        // 피격 사운드 재생
+        // 피격 효과 
+    }
+
+    // 사망 후 이벤트
     public void EventToDie()
     {
-        // 사운드 재생
+        // 사망 사운드 재생
         // 사망 효과
     }
 }
