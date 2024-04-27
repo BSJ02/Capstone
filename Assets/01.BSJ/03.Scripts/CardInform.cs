@@ -64,6 +64,7 @@ public class CardInform : ScriptableObject
 [System.Serializable]
 public class Card
 {
+    //[HideInInspector] public int cardID;
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
     public string cardDescription_Power;
