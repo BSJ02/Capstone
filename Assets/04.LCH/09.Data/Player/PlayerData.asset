@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Hp: 94.437164
+  Hp: 69.67155
   MaxHp: 100
   Damage: 20
   Armor: 120
   CriticalHit: 0
-  activePoint: 0
-  MaxActivePoint: 4
+  activePoint: 100
+  MaxActivePoint: 100
