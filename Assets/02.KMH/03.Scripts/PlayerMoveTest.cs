@@ -64,13 +64,10 @@ public class PlayerMoveTest : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
 
-                // Ŭ���� ���� �������� Ȯ��
                 if (hit.collider.CompareTag("Monster"))
                 {
-                    // Ŭ���� ���� ����
                     clickedMonster = hit.collider.GetComponent<Monster>();
 
-                    // ������ ���� ����Ʈ�� �ִ��� Ȯ��
                     if (detectedMonsters.Contains(clickedMonster))
                     {
                         // Ŭ���� ���Ϳ��� ������ �Լ� ����
@@ -238,35 +235,28 @@ public class PlayerMoveTest : MonoBehaviour
         }
     }
 
-    // Monster ����(3x3 Ÿ��)
-
-    // �÷��̾� �ֺ��� Ÿ���� �˻��Ͽ� ���͸� ����
+    // 몬스터 감지
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
-        // ������ ���� ����Ʈ �ʱ�ȭ
         detectedMonsters.Clear();
 
-        // ��� ���� ã��
         Monster[] monsters = FindObjectsOfType<Monster>();
 
         foreach (Monster m in monsters)
         {
-            // ���� ��ġ
             Vector3 monsterPosition = m.transform.position;
             Vector2Int monsterPos = new Vector2Int((int)monsterPosition.x, (int)monsterPosition.z);
 
-            // �÷��̾�� ���� ���� �Ÿ� ���
+            //플레이어와 몬스터 거리 계산
             int distanceX = Mathf.Abs(playerPos.x - monsterPos.x);
             int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
 
-            // �Ÿ��� ���� ���� �̳���� ���͸� ����Ʈ�� �߰�
+            //몬스터가 감지 범위 안에 있으면 실행
             if (distanceX <= detectionRange && distanceY <= detectionRange)
             {
                 detectedMonsters.Add(m);
                 Debug.Log(m);
             }
         }
-
-        // ������ ���Ϳ� ���� �߰����� ó�� ���� ����
     }
 }
