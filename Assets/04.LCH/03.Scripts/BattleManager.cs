@@ -34,9 +34,9 @@ public class BattleManager : MonoBehaviour
     private int currentMonsterIndex = -1;
     private float delay = 1.5f;
 
-    public bool isPlayerMove = false;
-    public bool isPlayerTurn = false;
-    public bool isRandomCard = false;
+    [HideInInspector] public bool isPlayerMove = false;
+    [HideInInspector] public bool isPlayerTurn = false;
+    [HideInInspector] public bool isRandomCard = false;
 
     private CardManager cardManager;
 

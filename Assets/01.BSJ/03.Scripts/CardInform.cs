@@ -35,11 +35,11 @@ public class CardInform : ScriptableObject
         FixCardPercent(epicCards, epicPercent);
         FixCardPercent(legendCards, legendPercent);
 
-        ApplyCardRank(baseCards, Card.CardRank.baseCards);
-        ApplyCardRank(commonCards, Card.CardRank.commonCards);
-        ApplyCardRank(rareCards, Card.CardRank.rareCards);
-        ApplyCardRank(epicCards, Card.CardRank.epicCards);
-        ApplyCardRank(legendCards, Card.CardRank.legendCards);
+        ApplyCardRank(baseCards, Card.CardRank.BaseCards);
+        ApplyCardRank(commonCards, Card.CardRank.CommonCards);
+        ApplyCardRank(rareCards, Card.CardRank.RareCards);
+        ApplyCardRank(epicCards, Card.CardRank.EpicCards);
+        ApplyCardRank(legendCards, Card.CardRank.LegendCards);
     }
 
     // 리스트에 있는 카드들의 percent를 원하는 값으로 설정
@@ -72,14 +72,24 @@ public class Card
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardRank cardRank; // 카드 등급
+    public WeaponType cardWeaponType;
 
     public enum CardRank
     {
-        baseCards,  // 기본
-        commonCards,    // 일반
-        rareCards,  // 레어
-        epicCards,  // 에픽
-        legendCards // 전설
+        BaseCards,  // 기본
+        CommonCards,    // 일반
+        RareCards,  // 레어
+        EpicCards,  // 에픽
+        LegendCards // 전설
     }
 
+    public enum WeaponType
+    {
+        Sword,
+        Axe,
+        Bow,
+        Hammer,
+        Wand,
+        Shield
+    }
 }

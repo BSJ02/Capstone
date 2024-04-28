@@ -11,7 +11,7 @@ public class CardManager : MonoBehaviour
 {
     [Header(" # Card Inform")] public CardInform cardInform;
     [Header(" # Player Scripts")] public Player player;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
     
 
     // 카드 생성 위치
@@ -48,8 +48,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
-    [HideInInspector] public Card useCard = null;
-
+    [HideInInspector] public Card useCard = null;   // 사용한 카드를 담을 변수
 
     private void Awake()
     {
@@ -84,7 +83,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
 
         // 기본 카드 생성
         handCardList.AddRange(cardInform.baseCards);   // 값 추가
@@ -97,7 +96,7 @@ public class CardManager : MonoBehaviour
     // 카드 사용 취소
     public void CardCancle()
     {
-        if (useCard != null && cardData.usingCard)
+        if (useCard != null && cardProcessing.usingCard)
         {
             Card card = useCard;
             GameObject cardObject = addCardObject[addCardObject.Count - 1];
@@ -110,11 +109,11 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            player.playerData.activePoint = cardData.TempActivePoint;
+            player.playerData.activePoint = cardProcessing.TempActivePoint;
 
-            cardData.usingCard = false;
-            cardData.waitForInput = false;
-            cardData.coroutineStop = true;
+            cardProcessing.usingCard = false;
+            cardProcessing.waitForInput = false;
+            cardProcessing.coroutineStop = true;
             useCard = null;
         }
     }
