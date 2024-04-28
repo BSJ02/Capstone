@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1098,6 +1098,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d074474a72d9542ae9de520edd32b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &301803554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301803543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e0c60103c2399428a52b238394b97f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 301803543}
+  swordList: []
+  axeList: []
+  bowList: []
+  hammerList: []
+  wandList: []
+  shieldList: []
 --- !u!1 &328140820
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,7 +3477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1158601559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5390,10 +5409,50 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 301803549}
+    - target: {fileID: 55313148014092396, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 107924265554004268, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 177393455962662985, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177393455962662985, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 193049383330332053, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 310997382968150937, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459844743877120535, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 474430814147901567, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474430814147901567, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 672575973925746434, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -5410,20 +5469,145 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 987008591185606539, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987008591185606539, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044148825955007469, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044148825955007469, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 1124006884614567464, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219784695288970033, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269508918959595079, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269508918959595079, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428145161891029119, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544256305207465081, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544256305207465081, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612928033760023299, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975267605708485307, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975267606078760012, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975267606078760012, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2078198636931982850, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2078198636988525744, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167827013169339001, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 2176229262324840954, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2341805002759850079, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2341805004184262912, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401314376971798011, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 2500689828159068678, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924120402591272608, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924120402591272608, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313996180166576309, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383203751825100180, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383203753253948834, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 3558562984227489006, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -5435,6 +5619,121 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3733367897248427191, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737467648177343890, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3752572936425856071, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3752572936425856071, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3990483520666876564, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4027110793890110611, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4027110794425696759, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062553592373911771, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062553592373911771, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065550370774162367, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083011282307863938, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083011282307863938, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098986340710123679, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098986340710123679, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4143139849006886331, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416278813624521757, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416278813624521757, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497175752462480068, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497175752462480068, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497175753987513321, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497175753987513321, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4546488303805020239, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601855785713113530, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 4623419494616883150, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
@@ -5444,6 +5743,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850644786559092988, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850644786901980101, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 5053353830109982860, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -5455,20 +5764,100 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5198169005696818733, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5382515450187360631, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5382515450187360631, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558992097254817714, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656960744997317728, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 5690858344159926601, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707986307825861515, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707986309885083678, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 5925823282711627523, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6044184715629027460, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044184715629027460, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188668910436123550, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188668910479028724, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 6578022476308063197, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6672216400462508481, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6672216400462508481, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825763076189353695, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825763076235687243, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825763076235687243, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 6930307977983481363, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -5480,6 +5869,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7104417170343730894, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104417170343730894, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108461396823104468, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191100790416280148, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 54f72210cc023874e9be1506ec0fadfe, type: 2}
     - target: {fileID: 7191100790416280148, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_Controller
@@ -5540,15 +5949,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7357796030857638264, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357796030857638264, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7523084374181583702, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7523084374571104303, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543586217660832583, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 7694000570315084372, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7731757349341600489, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7731757349341600489, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 7806490576938327467, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891887250228581107, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891887250228581107, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978060249605229007, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978060249605229007, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -5560,6 +6024,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8192300620582832796, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8192300620582832796, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 8264577405655240804, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
@@ -5570,16 +6044,70 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8384307519746191924, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8411264861097380425, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 8618620540167870774, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8726119005199030134, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726119005972369573, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896852372303736567, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068660206768712711, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068660206796882720, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095254468575138960, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095254468575138960, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124897800117992762, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -3865380473914953554, guid: e77bc5b981553b942a305281b23b4012, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 301803554}
   m_SourcePrefab: {fileID: 100100000, guid: e77bc5b981553b942a305281b23b4012, type: 3}
 --- !u!1 &1359625719 stripped
 GameObject:
@@ -7210,7 +7738,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleState: 0
   player: {fileID: 301803543}
-  playerData: {fileID: 301803549}
   monsters:
   - {fileID: 1359625719}
   - {fileID: 1629993931}
@@ -7909,31 +8436,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab:
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 1221953997338041583, guid: fda65a992e719454ea6143612faeb71e, type: 3}
-  - {fileID: 4952380534849485741, guid: 4005c83163cfd574eb6dde2df7985c82, type: 3}
-  - {fileID: 3190760011829419382, guid: 85f9dfb460e480e4ba3630fa71d10d23, type: 3}
-  - {fileID: 2061050301493775873, guid: 0d1f0966b5d8fbf478a17f06e85c3c8d, type: 3}
-  - {fileID: 6295541277732897268, guid: 953e58cbfd3a1ed4c8e731bf8b1e7780, type: 3}
-  - {fileID: 3495067033411339927, guid: 8aa93f36d701ac24980a876fc0bbc5b3, type: 3}
-  - {fileID: 8926646481136535707, guid: c53ca47f864d9014e92682fd57093bcf, type: 3}
-  - {fileID: 6401674023999078618, guid: b52b38180cd41514986fcb12b3a5004a, type: 3}
-  - {fileID: 8779686657556151950, guid: 85d793aad78111d418e71e7eccf23b38, type: 3}
-  - {fileID: 7704905326114076265, guid: aba571f1aafd3a3499bc6e93d7f4b576, type: 3}
-  - {fileID: 4796066834466991590, guid: 352bc4c106f36e64cac3c0fee88cefd2, type: 3}
-  - {fileID: 2950845936340731081, guid: fad9b7088618fa844b568191b79722b7, type: 3}
-  - {fileID: -6419840065421506524, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
-  - {fileID: 8360416698087754585, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
-  - {fileID: 4126882791157839235, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
-  - {fileID: 2657789800304004502, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 7284856300908179813, guid: 0cff5f4d963d0ab47a4635729d70be48, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 4268123180812608762, guid: b9dd35bf5635c134a8095336f6ee3bff, type: 3}
+  - {fileID: 1474524636015859751, guid: c948571b5be2fdd41aab5eedb270e73d, type: 3}
+  - {fileID: 1474524636015859751, guid: c948571b5be2fdd41aab5eedb270e73d, type: 3}
+  - {fileID: 11239846055912105, guid: 939c25db21f9ee6469342fb8938c2c87, type: 3}
+  - {fileID: 9191114879412576129, guid: 348ae33dc1c05794491394784e1c2e8b, type: 3}
+  - {fileID: 1573064817867448636, guid: fc5121c3e3001244983024401f1fce3f, type: 3}
+  - {fileID: 7357713987075281806, guid: e59f2f2fc16b79b41a088e66a507acb0, type: 3}
+  - {fileID: 708975767838100973, guid: 348ce404fdc8d3b49bff04baa69a5423, type: 3}
+  - {fileID: 7357713987075281806, guid: e59f2f2fc16b79b41a088e66a507acb0, type: 3}
+  - {fileID: 4648602613556972353, guid: 352bc4c106f36e64cac3c0fee88cefd2, type: 3}
+  - {fileID: 4648602613556972353, guid: 352bc4c106f36e64cac3c0fee88cefd2, type: 3}
+  - {fileID: 3847749342915264672, guid: fad9b7088618fa844b568191b79722b7, type: 3}
+  - {fileID: 3847749342915264672, guid: fad9b7088618fa844b568191b79722b7, type: 3}
+  - {fileID: 1118813982218620538, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
+  - {fileID: 4008368103816103496, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
+  - {fileID: 624648965016542229, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
+  - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
+  - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 6124339996064874330, guid: eadd87a57cdb0484593d86c3790b06b9, type: 3}
+  - {fileID: 7284856300908179813, guid: 0cff5f4d963d0ab47a4635729d70be48, type: 3}
+  - {fileID: 4268123180812608762, guid: b9dd35bf5635c134a8095336f6ee3bff, type: 3}
+  - {fileID: 1474524636015859751, guid: c948571b5be2fdd41aab5eedb270e73d, type: 3}
+  - {fileID: 708975767838100973, guid: 348ce404fdc8d3b49bff04baa69a5423, type: 3}
+  - {fileID: 1573064817867448636, guid: fc5121c3e3001244983024401f1fce3f, type: 3}
+  - {fileID: 7357713987075281806, guid: e59f2f2fc16b79b41a088e66a507acb0, type: 3}
+  - {fileID: 9191114879412576129, guid: 348ae33dc1c05794491394784e1c2e8b, type: 3}
+  - {fileID: 11239846055912105, guid: 939c25db21f9ee6469342fb8938c2c87, type: 3}
+  - {fileID: 1118813982218620538, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
   garo: 10
   sero: 10
 --- !u!4 &2082544544
@@ -8322,12 +8862,12 @@ SceneRoots:
   - {fileID: 1820781256}
   - {fileID: 1664038494}
   - {fileID: 1329013518}
-  - {fileID: 1158601560}
-  - {fileID: 401504239}
-  - {fileID: 615802234}
   - {fileID: 1422773952}
-  - {fileID: 2082544544}
   - {fileID: 1350508652}
   - {fileID: 513620028}
   - {fileID: 1884863713}
   - {fileID: 602341941}
+  - {fileID: 1158601560}
+  - {fileID: 2082544544}
+  - {fileID: 401504239}
+  - {fileID: 615802234}
