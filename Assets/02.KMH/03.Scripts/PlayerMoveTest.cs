@@ -41,12 +41,21 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMoving && !cardData.usingCard)
+
+        if (Input.GetMouseButtonDown(0) && !isMoving /*&& !cardData.usingCard*/)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
+            int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
+            {
+                if(hit.collider.CompareTag("Player"))
+                mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+            }
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, TileLayerMask))
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
@@ -63,7 +72,10 @@ public class PlayerMoveTest : MonoBehaviour
                     StartCoroutine(MoveSmoothly(move));
                     mapGenerator.ResetTotalMap();
                 }
+            }
 
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
                 if (hit.collider.CompareTag("Monster"))
                 {
                     clickedMonster = hit.collider.GetComponent<Monster>();
@@ -74,9 +86,7 @@ public class PlayerMoveTest : MonoBehaviour
                         player.ReadyToAttack(clickedMonster);
                     }
                 }
-
             }
-            
         }
 
     }
@@ -149,7 +159,8 @@ public class PlayerMoveTest : MonoBehaviour
     public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
-        transform.gameObject.GetComponent<Collider>().enabled = false;
+        //transform.gameObject.GetComponent<Collider>().enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         player.playerState = PlayerState.Moving;
 
         float moveSpeed = 1f;
@@ -183,7 +194,8 @@ public class PlayerMoveTest : MonoBehaviour
         }
 
         isMoving = false;
-        transform.gameObject.GetComponent<Collider>().enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        //transform.gameObject.GetComponent<Collider>().enabled = true;
         player.playerState = PlayerState.Idle;
 
         // Path�� ���� ��ǥ
@@ -227,13 +239,13 @@ public class PlayerMoveTest : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
-    {
-        if (!isMoving)
-        {
-            mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
-        }
-    }
+    //private void OnMouseDown()
+    //{
+    //    if (!isMoving)
+    //    {
+    //        mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+    //    }
+    //}
 
     // 몬스터 감지
     public void GetSurroundingTiles(Vector2Int playerPos)

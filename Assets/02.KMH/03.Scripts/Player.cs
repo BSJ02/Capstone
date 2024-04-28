@@ -74,12 +74,6 @@ public class Player : MonoBehaviour
             case PlayerState.Moving:
                 anim.SetInteger("State", 1);
                 break;
-            case PlayerState.Attack1:
-                anim.SetInteger("State", 2);
-                break;
-            case PlayerState.GetHit:
-                anim.SetInteger("State", 3);
-                break;
         }
     }
 
@@ -165,21 +159,21 @@ public class Player : MonoBehaviour
 
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack1;
+        anim.SetInteger("State", (int)playerState);
+
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"데미지{(int)randDamage}!");
 
 
         monster.GetHit(playerData.Damage);
 
-        StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
 
-    //idle로 변경
-    public IEnumerator ChangeStateDelayed(float delay)
+    // 애니메이션 초기화
+    public void Init()
     {
-        yield return new WaitForSeconds(delay);
         playerState = PlayerState.Idle;
+        anim.SetInteger("State", (int)playerState);
     }
 
     public void GetHit(float damage)
@@ -207,7 +201,7 @@ public class Player : MonoBehaviour
         }
 
         playerState = PlayerState.GetHit;
-        StartCoroutine(ChangeStateDelayed(1));
+        anim.SetInteger("State", (int)playerState);
 
     }
 

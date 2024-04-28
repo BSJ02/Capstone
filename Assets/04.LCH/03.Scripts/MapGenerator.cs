@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
     public int garo;
     public int sero;
 
+    [SerializeField]
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
 
     private void Awake()
