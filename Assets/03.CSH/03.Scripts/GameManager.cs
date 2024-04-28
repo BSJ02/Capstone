@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        remainingDistance.text = player.playerData.activePoint.ToString();
+        //remainingDistance.text = player.playerData.activePoint.ToString();
     }
 
 
