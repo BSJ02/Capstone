@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MonsterMove : MonoBehaviour
 {
     private Monster monster;
-
 
     Tile StartNode, TargetNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
@@ -20,23 +20,23 @@ public class MonsterMove : MonoBehaviour
     }
 
 
+    // 플레이어 턴 종료 후 호출[몬스터 턴]
     public void MoveStart()
     {
-        // ����Ʈ �ʱ�ȭ 
+        // 초기화
         OpenList.Clear();
         CloseList.Clear();
 
-        // ��ã�� 
+        // 길찾기 시작
         SetDestination();
         List<Vector2Int> move = PathFinding();
         StartCoroutine(MoveSmoothly(move));
 
-        // Ÿ�� ��ǥ �ʱ�ȭ
+        // 타일 좌표 초기화 
         MapGenerator.instance.ResetTotalMap();
-
     }
 
-
+    // 플레이어 및 몬스터 초기 좌표 설정
     public void SetDestination() 
     {
         monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
@@ -50,19 +50,20 @@ public class MonsterMove : MonoBehaviour
         TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
 
+    // 길찾기 시작
     public List<Vector2Int> PathFinding() 
     {
-        OpenList.Add(StartNode);
+        OpenList.Add(StartNode); 
         
-        List<Vector2Int> path = new List<Vector2Int>();
+        List<Vector2Int> path = new List<Vector2Int>(); // 경로가 담길 리스트
 
-        // ����Ʈ �ߺ� ����
         path.Clear();
 
         while (OpenList.Count > 0)
         {
             CurrentNode = OpenList[0];
 
+            // 연산 비용 계산
             for (int i = 1; i < OpenList.Count; i++)
             {
                 if (OpenList[i].coord.F <= CurrentNode.coord.F && OpenList[i].coord.H < CurrentNode.coord.H)
@@ -74,7 +75,7 @@ public class MonsterMove : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ��� ���� �� ã��
+            // 좌표 전부 찾음
             if (CurrentNode == TargetNode)
             {
                 Tile currentNode = TargetNode;
@@ -85,26 +86,27 @@ public class MonsterMove : MonoBehaviour
                     currentNode = currentNode.coord.parentNode;
                 }
 
-                path.Reverse();
+                path.Reverse(); // 플레이어 기준 좌표 -> 몬스터 기준 좌표[순서 정리]
 
                 break;
             }
 
+            // 위, 오른쪽, 아래, 왼쪽 순서대로 OpenList 찾기
             OpenListAdd(CurrentNode.coord.x, CurrentNode.coord.y + 1);
             OpenListAdd(CurrentNode.coord.x + 1, CurrentNode.coord.y);
             OpenListAdd(CurrentNode.coord.x, CurrentNode.coord.y - 1);
             OpenListAdd(CurrentNode.coord.x - 1, CurrentNode.coord.y);
         }
 
-        // �÷��̾� ��ǥ ����(��ħ ����)
-        if(path.Count > 0)
+        // 플레이어 겹침 방지
+        if (path.Count > 0)
         path.RemoveAt(path.Count - 1); 
 
+        // 경로 반환 
         return path;
     }
 
-
-    // ���� ��� üũ
+    // 노드 연산 비용 계산 
     public void OpenListAdd(int checkX, int checkY) 
     {
         if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
@@ -135,14 +137,13 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-
-    // ���� �̵�
+    // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // ���� �̵��Ÿ�
+        // 몬스터 최대 이동 거리(moveDistance 만큼 리스트 반환)
         int maxMoveDistance = monster.monsterData.MoveDistance;
 
         float moveSpeed = 1f;
@@ -150,7 +151,7 @@ public class MonsterMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            // ���� �̵��Ÿ��� �°� ����
+            // 몬스터의 moveDistacne 값이 최대이면 종료
             if (i >= maxMoveDistance)
                 break;
 
@@ -169,26 +170,26 @@ public class MonsterMove : MonoBehaviour
                 yield return null;
             }
 
-            // ���� ��ġ �� ���� 
+            // Position 값 보정
             transform.position = nextPosition;
-
         }
 
-        // ���� ���� ��ġ
+        // 최종 플레이어 좌표
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // ���� ��ġ�� isWall üũ(��ħ ����)
+        // 최종 좌표 isWall 설정(몬스터 및 플레이어 겹침 방지)
         MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
 
-        // ���� ��ġ �������� �÷��̾� ����
+        // 플레이어 감지 후 공격
         GetSurroundingTiles(finalPosition);
 
-        // ���� �� ����
+        // 몬스터 턴 종료
         StartCoroutine(EscapeMonsterTurn());
         yield break;
     }
 
-    // ���� �ֺ� Ÿ�� ����
+
+    // 플레이어 감지 및 공격
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
         int detectionRange = monster.monsterData.DetectionRagne;
@@ -196,28 +197,44 @@ public class MonsterMove : MonoBehaviour
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        if(distacneX <= detectionRange && distacneY <= detectionRange)
+       
+        if (distacneX == detectionRange || distacneY == detectionRange) 
         {
-            // ���� O
+            // 대각선 감지 X(근거리 몬스터)
+            if (monster.monsterType != MonsterType.Short)
+                return;
+
+            // 감지 O
+            Player player = FindObjectOfType<Player>();
+            transform.LookAt(player.transform); // 회전 값 보정
+            monster.ReadyToAttack(player);
+            return;
+        }
+        else if(distacneX <= detectionRange && distacneY <= detectionRange) 
+        {
+            //대각선 감지 O (원거리 몬스터)
+            if (monster.monsterType != MonsterType.Long)
+                return;
+
+            // 감지 O
             Player player = FindObjectOfType<Player>();
             monster.ReadyToAttack(player);
             return;
         }
         else
         {
-            // ���� X
+            // 감지 X
             monster.Init();
             return;
         }
     }
 
-    
+    // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
         BattleManager.instance.ui[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
-
     }
 }
 

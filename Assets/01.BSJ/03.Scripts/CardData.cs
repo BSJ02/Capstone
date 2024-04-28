@@ -5,15 +5,41 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Card;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
+
+
+//public enum CardState
+//{
+//    SwordSlash,
+//    HealingSalve,
+//    Sprint,
+//    BasicStrike,
+//    ShieldBlock,
+//    AxSlash,
+//    Heal,
+//    Teleport,
+//    GuardianSpirit,
+//    HolyNova,
+//    Fireball,
+//    LightningStrike,
+//    ExcalibursWrath,
+//    DivineIntervention,
+//    SoulSiphon
+//}
 
 public class CardData : MonoBehaviour
 {
     [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
     [HideInInspector] public bool waitAnim = false;
+    [HideInInspector] public bool usingCard = false;
+    [HideInInspector] public bool coroutineStop = false;
+    [HideInInspector] public int TempActivePoint;
 
     private PlayerMoveTest playerMoveTest;
     private BattleManager battleManager;
+
     [Header(" # Player Scripts")] public Player player;
     [Header(" # Map Scripts")] public MapGenerator mapGenerator;
 
@@ -21,12 +47,9 @@ public class CardData : MonoBehaviour
 
     [Header(" # Player Object")] public GameObject playerObject;
 
-    //private float maxAttackRange = 3.0f;
 
-    [HideInInspector] public bool usingCard = false;
-    [HideInInspector] public bool coroutineStop = false;
-
-    [HideInInspector] public int TempActivePoint;
+    private GameObject selectedTarget = null;
+    private float cardUseDistance = 0;
 
     private void Awake()
     {
@@ -43,9 +66,8 @@ public class CardData : MonoBehaviour
     {
         if (usingCard)
         {
-            mapGenerator.PlayerAttackRange(playerObject.transform.position, 1);
+            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
         }
-
     }
 
     // 카드 사용 메서드
@@ -54,9 +76,6 @@ public class CardData : MonoBehaviour
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    //if (Vector3.Distance(player.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)) <= maxAttackRange)
-    //            {
-
 
     // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
@@ -64,29 +83,18 @@ public class CardData : MonoBehaviour
         battleManager.isPlayerMove = false;
         TempActivePoint = player.playerData.activePoint;
         player.playerData.activePoint = 0;
+        cardUseDistance = card.cardPower[2];    // 카드 거리 저장
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
 
-            GameObject selectedTarget = null;   // 선택된 대상을 저장할 변수
-
             // 대상 선택이 완료될 때까지 반복합니다.
             while (waitForInput)
             {
-
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                    {
-                        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
-                        {
-                            selectedTarget = hit.collider.gameObject;
-                            waitForInput = false;
-                        }
-                    }
+                    SelectTarget();
                 
                 }
                 yield return null; // 다음 프레임까지 대기
@@ -105,9 +113,35 @@ public class CardData : MonoBehaviour
                 Debug.Log("대상을 다시 선택하세요.");
                 continue;
             }
-            else
+
+            usingCard = false;
+            mapGenerator.ClearHighlightedTiles();
+
+            if (!waitForInput)
             {
                 break;
+            }
+
+        }
+    }
+
+    private void SelectTarget()
+    {
+        selectedTarget = null;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
+            {
+
+                selectedTarget = hit.collider.gameObject;            
+                if (Vector3.Distance(player.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+                {
+                    waitForInput = false;
+                }
             }
         }
     }
@@ -170,8 +204,7 @@ public class CardData : MonoBehaviour
                     Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                     break;
             }
-            usingCard = false;
-            mapGenerator.ClearHighlightedTiles();
+
         }
     }
 
@@ -184,11 +217,12 @@ public class CardData : MonoBehaviour
 
         if (monster != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
             // 카드 사용 애니메이션
             player.AttackTwoAnim();
+
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            cardUseDistance = card.cardPower[1];
         }
         else
         {
@@ -204,10 +238,11 @@ public class CardData : MonoBehaviour
 
         if (player != null)
         {
-            player.playerData.Hp += card.cardPower[0];
-
             // 카드 사용 애니메이션
             player.ChargeAnim();
+
+            player.playerData.Hp += card.cardPower[0];
+            cardUseDistance = card.cardPower[1];    
         }
         else
         {
@@ -225,11 +260,12 @@ public class CardData : MonoBehaviour
         {
             Debug.Log("Sprint 카드를 사용");
 
-            // 플레이어 추가 이동
-            player.playerData.activePoint += (int)card.cardPower[0];
-
             // 카드 사용 애니메이션
             player.ChargeAnim();
+
+            // 플레이어 추가 이동
+            player.playerData.activePoint += (int)card.cardPower[0] + TempActivePoint;
+            cardUseDistance = card.cardPower[0];
         }
         else
         {
@@ -244,11 +280,12 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
+            // 카드 사용 애니메이션
+            player.StabAnim();
+
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-
-            player.StabAnim();
-            
+            cardUseDistance = card.cardPower[1];
         }
         else
         {
@@ -263,12 +300,12 @@ public class CardData : MonoBehaviour
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
+            // 카드 사용 애니메이션
+            player.ChargeAnim();
+
             Debug.Log(card.cardName + " 카드를 사용 / " + player + " Armor: " + player.playerData.Armor);
             player.playerData.Armor += card.cardPower[0];
             Debug.Log(player + "Armor: " + player.playerData.Armor);
-
-            // 카드 사용 애니메이션
-
         }
         else
         {
@@ -284,11 +321,11 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
+            // 카드 사용 애니메이션
+            player.SpinAttackAnim();
+
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-
-            // 카드 사용 애니메이션
-
         }
         else
         {
@@ -303,12 +340,12 @@ public class CardData : MonoBehaviour
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
+            // 카드 사용 애니메이션
+            player.ChargeAnim();
+
             Debug.Log(card.cardName + " 카드를 사용 / " + player + " Hp: " + player.playerData.Hp);
             player.playerData.Hp += card.cardPower[0];
             Debug.Log(player + "Hp: " + player.playerData.Hp);
-
-            // 카드 사용 애니메이션
-
         }
         else
         {
@@ -323,11 +360,13 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
+            // 카드 사용 애니메이션
+            player.ChargeAnim();
+
             Debug.Log("Teleport 카드를 사용");
 
             // 플레이어 추가 이동
-
-            // 카드 사용 애니메이션
+            player.playerData.activePoint = TempActivePoint;
 
         }
         else
@@ -347,7 +386,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.ChargeAnim();
         }
         else
         {
@@ -367,7 +406,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.ChargeAnim();
         }
         else
         {
@@ -386,7 +425,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.MacigAttack01Anim();
         }
         else
         {
@@ -405,7 +444,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.MacigAttack02Anim();
         }
         else
         {
@@ -425,7 +464,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.MacigAttack03Anim();
         }
         else
         {
@@ -444,7 +483,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.ChargeAnim();
         }
         else
         {
@@ -464,7 +503,7 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             // 카드 사용 애니메이션
-
+            player.MacigAttack03Anim();
         }
         else
         {

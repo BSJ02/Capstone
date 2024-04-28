@@ -6,13 +6,17 @@ using UnityEngine;
 
 public enum PlayerState
 {
-    Idle,
-    Moving,
-    Attack,
-    GetHit,
-    Attack2,
-    Stab,
-    Charge
+    Idle = 0,
+    Moving = 1,
+    Attack1 = 2,
+    GetHit = 3,
+    Attack2 = 4,
+    Stab = 5,
+    Charge = 6,
+    SpinAttack = 7,
+    MacigAttack01 = 8,
+    MacigAttack02 = 9,
+    MacigAttack03 = 10
 }
 
 public class Player : MonoBehaviour
@@ -27,16 +31,18 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
+        cardData = FindObjectOfType<CardData>();
+
         playerData.Hp = playerData.MaxHp;
         ResetActivePoint();
+
+        isLive = true;
     }
 
     void Start()
     {
-        anim = GetComponent<Animator>();
-        cardData = FindObjectOfType<CardData>();
-
-        isLive = true;
+        IdleAnim();
     }
 
     private void Update()
@@ -50,6 +56,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // ActivePoint 초기화
     public void ResetActivePoint()
     {
         playerData.activePoint = playerData.MaxActivePoint;
@@ -67,53 +74,79 @@ public class Player : MonoBehaviour
             case PlayerState.Moving:
                 anim.SetInteger("State", 1);
                 break;
-            case PlayerState.Attack:
-                anim.SetInteger("State", 2);
-                break;
-            case PlayerState.GetHit:
-                anim.SetInteger("State", 3);
-                break;
-            case PlayerState.Attack2:
-                anim.SetInteger("State", 4);
-                break;
-            case PlayerState.Stab:
-                anim.SetInteger("State", 5);
-                break;
-            case PlayerState.Charge:
-                anim.SetInteger("State", 6);
-                break;
         }
+    }
+
+    public void IdleAnim()
+    {
+        playerState = PlayerState.Idle;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
+    public void MovingAnim()
+    {
+        playerState = PlayerState.Idle;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
+    public void AttackOneAnim()
+    {
+        playerState = PlayerState.Attack1;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
     }
 
     public void AttackTwoAnim()
     {
         playerState = PlayerState.Attack2;
+        anim.SetInteger("State", (int)playerState);
         cardData.waitAnim = false;
-
-        StartCoroutine(ChangeStateDelayed(0));
-
-        return;
     }
 
     public void StabAnim()
     {
         playerState = PlayerState.Stab;
+        anim.SetInteger("State", (int)playerState);
         cardData.waitAnim = false;
-
-        StartCoroutine(ChangeStateDelayed(0));
-
-        return;
     }
 
     public void ChargeAnim()
     {
         playerState = PlayerState.Charge;
+        anim.SetInteger("State", (int)playerState);
         cardData.waitAnim = false;
-
-        StartCoroutine(ChangeStateDelayed(0));
-
-        return;
     }
+
+    public void SpinAttackAnim()
+    {
+        playerState = PlayerState.SpinAttack;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
+    public void MacigAttack01Anim()
+    {
+        playerState = PlayerState.MacigAttack01;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
+    public void MacigAttack02Anim()
+    {
+        playerState = PlayerState.MacigAttack02;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
+    public void MacigAttack03Anim()
+    {
+        playerState = PlayerState.MacigAttack03;
+        anim.SetInteger("State", (int)playerState);
+        cardData.waitAnim = false;
+    }
+
 
     // �÷��̾� ����
     public void ReadyToAttack(Monster monster)
@@ -125,22 +158,22 @@ public class Player : MonoBehaviour
         monsterHp -= randDamage;
 
         transform.LookAt(monster.transform);
-        playerState = PlayerState.Attack;
+        playerState = PlayerState.Attack1;
+        anim.SetInteger("State", (int)playerState);
+
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"데미지{(int)randDamage}!");
 
 
         monster.GetHit(playerData.Damage);
 
-        StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
 
-    //idle로 변경
-    public IEnumerator ChangeStateDelayed(float delay)
+    // 애니메이션 초기화
+    public void Init()
     {
-        yield return new WaitForSeconds(delay);
         playerState = PlayerState.Idle;
+        anim.SetInteger("State", (int)playerState);
     }
 
     public void GetHit(float damage)
@@ -148,7 +181,17 @@ public class Player : MonoBehaviour
         if (!isLive)
             return;
 
-        playerData.Hp -= damage;
+        int randNum = Random.Range(0, 100);
+
+        if (randNum > playerData.CriticalHit)
+        {
+            Debug.Log("Critical!");
+            playerData.Hp -= damage * (float)1.5;
+        }
+        else
+        {
+            playerData.Hp -= damage;
+        }
 
         Debug.Log("남은 체력 : " + (int)playerData.Hp);
 
@@ -158,7 +201,7 @@ public class Player : MonoBehaviour
         }
 
         playerState = PlayerState.GetHit;
-        StartCoroutine(ChangeStateDelayed(1));
+        anim.SetInteger("State", (int)playerState);
 
     }
 
@@ -167,10 +210,6 @@ public class Player : MonoBehaviour
     {
         /*if (isLive) 
             return;*/
-
-        // ���� ��� �� isWall ����
-        MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
-            .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
         anim.SetTrigger("Die");
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class MapGenerator : MonoBehaviour
     public int garo;
     public int sero;
 
+    [SerializeField]
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
 
     private void Awake()
@@ -48,7 +50,7 @@ public class MapGenerator : MonoBehaviour
                 // 전체 좌표 설정
                 tile.SetCoord(i, j, false);
 
-                // 타일 위에 몬스터가 있을 경우 
+                // 타일 위에 몬스터가 있을 경우(몬스터 겹침 방지)
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
@@ -114,7 +116,8 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void PlayerAttackRange(Vector3 playerPosition, int distance)
+    // 카드 사용 범위
+    public void CardUseRange(Vector3 playerPosition, int distance)
     {
         // 초기화
         ClearHighlightedTiles();
@@ -132,11 +135,15 @@ public class MapGenerator : MonoBehaviour
                 // 해당 타일이 맵 범위 내에 있는지 확인
                 if (x >= 0 && x < garo && z >= 0 && z < sero)
                 {
+                    // 대각선 방향에 있는 타일은 건너뜀
+                    if ((x == playerX - distance || x == playerX + distance) && (z == playerZ - distance || z == playerZ + distance))
+                        continue;
+
                     Tile currentTile = totalMap[x, z];
                     // 플레이어 위치를 중심으로 distance 범위 내의 타일만 색깔을 변경
                     if (!currentTile.coord.isWall)
                     {
-                        currentTile.GetComponent<Renderer>().material.color = Color.red;
+                        currentTile.GetComponent<Renderer>().material.color = Color.black;
                         highlightedTiles.Add(currentTile);
                     }
                 }

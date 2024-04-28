@@ -592,10 +592,12 @@ MonoBehaviour:
   monsters:
   - {fileID: 518680316}
   - {fileID: 1860897677}
+  damage: 5
   isPlayerMove: 0
   isPlayerTurn: 0
   ui: []
   turnEnd: {fileID: 0}
+  isRandomCard: 0
 --- !u!4 &1787892299
 Transform:
   m_ObjectHideFlags: 0
@@ -745,7 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab:
-  - {fileID: 6983212289210100741, guid: 735710c68b6ccb34a9f0eca941ffbfc2, type: 3}
+  - {fileID: 5760483068190111454, guid: 4e1af781d7b52544ca47adb488cb7b2f, type: 3}
   garo: 8
   sero: 8
 --- !u!1001 &3530263493230409242
@@ -780,12 +782,12 @@ PrefabInstance:
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}

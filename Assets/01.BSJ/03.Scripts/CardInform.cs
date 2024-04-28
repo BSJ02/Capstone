@@ -6,21 +6,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Card", menuName = "Scriptable Object/Cards")]
 public class CardInform : ScriptableObject
 {
-    [Header("카드 종류")]
+    [Header(" # 카드 종류")]
     [SerializeField] public List<Card> baseCards;
     [SerializeField] public List<Card> commonCards;
     [SerializeField] public List<Card> rareCards;
     [SerializeField] public List<Card> epicCards;
     [SerializeField] public List<Card> legendCards;
 
-    [Header("카드 확률 값")]
+    [Header(" # 카드 확률 값")]
     public int basePercent = 35;
     public int commonPercent = 25;
     public int rarePercent = 20;
     public int epicPercent = 15;
     public int legendPercent = 5;
 
-    [Header("색상 정의")]
+    [Header(" # 등급별 색상")]
     public Color commonColor = Color.green;
     public Color rareColor = Color.blue;
     public Color epicColor = Color.red;
@@ -64,10 +64,11 @@ public class CardInform : ScriptableObject
 [System.Serializable]
 public class Card
 {
+    //[HideInInspector] public int cardID;
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
     public string cardDescription_Power;
-    public float[] cardPower;   // 공격력, 힐량, 이동거리
+    [Header(" # Power1, Power2, Distance")] public float[] cardPower;   // 공격력, 힐량, 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardRank cardRank; // 카드 등급

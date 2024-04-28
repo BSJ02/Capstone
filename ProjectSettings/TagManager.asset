@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - Tile
   - CardPanel
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -26,15 +27,13 @@ TagManager:
   - 
   - 
   - 
-  - Player
+  - 
   - Monster
-  - 
-  - 
+  - Tile
+  - Player
   - 
   - 
   - Panel
-  - 
-  - 
   - 
   - 
   - 

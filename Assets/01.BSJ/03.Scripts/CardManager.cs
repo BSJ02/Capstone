@@ -94,15 +94,6 @@ public class CardManager : MonoBehaviour
         handCardCount = handCardList.Count;
     }
     
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateRandomCard();
-        }
-    }
-
     // 카드 사용 취소
     public void CardCancle()
     {
@@ -245,7 +236,6 @@ public class CardManager : MonoBehaviour
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
-        // Order In Layer 값 변경 (왜 안돼!!!!)
         for (int i = 0; i < 3; i++)
         {
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
