@@ -22,7 +22,7 @@ public enum PlayerState
 public class Player : MonoBehaviour
 {
     public PlayerData playerData;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
 
     private Animator anim;
     public PlayerState playerState;
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
 
         playerData.Hp = playerData.MaxHp;
         ResetActivePoint();
@@ -74,6 +74,12 @@ public class Player : MonoBehaviour
             case PlayerState.Moving:
                 anim.SetInteger("State", 1);
                 break;
+            case PlayerState.Attack1:
+                anim.SetInteger("State", 2);
+                break;
+            case PlayerState.GetHit:
+                anim.SetInteger("State", 3);
+                break;
         }
     }
 
@@ -81,70 +87,68 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Idle;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
     }
 
     public void MovingAnim()
     {
         playerState = PlayerState.Idle;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
     }
 
     public void AttackOneAnim()
     {
         playerState = PlayerState.Attack1;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void AttackTwoAnim()
     {
         playerState = PlayerState.Attack2;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void StabAnim()
     {
         playerState = PlayerState.Stab;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void ChargeAnim()
     {
         playerState = PlayerState.Charge;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void SpinAttackAnim()
     {
         playerState = PlayerState.SpinAttack;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack01Anim()
     {
         playerState = PlayerState.MacigAttack01;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack02Anim()
     {
         playerState = PlayerState.MacigAttack02;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack03Anim()
     {
         playerState = PlayerState.MacigAttack03;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
 

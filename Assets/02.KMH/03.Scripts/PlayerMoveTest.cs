@@ -8,7 +8,7 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -27,7 +27,7 @@ public class PlayerMoveTest : MonoBehaviour
     private void Awake()
     {
         Player currentPoint = FindObjectOfType<Player>();
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
     }
 
     public void SetDestination(Vector2Int clickedTargetPos)
@@ -41,19 +41,11 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetMouseButtonDown(0) && !isMoving /*&& !cardData.usingCard*/)
+        if(Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
             int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
-            {
-                if(hit.collider.CompareTag("Player"))
-                mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
-            }
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, TileLayerMask))
             {
@@ -73,6 +65,20 @@ public class PlayerMoveTest : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
             }
+        }
+
+        if (Input.GetMouseButtonDown(0) && !isMoving /*&& !cardData.usingCard*/)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
+            {
+                if(hit.collider.CompareTag("Player"))
+                mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+            }
+
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {

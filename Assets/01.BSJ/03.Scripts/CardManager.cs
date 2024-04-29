@@ -11,9 +11,8 @@ public class CardManager : MonoBehaviour
 {
     [Header(" # Card Inform")] public CardInform cardInform;
     [Header(" # Player Scripts")] public Player player;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
     
-
     // 카드 생성 위치
     [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // 들고 있는 카드 위치
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
@@ -32,7 +31,6 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
     [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
 
-
     // 손에 들고 있는 카드 개수
     private int handCardCount;
 
@@ -48,8 +46,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
-    [HideInInspector] public Card useCard = null;
-
+    [HideInInspector] public Card useCard = null;   // 사용한 카드를 담을 변수
 
     private void Awake()
     {
@@ -66,7 +63,6 @@ public class CardManager : MonoBehaviour
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
 
-        // 초기화
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
@@ -84,7 +80,7 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
 
         // 기본 카드 생성
         handCardList.AddRange(cardInform.baseCards);   // 값 추가
@@ -97,7 +93,7 @@ public class CardManager : MonoBehaviour
     // 카드 사용 취소
     public void CardCancle()
     {
-        if (useCard != null && cardData.usingCard)
+        if (useCard != null && cardProcessing.usingCard)
         {
             Card card = useCard;
             GameObject cardObject = addCardObject[addCardObject.Count - 1];
@@ -110,11 +106,11 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            player.playerData.activePoint = cardData.TempActivePoint;
+            player.playerData.activePoint = cardProcessing.TempActivePoint;
 
-            cardData.usingCard = false;
-            cardData.waitForInput = false;
-            cardData.coroutineStop = true;
+            cardProcessing.usingCard = false;
+            cardProcessing.waitForInput = false;
+            cardProcessing.coroutineStop = true;
             useCard = null;
         }
     }
@@ -228,7 +224,7 @@ public class CardManager : MonoBehaviour
 
         addCardList = dedupeCard.ToList(); // 중복 없는 카드 목록 생성
 
-        for (int i = 0; i < addCardList.Count; i++)
+        for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
         {
             addCardObject[i].SetActive(true);
             ApplyCardInfrom(addCardList[i], addCardObject[i]);
@@ -236,7 +232,7 @@ public class CardManager : MonoBehaviour
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
         {
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
         }
