@@ -29,7 +29,7 @@ public class WeaponController : MonoBehaviour
     private bool leftHand = false;
     private bool rightHand = false;
 
-    private bool equipSword = false;
+    private Dictionary<WeaponType, int> equipWeapon = new Dictionary<WeaponType, int>();
 
     private void Awake()
     {
@@ -59,6 +59,13 @@ public class WeaponController : MonoBehaviour
                 AddWeaponByTypeList(childTransform.gameObject);
             }
         }
+
+        equipWeapon[WeaponType.Sword] = 0;
+        equipWeapon[WeaponType.Axe] = 0;
+        equipWeapon[WeaponType.Bow] = 0;
+        equipWeapon[WeaponType.Hammer] = 0;
+        equipWeapon[WeaponType.Wand] = 0;
+        equipWeapon[WeaponType.Shield] = 0;
     }
 
     // 무기 타입별로 저장
@@ -84,7 +91,7 @@ public class WeaponController : MonoBehaviour
         {
             wandList.Add(gameObject.gameObject);
         }
-        else
+        else if (gameObject.name.IndexOf("Shield") != -1)
         {
             shieldList.Add(gameObject.gameObject);
         }
@@ -123,34 +130,31 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    public void ChangeToSword()
+    public void ChangeToWeapon(WeaponType weaponType)
     {
-        SwitchWeaponInHand(swordList);
-    }
-
-    public void ChangeToAxe()
-    {
-        SwitchWeaponInHand(axeList);
-    }
-
-    public void ChangeToBow()
-    {
-        SwitchWeaponInHand(bowList);
-    }
-
-    public void ChangeToHammer()
-    {
-        SwitchWeaponInHand(hammerList);
-    }
-
-    public void ChangeToWand()
-    {
-        SwitchWeaponInHand(wandList);
-
-    }
-
-    public void ChangeToSheild()
-    {
-        SwitchWeaponInHand(shieldList);
+        if (weaponType == Card.WeaponType.Sword)
+        {
+            SwitchWeaponInHand(swordList);
+        }
+        else if (weaponType == Card.WeaponType.Axe)
+        {
+            SwitchWeaponInHand(axeList);
+        }
+        else if (weaponType == Card.WeaponType.Bow)
+        {
+            SwitchWeaponInHand(bowList);
+        }
+        else if (weaponType == Card.WeaponType.Hammer)
+        {
+            SwitchWeaponInHand(hammerList);
+        }
+        else if (weaponType == Card.WeaponType.Wand)
+        {
+            SwitchWeaponInHand(wandList);
+        }
+        else if (weaponType == Card.WeaponType.Shield)
+        {
+            SwitchWeaponInHand(shieldList);
+        }
     }
 }

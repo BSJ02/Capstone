@@ -32,8 +32,6 @@ public class CardData : MonoBehaviour
         // 대상의 값을 변경
         Monster monster = selectedTarget.GetComponent<Monster>();
 
-        weaponController.ChangeToSword();
-
         if (monster != null)
         {
             // 카드 사용 애니메이션
@@ -67,7 +65,6 @@ public class CardData : MonoBehaviour
         {
             cardProcessing.waitForInput = true;
         }
-
     }
 
     // Sprint 카드 (빠르게 이동하여 적의 공격을 피합니다.)
