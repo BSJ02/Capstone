@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static Card;
 
 public class WeaponController : MonoBehaviour
 {
     [Header("# Player Character")] public GameObject player;
-    private GameObject weapon_r;
-    private GameObject weapon_l;
 
-    private List<GameObject> rightHandWeaponList;
-    private List<GameObject> leftHandWeaponList;
+    private List<GameObject> leftWeaponList = new List<GameObject>();
+    private List<GameObject> rightWeaponList = new List<GameObject>();
 
     [Header("# Weapon Type")]
     public List<GameObject> swordList;
@@ -17,6 +17,7 @@ public class WeaponController : MonoBehaviour
     public List<GameObject> bowList;
     public List<GameObject> hammerList;
     public List<GameObject> wandList;
+    public List<GameObject> shieldList;
 
     private Transform leftWeaponTransform;
     private Transform rightWeaponTransform;
@@ -24,6 +25,11 @@ public class WeaponController : MonoBehaviour
     private string adress = "root/pelvis/spine_01/spine_02/spine_03/";
     private string adress_Left = "clavicle_l/upperarm_l/lowerarm_l/hand_l/weapon_l";
     private string adress_Right = "clavicle_r/upperarm_r/lowerarm_r/hand_r/weapon_r";
+
+    private bool leftHand = false;
+    private bool rightHand = false;
+
+    private bool equipSword = false;
 
     private void Awake()
     {
@@ -33,55 +39,118 @@ public class WeaponController : MonoBehaviour
 
     private void Start()
     {
-        // ¿Þ¼Õ ¹«±â ¸®½ºÆ® ÀúÀå
-        foreach (Transform child in leftWeaponTransform)
+        // ì™¼ìª½ ë¬´ê¸° ë¦¬ìŠ¤íŠ¸ ì €ìž¥
+        foreach (Transform childTransform in leftWeaponTransform)
         {
-            Debug.Log("Child object name: " + child.name);
-            if (child.CompareTag("Weapon"))
+            
+            if (childTransform.CompareTag("Weapon"))
             {
-                leftHandWeaponList.Add(child.gameObject);
+                leftWeaponList.Add(childTransform.gameObject);
+                AddWeaponByTypeList(childTransform.gameObject);
             }
         }
 
-        // ¿À¸¥¼Õ ¹«±â ¸®½ºÆ® ÀúÀå
-        foreach (Transform child in rightWeaponTransform)
+        // ì˜¤ë¥¸ìª½ ë¬´ê¸° ë¦¬ìŠ¤íŠ¸ ì €ìž¥
+        foreach (Transform childTransform in rightWeaponTransform)
         {
-            if (child.CompareTag("Weapon"))
+            if (childTransform.CompareTag("Weapon"))
             {
-                rightHandWeaponList.Add(child.gameObject);
+                rightWeaponList.Add(childTransform.gameObject);
+                AddWeaponByTypeList(childTransform.gameObject);
+            }
+        }
+    }
+
+    // ë¬´ê¸° íƒ€ìž…ë³„ë¡œ ì €ìž¥
+    private void AddWeaponByTypeList(GameObject gameObject)
+    {
+        if (gameObject.name.IndexOf("Sword") != -1)
+        {
+            swordList.Add(gameObject.gameObject);
+        }
+        else if (gameObject.name.IndexOf("Axe") != -1)
+        {
+            axeList.Add(gameObject.gameObject);
+        }
+        else if (gameObject.name.IndexOf("Bow") != -1)
+        {
+            bowList.Add(gameObject.gameObject);
+        }
+        else if (gameObject.name.IndexOf("Hammer") != -1)
+        {
+            hammerList.Add(gameObject.gameObject);
+        }
+        else if (gameObject.name.IndexOf("Wand") != -1)
+        {
+            wandList.Add(gameObject.gameObject);
+        }
+        else
+        {
+            shieldList.Add(gameObject.gameObject);
+        }
+    }
+
+    private void SwitchWeaponInHand(List<GameObject> weaponList)
+    {
+        int randNum = Random.Range(0, weaponList.Count);
+        GameObject[] targetWeaponList = null;
+
+        if (randNum < weaponList.Count / 2)
+        {
+            targetWeaponList = leftWeaponList.ToArray();
+            leftHand = true;
+        }
+        else
+        {
+            targetWeaponList = rightWeaponList.ToArray();
+            rightHand = true;
+        }
+
+        if (targetWeaponList != null)
+        {
+            foreach (GameObject weapon in targetWeaponList)
+            {
+                if (weapon.activeSelf)
+                {
+                    weapon.SetActive(false);
+                }
+            }
+
+            for (int i = 0; i < targetWeaponList.Length; i++)
+            {
+                weaponList[randNum].SetActive(true);
             }
         }
     }
 
     public void ChangeToSword()
     {
-        
+        SwitchWeaponInHand(swordList);
     }
 
     public void ChangeToAxe()
     {
-
+        SwitchWeaponInHand(axeList);
     }
 
     public void ChangeToBow()
     {
-
+        SwitchWeaponInHand(bowList);
     }
 
     public void ChangeToHammer()
     {
-
+        SwitchWeaponInHand(hammerList);
     }
 
     public void ChangeToWand()
     {
+        SwitchWeaponInHand(wandList);
 
     }
 
-    public bool ContainsWordInName(GameObject gameObject, string word)
+    public void ChangeToSheild()
     {
-        string gameObjectName = gameObject.name;
-
-        return gameObjectName.Contains(word);
+        SwitchWeaponInHand(shieldList);
     }
 }

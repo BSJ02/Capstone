@@ -22,7 +22,7 @@ public enum PlayerState
 public class Player : MonoBehaviour
 {
     public PlayerData playerData;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
 
     private Animator anim;
     public PlayerState playerState;
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
 
         playerData.Hp = playerData.MaxHp;
         ResetActivePoint();
@@ -87,70 +87,68 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.Idle;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
     }
 
     public void MovingAnim()
     {
         playerState = PlayerState.Idle;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
     }
 
     public void AttackOneAnim()
     {
         playerState = PlayerState.Attack1;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void AttackTwoAnim()
     {
         playerState = PlayerState.Attack2;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void StabAnim()
     {
         playerState = PlayerState.Stab;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void ChargeAnim()
     {
         playerState = PlayerState.Charge;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void SpinAttackAnim()
     {
         playerState = PlayerState.SpinAttack;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack01Anim()
     {
         playerState = PlayerState.MacigAttack01;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack02Anim()
     {
         playerState = PlayerState.MacigAttack02;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
     public void MacigAttack03Anim()
     {
         playerState = PlayerState.MacigAttack03;
         anim.SetInteger("State", (int)playerState);
-        cardData.waitAnim = false;
+
     }
 
 
@@ -165,21 +163,21 @@ public class Player : MonoBehaviour
 
         transform.LookAt(monster.transform);
         playerState = PlayerState.Attack1;
+        anim.SetInteger("State", (int)playerState);
+
         Debug.Log("몬스터 체력:" + (int)monsterHp + $"데미지{(int)randDamage}!");
 
 
         monster.GetHit(playerData.Damage);
 
-        StartCoroutine(ChangeStateDelayed(0));
-
         return;
     }
 
-    //idle로 변경
-    public IEnumerator ChangeStateDelayed(float delay)
+    // 애니메이션 초기화
+    public void Init()
     {
-        yield return new WaitForSeconds(delay);
         playerState = PlayerState.Idle;
+        anim.SetInteger("State", (int)playerState);
     }
 
     public void GetHit(float damage)
@@ -207,7 +205,7 @@ public class Player : MonoBehaviour
         }
 
         playerState = PlayerState.GetHit;
-        StartCoroutine(ChangeStateDelayed(1));
+        anim.SetInteger("State", (int)playerState);
 
     }
 

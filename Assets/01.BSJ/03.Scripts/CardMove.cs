@@ -8,7 +8,7 @@ using System;
 
 public class CardMove : MonoBehaviour
 {
-    private CardData cardData;
+    private CardProcessing cardProcessing;
     private CardManager cardManager;
     private BattleManager battleManager;
 
@@ -27,7 +27,7 @@ public class CardMove : MonoBehaviour
     private void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
@@ -96,11 +96,11 @@ public class CardMove : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit) && !cardData.waitForInput)
+        if (Physics.Raycast(ray, out hit) && !cardProcessing.waitForInput)
         {
             if (hit.collider.gameObject.CompareTag("CardPanel"))
             {
-                cardData.usingCard = true;
+                cardProcessing.usingCard = true;
                 ProcessingCard();
             }
             else
@@ -119,16 +119,16 @@ public class CardMove : MonoBehaviour
             int index = cardManager.handCardObject.IndexOf(this.gameObject);
             if (index != -1)
             {
-                if (cardData == null)
+                if (cardProcessing == null)
                 {
-                    cardData = GetComponent<CardData>();
+                    cardProcessing = GetComponent<CardProcessing>();
                 }
                 else
                 {
                     MoveCardToScale(0f);
                     cardManager.useCardPanelPrefab.SetActive(false);
                     cardManager.UpdateCardList(this.gameObject);
-                    cardData.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
+                    cardProcessing.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
                 }
             }
         }
@@ -156,18 +156,18 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim)
+            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard)
             {
                 cardManager.useCardPanelPrefab.SetActive(true);
             }
         }
-        if (cardData.waitForInput)
+        if (cardProcessing.waitForInput)
         {
-            UnityEngine.Debug.Log("cardData.waitForInput" + cardData.waitAnim + battleManager.isPlayerTurn);
+            UnityEngine.Debug.Log("cardProcessing.waitForInput" + battleManager.isPlayerTurn);
         }
         if (cardManager.waitAddCard)
         {
-            UnityEngine.Debug.Log("cardManager.waitAddCard" + cardData.waitAnim + battleManager.isPlayerTurn);
+            UnityEngine.Debug.Log("cardManager.waitAddCard" + battleManager.isPlayerTurn);
         }
     }
   
@@ -175,7 +175,7 @@ public class CardMove : MonoBehaviour
     private void OnMouseDrag()
     {
         // 카드 클릭 & !대상 선택 & !카드 선택
-        if (!cardData.waitForInput && !cardManager.waitAddCard && !cardData.waitAnim && battleManager.isPlayerTurn)
+        if (!cardProcessing.waitForInput && !cardManager.waitAddCard && battleManager.isPlayerTurn)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;

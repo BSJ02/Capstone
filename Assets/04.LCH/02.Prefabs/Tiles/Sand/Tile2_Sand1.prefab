@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3914254264782493094}
   - component: {fileID: 3847749342915264672}
   - component: {fileID: 435929028230563942}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Tile2_Sand1
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -190,6 +190,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DownPlatform1_LP
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94bd9f5d8ce33e34b9b782fd12261d13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -263,6 +268,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpicaCombine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261656815566148838, guid: 80e6eeafa3ae7cf4ba224fc587d30c96,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
