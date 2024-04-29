@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6821258506995262103}
   - component: {fileID: 4648602613556972353}
   - component: {fileID: 787945643101259635}
-  m_Layer: 18
+  m_Layer: 6
   m_Name: Tile1_Sand
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 94bd9f5d8ce33e34b9b782fd12261d13,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

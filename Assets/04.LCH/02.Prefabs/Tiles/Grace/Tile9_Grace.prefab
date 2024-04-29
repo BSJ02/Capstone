@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4575446251114054320}
   - component: {fileID: 9191114879412576129}
   - component: {fileID: 39213534477655139}
-  m_Layer: 18
+  m_Layer: 6
   m_Name: Tile9_Grace
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ PrefabInstance:
     - target: {fileID: 8712022509305961556, guid: 050f3df7dcfaa484189eaa24083b7966,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -273,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 7620152260970144480, guid: 8e1d1496271041e459afd247bae462a7,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -352,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 7718898369248516787, guid: 8b6f915c94ac27148b32b1a7c75bf41e,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
