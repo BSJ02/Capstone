@@ -82,13 +82,13 @@ public class PlayerMoveTest : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.collider.CompareTag("Monster"))
+                if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
                 {
                     clickedMonster = hit.collider.GetComponent<Monster>();
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-                        // Ŭ���� ���Ϳ��� ������ �Լ� ����
+               
                         player.ReadyToAttack(clickedMonster);
                     }
                 }
