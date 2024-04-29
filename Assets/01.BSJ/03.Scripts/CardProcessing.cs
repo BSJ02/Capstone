@@ -19,6 +19,7 @@ public class CardProcessing : MonoBehaviour
     private WeaponController weaponController;
     private BattleManager battleManager;
     private CardData cardData;
+    private CardManager cardManager;
 
     [Header(" # Player Scripts")] public Player player;
     [Header(" # Map Scripts")] public MapGenerator mapGenerator;
@@ -37,6 +38,7 @@ public class CardProcessing : MonoBehaviour
 
     private void Start()
     {
+        cardManager = FindObjectOfType<CardManager>();
         weaponController = playerObject.GetComponent<WeaponController>();
         battleManager = FindObjectOfType<BattleManager>();
         player = playerObject.GetComponent<Player>();
@@ -67,7 +69,6 @@ public class CardProcessing : MonoBehaviour
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
-
             
             // 대상 선택이 완료될 때까지 반복합니다.
             while (waitForInput)
