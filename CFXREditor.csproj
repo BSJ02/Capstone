@@ -9,11 +9,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>OccaSoftware.SuperSimpleSkybox.Editor</RootNamespace>
-    <ProjectGuid>{FE0BD25A-5864-13D6-C85D-9CE8DB78CC0B}</ProjectGuid>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{EB4236B6-CC0F-5A17-CDF8-CAB554A1D762}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>OccaSoftware.SuperSimpleSkybox.Editor</AssemblyName>
+    <AssemblyName>CFXREditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -55,15 +55,19 @@
     <UnityVersion>2022.3.14f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Packages\com.occasoftware.super-simple-skybox\Editor\SkyboxEditorGUI.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_Styles.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderPostProcessor.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Packages\com.occasoftware.super-simple-skybox\Editor\OccaSoftware.SuperSimpleSkybox.Editor.asmdef" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR Editor.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -978,16 +982,16 @@
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEditor.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UnityEditor.TestRunner.csproj">
+      <Project>{59919EBE-6A61-9673-F189-C7ED8CAE56D5}</Project>
+      <Name>UnityEditor.TestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.TestRunner.csproj">
+      <Project>{58EF43A0-8EDE-577F-1383-359EA30A7F3A}</Project>
+      <Name>UnityEngine.TestRunner</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

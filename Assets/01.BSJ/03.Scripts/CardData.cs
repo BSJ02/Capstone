@@ -26,15 +26,15 @@ public class CardData : MonoBehaviour
     }
 
     // Base Cards --------------------------------
-    // Sword Slash Ä«µå (ÀûÀ» Ä®·Î °ø°ÝÇÕ´Ï´Ù.)
+    // Sword Slash Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ Ä®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseSwordSlash(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
 
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.AttackTwoAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
@@ -47,15 +47,15 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Healing Salve Ä«µå (¾àÃÊ¸¦ »ç¿ëÇÏ¿© Ã¼·ÂÀ» È¸º¹ÇÕ´Ï´Ù.)
+    // Healing Salve Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseHealingSalve(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
 
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
             player.playerData.Hp += card.cardPower[0];
@@ -67,19 +67,19 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Sprint Ä«µå (ºü¸£°Ô ÀÌµ¿ÇÏ¿© ÀûÀÇ °ø°ÝÀ» ÇÇÇÕ´Ï´Ù.)
+    // Sprint Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseSprint(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            Debug.Log("Sprint Ä«µå¸¦ »ç¿ë");
+            Debug.Log("Sprint Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½");
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            // ÇÃ·¹ÀÌ¾î Ãß°¡ ÀÌµ¿
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½Ìµï¿½
             player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
             cardProcessing.cardUseDistance = card.cardPower[0];
         }
@@ -89,14 +89,14 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Basic Strike Ä«µå (°£´ÜÇÑ °ø°ÝÀ» °¡ÇØ ÀûÀ» °ø°ÝÇÕ´Ï´Ù.)
+    // Basic Strike Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseBasicStrike(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.StabAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
@@ -109,17 +109,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Shield Block Ä«µå (¹æÆÐ·Î °ø°ÝÀ» ¸·¾Æ ¹Þ´Â ÇÇÇØ¸¦ °¨¼Ò½ÃÅµ´Ï´Ù.)
+    // Shield Block Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ð·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½Åµï¿½Ï´ï¿½.)
     public void UseShieldBlock(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log(card.cardName + " Ä«µå¸¦ »ç¿ë / " + player + " Armor: " + player.playerData.Armor);
+            Debug.Log(card.cardName + " Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ / " + player + " Armor: " + player.playerData.Armor);
             player.playerData.Armor += card.cardPower[0];
             cardProcessing.cardUseDistance = card.cardPower[1];
         }
@@ -130,14 +130,14 @@ public class CardData : MonoBehaviour
     }
 
     // Common Cards --------------------------------
-    // Ax Slash Ä«µå (ÀûÀ» µµ³¢·Î °ø°ÝÇÕ´Ï´Ù.)
+    // Ax Slash Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseAxSlash(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.SpinAttackAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
@@ -150,17 +150,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Heal!! Ä«µå (Ãàº¹À» ¹Þ¾Æ Ã¼·ÂÀ» È¸º¹ÇÕ´Ï´Ù.)
+    // Heal!! Ä«ï¿½ï¿½ (ï¿½àº¹ï¿½ï¿½ ï¿½Þ¾ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseHeal(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log(card.cardName + " Ä«µå¸¦ »ç¿ë / " + player + " Hp: " + player.playerData.Hp);
+            Debug.Log(card.cardName + " Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ / " + player + " Hp: " + player.playerData.Hp);
             player.playerData.Hp += card.cardPower[0];
             cardProcessing.cardUseDistance = card.cardPower[1];
         }
@@ -170,19 +170,19 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Teleport Ä«µå (¿øÇÏ´Â À§Ä¡·Î ¼ø°£ÀÌµ¿ÇÏ¿© ÀÌµ¿ÇÕ´Ï´Ù.)
+    // Teleport Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ï¿ï¿½ ï¿½Ìµï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log("Teleport Ä«µå¸¦ »ç¿ë");
+            Debug.Log("Teleport Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½");
 
-            // ÇÃ·¹ÀÌ¾î Ãß°¡ ÀÌµ¿
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½Ìµï¿½
             player.playerData.activePoint = cardProcessing.TempActivePoint;
 
         }
@@ -192,17 +192,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Guardian Spirit Ä«µå (¼öÈ£ Á¤·ÉÀ» ¼ÒÈ¯ÇÏ¿© ÇÃ·¹ÀÌ¾îÀÇ ¹æ¾î·ÂÀ» Áõ°¡½ÃÅµ´Ï´Ù.)
+    // Guardian Spirit Ä«ï¿½ï¿½ (ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¿ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.)
     public void UseGuardianSpirit(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
@@ -212,17 +212,17 @@ public class CardData : MonoBehaviour
     }
 
     // Rare Cards --------------------------------
-    // Holy Nova Ä«µå (ÁÖº¯ Àû¿¡°Ô ½Å¼ºÇÑ ºûÀ» ³»¸®¸ç °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
+    // Holy Nova Ä«ï¿½ï¿½ (ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
     public void UseHolyNova(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
@@ -231,17 +231,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Fireball Ä«µå (È­¿°±¸¸¦ ¹ß»çÇÏ¿© Àû¿¡°Ô °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
+    // Fireball Ä«ï¿½ï¿½ (È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
     public void UseFireball(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack01Anim();
         }
         else
@@ -250,17 +250,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Lightning Strike (¼Õ¿¡ ¹ø°³¸¦ ¸ð¾Æ Àû¿¡°Ô ÀÏ°ÝÀ» °¡ÇØ °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
+    // Lightning Strike (ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
     public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack02Anim();
         }
         else
@@ -270,17 +270,17 @@ public class CardData : MonoBehaviour
     }
 
     // Epic Cards --------------------------------
-    // Excalibur's Wrath (Àü¼³ÀûÀÎ °ËÀÇ ºÐ³ë·Î ÀûÀ» °ø°ÝÇÕ´Ï´Ù.)
+    // Excalibur's Wrath (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseExcalibursWrath(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack03Anim();
         }
         else
@@ -289,17 +289,17 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Divine Intervention (½ÅÀÇ °³ÀÔÀ¸·Î ÇÃ·¹ÀÌ¾î¸¦ º¸È£ÇÏ°í È¸º¹½ÃÅµ´Ï´Ù.)
+    // Divine Intervention (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½È£ï¿½Ï°ï¿½ È¸ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.)
     public void UseDivineIntervention(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
@@ -309,17 +309,17 @@ public class CardData : MonoBehaviour
     }
 
     // Legend Cards --------------------------------
-    // Soul Siphon (¿µÈ¥À» Èí¼öÇÏ¿© ÁÖº¯ ÀûÀÇ »ý¸í·ÂÀ» Èí¼öÇÏ°í È¸º¹ÇÕ´Ï´Ù.)
+    // Soul Siphon (ï¿½ï¿½È¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
     public void UseSoulSiphon(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack03Anim();
         }
         else

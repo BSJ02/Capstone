@@ -197,22 +197,25 @@ public class MonsterMove : MonoBehaviour
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-       
-        if (distacneX == detectionRange || distacneY == detectionRange) 
+        // 근거리 몬스터
+        if ((distacneX <= detectionRange && monsterPos.y == playerPos.y) || (distacneY <= detectionRange && monsterPos.x == playerPos.x))
         {
-            // 대각선 감지 X(근거리 몬스터)
-            if (monster.monsterType != MonsterType.Short)
-                return;
-
-            // 감지 O
+            // 감지 O 
             Player player = FindObjectOfType<Player>();
             transform.LookAt(player.transform); // 회전 값 보정
             monster.ReadyToAttack(player);
             return;
         }
-        else if(distacneX <= detectionRange && distacneY <= detectionRange) 
+        else
         {
-            //대각선 감지 O (원거리 몬스터)
+            // 감지 X
+            monster.Init();
+            return;
+        }
+        /*// 원거리 몬스터
+        if (distacneX <= detectionRange && distacneY <= detectionRange)
+        {
+            // 대각선 감지 O (원거리 몬스터)
             if (monster.monsterType != MonsterType.Long)
                 return;
 
@@ -226,14 +229,14 @@ public class MonsterMove : MonoBehaviour
             // 감지 X
             monster.Init();
             return;
-        }
+        }*/
     }
 
     // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
-        BattleManager.instance.ui[1].gameObject.SetActive(false);
+        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
     }
 }
