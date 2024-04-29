@@ -17,8 +17,6 @@ TagManager:
   - 
   - Water
   - UI
-  - UIButton
-  - Card
   - 
   - 
   - 
@@ -28,12 +26,14 @@ TagManager:
   - 
   - 
   - 
-  - Monster
-  - Tile
-  - Player
   - 
   - 
-  - Panel
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

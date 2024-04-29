@@ -3991,6 +3991,7 @@ MonoBehaviour:
   - {fileID: 1118813982218620538, guid: 46a58721fd7e37742b04ffa7c3c0b89c, type: 3}
   garo: 10
   sero: 10
+  highlightedTiles: []
 --- !u!4 &477943680
 Transform:
   m_ObjectHideFlags: 0
@@ -13582,7 +13583,7 @@ PrefabInstance:
     - target: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8192300620582832796, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}

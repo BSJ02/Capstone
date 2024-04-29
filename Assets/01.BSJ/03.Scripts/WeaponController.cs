@@ -123,29 +123,24 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-
     public void ChangeToSword()
     {
         SwitchWeaponInHand(swordList);
-
     }
 
     public void ChangeToAxe()
     {
         SwitchWeaponInHand(axeList);
-
     }
 
     public void ChangeToBow()
     {
         SwitchWeaponInHand(bowList);
-
     }
 
     public void ChangeToHammer()
     {
         SwitchWeaponInHand(hammerList);
-
     }
 
     public void ChangeToWand()

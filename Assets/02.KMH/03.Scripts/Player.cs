@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         cardProcessing = FindObjectOfType<CardProcessing>();
-        cardData = FindObjectOfType<CardData>();
 
         playerData.Hp = playerData.MaxHp;
         ResetActivePoint();

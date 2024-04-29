@@ -13,7 +13,6 @@ public class CardManager : MonoBehaviour
     [Header(" # Player Scripts")] public Player player;
     private CardProcessing cardProcessing;
     
-
     // 카드 생성 위치
     [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // 들고 있는 카드 위치
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // 추가할 카드 위치 
@@ -31,7 +30,6 @@ public class CardManager : MonoBehaviour
     // 생성한 카드 오브젝트를 담을 리스트
     [HideInInspector] public List<GameObject> handCardObject;   // 사용할 카드 오브젝트
     [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
-
 
     // 손에 들고 있는 카드 개수
     private int handCardCount;
@@ -65,7 +63,6 @@ public class CardManager : MonoBehaviour
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
 
-        // 초기화
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
@@ -227,7 +224,7 @@ public class CardManager : MonoBehaviour
 
         addCardList = dedupeCard.ToList(); // 중복 없는 카드 목록 생성
 
-        for (int i = 0; i < addCardList.Count; i++)
+        for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
         {
             addCardObject[i].SetActive(true);
             ApplyCardInfrom(addCardList[i], addCardObject[i]);
@@ -235,7 +232,7 @@ public class CardManager : MonoBehaviour
             StartCoroutine(CardSorting(addCardList, addCardObject, addCardPos, addCardDistance));
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
         {
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
         }
