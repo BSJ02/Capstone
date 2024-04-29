@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+
+
+    public GameObject[] windowUI;
+    public GameObject objectUIPanel;
+    private GameObject currentlyActiveWindow;
+
     public static UIManager instance;
 
     public Animator[] animators;
@@ -20,6 +26,23 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ShowLayerWindow(int index)
+    {
+        if (currentlyActiveWindow != null)
+        {
+            currentlyActiveWindow.SetActive(false);
+        }
+
+
+        windowUI[index].gameObject.SetActive(true);
+        currentlyActiveWindow = windowUI[index];
+    }
+
+    public void ExitWindow(int index)
+    {
+        windowUI[index].gameObject.SetActive(false);
     }
 
 

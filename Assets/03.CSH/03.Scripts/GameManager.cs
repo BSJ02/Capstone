@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
 
 
     //게임 턴 판별 private 으로 바꿔주기 
+    public bool isGameOver = false; // 게임 오버 상태
+    private GameObject gameOverUI;
+
     public bool gameturn = true; // true 플레이어 턴 / false 적 턴
     public GameObject playerturn;
     public GameObject enemyturn;
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
 
 
     private static GameManager instance;
+
 
     public static GameManager Instance
     {
@@ -75,7 +80,20 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         //remainingDistance.text = player.playerData.activePoint.ToString();
+        if (isGameOver)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
+
+    public void OnGameOver()
+    {
+        isGameOver = true;
+        gameOverUI.SetActive(true);
+    }
+
+    
 
 
     public void ShowLayerWindow(int index)
@@ -108,6 +126,7 @@ public class GameManager : MonoBehaviour
         
     }
 
+   
 
     public void StartFadeIn()
     {
@@ -159,6 +178,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+  
 
     public void cardUIEffect(bool boolean)
     {
