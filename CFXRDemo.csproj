@@ -10,10 +10,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{68935E6F-7396-574E-D04E-7A449144B7D7}</ProjectGuid>
+    <ProjectGuid>{B8C3C6D3-11E0-B9B9-2BDD-1B8D296D86A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>SingularityGroup.HotReload.Runtime.Public</AssemblyName>
+    <AssemblyName>CFXRDemo</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -60,14 +60,12 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Public\InvokeOnHotReloadLocal.cs" />
-    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Public\Log.cs" />
-    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Public\HotReloadLogging.cs" />
-    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Public\LogLevel.cs" />
-    <Compile Include="Packages\com.singularitygroup.hotreload\Runtime\Public\InvokeOnHotReload.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo_Rotate.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo_Translate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Packages\com.singularitygroup.hotreload\Runtime\Public\SingularityGroup.HotReload.Runtime.Public.asmdef" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR Demo.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -964,6 +962,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{903F2A97-883D-C77D-6289-29894A1837C7}</Project>
+      <Name>CFXRRuntime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

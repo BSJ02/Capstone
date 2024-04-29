@@ -9,7 +9,8 @@ public class MonsterData : ScriptableObject
     public int Id; // 넘버링
     public float Hp; // 체력
     public float MaxHp = 100f;
-    public int CurrentDamage;
+    public float Amor;
+    public float CurrentDamage;
     public bool IsBoss = false;
     public int MoveDistance; // 몬스터 이동 거리(칸 당 = 1)
     public int DetectionRagne; // 감지 범위
@@ -21,14 +22,29 @@ public class MonsterData : ScriptableObject
     public float MaxDamage; // 최대 데미지
 
 
-    // 모든 몬스터 턴 종료 후 공격력 증가
-    public void IncreaseDamage(float damageBuff)
+    // 몬스터 버프
+    // 공격력 증가
+    public void IncreaseDamage(float damage)
     {
-        if (MinDamage == MaxDamage)
-            return;
+        if (CurrentDamage >= MaxDamage)
+            CurrentDamage = MaxDamage;
 
-        MinDamage += damageBuff;
+        CurrentDamage += damage;
+    }
 
+    // 체력 증가
+    public void IncreaseHp(float heal)
+    {
+        if (Hp >= MaxHp)
+            Hp = MaxHp;
+
+        Hp += heal;
+    }
+
+    // 방어력 증가
+    public void IncreaseAmor(float amor)
+    {
+        Amor = amor;
     }
 }
 
