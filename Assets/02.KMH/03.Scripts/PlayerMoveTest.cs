@@ -8,7 +8,7 @@ public class PlayerMoveTest : MonoBehaviour
     public MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
-    private CardData cardData;
+    private CardProcessing cardProcessing;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -27,7 +27,7 @@ public class PlayerMoveTest : MonoBehaviour
     private void Awake()
     {
         Player currentPoint = FindObjectOfType<Player>();
-        cardData = FindObjectOfType<CardData>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
     }
 
     public void SetDestination(Vector2Int clickedTargetPos)

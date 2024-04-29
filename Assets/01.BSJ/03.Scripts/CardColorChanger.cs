@@ -23,13 +23,13 @@ public class CardColorChanger : MonoBehaviour
     {
         switch (rank)
         {
-            case Card.CardRank.commonCards:
+            case Card.CardRank.CommonCards:
                 return cardInform.commonColor;
-            case Card.CardRank.rareCards:
+            case Card.CardRank.RareCards:
                 return cardInform.rareColor;
-            case Card.CardRank.epicCards:
+            case Card.CardRank.EpicCards:
                 return cardInform.epicColor;
-            case Card.CardRank.legendCards:
+            case Card.CardRank.LegendCards:
                 return cardInform.legendColor;
             default:
                 return Color.white;

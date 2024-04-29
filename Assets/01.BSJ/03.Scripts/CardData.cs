@@ -1,55 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static Card;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
-
-
-//public enum CardState
-//{
-//    SwordSlash,
-//    HealingSalve,
-//    Sprint,
-//    BasicStrike,
-//    ShieldBlock,
-//    AxSlash,
-//    Heal,
-//    Teleport,
-//    GuardianSpirit,
-//    HolyNova,
-//    Fireball,
-//    LightningStrike,
-//    ExcalibursWrath,
-//    DivineIntervention,
-//    SoulSiphon
-//}
 
 public class CardData : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // ´ë±â »óÅÂ ¿©ºÎ
-    [HideInInspector] public bool waitAnim = false;
-    [HideInInspector] public bool usingCard = false;
-    [HideInInspector] public bool coroutineStop = false;
-    [HideInInspector] public int TempActivePoint;
-
-    private PlayerMoveTest playerMoveTest;
-    private BattleManager battleManager;
+    private WeaponController weaponController;
+    private CardProcessing cardProcessing;
 
     [Header(" # Player Scripts")] public Player player;
-    [Header(" # Map Scripts")] public MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
     [Header(" # Player Object")] public GameObject playerObject;
-
-
-    private GameObject selectedTarget = null;
-    private float cardUseDistance = 0;
 
     private void Awake()
     {
@@ -58,456 +20,314 @@ public class CardData : MonoBehaviour
 
     private void Start()
     {
-        battleManager = FindObjectOfType<BattleManager>();
+        cardProcessing = FindObjectOfType<CardProcessing>();
+        weaponController = playerObject.GetComponent<WeaponController>();
         player = playerObject.GetComponent<Player>();
     }
 
-    private void Update()
-    {
-        if (usingCard)
-        {
-            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
-        }
-    }
-
-    // Ä«µå »ç¿ë ¸Þ¼­µå
-    public void UseCardAndSelectTarget(Card card, GameObject gameObject)
-    {
-        StartCoroutine(WaitForTargetSelection(card));
-    }
-
-
-    // ´ë»ó ¼±ÅÃÀ» ±â´Ù¸®´Â ÄÚ·çÆ¾
-    private IEnumerator WaitForTargetSelection(Card card)
-    {
-        battleManager.isPlayerMove = false;
-        TempActivePoint = player.playerData.activePoint;
-        player.playerData.activePoint = 0;
-        cardUseDistance = card.cardPower[2];    // Ä«µå °Å¸® ÀúÀå
-        while (true)
-        {
-            waitForInput = true;    // ´ë±â »óÅÂ·Î ÀüÈ¯
-
-            // ´ë»ó ¼±ÅÃÀÌ ¿Ï·áµÉ ¶§±îÁö ¹Ýº¹ÇÕ´Ï´Ù.
-            while (waitForInput)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-
-                    SelectTarget();
-                
-                }
-                yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
-            }
-            if (coroutineStop)
-            {
-                coroutineStop = false;
-                mapGenerator.ClearHighlightedTiles();
-                yield break;
-            }
-
-            UseCard(card, selectedTarget);
-
-            if (waitForInput)
-            {
-                Debug.Log("´ë»óÀ» ´Ù½Ã ¼±ÅÃÇÏ¼¼¿ä.");
-                continue;
-            }
-
-            usingCard = false;
-            mapGenerator.ClearHighlightedTiles();
-
-            if (!waitForInput)
-            {
-                break;
-            }
-
-        }
-    }
-
-    private void SelectTarget() // ´ë»ó ¼³Á¤
-    {
-        selectedTarget = null;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
-            {
-
-                selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(player.transform.position, selectedTarget.transform.position) <= cardUseDistance)
-                {
-                    waitForInput = false;
-                }
-            }
-        }
-    }
-
-    private void UseCard(Card card, GameObject selectedTarget)
-    {
-        // ¼±ÅÃµÈ ´ë»ó¿¡ µû¶ó Ä«µå¸¦ »ç¿ë
-        if (selectedTarget != null)
-        {
-            waitAnim = true;
-            // cardNameÀ» »ç¿ëÇÏ´Â ·ÎÁ÷À» È£Ãâ
-            switch (card.cardName)
-            {
-                case "Sword Slash":
-                    UseSwordSlash(card, selectedTarget);
-                    break;
-                case "Healing Salve":
-                    UseHealingSalve(card, selectedTarget);
-                    break;
-                case "Sprint":
-                    UseSprint(card, selectedTarget);
-                    break;
-                case "Basic Strike":
-                    UseBasicStrike(card, selectedTarget);
-                    break;
-                case "Shield Block":
-                    UseShieldBlock(card, selectedTarget);
-                    break;
-                case "Ax Slash":
-                    UseAxSlash(card, selectedTarget);
-                    break;
-                case "Heal!!":
-                    UseHeal(card, selectedTarget);
-                    break;
-                case "Teleport":
-                    UseTeleport(card, selectedTarget);
-                    break;
-                case "Guardian Spirit":
-                    UseGuardianSpirit(card, selectedTarget);
-                    break;
-                case "Holy Nova":
-                    UseHolyNova(card, selectedTarget);
-                    break;
-                case "Fireball":
-                    UseFireball(card, selectedTarget);
-                    break;
-                case "Lightning Strike":
-                    UseLightningStrike(card, selectedTarget);
-                    break;
-                case "Excalibur's Wrath":
-                    UseExcalibursWrath(card, selectedTarget);
-                    break;
-                case "Divine Intervention":
-                    UseDivineIntervention(card, selectedTarget);
-                    break;
-                case "Soul Siphon":
-                    UseSoulSiphon(card, selectedTarget);
-                    break;
-                default:
-                    Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
-                    break;
-            }
-
-        }
-    }
-
     // Base Cards --------------------------------
-    // Sword Slash Ä«µå (ÀûÀ» Ä®·Î °ø°ÝÇÕ´Ï´Ù.)
-    private void UseSwordSlash(Card card, GameObject selectedTarget)
+    // Sword Slash Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ Ä®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseSwordSlash(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
+
+        weaponController.ChangeToSword();
 
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.AttackTwoAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-            //cardUseDistance = card.cardPower[1];
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Healing Salve Ä«µå (¾àÃÊ¸¦ »ç¿ëÇÏ¿© Ã¼·ÂÀ» È¸º¹ÇÕ´Ï´Ù.)
-    private void UseHealingSalve(Card card, GameObject selectedTarget)
+    // Healing Salve Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ê¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseHealingSalve(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
 
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
             player.playerData.Hp += card.cardPower[0];
-            cardUseDistance = card.cardPower[1];
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
-        
+
     }
 
-    // Sprint Ä«µå (ºü¸£°Ô ÀÌµ¿ÇÏ¿© ÀûÀÇ °ø°ÝÀ» ÇÇÇÕ´Ï´Ù.)
-    private void UseSprint(Card card, GameObject selectedTarget)
+    // Sprint Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseSprint(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            Debug.Log("Sprint Ä«µå¸¦ »ç¿ë");
+            Debug.Log("Sprint Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½");
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            // ÇÃ·¹ÀÌ¾î Ãß°¡ ÀÌµ¿
-            player.playerData.activePoint += (int)card.cardPower[0] + TempActivePoint;
-            cardUseDistance = card.cardPower[0];
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½Ìµï¿½
+            player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
+            cardProcessing.cardUseDistance = card.cardPower[0];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Basic Strike Ä«µå (°£´ÜÇÑ °ø°ÝÀ» °¡ÇØ ÀûÀ» °ø°ÝÇÕ´Ï´Ù.)
-    private void UseBasicStrike(Card card, GameObject selectedTarget)
+    // Basic Strike Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseBasicStrike(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.StabAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-            cardUseDistance = card.cardPower[1];
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Shield Block Ä«µå (¹æÆÐ·Î °ø°ÝÀ» ¸·¾Æ ¹Þ´Â ÇÇÇØ¸¦ °¨¼Ò½ÃÅµ´Ï´Ù.)
-    private void UseShieldBlock(Card card, GameObject selectedTarget)
+    // Shield Block Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ð·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½Åµï¿½Ï´ï¿½.)
+    public void UseShieldBlock(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log(card.cardName + " Ä«µå¸¦ »ç¿ë / " + player + " Armor: " + player.playerData.Armor);
+            Debug.Log(card.cardName + " Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ / " + player + " Armor: " + player.playerData.Armor);
             player.playerData.Armor += card.cardPower[0];
-            Debug.Log(player + "Armor: " + player.playerData.Armor);
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
     // Common Cards --------------------------------
-    // Ax Slash Ä«µå (ÀûÀ» µµ³¢·Î °ø°ÝÇÕ´Ï´Ù.)
-    private void UseAxSlash(Card card, GameObject selectedTarget)
+    // Ax Slash Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseAxSlash(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.SpinAttackAnim();
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Heal!! Ä«µå (Ãàº¹À» ¹Þ¾Æ Ã¼·ÂÀ» È¸º¹ÇÕ´Ï´Ù.)
-    private void UseHeal(Card card, GameObject selectedTarget)
+    // Heal!! Ä«ï¿½ï¿½ (ï¿½àº¹ï¿½ï¿½ ï¿½Þ¾ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseHeal(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log(card.cardName + " Ä«µå¸¦ »ç¿ë / " + player + " Hp: " + player.playerData.Hp);
+            Debug.Log(card.cardName + " Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½ / " + player + " Hp: " + player.playerData.Hp);
             player.playerData.Hp += card.cardPower[0];
-            Debug.Log(player + "Hp: " + player.playerData.Hp);
+            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Teleport Ä«µå (¿øÇÏ´Â À§Ä¡·Î ¼ø°£ÀÌµ¿ÇÏ¿© ÀÌµ¿ÇÕ´Ï´Ù.)
-    private void UseTeleport(Card card, GameObject selectedTarget)
+    // Teleport Ä«ï¿½ï¿½ (ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ï¿ï¿½ ï¿½Ìµï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseTeleport(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
 
-            Debug.Log("Teleport Ä«µå¸¦ »ç¿ë");
+            Debug.Log("Teleport Ä«ï¿½å¸¦ ï¿½ï¿½ï¿½");
 
-            // ÇÃ·¹ÀÌ¾î Ãß°¡ ÀÌµ¿
-            player.playerData.activePoint = TempActivePoint;
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß°ï¿½ ï¿½Ìµï¿½
+            player.playerData.activePoint = cardProcessing.TempActivePoint;
 
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Guardian Spirit Ä«µå (¼öÈ£ Á¤·ÉÀ» ¼ÒÈ¯ÇÏ¿© ÇÃ·¹ÀÌ¾îÀÇ ¹æ¾î·ÂÀ» Áõ°¡½ÃÅµ´Ï´Ù.)
-    private void UseGuardianSpirit(Card card, GameObject selectedTarget)
+    // Guardian Spirit Ä«ï¿½ï¿½ (ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¿ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.)
+    public void UseGuardianSpirit(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
     // Rare Cards --------------------------------
-    // Holy Nova Ä«µå (ÁÖº¯ Àû¿¡°Ô ½Å¼ºÇÑ ºûÀ» ³»¸®¸ç °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
-    private void UseHolyNova(Card card, GameObject selectedTarget)
+    // Holy Nova Ä«ï¿½ï¿½ (ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
+    public void UseHolyNova(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Fireball Ä«µå (È­¿°±¸¸¦ ¹ß»çÇÏ¿© Àû¿¡°Ô °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
-    private void UseFireball(Card card, GameObject selectedTarget)
+    // Fireball Ä«ï¿½ï¿½ (È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
+    public void UseFireball(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack01Anim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Lightning Strike (¼Õ¿¡ ¹ø°³¸¦ ¸ð¾Æ Àû¿¡°Ô ÀÏ°ÝÀ» °¡ÇØ °­·ÂÇÑ µ¥¹ÌÁö¸¦ ÀÔÈü´Ï´Ù.)
-    private void UseLightningStrike(Card card, GameObject selectedTarget)
+    // Lightning Strike (ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.)
+    public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack02Anim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
     // Epic Cards --------------------------------
-    // Excalibur's Wrath (Àü¼³ÀûÀÎ °ËÀÇ ºÐ³ë·Î ÀûÀ» °ø°ÝÇÕ´Ï´Ù.)
-    private void UseExcalibursWrath(Card card, GameObject selectedTarget)
+    // Excalibur's Wrath (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseExcalibursWrath(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack03Anim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
-    // Divine Intervention (½ÅÀÇ °³ÀÔÀ¸·Î ÇÃ·¹ÀÌ¾î¸¦ º¸È£ÇÏ°í È¸º¹½ÃÅµ´Ï´Ù.)
-    private void UseDivineIntervention(Card card, GameObject selectedTarget)
+    // Divine Intervention (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½È£ï¿½Ï°ï¿½ È¸ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.)
+    public void UseDivineIntervention(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.ChargeAnim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 
     // Legend Cards --------------------------------
-    // Soul Siphon (¿µÈ¥À» Èí¼öÇÏ¿© ÁÖº¯ ÀûÀÇ »ý¸í·ÂÀ» Èí¼öÇÏ°í È¸º¹ÇÕ´Ï´Ù.)
-    private void UseSoulSiphon(Card card, GameObject selectedTarget)
+    // Soul Siphon (ï¿½ï¿½È¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È¸ï¿½ï¿½ï¿½Õ´Ï´ï¿½.)
+    public void UseSoulSiphon(Card card, GameObject selectedTarget)
     {
-        // ´ë»óÀÇ °ªÀ» º¯°æ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // Ä«µå »ç¿ë ¾Ö´Ï¸ÞÀÌ¼Ç
+            // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
             player.MacigAttack03Anim();
         }
         else
         {
-            waitForInput = true;
+            cardProcessing.waitForInput = true;
         }
     }
 }
