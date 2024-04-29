@@ -22,14 +22,14 @@ public class WeaponController : MonoBehaviour
     private Transform leftWeaponTransform;
     private Transform rightWeaponTransform;
 
-    private string adress = "root/pelvis/spine_01/spine_02/spine_03/";
-    private string adress_Left = "clavicle_l/upperarm_l/lowerarm_l/hand_l/weapon_l";
-    private string adress_Right = "clavicle_r/upperarm_r/lowerarm_r/hand_r/weapon_r";
-
     private bool leftHand = false;
     private bool rightHand = false;
 
     private Dictionary<WeaponType, int> equipWeapon = new Dictionary<WeaponType, int>();
+
+    private string adress = "root/pelvis/spine_01/spine_02/spine_03/";
+    private string adress_Left = "clavicle_l/upperarm_l/lowerarm_l/hand_l/weapon_l";
+    private string adress_Right = "clavicle_r/upperarm_r/lowerarm_r/hand_r/weapon_r";
 
     private void Awake()
     {

@@ -26,16 +26,14 @@ public class CardData : MonoBehaviour
     }
 
     // Base Cards --------------------------------
-    // Sword Slash ī�� (���� Į�� �����մϴ�.)
+    // Sword Slash
     public void UseSwordSlash(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
 
         if (monster != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.AttackTwoAnim();
+            player.AttackTwoAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -47,16 +45,14 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Healing Salve ī�� (���ʸ� ����Ͽ� ü���� ȸ���մϴ�.)
+    // Healing Salve
     public void UseHealingSalve(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Player player = selectedTarget.GetComponent<Player>();
 
         if (player != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
 
             player.playerData.Hp += card.cardPower[0];
             cardProcessing.cardUseDistance = card.cardPower[1];
@@ -67,19 +63,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Sprint ī�� (������ �̵��Ͽ� ���� ������ ���մϴ�.)
+    // Sprint
     public void UseSprint(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
             Debug.Log("Sprint ī�带 ���");
 
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
 
-            // �÷��̾� �߰� �̵�
             player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
             cardProcessing.cardUseDistance = card.cardPower[0];
         }
@@ -89,15 +82,13 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Basic Strike ī�� (������ ������ ���� ���� �����մϴ�.)
+    // Basic Strike
     public void UseBasicStrike(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.StabAnim();
+            player.StabAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -109,15 +100,13 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Shield Block ī�� (���з� ������ ���� �޴� ���ظ� ���ҽ�ŵ�ϴ�.)
+    // Shield Block
     public void UseShieldBlock(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
 
             Debug.Log(card.cardName + " ī�带 ��� / " + player + " Armor: " + player.playerData.Armor);
             player.playerData.Armor += card.cardPower[0];
@@ -130,15 +119,13 @@ public class CardData : MonoBehaviour
     }
 
     // Common Cards --------------------------------
-    // Ax Slash ī�� (���� ������ �����մϴ�.)
+    // Ax Slash
     public void UseAxSlash(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.SpinAttackAnim();
+            player.SpinAttackAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -150,15 +137,13 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Heal!! ī�� (�ູ�� �޾� ü���� ȸ���մϴ�.)
+    // Heal!!
     public void UseHeal(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
 
             Debug.Log(card.cardName + " ī�带 ��� / " + player + " Hp: " + player.playerData.Hp);
             player.playerData.Hp += card.cardPower[0];
@@ -170,19 +155,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Teleport ī�� (���ϴ� ��ġ�� �����̵��Ͽ� �̵��մϴ�.)
+    // Teleport
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
 
             Debug.Log("Teleport ī�带 ���");
 
-            // �÷��̾� �߰� �̵�
             player.playerData.activePoint = cardProcessing.TempActivePoint;
 
         }
@@ -192,18 +174,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Guardian Spirit ī�� (��ȣ ������ ��ȯ�Ͽ� �÷��̾��� ������ ������ŵ�ϴ�.)
+    // Guardian Spirit
     public void UseGuardianSpirit(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -212,18 +192,16 @@ public class CardData : MonoBehaviour
     }
 
     // Rare Cards --------------------------------
-    // Holy Nova ī�� (�ֺ� ������ �ż��� ���� ������ ������ �������� �����ϴ�.)
+    // Holy Nova
     public void UseHolyNova(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -231,18 +209,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Fireball ī�� (ȭ������ �߻��Ͽ� ������ ������ �������� �����ϴ�.)
+    // Fireball
     public void UseFireball(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.MacigAttack01Anim();
+            player.MacigAttack01Anim(selectedTarget);
         }
         else
         {
@@ -250,18 +226,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Lightning Strike (�տ� ������ ��� ������ �ϰ��� ���� ������ �������� �����ϴ�.)
+    // Lightning Strike
     public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.MacigAttack02Anim();
+            player.MacigAttack02Anim(selectedTarget);
         }
         else
         {
@@ -270,18 +244,16 @@ public class CardData : MonoBehaviour
     }
 
     // Epic Cards --------------------------------
-    // Excalibur's Wrath (�������� ���� �г�� ���� �����մϴ�.)
+    // Excalibur's Wrath
     public void UseExcalibursWrath(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.MacigAttack03Anim();
+            player.MacigAttack03Anim(selectedTarget);
         }
         else
         {
@@ -289,18 +261,16 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Divine Intervention (���� �������� �÷��̾ ��ȣ�ϰ� ȸ����ŵ�ϴ�.)
+    // Divine Intervention
     public void UseDivineIntervention(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.ChargeAnim();
+            player.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -309,18 +279,16 @@ public class CardData : MonoBehaviour
     }
 
     // Legend Cards --------------------------------
-    // Soul Siphon (��ȥ�� ����Ͽ� �ֺ� ���� ������� ����ϰ� ȸ���մϴ�.)
+    // Soul Siphon
     public void UseSoulSiphon(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            // ī�� ��� �ִϸ��̼�
-            player.MacigAttack03Anim();
+            player.MacigAttack03Anim(selectedTarget);
         }
         else
         {
