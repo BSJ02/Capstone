@@ -45,10 +45,10 @@ public class CardProcessing : MonoBehaviour
 
     private void Update()
     {
-        //if (usingCard)
-        //{
-        //    mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
-        //}
+        if (usingCard)
+        {
+            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
+        }
     }
 
     // 카드 사용 메서드

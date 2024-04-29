@@ -177,8 +177,8 @@ public class CardData : MonoBehaviour
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
         // ����� ���� ����
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Tile tile = selectedTarget.GetComponent<Tile>();
+        if (tile != null)
         {
             // ī�� ��� �ִϸ��̼�
             player.ChargeAnim();
@@ -186,7 +186,7 @@ public class CardData : MonoBehaviour
             Debug.Log("Teleport ī�带 ���");
 
             // �÷��̾� �߰� �̵�
-            player.playerData.activePoint = cardProcessing.TempActivePoint;
+            player.transform.position = tile.transform.position;
 
         }
         else
