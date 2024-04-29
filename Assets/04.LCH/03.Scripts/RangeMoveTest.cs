@@ -234,7 +234,7 @@ public class RangeMoveTest : MonoBehaviour
     IEnumerator EscapeMonsterTurn()
     {
         yield return new WaitForSeconds(2f);
-        BattleManager.instance.ui[1].gameObject.SetActive(false);
+        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
     }
 }

@@ -32,8 +32,9 @@ public class Monster : MonoBehaviour
 
     private Animator anim;
 
-    protected bool isLive;
-    public float critaical = 3; // CriticalDamage = MinDamage + critcal
+    private bool isLive;
+    
+    [SerializeField] public float critaical = 3; // CriticalDamage = MinDamage + critcal
 
     void Awake()
     {
@@ -98,9 +99,12 @@ public class Monster : MonoBehaviour
             return;
 
         damage = FindObjectOfType<Player>().playerData.Damage;
-        monsterData.Hp -= Mathf.FloorToInt(damage);
+
+        float finalDamage = damage - monsterData.Amor;
+        monsterData.Hp -= Mathf.FloorToInt(finalDamage);
         monster_UI.GetMonsterHp();
-        Debug.Log("몬스터 피격 당한 데미지:" + (int)damage);
+
+        Debug.Log("몬스터 피격 당한 데미지:" + (int)finalDamage);
 
         // 몬스터 사망
         if (monsterData.Hp <= 0)
@@ -111,7 +115,6 @@ public class Monster : MonoBehaviour
 
         state = MonsterState.GetHit;
         anim.SetInteger("State", (int)state);
-
     }
 
 

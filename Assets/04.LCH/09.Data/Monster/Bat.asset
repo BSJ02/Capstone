@@ -16,8 +16,10 @@ MonoBehaviour:
   Id: 0
   Hp: 100
   MaxHp: 100
+  Amor: 0
+  CurrentDamage: 0
   IsBoss: 0
-  MoveDistance: 4
+  MoveDistance: 3
   DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 4

@@ -16,6 +16,8 @@ MonoBehaviour:
   Id: 1
   Hp: 100
   MaxHp: 100
+  Amor: 2
+  CurrentDamage: 0
   IsBoss: 0
   MoveDistance: 4
   DetectionRagne: 1
