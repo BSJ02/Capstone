@@ -125,7 +125,7 @@ public class CardData : MonoBehaviour
         }
     }
 
-    private void SelectTarget()
+    private void SelectTarget() // 대상 설정
     {
         selectedTarget = null;
 
@@ -222,7 +222,7 @@ public class CardData : MonoBehaviour
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-            cardUseDistance = card.cardPower[1];
+            //cardUseDistance = card.cardPower[1];
         }
         else
         {
@@ -242,7 +242,7 @@ public class CardData : MonoBehaviour
             player.ChargeAnim();
 
             player.playerData.Hp += card.cardPower[0];
-            cardUseDistance = card.cardPower[1];    
+            cardUseDistance = card.cardPower[1];
         }
         else
         {
