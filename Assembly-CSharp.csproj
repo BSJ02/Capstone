@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
+    <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\WeaponController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\LookAtCamera.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
