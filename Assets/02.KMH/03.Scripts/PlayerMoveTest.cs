@@ -47,7 +47,7 @@ public class PlayerMoveTest : MonoBehaviour
             RaycastHit hit;
             int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, TileLayerMask))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, TileLayerMask) && !cardProcessing.usingCard)
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
@@ -82,13 +82,13 @@ public class PlayerMoveTest : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.collider.CompareTag("Monster"))
+                if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
                 {
                     clickedMonster = hit.collider.GetComponent<Monster>();
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-                        // Ŭ���� ���Ϳ��� ������ �Լ� ����
+               
                         player.ReadyToAttack(clickedMonster);
                     }
                 }

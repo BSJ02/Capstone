@@ -32,7 +32,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
 
     // 손에 들고 있는 카드 개수
-    private int handCardCount;
+    public int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
@@ -46,7 +46,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool waitAddCard = false;    // 카드 선택 여부
 
     // 사용한 카드
-    [HideInInspector] public Card useCard = null;   // 사용한 카드를 담을 변수
+    [HideInInspector] public Card useCard    = null;   // 사용한 카드를 담을 변수
 
     private void Awake()
     {
@@ -115,6 +115,40 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void CardGetTest()
+    {
+
+        addCardObject[0].SetActive(true);
+        Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
+
+        ApplyCardInfrom(card, addCardObject[0]);
+
+        for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
+        {
+            addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
+        }
+
+        // 리스트 값 추가 및 제거
+        handCardList.Add(card);
+        addCardList.Clear();
+        handCardObject.Add(addCardObject[0]);
+        addCardObject.RemoveAt(0);
+
+        // 선택받지 못한 오브젝트 비활성화 / 위치 이동
+        for (int i = 0; i < addCardObject.Count; i++)
+        {
+            addCardObject[i].GetComponent<CardMove>().originalPosition = spawDeckPos;
+            addCardObject[i].transform.position = spawDeckPos;
+            addCardObject[i].SetActive(false);
+        }
+
+        StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
+
+        addCardPanelPrefab.SetActive(false);
+        waitAddCard = false;
+
+        handCardCount = handCardList.Count;
+    }
 
     // 카드 사용
     public void UpdateCardList(GameObject cardObject)
@@ -182,19 +216,15 @@ public class CardManager : MonoBehaviour
         int randNum = UnityEngine.Random.Range(1, 101);
         if (randNum <= cardInform.legendPercent)
         {
-            randomList = cardInform.legendCards;
+            randomList = cardInform.warriorCards;
         }
         else if (randNum <= cardInform.epicPercent)
         {
-            randomList = cardInform.epicCards;
+            randomList = cardInform.wizardCards;
         }
         else if (randNum <= cardInform.rarePercent)
         {
-            randomList = cardInform.rareCards;
-        }
-        else if (randNum <= cardInform.commonPercent)
-        {
-            randomList = cardInform.commonCards;
+            randomList = cardInform.archerCards;
         }
         else
         {

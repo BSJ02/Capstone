@@ -19,6 +19,7 @@ public class CardProcessing : MonoBehaviour
     private WeaponController weaponController;
     private BattleManager battleManager;
     private CardData cardData;
+    private CardManager cardManager;
 
     [Header(" # Player Scripts")] public Player player;
     [Header(" # Map Scripts")] public MapGenerator mapGenerator;
@@ -37,6 +38,7 @@ public class CardProcessing : MonoBehaviour
 
     private void Start()
     {
+        cardManager = FindObjectOfType<CardManager>();
         weaponController = playerObject.GetComponent<WeaponController>();
         battleManager = FindObjectOfType<BattleManager>();
         player = playerObject.GetComponent<Player>();
@@ -45,10 +47,10 @@ public class CardProcessing : MonoBehaviour
 
     private void Update()
     {
-        //if (usingCard)
-        //{
-        //    mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
-        //}
+        if (usingCard)
+        {
+            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
+        }
     }
 
     // 카드 사용 메서드
@@ -63,20 +65,17 @@ public class CardProcessing : MonoBehaviour
         battleManager.isPlayerMove = false;
         TempActivePoint = player.playerData.activePoint;
         player.playerData.activePoint = 0;
-        cardUseDistance = card.cardPower[2];    // 카드 거리 저장
+        cardUseDistance = card.cardDistance;    // 카드 거리 저장
         while (true)
         {
             waitForInput = true;    // 대기 상태로 전환
-
             
             // 대상 선택이 완료될 때까지 반복합니다.
             while (waitForInput)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-
                     SelectTarget();
-                
                 }
                 yield return null; // 다음 프레임까지 대기
             }
@@ -132,77 +131,119 @@ public class CardProcessing : MonoBehaviour
         // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
-            // cardName을 사용하는 로직을 호출
-            switch (card.cardName)
-            {
-                case "Sword Slash":
-                    cardData.UseSwordSlash(card, selectedTarget);
-                    break;
-                case "Healing Salve":
-                    cardData.UseHealingSalve(card, selectedTarget);
-                    break;
-                case "Sprint":
-                    cardData.UseSprint(card, selectedTarget);
-                    break;
-                case "Basic Strike":
-                    cardData.UseBasicStrike(card, selectedTarget);
-                    break;
-                case "Shield Block":
-                    cardData.UseShieldBlock(card, selectedTarget);
-                    break;
-                case "Ax Slash":
-                    cardData.UseAxSlash(card, selectedTarget);
-                    break;
-                case "Heal!!":
-                    cardData.UseHeal(card, selectedTarget);
-                    break;
-                case "Teleport":
-                    cardData.UseTeleport(card, selectedTarget);
-                    break;
-                case "Guardian Spirit":
-                    cardData.UseGuardianSpirit(card, selectedTarget);
-                    break;
-                case "Holy Nova":
-                    cardData.UseHolyNova(card, selectedTarget);
-                    break;
-                case "Fireball":
-                    cardData.UseFireball(card, selectedTarget);
-                    break;
-                case "Lightning Strike":
-                    cardData.UseLightningStrike(card, selectedTarget);
-                    break;
-                case "Excalibur's Wrath":
-                    cardData.UseExcalibursWrath(card, selectedTarget);
-                    break;
-                case "Divine Intervention":
-                    cardData.UseDivineIntervention(card, selectedTarget);
-                    break;
-                case "Soul Siphon":
-                    cardData.UseSoulSiphon(card, selectedTarget);
-                    break;
-                default:
-                    Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
-                    break;
-            }
-           
+            BaseCards(card);
+            WarriorCards(card);
+            ArcherCards(card);
+            WizardCards(card);
         }
     }
 
-    // 검을 들고 있을 때의 효과
-    private void ApplySwordEffect(Card card, GameObject selectedTarget)
+    // Base
+    private void BaseCards(Card card)
     {
-        // 효과를 증폭시키는 처리
+        switch (card.cardName)
+        {
+            case "Healing Potion":
+                cardData.UseHealingPotion(card, selectedTarget);
+                break;
+            case "Remove Ailments":
+                cardData.UseRemoveAilments(card, selectedTarget);
+                break;
+            case "Evasion Boost":
+                cardData.UseEvasionBoost(card, selectedTarget);
+                break;
+            case "Transmission":
+                cardData.UseTransmission(card, selectedTarget);
+                break;
+            case "Stat Boost":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            case "Rest":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            default:
+                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                break;
+        }
     }
 
-    // 다른 무기를 들고 있을 때의 효과
-    private void ApplyOtherWeaponEffect(Card card, GameObject selectedTarget)
+    // Warrior
+    private void WarriorCards(Card card)
     {
-        // 효과를 약화시키는 처리
+        switch (card.cardName)
+        {
+            case "Fireball":
+                cardData.UseFireball(card, selectedTarget);
+                break;
+            case "Lightning Strike":
+                cardData.UseLightningStrike(card, selectedTarget);
+                break;
+            case "Excalibur's Wrath":
+                cardData.UseExcalibursWrath(card, selectedTarget);
+                break;
+            case "Divine Intervention":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            case "Soul Siphon":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            default:
+                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                break;
+        }
     }
 
-    // 기본적인 효과 처리
-    private void ApplyDefaultEffect(Card card, GameObject selectedTarget)
+    // Archer
+    private void ArcherCards(Card card)
     {
-        // 특별한 처리가 필요 없는 경우
+        switch (card.cardName)
+        {
+            // Warrior
+            case "Fireball":
+                cardData.UseFireball(card, selectedTarget);
+                break;
+            case "Lightning Strike":
+                cardData.UseLightningStrike(card, selectedTarget);
+                break;
+            case "Excalibur's Wrath":
+                cardData.UseExcalibursWrath(card, selectedTarget);
+                break;
+            case "Divine Intervention":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            case "Soul Siphon":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            default:
+                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                break;
+        }
+    }
+
+    // Wizard
+    private void WizardCards(Card card)
+    {
+        switch (card.cardName)
+        {
+            // Warrior
+            case "Fireball":
+                cardData.UseFireball(card, selectedTarget);
+                break;
+            case "Lightning Strike":
+                cardData.UseLightningStrike(card, selectedTarget);
+                break;
+            case "Excalibur's Wrath":
+                cardData.UseExcalibursWrath(card, selectedTarget);
+                break;
+            case "Divine Intervention":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            case "Soul Siphon":
+                cardData.UseDivineIntervention(card, selectedTarget);
+                break;
+            default:
+                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                break;
+        }
     }
 }

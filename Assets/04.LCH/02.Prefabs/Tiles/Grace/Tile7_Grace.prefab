@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5064986021418004169}
   - component: {fileID: 1573064817867448636}
   - component: {fileID: 1798990767944171363}
-  m_Layer: 18
+  m_Layer: 6
   m_Name: Tile7_Grace
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ PrefabInstance:
     - target: {fileID: 4390170253439457171, guid: e16ee7bfa09c4b64191b6b4041d288fd,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -274,7 +274,7 @@ PrefabInstance:
     - target: {fileID: 7620152260970144480, guid: 8e1d1496271041e459afd247bae462a7,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -303,7 +303,7 @@ PrefabInstance:
     - target: {fileID: 210407763795228248, guid: 2d179e3578d54ae4fb6889266d889d93,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 693646785483107554, guid: 2d179e3578d54ae4fb6889266d889d93,
         type: 3}
@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 8712022509305961556, guid: 050f3df7dcfaa484189eaa24083b7966,
         type: 3}
       propertyPath: m_Layer
-      value: 18
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
