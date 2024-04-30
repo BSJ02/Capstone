@@ -26,8 +26,8 @@ public class CardData : MonoBehaviour
     }
 
     // Base Cards --------------------------------
-    // Sword Slash
-    public void UseSwordSlash(Card card, GameObject selectedTarget)
+    // Healing Potion
+    public void UseHealingPotion(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
 
@@ -45,8 +45,8 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Healing Salve
-    public void UseHealingSalve(Card card, GameObject selectedTarget)
+    // Remove Ailments
+    public void UseRemoveAilments(Card card, GameObject selectedTarget)
     {
         Player player = selectedTarget.GetComponent<Player>();
 
@@ -63,8 +63,8 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Sprint
-    public void UseSprint(Card card, GameObject selectedTarget)
+    // Evasion Boost
+    public void UseEvasionBoost(Card card, GameObject selectedTarget)
     {
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
@@ -82,8 +82,8 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Basic Strike
-    public void UseBasicStrike(Card card, GameObject selectedTarget)
+    // Transmission
+    public void UseTransmission(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -100,8 +100,8 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Shield Block
-    public void UseShieldBlock(Card card, GameObject selectedTarget)
+    // Stat Boost
+    public void UseStatBoost(Card card, GameObject selectedTarget)
     {
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
@@ -118,7 +118,24 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Common Cards --------------------------------
+    // Rest
+    public void UseRest(Card card, GameObject selectedTarget)
+    {
+        Player player = selectedTarget.GetComponent<Player>();
+        if (player != null)
+        {
+            player.ChargeAnim(selectedTarget);
+
+            player.playerData.Armor += card.cardPower[0];
+            cardProcessing.cardUseDistance = card.cardPower[1];
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Warrior Cards --------------------------------
     // Ax Slash
     public void UseAxSlash(Card card, GameObject selectedTarget)
     {
@@ -191,7 +208,7 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Rare Cards --------------------------------
+    // Archer Cards --------------------------------
     // Holy Nova
     public void UseHolyNova(Card card, GameObject selectedTarget)
     {
@@ -243,7 +260,7 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Epic Cards --------------------------------
+    // Wizard Cards --------------------------------
     // Excalibur's Wrath
     public void UseExcalibursWrath(Card card, GameObject selectedTarget)
     {
@@ -271,24 +288,6 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             player.ChargeAnim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
-    // Legend Cards --------------------------------
-    // Soul Siphon
-    public void UseSoulSiphon(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            player.MacigAttack03Anim(selectedTarget);
         }
         else
         {

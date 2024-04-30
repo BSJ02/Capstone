@@ -32,7 +32,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> addCardObject;    // 추가할 카드 오브젝트
 
     // 손에 들고 있는 카드 개수
-    private int handCardCount;
+    public int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
@@ -119,7 +119,7 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.commonCards[2]; // index에 해당하는 카드를 가져옵니다.
+        Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
 
         ApplyCardInfrom(card, addCardObject[0]);
 
@@ -216,19 +216,15 @@ public class CardManager : MonoBehaviour
         int randNum = UnityEngine.Random.Range(1, 101);
         if (randNum <= cardInform.legendPercent)
         {
-            randomList = cardInform.legendCards;
+            randomList = cardInform.warriorCards;
         }
         else if (randNum <= cardInform.epicPercent)
         {
-            randomList = cardInform.epicCards;
+            randomList = cardInform.wizardCards;
         }
         else if (randNum <= cardInform.rarePercent)
         {
-            randomList = cardInform.rareCards;
-        }
-        else if (randNum <= cardInform.commonPercent)
-        {
-            randomList = cardInform.commonCards;
+            randomList = cardInform.archerCards;
         }
         else
         {

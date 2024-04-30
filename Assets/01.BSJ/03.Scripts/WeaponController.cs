@@ -59,7 +59,6 @@ public class WeaponController : MonoBehaviour
                 AddWeaponByTypeList(childTransform.gameObject);
             }
         }
-
         equipWeapon[WeaponType.Sword] = 0;
         equipWeapon[WeaponType.Axe] = 0;
         equipWeapon[WeaponType.Bow] = 0;

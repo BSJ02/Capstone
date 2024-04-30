@@ -80,7 +80,14 @@ public class BattleManager : MonoBehaviour
     {
         isPlayerTurn = true;
         playerScripts.ResetActivePoint();
-        cardManager.CreateRandomCard();
+        if (cardManager.handCardCount < 8)
+        {
+            cardManager.CreateRandomCard();
+        }
+        else
+        {
+            // 카드가 너무 많음
+        }
         isPlayerTurn = true;
         battleState = BattleState.PlayerTurn;
         turn_UI[0].gameObject.SetActive(true);
