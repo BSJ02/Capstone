@@ -131,10 +131,21 @@ public class CardProcessing : MonoBehaviour
         // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
-            BaseCards(card);
-            WarriorCards(card);
-            ArcherCards(card);
-            WizardCards(card);
+            switch (card.cardRank)
+            {
+                case CardRank.WarriorCard:
+                    WarriorCards(card);
+                    break;
+                case CardRank.ArcherCard:
+                    ArcherCards(card);
+                    break;
+                case CardRank.WizardCard:
+                    WizardCards(card);
+                    break;
+                default:
+                    BaseCards(card);
+                    break;
+            }
         }
     }
 
@@ -156,7 +167,7 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseTransmission(card, selectedTarget);
                 break;
             case "Stat Boost":
-                cardData.UseDivineIntervention(card, selectedTarget);
+                cardData.UseStatBoost(card, selectedTarget);
                 break;
             case "Rest":
                 cardData.UseDivineIntervention(card, selectedTarget);

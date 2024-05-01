@@ -2020,6 +2020,7 @@ MonoBehaviour:
   addCardList: []
   handCardObject: []
   addCardObject: []
+  handCardCount: 0
   handCardPrefab: {fileID: 8317238898173453788, guid: fc41759a818988143a8b1fcd803ec190,
     type: 3}
   addCardPanelPrefab: {fileID: 2020583034978801655, guid: 7d88c60230728774eb1617770b62830d,
@@ -2034,6 +2035,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 0
     cardRank: 0
@@ -13474,6 +13476,54 @@ RectTransform:
   m_AnchoredPosition: {x: -960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1926800750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1926800752}
+  - component: {fileID: 1926800751}
+  m_Layer: 0
+  m_Name: ParticleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1926800751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926800750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a025b48750fbec449ca6224c085d6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healEffectPrefab: {fileID: 9017484664307500583, guid: b6b60b986882e7e4e87bbff30371dc10,
+    type: 3}
+  buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
+    type: 3}
+--- !u!4 &1926800752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926800750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.9999998, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1937813732
 GameObject:
   m_ObjectHideFlags: 0
@@ -22673,3 +22723,4 @@ SceneRoots:
   - {fileID: 401504239}
   - {fileID: 615802234}
   - {fileID: 1497366973}
+  - {fileID: 1926800752}

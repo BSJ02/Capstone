@@ -6,12 +6,13 @@ public class CardData : MonoBehaviour
 {
     private WeaponController weaponController;
     private CardProcessing cardProcessing;
+    private ParticleController particleController;
 
     [Header(" # Player Scripts")] public Player player;
 
-    private PlayerState playerState;
-
     [Header(" # Player Object")] public GameObject playerObject;
+
+    private PlayerState playerState;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class CardData : MonoBehaviour
 
     private void Start()
     {
+        particleController = FindObjectOfType<ParticleController>();
         cardProcessing = FindObjectOfType<CardProcessing>();
         weaponController = playerObject.GetComponent<WeaponController>();
         player = playerObject.GetComponent<Player>();
@@ -29,14 +31,21 @@ public class CardData : MonoBehaviour
     // Healing Potion
     public void UseHealingPotion(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
+        Player player = selectedTarget.GetComponent<Player>();
 
-        if (monster != null)
+        if (player != null)
         {
-            player.AttackTwoAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            particleController.HealEffect(selectedTarget);
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
             cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
@@ -103,14 +112,32 @@ public class CardData : MonoBehaviour
     // Stat Boost
     public void UseStatBoost(Card card, GameObject selectedTarget)
     {
+        Debug.Log(1);
         Player player = selectedTarget.GetComponent<Player>();
         if (player != null)
         {
             player.ChargeAnim(selectedTarget);
 
-            Debug.Log(card.cardName + " ī�带 ��� / " + player + " Armor: " + player.playerData.Armor);
-            player.playerData.Armor += card.cardPower[0];
-            cardProcessing.cardUseDistance = card.cardPower[1];
+            particleController.BuffEffect(selectedTarget);
+
+            int randNum = Random.Range(0, 3);
+            switch (randNum)
+            {
+                case 0:
+                    player.playerData.Armor += 20;
+                    break;
+                case 1:
+                    player.playerData.MaxHp += 20; // MaxHp를 증가시킴
+                    break;
+                case 2:
+                    player.playerData.MaxActivePoint += 1;
+                    break;
+                default:
+                    break;
+            }
+
+            Debug.Log(player.playerData.MaxHp);
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -228,23 +255,6 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Fireball
-    public void UseFireball(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            player.MacigAttack01Anim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
     // Lightning Strike
     public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
@@ -290,6 +300,25 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             player.ChargeAnim(selectedTarget);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Fireball
+    public void UseFireball(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            player.ChargeAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
