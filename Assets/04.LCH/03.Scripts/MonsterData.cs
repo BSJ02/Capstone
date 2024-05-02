@@ -4,29 +4,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MonsterData", menuName = "ScriptableObject/MonsterData", order = 1)]
 public class MonsterData : ScriptableObject
 {
-    [Header("¸ó½ºÅÍ Á¤º¸")]
-    public string MonsterName; // ¸ó½ºÅÍ ÀÌ¸§
-    public int Id; // ³Ñ¹ö¸µ
-    public float Hp; // Ã¼·Â
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public string MonsterName; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+    public int Id; // ï¿½Ñ¹ï¿½ï¿½ï¿½
+    public float Hp; // Ã¼ï¿½ï¿½
     public float MaxHp = 100f;
     public float Amor;
     public float CurrentDamage;
     public bool IsBoss = false;
-    public int MoveDistance; // ¸ó½ºÅÍ ÀÌµ¿ °Å¸®(Ä­ ´ç = 1)
-    public int DetectionRagne; // °¨Áö ¹üÀ§
+    public int MoveDistance; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Å¸ï¿½(Ä­ ï¿½ï¿½ = 1)
+    public int DetectionRagne; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [TextArea] public string Description;
 
   
-    [Header("½ºÅ³ ¼³Á¤")]
-    public float MinDamage; // ÃÖ¼Ò µ¥¹ÌÁö 
-    public float MaxDamage; // ÃÖ´ë µ¥¹ÌÁö
-    public float Critical; // ½ºÅ³ È®·ü
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½")]
+    public float MinDamage; // ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+    public float MaxDamage; // ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float Critical; // ï¿½ï¿½Å³ È®ï¿½ï¿½
     public int SkillDetectionRange;
 
 
 
-    // ¸ó½ºÅÍ ¹öÇÁ
-    // °ø°Ý·Â Áõ°¡
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½Ý·ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void IncreaseDamage(float damage)
     {
         if (CurrentDamage >= MaxDamage)
@@ -35,7 +35,7 @@ public class MonsterData : ScriptableObject
         CurrentDamage += damage;
     }
 
-    // Ã¼·Â Áõ°¡
+    // Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void IncreaseHp(float heal)
     {
         if (Hp >= MaxHp)
@@ -44,7 +44,7 @@ public class MonsterData : ScriptableObject
         Hp += heal;
     }
 
-    // ¹æ¾î·Â Áõ°¡
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void IncreaseAmor(float amor)
     {
         Amor = amor;
