@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // �ִϸ��̼� ����
     public void UpdateAnimation()
     {
         switch (playerState)
@@ -159,7 +158,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // �÷��̾� ����
     public void ReadyToAttack(Monster monster)
     {
         float monsterHp = monster.monsterData.Hp;
@@ -216,7 +214,6 @@ public class Player : MonoBehaviour
 
     }
 
-    // [3] ���� ��� ó��
     public void Die()
     {
         /*if (isLive) 
