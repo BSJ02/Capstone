@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class RangeMoveTest : MonoBehaviour
 {
@@ -26,6 +28,11 @@ public class RangeMoveTest : MonoBehaviour
         OpenList.Clear();
         CloseList.Clear();
 
+        // 플레이어 감지 하고 시작
+        PlayerDetect();
+        // 1. 플레이어가 optimalRange 안에 있을 때
+        // 2. 플레이어가 optimalRange 밖에 있을 때
+
         // 길찾기 시작
         SetDestination();
         List<Vector2Int> move = PathFinding();
@@ -33,6 +40,11 @@ public class RangeMoveTest : MonoBehaviour
 
         // 타일 좌표 초기화 
         MapGenerator.instance.ResetTotalMap();
+    }
+
+    private void PlayerDetect()
+    {
+        // 자기 중심을 기준으로 optimalRange * optimalRange 타일의 정보를 가져와서 위에 플레이어가 있으면  
     }
 
     // 플레이어 및 몬스터 초기 좌표 설정
@@ -43,27 +55,10 @@ public class RangeMoveTest : MonoBehaviour
         Vector3 player = FindObjectOfType<Player>().transform.position;
         playerPos = new Vector2Int((int)player.x, (int)player.z);
 
-        int targetPosX= 0;
-        int targetPosY = 0;
-
-        // TargetPos 지정
-        if(monsterPos.x > playerPos.x || monsterPos.y > playerPos.y)
-        {
-            targetPosX = monsterPos.x + playerPos.x;
-            targetPosY = monsterPos.y + playerPos.y;
-        }
-        else if(monsterPos.x < playerPos.x || monsterPos.y < playerPos.y)
-        {
-            targetPosX = monsterPos.x - playerPos.x;
-            targetPosY = monsterPos.y - playerPos.y;
-        }
-
         MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false);
 
         StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
-        TargetNode = MapGenerator.instance.totalMap[targetPosX, targetPosY];
-
-        Debug.Log("X좌표:" + TargetNode.coord.x + "Y좌표:" + TargetNode.coord.y);
+        TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
 
     // 길찾기 시작
@@ -160,7 +155,8 @@ public class RangeMoveTest : MonoBehaviour
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
         // 몬스터 최대 이동 거리(moveDistance 만큼 리스트 반환)
-        int maxMoveDistance = monster.monsterData.MoveDistance;
+        /*        int maxMoveDistance = monster.monsterData.MoveDistance;*/
+        int maxMoveDistance = monster.GetComponent<MonsterData>().MoveDistance;
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
@@ -208,25 +204,50 @@ public class RangeMoveTest : MonoBehaviour
     // 플레이어 감지 및 공격
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
-        int detectionRange = monster.monsterData.DetectionRagne;
+        /*int detectionRange = monster.monsterData.DetectionRagne;*/
+        int detectionRange = monster.GetComponent<MonsterData>().DetectionRagne;
 
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        // 대각선 감지 X
-        if (distacneX == detectionRange || distacneY == detectionRange)
+
+        switch (monster.monsterType)
         {
-            // 감지 O
-            Player player = FindObjectOfType<Player>();
-            transform.LookAt(player.transform);
-            monster.ReadyToAttack(player);
-            return;
-        }
-        else
-        {
-            // 감지 X
-            monster.Init();
-            return;
+            case MonsterType.Short:
+                // 근거리 몬스터
+                if ((distacneX <= detectionRange && monsterPos.y == playerPos.y) || (distacneY <= detectionRange && monsterPos.x == playerPos.x) && (monster.monsterType == MonsterType.Short))
+                {
+                    // 감지 O 
+                    Player player = FindObjectOfType<Player>();
+                    transform.LookAt(player.transform); // 회전 값 보정
+                   /* monster.ReadyToAttack(player);*/
+                    return;
+                }
+                else
+                {
+                    // 감지 X
+                    monster.Init();
+                    return;
+                }
+            case MonsterType.Long:
+                // 원거리 몬스터
+                if ((distacneX <= detectionRange && distacneY <= detectionRange) && (monster.monsterType == MonsterType.Short))
+                {
+                    // 대각선 감지 O (원거리 몬스터)
+                    if (monster.monsterType != MonsterType.Long)
+                        return;
+
+                    // 감지 O
+                    Player player = FindObjectOfType<Player>();
+                /*    monster.ReadyToAttack(player);*/
+                    return;
+                }
+                else
+                {
+                    // 감지 X
+                    monster.Init();
+                    return;
+                }
         }
     }
 
@@ -238,5 +259,4 @@ public class RangeMoveTest : MonoBehaviour
         BattleManager.instance.PlayerTurn();
     }
 }
-
 
