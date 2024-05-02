@@ -89,17 +89,13 @@ public class BattleManager : MonoBehaviour
         {
             // 카드가 너무 많음
         }
+
         isPlayerTurn = true;
         battleState = BattleState.PlayerTurn;
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
         player.gameObject.layer = LayerMask.NameToLayer("Player");
-        cardManager.CreateRandomCard();
-        turn_UI[0].gameObject.SetActive(true);
-        turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
-        turnEnd_Btn.interactable = true;
-        
     }
 
 
