@@ -4,29 +4,27 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MonsterData", menuName = "ScriptableObject/MonsterData", order = 1)]
 public class MonsterData : ScriptableObject
 {
-    [Header("���� ����")]
-    public string MonsterName; // ���� �̸�
-    public int Id; // �ѹ���
-    public float Hp; // ü��
+    [Header("# Monster Info")]
+    public string MonsterName;
+    public int Id; 
+    public float Hp; 
     public float MaxHp = 100f;
     public float Amor;
     public float CurrentDamage;
     public bool IsBoss = false;
-    public int MoveDistance; // ���� �̵� �Ÿ�(ĭ �� = 1)
-    public int DetectionRagne; // ���� ����
+    public int MoveDistance; 
+    public int DetectionRagne; 
     [TextArea] public string Description;
 
   
-    [Header("��ų ����")]
-    public float MinDamage; // �ּ� ������ 
-    public float MaxDamage; // �ִ� ������
-    public float Critical; // ��ų Ȯ��
+    [Header("# Skill")]
+    public float MinDamage;
+    public float MaxDamage;
+    public float Critical;
     public int SkillDetectionRange;
 
 
 
-    // ���� ����
-    // ���ݷ� ����
     public void IncreaseDamage(float damage)
     {
         if (CurrentDamage >= MaxDamage)
@@ -35,7 +33,6 @@ public class MonsterData : ScriptableObject
         CurrentDamage += damage;
     }
 
-    // ü�� ����
     public void IncreaseHp(float heal)
     {
         if (Hp >= MaxHp)
@@ -44,7 +41,6 @@ public class MonsterData : ScriptableObject
         Hp += heal;
     }
 
-    // ���� ����
     public void IncreaseAmor(float amor)
     {
         Amor = amor;

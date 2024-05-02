@@ -10,10 +10,8 @@ public class ParticleController : MonoBehaviour
 
     private IEnumerator StopParticleAfterDelay(GameObject particleObject, float delay)
     {
-        // 지정된 시간만큼 대기합니다.
         yield return new WaitForSeconds(delay);
 
-        // 파티클을 중지합니다.
         Destroy(particleObject);
     }
 
@@ -21,11 +19,9 @@ public class ParticleController : MonoBehaviour
     {
         if (prefab != null && targetObject != null)
         {
-            // 프리팹을 인스턴스화하여 파티클 시스템을 생성합니다.
             GameObject particleObject = Instantiate(prefab, targetObject.transform.position, Quaternion.identity);
             ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
 
-            // 파티클 시스템이 있다면 재생합니다.
             if (particleSystem != null)
             {
                 particleSystem.Play();
