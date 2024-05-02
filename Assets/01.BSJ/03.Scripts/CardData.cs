@@ -37,7 +37,7 @@ public class CardData : MonoBehaviour
         {
             player.ChargeAnim(selectedTarget);
 
-            particleController.HealEffect(selectedTarget);
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
             if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
             {
                 player.playerData.Hp = player.playerData.MaxHp;
@@ -118,7 +118,7 @@ public class CardData : MonoBehaviour
         {
             player.ChargeAnim(selectedTarget);
 
-            particleController.BuffEffect(selectedTarget);
+            particleController.ApplyPlayerEffect(particleController.buffEffectPrefab, selectedTarget);
 
             int randNum = Random.Range(0, 3);
             switch (randNum)
@@ -127,7 +127,7 @@ public class CardData : MonoBehaviour
                     player.playerData.Armor += 20;
                     break;
                 case 1:
-                    player.playerData.MaxHp += 20; // MaxHp를 증가시킴
+                    player.playerData.MaxHp += 20;
                     break;
                 case 2:
                     player.playerData.MaxActivePoint += 1;

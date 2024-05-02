@@ -19,10 +19,10 @@ public class PlayerMoveTest : MonoBehaviour
     List<Tile> CloseList = new List<Tile>();
 
     public int detectionRange = 1;
-    private List<Monster> detectedMonsters = new List<Monster>(); // ������ ���� ����Ʈ
-    private Monster clickedMonster; // Ŭ���� ���� ���� ����
+    private List<Monster> detectedMonsters = new List<Monster>();
+    private Monster clickedMonster;
 
-    private bool isMoving = false; // �̵� ������ ����
+    private bool isMoving = false;
 
     private void Awake()
     {
@@ -51,11 +51,9 @@ public class PlayerMoveTest : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
-                    // Ÿ���� Ŭ������ �� �÷��̾� �̵�
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
 
-                    // target�� ��ġ ����
-                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord); // Ŭ���� ��ǥ�� = targetPos
+                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
 
                     OpenList.Clear();
                     CloseList.Clear();
@@ -103,7 +101,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         List<Vector2Int> path = new List<Vector2Int>();
 
-        // ������ ã�� path ����
+   
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -121,7 +119,6 @@ public class PlayerMoveTest : MonoBehaviour
             OpenList.Remove(CurrentNode);
             CloseList.Add(CurrentNode);
 
-            // ��� �� ã��
             if (CurrentNode == EndNode)
             {
                 Tile currentNode = EndNode;
@@ -134,7 +131,7 @@ public class PlayerMoveTest : MonoBehaviour
 
                 path.Reverse();
 
-                //foreach (var pos in path) // ��ǥ ����
+                //foreach (var pos in path)
                 //{
                 //    Debug.Log("X��:" + pos.x + "Y��:" + pos.y);
                 //}
@@ -153,7 +150,6 @@ public class PlayerMoveTest : MonoBehaviour
 
 
 
-    // Ŭ���� ��ǥ ��ȯ
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
@@ -165,7 +161,6 @@ public class PlayerMoveTest : MonoBehaviour
     public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
-        //transform.gameObject.GetComponent<Collider>().enabled = false;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         player.playerState = PlayerState.Moving;
 
@@ -194,20 +189,16 @@ public class PlayerMoveTest : MonoBehaviour
 
             player.playerData.activePoint--;
 
-            // ��� Ÿ���� �̵��ߴ��� Ȯ��
             if (0 >= player.playerData.activePoint)
                 break;
         }
 
         isMoving = false;
         gameObject.layer = LayerMask.NameToLayer("Player");
-        //transform.gameObject.GetComponent<Collider>().enabled = true;
         player.playerState = PlayerState.Idle;
 
-        // Path�� ���� ��ǥ
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        // Monster ���� ����
         GetSurroundingTiles(finalPosition);
 
         yield break;
