@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        playerData.Hp = playerData.MaxHp;
+        playerData.ResetPlayerData();
         ResetActivePoint();
 
         isLive = true;
@@ -95,60 +95,67 @@ public class Player : MonoBehaviour
         anim.SetInteger("State", (int)playerState);
     }
 
-    public void AttackOneAnim()
+    public void AttackOneAnim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.Attack1;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void AttackTwoAnim()
+    public void AttackTwoAnim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.Attack2;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void StabAnim()
+    public void StabAnim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.Stab;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void ChargeAnim()
+    public void ChargeAnim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.Charge;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void SpinAttackAnim()
+    public void SpinAttackAnim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.SpinAttack;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void MacigAttack01Anim()
+    public void MacigAttack01Anim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.MacigAttack01;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void MacigAttack02Anim()
+    public void MacigAttack02Anim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.MacigAttack02;
         anim.SetInteger("State", (int)playerState);
 
     }
 
-    public void MacigAttack03Anim()
+    public void MacigAttack03Anim(GameObject monster)
     {
+        transform.LookAt(monster.transform);
         playerState = PlayerState.MacigAttack03;
         anim.SetInteger("State", (int)playerState);
-
     }
 
 

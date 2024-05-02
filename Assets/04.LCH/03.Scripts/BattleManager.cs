@@ -81,6 +81,20 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
         playerScripts.ResetActivePoint();
+        if (cardManager.handCardCount < 8)
+        {
+            cardManager.CreateRandomCard();
+        }
+        else
+        {
+            // 카드가 너무 많음
+        }
+        isPlayerTurn = true;
+        battleState = BattleState.PlayerTurn;
+        turn_UI[0].gameObject.SetActive(true);
+        turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
+        turnEnd_Btn.interactable = true;
+        player.gameObject.layer = LayerMask.NameToLayer("Player");
         cardManager.CreateRandomCard();
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
@@ -98,6 +112,7 @@ public class BattleManager : MonoBehaviour
         turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
         turnEnd_Btn.interactable = false;  
         StartCoroutine(NextMonster());
+        player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
 
 
