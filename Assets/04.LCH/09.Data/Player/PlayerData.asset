@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   Hp: 100
-  MaxHp: 100
+  MaxHp: 120
   Damage: 20
   Armor: 100
   CriticalHit: 0
