@@ -78,21 +78,22 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
+        battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
         playerScripts.ResetActivePoint();
         cardManager.CreateRandomCard();
-        isPlayerTurn = true;
-        battleState = BattleState.PlayerTurn;
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
+        
     }
 
 
     public void MonsterTurn()
     {
-        isPlayerTurn = false;
         battleState = BattleState.MonsterTurn;
+        isPlayerTurn = false;
+        turn_UI[0].gameObject.SetActive(false);
         turn_UI[1].gameObject.SetActive(true);
         turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
         turnEnd_Btn.interactable = false;  
@@ -112,14 +113,13 @@ public class BattleManager : MonoBehaviour
             // 몬스터 순회 완료
             if (currentMonsterIndex == monsters.Count - 1)
             {
-                // 몬스터 버프
+                /*// 몬스터 버프
                 for (int i = 0; i < monsters.Count; i++)
                 {
                     buff_UI.gameObject.SetActive(true);
                     buff_UI.GetComponent<Animator>().Play("Buff", -1, 0f);
-                    monsters[i].GetComponent<Monster>().monsterData.IncreaseDamage(damage);
-                    Debug.Log(monsters[i].name + "의 스탯이 증가하였습니다.");
-                }
+                    monsters[i].GetComponent<Monster>().monsterData.IncreaseDamage(damage); // 원하는 스탯을 랜덤하게 뽑기
+                }*/
                 // 초기화 
                 currentMonsterIndex = -1;
             }

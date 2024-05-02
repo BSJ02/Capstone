@@ -17,9 +17,12 @@ public class MonsterData : ScriptableObject
     [TextArea] public string Description;
 
   
-    [Header("데미지 설정")]
+    [Header("스킬 설정")]
     public float MinDamage; // 최소 데미지 
     public float MaxDamage; // 최대 데미지
+    public float Critical; // 스킬 확률
+    public int SkillDetectionRange;
+
 
 
     // 몬스터 버프

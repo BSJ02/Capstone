@@ -60,10 +60,14 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\GameManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardProcessing.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
@@ -71,22 +75,28 @@
     <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\WeaponController.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\LookAtCamera.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardMove.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMoveTest.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
   </ItemGroup>
@@ -94,9 +104,13 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\06.Shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFX3 Multiply Color.shader" />
     <None Include="Assets\Asset\Monster\HowToTestHDRP_URP.txt" />
     <None Include="Assets\Asset\Card\ReadMe.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\CartoonFX Free.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Asset\Player\HowToTestHDRP_URP.txt" />
@@ -105,17 +119,22 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster FREE.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Asset\Card_Icon\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_PASSES.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Asset\Monster\CommonStuffs\Shader\PAMaskTint.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
@@ -1023,6 +1042,10 @@
       <Project>{3B818AB6-3A52-A22C-0CB3-9F171E3BE56F}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="CFXR.WelcomeScreen.csproj">
+      <Project>{64CD1726-5DDB-0C44-60F4-D08CA4EA79EF}</Project>
+      <Name>CFXR.WelcomeScreen</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Burst.Editor.csproj">
       <Project>{8D769A60-7956-EA2D-0D9B-05AF6069BC85}</Project>
       <Name>Unity.Burst.Editor</Name>
@@ -1050,6 +1073,10 @@
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Runtime.csproj">
       <Project>{4A7DCDA0-412C-E24C-2B81-02A1EC641570}</Project>
       <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="KinoBloom.Runtime.csproj">
+      <Project>{2EB0A03E-1693-41A6-950A-A8DF1729ADE7}</Project>
+      <Name>KinoBloom.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
@@ -1083,9 +1110,21 @@
       <Project>{847CB78C-CE26-3B65-1918-F76E4E17C84C}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
+    <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
+      <Project>{83B3661C-02A0-F445-5D90-6930A87D213C}</Project>
+      <Name>ToonyColorsPro.Demo.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{903F2A97-883D-C77D-6289-29894A1837C7}</Project>
+      <Name>CFXRRuntime</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj">
       <Project>{854701F2-91DB-0143-498F-1454EBA695C6}</Project>
       <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{EB4236B6-CC0F-5A17-CDF8-CAB554A1D762}</Project>
+      <Name>CFXREditor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
       <Project>{E116A308-5F29-331E-CB3B-85BBDB329A55}</Project>
@@ -1094,6 +1133,10 @@
     <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
       <Project>{13448129-0462-3867-7326-75C5B35C5E69}</Project>
       <Name>Unity.VisualScripting.State.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{B8C3C6D3-11E0-B9B9-2BDD-1B8D296D86A1}</Project>
+      <Name>CFXRDemo</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.csproj">
       <Project>{16AFEA09-33B0-2F74-E772-AB91D4D96425}</Project>
