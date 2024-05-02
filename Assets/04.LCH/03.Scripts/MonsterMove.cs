@@ -178,18 +178,19 @@ public class MonsterMove : MonoBehaviour
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
         // 최종 좌표 isWall 설정(몬스터 및 플레이어 겹침 방지)
-        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
+        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true);
+
+        // RandomDamage 선택
+        monster.ReadyToAttack();
 
         // 플레이어 감지 후 공격
         GetSurroundingTiles(finalPosition);
 
-        // 몬스터 턴 종료
-        StartCoroutine(EscapeMonsterTurn());
         yield break;
     }
 
 
-    // 플레이어 감지 및 공격
+    /*// 플레이어 감지 및 공격(기존 감지 방식 - 삭제 예정)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
         int detectionRange = monster.monsterData.DetectionRagne;
@@ -197,47 +198,112 @@ public class MonsterMove : MonoBehaviour
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        // 근거리 몬스터
-        if ((distacneX <= detectionRange && monsterPos.y == playerPos.y) || (distacneY <= detectionRange && monsterPos.x == playerPos.x))
+
+        switch (monster.monsterType)
         {
-            // 감지 O 
+            case MonsterType.Short:
+                // 근거리 몬스터
+                if ((distacneX <= detectionRange && monsterPos.y == playerPos.y) || (distacneY <= detectionRange && monsterPos.x == playerPos.x) && (monster.monsterType == MonsterType.Short))
+                {
+                    // 감지 O 
+                    Player player = FindObjectOfType<Player>();
+                    transform.LookAt(player.transform); // 회전 값 보정
+                    monster.Attack(player);
+
+                    StartCoroutine(EscapeMonsterTurn());
+                    return;
+                }
+                else
+                {
+                    // 감지 X
+                    monster.Init();
+                 
+                    StartCoroutine(EscapeMonsterTurn());
+                    return;
+                }
+
+            case MonsterType.Long:
+                // 원거리 몬스터(대각선 감지 O)
+                if ((distacneX <= detectionRange && distacneY <= detectionRange) && (monster.monsterType == MonsterType.Long))
+                {
+                    // 감지 O
+                    Player player = FindObjectOfType<Player>();
+                    monster.Attack(player);
+
+                    StartCoroutine(EscapeMonsterTurn());
+                    return;
+                }
+                else
+                {
+                    // 감지 X
+                    monster.Init();
+
+                    StartCoroutine(EscapeMonsterTurn());
+                    return;
+                }
+        }
+    }*/
+
+    // 플레이어 감지 및 공격
+    public void GetSurroundingTiles(Vector2Int monsterPos)
+    {
+        int detectionRange = monster.monsterData.DetectionRagne;
+        int skillDetectionRange = monster.monsterData.SkillDetectionRange;
+
+        int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
+        int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
+
+        // 일반 공격
+        if ((monster.monsterData.CurrentDamage < monster.monsterData.Critical) &&
+            (distacneX <= detectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= detectionRange && monsterPos.x == playerPos.x))
+        {
+            monster.attack = AttackState.GeneralAttack;
+
             Player player = FindObjectOfType<Player>();
             transform.LookAt(player.transform); // 회전 값 보정
-            monster.ReadyToAttack(player);
-            return;
-        }
-        else
-        {
-            // 감지 X
-            monster.Init();
-            return;
-        }
-        /*// 원거리 몬스터
-        if (distacneX <= detectionRange && distacneY <= detectionRange)
-        {
-            // 대각선 감지 O (원거리 몬스터)
-            if (monster.monsterType != MonsterType.Long)
-                return;
+            monster.Attack(player); // 데미지 연산
 
-            // 감지 O
-            Player player = FindObjectOfType<Player>();
-            monster.ReadyToAttack(player);
+            Debug.Log("General!");
+            StartCoroutine(EscapeMonsterTurn());
             return;
         }
+        // 스킬 공격
+        else if ((monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&
+            (distacneX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= skillDetectionRange && monsterPos.x == playerPos.x))
+        {
+            monster.attack = AttackState.Skill;
+
+            Player player = FindObjectOfType<Player>();
+            transform.LookAt(player.transform); // 회전 값 보정
+            monster.Attack(player);
+
+            Debug.Log("Skill!");
+            StartCoroutine(EscapeMonsterTurn());
+            return;
+        }
+        // 감지 X
         else
         {
-            // 감지 X
             monster.Init();
+            StartCoroutine(EscapeMonsterTurn());
             return;
-        }*/
+        }
     }
 
-    // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
+
+    // 몬스터 턴 종료 후 대기(바로 턴 넘어가기 방지)
     IEnumerator EscapeMonsterTurn()
     {
-        yield return new WaitForSeconds(2f);
+        while (monster.state != MonsterState.Idle)
+            yield return null;
+
+        yield return new WaitForSeconds(3f);
         BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
     }
 }
+
+   
 
