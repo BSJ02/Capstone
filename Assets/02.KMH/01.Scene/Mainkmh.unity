@@ -5904,6 +5904,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 9a389479074643142aec1244f40bd4d8, type: 2}
+    - target: {fileID: 2436971512463497434, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2763914743243945539, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5969,19 +5974,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e62c217a469170c4f88a8025dcb09cf6, type: 3}
---- !u!1 &1174658820 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6,
-    type: 3}
-  m_PrefabInstance: {fileID: 1174658819}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1174658821 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -7858928112727797192, guid: e62c217a469170c4f88a8025dcb09cf6,
     type: 3}
   m_PrefabInstance: {fileID: 1174658819}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174658820}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8d074474a72d9542ae9de520edd32b7, type: 3}
@@ -6790,7 +6789,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 1f0cbe711e3ba3347b4e9d619b5c74b7, type: 2}
   state: 0
   monsterType: 0
-  critaical: 3
+  attack: 0
 --- !u!65 &1254907821
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10002,6 +10001,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 16235643801458640b916de31d7c62e3, type: 2}
+    - target: {fileID: 7191100790416280148, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7224089402415111053, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_Layer
@@ -13072,7 +13076,6 @@ MonoBehaviour:
   battleState: 0
   players:
   - {fileID: 301803543}
-  - {fileID: 1174658820}
   monsters:
   - {fileID: 1254907817}
   - {fileID: 6803592954900015953}
@@ -15816,7 +15819,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: caa0e953ccdebb24ba602ae656562b59, type: 2}
   state: 0
   monsterType: 0
-  critaical: 3
+  attack: 0
 --- !u!4 &2984086886625534119
 Transform:
   m_ObjectHideFlags: 0
@@ -17962,7 +17965,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 899b59d276bc0d645ad110e9f7f927bc, type: 2}
   state: 0
   monsterType: 1
-  critaical: 3
+  attack: 0
 --- !u!1 &3972964381819250292
 GameObject:
   m_ObjectHideFlags: 0
@@ -19194,7 +19197,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 240eb807ea7f2414ca1462053704016e, type: 2}
   state: 0
   monsterType: 0
-  critaical: 3
+  attack: 0
 --- !u!1 &6362385937358400963
 GameObject:
   m_ObjectHideFlags: 0
@@ -22088,7 +22091,7 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: d0f176b3562eb634da7d50f551e7dd39, type: 2}
   state: 0
   monsterType: 0
-  critaical: 3
+  attack: 0
 --- !u!65 &8511647367841836513
 BoxCollider:
   m_ObjectHideFlags: 0
