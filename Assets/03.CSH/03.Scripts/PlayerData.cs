@@ -6,14 +6,14 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public float Hp;
-    public float MaxHp = 100f;
+    public float MaxHp;
 
-    public float Damage = 20f;
-    public float Armor = 100f;
+    public float Damage;
+    public float Armor;
 
-    public float CriticalHit = 0f;
+    public float CriticalHit;
 
     public int activePoint;
-    public int MaxActivePoint = 4;
+    public int MaxActivePoint;
     
 }

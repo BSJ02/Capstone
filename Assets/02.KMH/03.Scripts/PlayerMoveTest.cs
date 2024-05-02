@@ -165,7 +165,6 @@ public class PlayerMoveTest : MonoBehaviour
     public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
-        //transform.gameObject.GetComponent<Collider>().enabled = false;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         player.playerState = PlayerState.Moving;
 
@@ -201,7 +200,6 @@ public class PlayerMoveTest : MonoBehaviour
 
         isMoving = false;
         gameObject.layer = LayerMask.NameToLayer("Player");
-        //transform.gameObject.GetComponent<Collider>().enabled = true;
         player.playerState = PlayerState.Idle;
 
         // Path�� ���� ��ǥ

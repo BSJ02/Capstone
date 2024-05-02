@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour
     public BattleState battleState;
 
     [Header("# 스테이지 몬스터 및 플레이어")]
-    public GameObject player;
+    public List<GameObject> players = new List<GameObject>();
     public List<GameObject> monsters = new List<GameObject>();
     private Player playerScripts;
 
@@ -57,13 +57,16 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        playerScripts = player.GetComponent<Player>();
         cardManager = FindObjectOfType<CardManager>();
 
         battleState = BattleState.Start;
 
         // 스테이지 오브젝트 활성화
-        player.gameObject.SetActive(true);
+        foreach (GameObject player in players)
+        {
+            player.gameObject.SetActive(true);
+            playerScripts = player.GetComponent<Player>();
+        }
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
@@ -93,7 +96,11 @@ public class BattleManager : MonoBehaviour
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
-        player.gameObject.layer = LayerMask.NameToLayer("Player");
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+
     }
 
 
@@ -105,7 +112,10 @@ public class BattleManager : MonoBehaviour
         turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
         turnEnd_Btn.interactable = false;  
         StartCoroutine(NextMonster());
-        player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
     }
 
 
