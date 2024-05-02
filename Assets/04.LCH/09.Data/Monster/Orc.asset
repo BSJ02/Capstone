@@ -24,3 +24,4 @@ MonoBehaviour:
   Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130"
   MinDamage: 10
   MaxDamage: 18
+  Critical: 16

@@ -84,7 +84,7 @@ public class CardManager : MonoBehaviour
 
         // 기본 카드 생성
         handCardList.AddRange(cardInform.baseCards);   // 값 추가
-        CreateCard(handCardList);   // 추가한 값을 가진 Card 생성 
+        CreateCard(handCardList);   // 추가한 값을    가진 Card 생성 
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));   // 카드 정렬
 
         handCardCount = handCardList.Count;

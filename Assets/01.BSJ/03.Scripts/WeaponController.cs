@@ -22,8 +22,8 @@ public class WeaponController : MonoBehaviour
     private Transform leftWeaponTransform;
     private Transform rightWeaponTransform;
 
-    private bool leftHand = false;
-    private bool rightHand = false;
+    //private bool leftHand = false;
+    //private bool rightHand = false;
 
     private Dictionary<WeaponType, int> equipWeapon = new Dictionary<WeaponType, int>();
 
@@ -104,12 +104,12 @@ public class WeaponController : MonoBehaviour
         if (randNum < weaponList.Count / 2)
         {
             targetWeaponList = leftWeaponList.ToArray();
-            leftHand = true;
+            //leftHand = true;
         }
         else
         {
             targetWeaponList = rightWeaponList.ToArray();
-            rightHand = true;
+            //rightHand = true;
         }
 
         if (targetWeaponList != null)

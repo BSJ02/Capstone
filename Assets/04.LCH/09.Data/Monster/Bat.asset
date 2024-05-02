@@ -24,3 +24,4 @@ MonoBehaviour:
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 4
   MaxDamage: 12
+  Critical: 8
