@@ -26,11 +26,10 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Awake()
     {
-        Player currentPoint = FindObjectOfType<Player>();
         cardProcessing = FindObjectOfType<CardProcessing>();
     }
 
-    public void SetDestination(Vector2Int clickedTargetPos)
+    private void SetDestination(Vector2Int clickedTargetPos)
     {
         playerPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
@@ -41,7 +40,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -73,8 +72,8 @@ public class PlayerMoveTest : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
-                if(hit.collider.CompareTag("Player"))
-                mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+                if (hit.collider.CompareTag("Player"))
+                    mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
             }
 
 
@@ -86,7 +85,7 @@ public class PlayerMoveTest : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-               
+
                         player.ReadyToAttack(clickedMonster);
                     }
                 }
@@ -95,13 +94,13 @@ public class PlayerMoveTest : MonoBehaviour
 
     }
 
-    public List<Vector2Int> PathFinding()
+    private List<Vector2Int> PathFinding()
     {
         OpenList.Add(StartNode);
 
         List<Vector2Int> path = new List<Vector2Int>();
 
-   
+
         path.Clear();
 
         while (OpenList.Count > 0)
@@ -158,7 +157,7 @@ public class PlayerMoveTest : MonoBehaviour
     }
 
 
-    public IEnumerator MoveSmoothly(List<Vector2Int> path)
+    private IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -207,7 +206,7 @@ public class PlayerMoveTest : MonoBehaviour
 
 
 
-    public void OpenListAdd(int checkX, int checkY)
+    private void OpenListAdd(int checkX, int checkY)
     {
         if (checkX < 0 || checkX >= mapGenerator.totalMap.GetLength(0) || checkY < 0 || checkY >= mapGenerator.totalMap.GetLength(1))
             return;
