@@ -11,19 +11,16 @@ public class MonsterData : ScriptableObject
     public float MaxHp = 100f;
     public float Amor;
     public float CurrentDamage;
-    public bool IsBoss = false;
     public int MoveDistance; 
     public int DetectionRagne; 
     [TextArea] public string Description;
 
-  
+
     [Header("# Skill")]
     public float MinDamage;
     public float MaxDamage;
     public float Critical;
     public int SkillDetectionRange;
-
-
 
     public void IncreaseDamage(float damage)
     {
