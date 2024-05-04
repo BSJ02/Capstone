@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CardData : MonoBehaviour
@@ -8,9 +9,9 @@ public class CardData : MonoBehaviour
     private CardProcessing cardProcessing;
     private ParticleController particleController;
 
-    [Header(" # Player Scripts")] public Player player;
+    private Player currentPlayer;
 
-    [Header(" # Player Object")] public GameObject playerObject;
+    private GameObject currentPlayerObj;
 
     private PlayerState playerState;
 
@@ -22,9 +23,19 @@ public class CardData : MonoBehaviour
     private void Start()
     {
         particleController = FindObjectOfType<ParticleController>();
-        cardProcessing = FindObjectOfType<CardProcessing>();
-        weaponController = playerObject.GetComponent<WeaponController>();
-        player = playerObject.GetComponent<Player>();
+        cardProcessing = FindObjectOfType<CardProcessing>();   
+    }
+
+    private void Update()
+    {
+        if (currentPlayer != null && currentPlayerObj != null)
+        {
+            currentPlayer = cardProcessing.currentPlayer;
+            currentPlayerObj = cardProcessing.currentPlayerObj;
+
+            weaponController = currentPlayerObj.GetComponent<WeaponController>();
+            currentPlayer = currentPlayerObj.GetComponent<Player>();
+        }
     }
 
     // Base Cards --------------------------------
@@ -97,7 +108,6 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            player.StabAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -169,7 +179,6 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            player.SpinAttackAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -206,12 +215,12 @@ public class CardData : MonoBehaviour
         Tile tile = selectedTarget.GetComponent<Tile>();
         if (tile != null)
         {
-            player.ChargeAnim(selectedTarget);
+            currentPlayer.ChargeAnim(selectedTarget);
 
             Debug.Log("Teleport ī�带 ���");
 
             // �÷��̾� �߰� �̵�
-            player.transform.position = tile.transform.position;
+            currentPlayerObj.transform.position = tile.transform.position;
 
         }
         else
@@ -229,7 +238,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.ChargeAnim(selectedTarget);
+            currentPlayer.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -247,7 +256,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.ChargeAnim(selectedTarget);
+            currentPlayer.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -264,7 +273,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.MacigAttack02Anim(selectedTarget);
+            currentPlayer.MacigAttack02Anim(selectedTarget);
         }
         else
         {
@@ -282,7 +291,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.MacigAttack03Anim(selectedTarget);
+            currentPlayer.MacigAttack03Anim(selectedTarget);
         }
         else
         {
@@ -299,7 +308,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.ChargeAnim(selectedTarget);
+            currentPlayer.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -316,7 +325,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.ChargeAnim(selectedTarget);
+            currentPlayer.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

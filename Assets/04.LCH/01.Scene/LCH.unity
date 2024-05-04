@@ -3788,8 +3788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047c121e575a43b429c24e08b1182063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerObject: {fileID: 0}
+  player: {fileID: 289030525}
+  playerObject: {fileID: 289030524}
 --- !u!1 &617252980
 GameObject:
   m_ObjectHideFlags: 0
@@ -11544,9 +11544,9 @@ MonoBehaviour:
   usingCard: 0
   coroutineStop: 0
   TempActivePoint: 0
-  player: {fileID: 0}
+  player: {fileID: 289030525}
   mapGenerator: {fileID: 2082544543}
-  playerObject: {fileID: 0}
+  playerObject: {fileID: 289030524}
   cardUseDistance: 0
 --- !u!4 &1497366973
 Transform:

@@ -90,7 +90,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            // 카드가 너무 많음
+            Debug.Log("카드가 너무 많음");
         }
         isPlayerTurn = true;
         battleState = BattleState.PlayerTurn;

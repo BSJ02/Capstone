@@ -20,13 +20,13 @@ public class CardProcessing : MonoBehaviour
     private BattleManager battleManager;
     private CardData cardData;
     private CardManager cardManager;
+    [HideInInspector] public Player currentPlayer;
+    [HideInInspector] public GameObject currentPlayerObj;
 
-    [Header(" # Player Scripts")] public Player player;
     [Header(" # Map Scripts")] public MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
-    [Header(" # Player Object")] public GameObject playerObject;
 
     private GameObject selectedTarget = null;
     [HideInInspector] public float cardUseDistance = 0;
@@ -38,18 +38,16 @@ public class CardProcessing : MonoBehaviour
 
     private void Start()
     {
-        cardManager = FindObjectOfType<CardManager>();
-        weaponController = playerObject.GetComponent<WeaponController>();
-        battleManager = FindObjectOfType<BattleManager>();
-        player = playerObject.GetComponent<Player>();
         cardData = FindObjectOfType<CardData>();
+        cardManager = FindObjectOfType<CardManager>();
+        battleManager = FindObjectOfType<BattleManager>();
     }
 
     private void Update()
     {
         if (usingCard)
         {
-            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
+            mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
         }
     }
 
@@ -63,8 +61,8 @@ public class CardProcessing : MonoBehaviour
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        TempActivePoint = player.playerData.activePoint;
-        player.playerData.activePoint = 0;
+        TempActivePoint = currentPlayer.playerData.activePoint;
+        currentPlayer.playerData.activePoint = 0;
         cardUseDistance = card.cardDistance;    // 카드 거리 저장
         while (true)
         {
@@ -118,7 +116,7 @@ public class CardProcessing : MonoBehaviour
             {
 
                 selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(player.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+                if (Vector3.Distance(currentPlayerObj.transform.position, selectedTarget.transform.position) <= cardUseDistance)
                 {
                     waitForInput = false;
                 }
