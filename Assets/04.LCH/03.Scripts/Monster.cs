@@ -16,11 +16,6 @@ public enum MonsterState
     CritcalAttack = 4 
 }
 
-public enum MonsterType
-{
-    Short,
-    Long
-}
 
 public enum AttackState
 {
@@ -34,7 +29,6 @@ public class Monster : MonoBehaviour
     private MonsterUI monster_UI;
 
     public MonsterState state;
-    public MonsterType monsterType;
     public AttackState attack;
 
     private Animator anim;
@@ -65,42 +59,11 @@ public class Monster : MonoBehaviour
         anim.SetInteger("State", (int)state);
     }
 
-    // [1] 몬스터 공격 
-    /*public void ReadyToAttack(Player player)
-    {
-        float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage);
-
-        // 스킬 공격
-        if (randDamage >= monsterData.Critical)
-        {
-            player.GetHit(randDamage);
-
-            state = MonsterState.CritcalAttack; // 애니메이션(파티클 + 사운드)
-            anim.SetInteger("State", (int)state);
-
-            monster_UI.GetMonsterDamage(); // UI 업데이트
-            return;
-        }
-        // 일반 공격
-        else
-        {
-            player.GetHit(randDamage);
-
-            state = MonsterState.Attack; // 애니메이션
-            anim.SetInteger("State", (int)state);
-
-            monster_UI.GetMonsterDamage(); // UI 업데이트
-            return;
-        }
-    }*/
-
-
     // [1] 몬스터 공격력 
     public void ReadyToAttack()
     {
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage); // Damage UI로 인해 자료형 변환
+        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage); 
     }
 
     //[1-2] 몬스터 실제 공격
@@ -111,6 +74,7 @@ public class Monster : MonoBehaviour
         {
             // 일반 공격
             case AttackState.Skill:
+                Debug.Log("현재 몬스터 일반공격 데미지:" + monsterData.CurrentDamage);
                 player.GetHit(monsterData.CurrentDamage);
 
                 state = MonsterState.CritcalAttack; // 애니메이션(파티클 + 사운드)
@@ -121,6 +85,7 @@ public class Monster : MonoBehaviour
 
             // 스킬 공격 
             case AttackState.GeneralAttack:
+                Debug.Log("현재 몬스터 스킬 데미지:" + monsterData.CurrentDamage);
                 player.GetHit(monsterData.CurrentDamage);
 
                 state = MonsterState.Attack; // 애니메이션(파티클 + 사운드)

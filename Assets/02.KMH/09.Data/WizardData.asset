@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: WizardData
   m_EditorClassIdentifier: 
-  Hp: 70
-  MaxHp: 70
+  Hp: 100
+  MaxHp: 100
   Damage: 20
-  Armor: 80
+  Armor: 100
   CriticalHit: 0
-  activePoint: 2
-  MaxActivePoint: 2
+  activePoint: 90
+  MaxActivePoint: 100

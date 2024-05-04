@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class MonsterSkill : MonoBehaviour
 {
-    public ParticleSystem particle;
     public GameObject skillPosition;
-    
-    private Vector3 particlePosition;
-    private Animator anim;
+    public ParticleSystem particle;
 
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    private Vector3 particlePosition;
+
+    private ParticleSystem skill;
 
     public void DragonSkill()
     {
         particlePosition = skillPosition.transform.position;
         Quaternion particleRotation = skillPosition.transform.rotation; 
 
-        ParticleSystem ps = Instantiate(particle, particlePosition, particleRotation, skillPosition.transform);
+        skill = Instantiate(particle, particlePosition, particleRotation, skillPosition.transform);
+
     }
 
-   
+    public void StopSkill()
+    {
+        if(skill != null)
+        {
+            Destroy(skill.gameObject);
+        }
+    }
 }
