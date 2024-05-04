@@ -17,12 +17,12 @@ MonoBehaviour:
   Hp: 100
   MaxHp: 100
   Amor: 2
-  CurrentDamage: 7.0818253
-  IsBoss: 0
+  CurrentDamage: 15
   MoveDistance: 3
   DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  MinDamage: 4
-  MaxDamage: 12
-  Critical: 8
-  SkillDetectionRange: 4
+  Skill: {fileID: 4565880980009830589, guid: 374257c2496d98042bc9d343d1d951ce, type: 3}
+  MinDamage: 10
+  MaxDamage: 20
+  Critical: 15
+  SkillDetectionRange: 5
