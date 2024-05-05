@@ -42,6 +42,13 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public bool isPlayerTurn = false;
     [HideInInspector] public bool isRandomCard = false;
 
+    // Player Buff & DeBuff
+    [HideInInspector] public int IsHealing = 0;
+    [HideInInspector] public int IsPoisoned = 0;
+    [HideInInspector] public int IsBurned = 0;
+    [HideInInspector] public int IsBleeding = 0;
+
+    private CardData cardData;
     private void Awake()
     {
         if(instance == null)
@@ -57,6 +64,7 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
+        cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
 
         battleState = BattleState.Start;
@@ -105,7 +113,6 @@ public class BattleManager : MonoBehaviour
 
     }
 
-
     public void MonsterTurn()
     {
         battleState = BattleState.MonsterTurn;
@@ -146,5 +153,48 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    //private IEnumerator CheckStatus()
+    //{
+    //    bool[] status = new bool[] { IsHealing > 0, IsPoisoned > 0, IsBurned > 0, IsBleeding > 0 };
+
+    //    for (int i = 0; i < status.Length; i++)
+    //    {
+    //        if (status[i])
+    //        {
+    //            ProcessStatus(i);
+
+    //            // 대기 시간을 설정합니다.
+    //            yield return new WaitForSeconds(1);
+    //        }
+    //    }
+    //    yield break;
+    //}
+
+    //private void ProcessStatus(int index)
+    //{
+    //    // index에 따라 각 상태를 처리합니다.
+    //    switch (index)
+    //    {
+    //        case 0:
+    //            IsHealing -= 1;
+    //            break;
+    //        case 1:
+
+    //            IsPoisoned -= 1;
+    //            break;
+    //        case 2:
+
+    //            IsBurned -= 1;
+    //            break;
+    //        case 3:
+
+    //            IsBleeding -= 1;
+    //            break;
+    //        default:
+    //            Debug.Log("상태이상 없음");
+    //            break;
+    //    }
+    //}
 }
 

@@ -9,9 +9,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
-    <ProjectGuid>{84068216-F05E-C1F8-F7DD-67999CBBE322}</ProjectGuid>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{1EE98971-DB57-CCE3-EB35-7D60258BAC4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -81,6 +80,7 @@
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\PlayerAnimationEvent.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />

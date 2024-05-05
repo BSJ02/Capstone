@@ -246,7 +246,7 @@ public class MonsterMove : MonoBehaviour
             yield return null;
 
         // 스킬 종료 시
-        monster.GetComponent<MonsterSkill>().StopSkill();
+        //monster.GetComponent<MonsterSkill>().StopSkill();
         yield return new WaitForSeconds(3f);
         BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();

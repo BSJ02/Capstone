@@ -119,7 +119,7 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
+        Card card = cardInform.wizardCards[0]; // <- 이거 바꾸면 됨
 
         ApplyCardInfrom(card, addCardObject[0]);
 
@@ -329,7 +329,6 @@ public class CardManager : MonoBehaviour
     {
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
-
 
         float deltaTime = Time.deltaTime; // deltaTime 한 번만 계산
 

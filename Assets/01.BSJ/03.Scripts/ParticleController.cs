@@ -8,11 +8,13 @@ public class ParticleController : MonoBehaviour
     public GameObject buffEffectPrefab;
     public GameObject fireballEffectPrefab;
 
-    public void ApplyPlayerEffect(GameObject prefab,GameObject targetObject)
+    float moveTime;
+
+    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject)
     {
-        if (prefab != null && targetObject != null)
+        if (prefab != null && playerObject != null)
         {
-            GameObject particleObject = Instantiate(prefab, targetObject.transform.position, Quaternion.identity);
+            GameObject particleObject = Instantiate(prefab, playerObject.transform.position, Quaternion.identity);
             ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
 
             if (particleSystem != null)
@@ -22,17 +24,21 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    public void FireballEffect(GameObject targetObject)
+    public void ProjectileEffect(GameObject prefab, GameObject playerObject, GameObject targetObject)
     {
-        if (healEffectPrefab != null && targetObject != null)
+        if (healEffectPrefab != null && playerObject != null)
         {
-            GameObject particleObject = Instantiate(buffEffectPrefab, targetObject.transform.position, Quaternion.identity);
+            GameObject particleObject = Instantiate(prefab, playerObject.transform.position, Quaternion.identity);
             ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
 
             if (particleSystem != null)
             {
                 particleSystem.Play();
             }
+
+            moveTime += Time.deltaTime;
+            float t = moveTime / 0.5f;
+            particleObject.transform.position = Vector3.Lerp(playerObject.transform.position, targetObject.transform.position, t);
         }
     }
 }
