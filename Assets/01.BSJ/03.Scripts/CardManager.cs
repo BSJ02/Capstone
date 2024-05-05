@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     [Header(" # Card Inform")] public CardInform cardInform;
-    [Header(" # Player Scripts")] public Player player;
+    
     private CardProcessing cardProcessing;
     
     // 카드 생성 위치
@@ -106,7 +106,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            player.playerData.activePoint = cardProcessing.TempActivePoint;
+            cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
 
             cardProcessing.usingCard = false;
             cardProcessing.waitForInput = false;

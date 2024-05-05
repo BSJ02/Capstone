@@ -8,13 +8,6 @@ public class ParticleController : MonoBehaviour
     public GameObject buffEffectPrefab;
     public GameObject fireballEffectPrefab;
 
-    private IEnumerator StopParticleAfterDelay(GameObject particleObject, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        Destroy(particleObject);
-    }
-
     public void ApplyPlayerEffect(GameObject prefab,GameObject targetObject)
     {
         if (prefab != null && targetObject != null)
@@ -25,8 +18,6 @@ public class ParticleController : MonoBehaviour
             if (particleSystem != null)
             {
                 particleSystem.Play();
-
-                StartCoroutine(StopParticleAfterDelay(particleObject, particleSystem.main.duration));
             }
         }
     }
@@ -41,7 +32,6 @@ public class ParticleController : MonoBehaviour
             if (particleSystem != null)
             {
                 particleSystem.Play();
-                StartCoroutine(StopParticleAfterDelay(particleObject, particleSystem.main.duration));
             }
         }
     }
