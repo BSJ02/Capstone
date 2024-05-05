@@ -280,6 +280,57 @@ public class CardData : MonoBehaviour
             cardProcessing.waitForInput = true;
         }
     }
+    
+
+
+
+    public void UsePoisonArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>(); 
+        if(monster!= null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            //animation
+            
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void TargetArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void DoubleTargetArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
 
     // Wizard Cards --------------------------------
     // Excalibur's Wrath
