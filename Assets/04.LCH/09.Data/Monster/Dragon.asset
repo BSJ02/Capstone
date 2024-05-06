@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dragon
   m_EditorClassIdentifier: 
   MonsterName: "\uB4DC\uB798\uACE4 "
-  Id: 5
+  Id: 1
   Hp: 100
   MaxHp: 100
   Amor: 2
@@ -21,7 +21,6 @@ MonoBehaviour:
   MoveDistance: 3
   DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  Skill: {fileID: 4565880980009830589, guid: 374257c2496d98042bc9d343d1d951ce, type: 3}
   MinDamage: 10
   MaxDamage: 20
   Critical: 15
