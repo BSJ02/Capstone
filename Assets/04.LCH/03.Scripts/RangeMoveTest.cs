@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -155,7 +155,7 @@ public class RangeMoveTest : MonoBehaviour
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
         // 몬스터 최대 이동 거리(moveDistance 만큼 리스트 반환)
-        /*        int maxMoveDistance = monster.monsterData.MoveDistance;*/
+        *//*        int maxMoveDistance = monster.monsterData.MoveDistance;*//*
         int maxMoveDistance = monster.GetComponent<MonsterData>().MoveDistance;
 
         float moveSpeed = 1f;
@@ -204,7 +204,7 @@ public class RangeMoveTest : MonoBehaviour
     // 플레이어 감지 및 공격
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
-        /*int detectionRange = monster.monsterData.DetectionRagne;*/
+        *//*int detectionRange = monster.monsterData.DetectionRagne;*//*
         int detectionRange = monster.GetComponent<MonsterData>().DetectionRagne;
 
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
@@ -220,7 +220,7 @@ public class RangeMoveTest : MonoBehaviour
                     // 감지 O 
                     Player player = FindObjectOfType<Player>();
                     transform.LookAt(player.transform); // 회전 값 보정
-                   /* monster.ReadyToAttack(player);*/
+                   *//* monster.ReadyToAttack(player);*//*
                     return;
                 }
                 else
@@ -239,7 +239,7 @@ public class RangeMoveTest : MonoBehaviour
 
                     // 감지 O
                     Player player = FindObjectOfType<Player>();
-                /*    monster.ReadyToAttack(player);*/
+                *//*    monster.ReadyToAttack(player);*//*
                     return;
                 }
                 else
@@ -260,3 +260,4 @@ public class RangeMoveTest : MonoBehaviour
     }
 }
 
+*/

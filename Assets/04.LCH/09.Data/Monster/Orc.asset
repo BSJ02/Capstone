@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Orc
   m_EditorClassIdentifier: 
   MonsterName: "\uC624\uD06C"
-  Id: 4
+  Id: 3
   Hp: 200
   MaxHp: 200
   Amor: 5
-  CurrentDamage: 0
-  IsBoss: 1
+  CurrentDamage: 14
   MoveDistance: 3
   DetectionRagne: 1
   Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130"
   MinDamage: 10
   MaxDamage: 18
-  Critical: 16
+  Critical: 12
+  SkillDetectionRange: 2

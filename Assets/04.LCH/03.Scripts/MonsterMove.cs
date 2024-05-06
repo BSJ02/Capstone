@@ -219,7 +219,7 @@ public class MonsterMove : MonoBehaviour
             (distacneX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
             (distacneY <= skillDetectionRange && monsterPos.x == playerPos.x))
         {
-            monster.attack = AttackState.Skill;
+            monster.attack = AttackState.SkillAttack;
 
             Player player = FindObjectOfType<Player>();
             transform.LookAt(player.transform); // 회전 값 보정
@@ -245,8 +245,22 @@ public class MonsterMove : MonoBehaviour
         while (monster.state != MonsterState.Idle)
             yield return null;
 
-        // 스킬 종료 시
-        monster.GetComponent<MonsterSkill>().StopSkill();
+        // MonsterSkill 클래스에 등록되어 있는 스킬 일 경우
+        if(monster.attack == AttackState.SkillAttack && monster.GetComponent<MonsterSkill>() != null)
+        {
+            MonsterSkill skill = monster.GetComponent<MonsterSkill>();
+            skill.StopSkill();
+
+            // 스킬 타격 이펙트 생성
+            if (skill.skillHitEffect != null)
+            {
+                Vector3 player = new Vector3(playerPos.x, 1, playerPos.y);
+                Instantiate(skill.skillHitEffect, player, Quaternion.identity);
+                monster.attack = AttackState.GeneralAttack;
+            }
+        }
+
+        // 대기 처리
         yield return new WaitForSeconds(3f);
         BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
