@@ -146,5 +146,11 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    public void CharacterSelect()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        players.Add(player);
+    }
 }
 
