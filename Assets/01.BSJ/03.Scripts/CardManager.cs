@@ -119,7 +119,8 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
+        //Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
+        Card card = cardInform.archerCards[0];
 
         ApplyCardInfrom(card, addCardObject[0]);
 

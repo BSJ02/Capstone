@@ -210,20 +210,29 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             // Warrior
-            case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
+            case "WallJump":
+                cardData.WallJump(card, selectedTarget);
                 break;
-            case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+            case "Concealment":
+                cardData.Concealment(card, selectedTarget);
                 break;
-            case "Excalibur's Wrath":
-                cardData.UseExcalibursWrath(card, selectedTarget);
+            case "Agility":
+                cardData.AgilityAttack(card, selectedTarget);
                 break;
-            case "Divine Intervention":
-                cardData.UseDivineIntervention(card, selectedTarget);
+            case "PowerOfTurn":
+                cardData.TurnCountAttack(card, selectedTarget);
                 break;
-            case "Soul Siphon":
-                cardData.UseDivineIntervention(card, selectedTarget);
+            case "MarkAttack":
+                cardData.MarkTargetArrow(card, selectedTarget);
+                break;
+            case "DoubleShot":
+                cardData.DoubleTargetArrow(card, selectedTarget);
+                break;
+            case "PoisonAttack":
+                cardData.PoisonArrow(card, selectedTarget);
+                break;
+            case "AimedShot":
+                cardData.AimedArrow(card, selectedTarget);
                 break;
             default:
                 Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");

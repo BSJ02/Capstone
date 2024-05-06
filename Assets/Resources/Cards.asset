@@ -20,6 +20,7 @@ MonoBehaviour:
     - 20
     - 0
     - 0
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 56e32878f231ecf41aff7fb6db3c724e, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -31,6 +32,7 @@ MonoBehaviour:
     - 20
     - 0
     - 1
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: fe9d7e3a4781e784ca6b245ac797d643, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -43,6 +45,7 @@ MonoBehaviour:
     - 20
     - 0
     - 0
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 72d12fb7d88462048b18383296fad108, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -54,6 +57,7 @@ MonoBehaviour:
     - 15
     - 0
     - 1
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: d2d734d7fb094e240915d71c663c8b57, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -65,6 +69,7 @@ MonoBehaviour:
     - 2
     - 0
     - 0
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -77,6 +82,7 @@ MonoBehaviour:
     - 20
     - 0
     - 0
+    cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 72d12fb7d88462048b18383296fad108, type: 3}
     cardPercent: 35
     cardRank: 0
@@ -86,6 +92,7 @@ MonoBehaviour:
     cardDescription: "\uC8FC\uC704 \uC801 \uACF5\uACA9"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 25
     cardRank: 1
@@ -94,6 +101,7 @@ MonoBehaviour:
     cardDescription: "\uBC29\uC5B4\uB825\uB9CC\uD07C \uCD94\uAC00 \uD53C\uD574"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 25
     cardRank: 1
@@ -102,6 +110,7 @@ MonoBehaviour:
     cardDescription: "\uC783\uC740 \uCCB4\uB825\uB9CC\uD07C \uACF5\uACA9\uB825 \uC5BB\uC74C"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 25
     cardRank: 1
@@ -110,75 +119,106 @@ MonoBehaviour:
     cardDescription: "\uC77C\uC815\uAC70\uB9AC \uC774\uB3D9\uD574\uC11C \uACF5\uACA9"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 25
     cardRank: 1
     cardWeaponType: 0
   archerCards:
   - cardName: Wall Jump
-    cardDescription: "\uBCBD\uC744 \uB118\uC74C"
+    cardDescription: "\uBCBD \uB118\uAE30"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 20
     cardRank: 2
     cardWeaponType: 0
-  - cardName: Conceal
+  - cardName: Concealment
     cardDescription: "\uC801\uC5D0\uAC8C \uAC10\uC9C0\uC548\uB418\uAC8C \uC228\uC74C"
     cardDescription_Power: 
     cardPower: []
-    cardSprite: {fileID: 0}
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: 97641afe141a54b43bbf121ea44168c9, type: 3}
     cardPercent: 20
     cardRank: 2
-    cardWeaponType: 0
+    cardWeaponType: 2
   - cardName: Agility
     cardDescription: "\uB0A8\uC740 \uC774\uB3D9\uAC70\uB9AC\uB9CC\uD07C \uCD94\uAC00\uD53C\uD574\uB97C
       \uC785\uD798"
     cardDescription_Power: 
-    cardPower: []
+    cardPower:
+    - 0
+    - 0
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 20
     cardRank: 2
     cardWeaponType: 0
-  - cardName: "\uD134 \uC99D\uAC00"
+  - cardName: Power Of Turn
     cardDescription: "\uD134 \uC99D\uAC00\uD560 \uC218\uB85D \uB370\uBBF8\uC9C0 \uC99D\uAC00"
     cardDescription_Power: 
-    cardPower: []
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 0
+    - 0
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: 0333e5c19862fdf45b4965cbbde56d16, type: 3}
     cardPercent: 20
     cardRank: 2
-    cardWeaponType: 0
-  - cardName: "\uD45C\uC2DD"
+    cardWeaponType: 2
+  - cardName: Mark Attack
     cardDescription: "\uD45C\uC2DD\uC744 \uB0A8\uACA8 \uB2E4\uC74C \uACF5\uACA9\uC2DC
       \uCD94\uAC00 \uD53C\uD574"
     cardDescription_Power: 
-    cardPower: []
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 0
+    - 0
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: 31206e3ab58bc394b960f9a53c6972b1, type: 3}
     cardPercent: 20
     cardRank: 2
-    cardWeaponType: 0
+    cardWeaponType: 2
   - cardName: Double Shot
     cardDescription: "2\uAC1C\uC758 \uD654\uC0B4\uC744 \uB0A0\uB824 \uD53C\uD574\uB97C
       \uC785\uD798"
     cardDescription_Power: 
-    cardPower: []
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 0
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: d827492232ea3a340a5e7be1bbe21adf, type: 3}
     cardPercent: 20
     cardRank: 2
-    cardWeaponType: 0
-  - cardName: Poison
+    cardWeaponType: 2
+  - cardName: Poison Attack
     cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower: []
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: d226ba675fbb16f4f8fb598ec67e78c8, type: 3}
     cardPercent: 20
     cardRank: 2
-    cardWeaponType: 0
+    cardWeaponType: 2
+  - cardName: Aimed Shot
+    cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
+    cardDescription_Power: 
+    cardPower:
+    - 0
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: c09272fb26b43764e8ec8f8711085ffb, type: 3}
+    cardPercent: 20
+    cardRank: 2
+    cardWeaponType: 2
   wizardCards:
   - cardName: Teleport
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -187,6 +227,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -196,6 +237,7 @@ MonoBehaviour:
       \uD654\uC0C1 \uBD80\uC5EC"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -205,6 +247,7 @@ MonoBehaviour:
       \uD654\uC0C1 \uBD80\uC5EC"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -213,6 +256,7 @@ MonoBehaviour:
     cardDescription: "\uB300\uC0C1\uC758 \uCCB4\uB825\uC744 \uAC15\uD0C8\uD568"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -221,6 +265,7 @@ MonoBehaviour:
     cardDescription: "\uBAAC\uC2A4\uD130 \uC2A4\uD0AC 1\uD68C \uBC29\uC5B4"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -229,6 +274,7 @@ MonoBehaviour:
     cardDescription: "\uBCBD\uC744 \uC18C\uD658\uD568"
     cardDescription_Power: 
     cardPower: []
+    cardDistance: 0
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
