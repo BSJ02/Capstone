@@ -11,7 +11,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardProcessing : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // ´ë±â »óÅÂ ¿©ºÎ
+    [HideInInspector] public bool waitForInput = false;  // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [HideInInspector] public bool usingCard = false;
     [HideInInspector] public bool coroutineStop = false;
     [HideInInspector] public int TempActivePoint;
@@ -51,40 +51,40 @@ public class CardProcessing : MonoBehaviour
         }
     }
 
-    // Ä«µå »ç¿ë ¸Þ¼­µå
+    // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    // ´ë»ó ¼±ÅÃÀ» ±â´Ù¸®´Â ÄÚ·çÆ¾
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
         TempActivePoint = currentPlayer.playerData.activePoint;
         currentPlayer.playerData.activePoint = 0;
-        cardUseDistance = card.cardDistance;    // Ä«µå °Å¸® ÀúÀå
+        cardUseDistance = card.cardDistance;    // Ä«ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         while (true)
         {
-            waitForInput = true;    // ´ë±â »óÅÂ·Î ÀüÈ¯
+            waitForInput = true;    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
             
             if (card.cardTarget == Card.CardTarget.Player)
             {
                 selectedTarget = currentPlayerObj;
                 waitForInput = false;
-                yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+                yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             }
             else
             {
-                // ´ë»ó ¼±ÅÃÀÌ ¿Ï·áµÉ ¶§±îÁö ¹Ýº¹ÇÕ´Ï´Ù.
+                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½ï¿½Õ´Ï´ï¿½.
                 while (waitForInput)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
                         SelectTarget();
                     }
-                    yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+                    yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 }
             }
 
@@ -99,7 +99,7 @@ public class CardProcessing : MonoBehaviour
 
             if (waitForInput)
             {
-                Debug.Log("´ë»óÀ» ´Ù½Ã ¼±ÅÃÇÏ¼¼¿ä.");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
                 continue;
             }
 
@@ -180,7 +180,7 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseRest(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -197,7 +197,7 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseLightningStrike(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -209,12 +209,33 @@ public class CardProcessing : MonoBehaviour
         {
             case "Fireball":
                 cardData.UseFireball(card, selectedTarget);
+            // Warrior
+            case "WallJump":
+                cardData.WallJump(card, selectedTarget);
                 break;
-            case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+            case "Concealment":
+                cardData.Concealment(card, selectedTarget);
+                break;
+            case "Agility":
+                cardData.AgilityAttack(card, selectedTarget);
+                break;
+            case "PowerOfTurn":
+                cardData.TurnCountAttack(card, selectedTarget);
+                break;
+            case "MarkAttack":
+                cardData.MarkTargetArrow(card, selectedTarget);
+                break;
+            case "DoubleShot":
+                cardData.DoubleTargetArrow(card, selectedTarget);
+                break;
+            case "PoisonAttack":
+                cardData.PoisonArrow(card, selectedTarget);
+                break;
+            case "AimedShot":
+                cardData.AimedArrow(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -246,7 +267,7 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }

@@ -83,10 +83,13 @@
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\CharacterSelector.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
