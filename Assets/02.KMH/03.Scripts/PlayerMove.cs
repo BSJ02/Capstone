@@ -89,8 +89,8 @@ public class PlayerMove : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-
-                        player.ReadyToAttack(clickedMonster);
+                        Player clickplayer = clickedPlayer.GetComponent<Player>();
+                        clickplayer.ReadyToAttack(clickedMonster);
                     }
                 }
             }
