@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,6 @@ public class CardData : MonoBehaviour
     private WeaponController weaponController;
     private CardProcessing cardProcessing;
     private ParticleController particleController;
-
-    private Player currentPlayer;
-
-    private GameObject currentPlayerObj;
 
     private PlayerState playerState;
 
@@ -31,19 +28,18 @@ public class CardData : MonoBehaviour
     // Healing Potion
     public void UseHealingPotion(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-        if (player != null)
+        if (cardProcessing.currentPlayer != null)
         {
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
-            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            if (cardProcessing.currentPlayer.playerData.Hp + card.cardPower[0] >= cardProcessing.currentPlayer.playerData.MaxHp)
             {
-                player.playerData.Hp = player.playerData.MaxHp;
+                cardProcessing.currentPlayer.playerData.Hp = cardProcessing.currentPlayer.playerData.MaxHp;
             }
             else
             {
-                player.playerData.Hp += card.cardPower[0];
+                cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
             }
         }
         else
@@ -55,12 +51,11 @@ public class CardData : MonoBehaviour
     // Remove Ailments
     public void UseRemoveAilments(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-        if (player != null)
+        if (cardProcessing.currentPlayer != null)
         {
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            player.playerData.Hp += card.cardPower[0];
+            cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
         }
         else
         {
@@ -71,12 +66,11 @@ public class CardData : MonoBehaviour
     // Evasion Boost
     public void UseEvasionBoost(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-        if (player != null)
+        if (cardProcessing.currentPlayer != null)
         {
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
+            cardProcessing.currentPlayer.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
         }
         else
         {
@@ -90,9 +84,7 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            currentPlayer.ChargeAnim(selectedTarget);
-
-            particleController.ProjectileEffect(particleController.fireballEffectPrefab, currentPlayerObj, selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             monster.GetHit(card.cardPower[0]);
         }
@@ -105,8 +97,7 @@ public class CardData : MonoBehaviour
     // Stat Boost
     public void UseStatBoost(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-        if (player != null)
+        if (cardProcessing.currentPlayer != null)
         {
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
@@ -116,15 +107,15 @@ public class CardData : MonoBehaviour
             switch (randNum)
             {
                 case 0:
-                    player.playerData.Armor += 20;
+                    cardProcessing.currentPlayer.playerData.Armor += 20;
 
                     break;
                 case 1:
-                    player.playerData.MaxHp += 20;
+                    cardProcessing.currentPlayer.playerData.MaxHp += 20;
 
                     break;
                 case 2:
-                    player.playerData.MaxActivePoint += 1;
+                    cardProcessing.currentPlayer.playerData.MaxActivePoint += 1;
 
                     break;
                 default:
@@ -140,21 +131,19 @@ public class CardData : MonoBehaviour
     // Rest
     public void UseRest(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-
-        if (player != null)
+        if (cardProcessing.currentPlayer != null)
         {
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
 
-            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            if (cardProcessing.currentPlayer.playerData.Hp + card.cardPower[0] >= cardProcessing.currentPlayer.playerData.MaxHp)
             {
-                player.playerData.Hp = player.playerData.MaxHp;
+                cardProcessing.currentPlayer.playerData.Hp = cardProcessing.currentPlayer.playerData.MaxHp;
             }
             else
             {
-                player.playerData.Hp += card.cardPower[0];
+                cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
             }
         }
         else
@@ -208,7 +197,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            currentPlayer.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -218,23 +207,6 @@ public class CardData : MonoBehaviour
 
     // Archer Cards --------------------------------
     // Holy Nova
-    public void UseHolyNova(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            currentPlayer.ChargeAnim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
-    // Lightning Strike
     public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
@@ -243,7 +215,23 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            currentPlayer.MacigAttack02Anim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void WallJump(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
         }
         else
         {
@@ -267,10 +255,71 @@ public class CardData : MonoBehaviour
         {
             cardProcessing.waitForInput = true;
         }
+    }
+  
+    public void Concealment(Card card, GameObject selectedTarget)
+    {
+        Player player = selectedTarget.GetComponent<Player>();
+
+        if (player != null)
+        {
+            /* 
+             * Concealment transparency 
+             material.color.a = 0.5f 
+              
+
+            scanRendererMesh use
+            become transparency 0.5
+       
+             */
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void AgilityAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= card.cardPower[0];
+            //animation
+
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
 
     }
 
-    public void TargetArrow(Card card, GameObject selectedTarget)
+    public void TurnCountAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= ArcherData.ActivePoint;
+            //monster.monsterData.Hp -= card.cardPower[0];
+
+            //animation
+            
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void MarkTargetArrow(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -291,6 +340,9 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            monster.monsterData.Hp -= card.cardPower[0];
 
         }
         else
@@ -299,6 +351,46 @@ public class CardData : MonoBehaviour
         }
 
     }
+
+    public void PoisonArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp -= card.cardPower[2];
+            //animation
+            //player.AttackTwoAnim(selectedTarget);
+
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void AimedArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp += card.cardPower[3];
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+
 
     // Wizard Cards --------------------------------
     // Teleport
@@ -337,16 +429,14 @@ public class CardData : MonoBehaviour
     }
 
     // Fireball
+    public bool shouldFireball = false;
     public void UseFireball(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            currentPlayer.ChargeAnim(selectedTarget);
-
+            shouldFireball = true;
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
             cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
@@ -364,7 +454,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            currentPlayer.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }
@@ -392,8 +482,7 @@ public class CardData : MonoBehaviour
     // Magic Shield
     public void UseMagicShield(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        if (cardProcessing.currentPlayer != null)
         {
             
         }
@@ -406,13 +495,11 @@ public class CardData : MonoBehaviour
     // Summon Obstacle
     public void UseSummonObstacle(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Tile tile = selectedTarget.GetComponent<Tile>();
+        if (tile != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
 
-            currentPlayer.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

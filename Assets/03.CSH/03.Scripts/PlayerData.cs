@@ -23,7 +23,7 @@ public class PlayerData : ScriptableObject
         Damage = 20f;
         Armor = 100f;
         CriticalHit = 0f;
-        MaxActivePoint = 100;
+        MaxActivePoint = 4;
         activePoint = MaxActivePoint;
     }
 

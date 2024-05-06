@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class MoveBackup : MonoBehaviour
 {
     public MapGenerator mapGenerator;
     public Player player;
@@ -22,8 +21,6 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
-    private GameObject clickedPlayer;
-
     private bool isMoving = false;
 
     private void Awake()
@@ -33,7 +30,7 @@ public class PlayerMove : MonoBehaviour
 
     private void SetDestination(Vector2Int clickedTargetPos)
     {
-        playerPos = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+        playerPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
 
         StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
@@ -46,9 +43,9 @@ public class PlayerMove : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            //int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
+            int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity/*, TileLayerMask*/) && !cardProcessing.usingCard)
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, TileLayerMask) && !cardProcessing.usingCard)
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
@@ -75,17 +72,7 @@ public class PlayerMove : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
                 if (hit.collider.CompareTag("Player"))
-                {
-                    clickedPlayer = hit.collider.gameObject;
-                    Player clickplayer = clickedPlayer.GetComponent<Player>();
-
-                    cardProcessing.currentPlayerObj = clickedPlayer;
-                    cardProcessing.currentPlayer = clickplayer;
-
-                    mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickplayer.playerData.activePoint);
-
-
-                }
+                    mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
             }
 
 
@@ -97,6 +84,7 @@ public class PlayerMove : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
+
                         player.ReadyToAttack(clickedMonster);
                     }
                 }
@@ -171,17 +159,16 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
-        clickedPlayer.layer = LayerMask.NameToLayer("Ignore Raycast");
-        Player clickplayer = clickedPlayer.GetComponent<Player>();
-        clickplayer.playerState = PlayerState.Moving;
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        player.playerState = PlayerState.Moving;
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
+            Vector3 playerPos = new Vector3(path[i].x, transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
 
             float startTime = Time.time;
 
@@ -190,28 +177,27 @@ public class PlayerMove : MonoBehaviour
                 float currentTime = (Time.time - startTime) * moveSpeed;
                 float weight = currentTime / lerpMaxTime;
 
-                clickedPlayer.transform.position = Vector3.Lerp(playerPos, nextPosition, weight);
-                clickedPlayer.transform.LookAt(nextPosition);
+                transform.position = Vector3.Lerp(playerPos, nextPosition, weight);
+                transform.LookAt(nextPosition);
                 yield return null;
             }
 
-            clickedPlayer.transform.position = nextPosition;
+            transform.position = nextPosition;
 
 
-            clickplayer.playerData.activePoint--;
+            player.playerData.activePoint--;
 
-            if (0 >= clickplayer.playerData.activePoint)
+            if (0 >= player.playerData.activePoint)
                 break;
         }
 
         isMoving = false;
-        clickedPlayer.layer = LayerMask.NameToLayer("Player");
-        clickplayer.playerState = PlayerState.Idle;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        player.playerState = PlayerState.Idle;
 
-        Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+        Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
         GetSurroundingTiles(finalPosition);
-        clickedPlayer = null;
 
         yield break;
     }

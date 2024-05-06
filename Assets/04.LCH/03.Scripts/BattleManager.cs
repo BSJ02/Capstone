@@ -91,7 +91,11 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
-        playerScripts.ResetActivePoint();
+        foreach (GameObject player in players)
+        {
+            playerScripts = player.GetComponent<Player>();
+            playerScripts.ResetActivePoint();
+        }
         if (cardManager.handCardCount < 8)
         {
             cardManager.CreateRandomCard();
@@ -128,7 +132,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-
     IEnumerator NextMonster()
     {
         yield return new WaitForSeconds(delay);
@@ -154,47 +157,5 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    //private IEnumerator CheckStatus()
-    //{
-    //    bool[] status = new bool[] { IsHealing > 0, IsPoisoned > 0, IsBurned > 0, IsBleeding > 0 };
-
-    //    for (int i = 0; i < status.Length; i++)
-    //    {
-    //        if (status[i])
-    //        {
-    //            ProcessStatus(i);
-
-    //            // 대기 시간을 설정합니다.
-    //            yield return new WaitForSeconds(1);
-    //        }
-    //    }
-    //    yield break;
-    //}
-
-    //private void ProcessStatus(int index)
-    //{
-    //    // index에 따라 각 상태를 처리합니다.
-    //    switch (index)
-    //    {
-    //        case 0:
-    //            IsHealing -= 1;
-    //            break;
-    //        case 1:
-
-    //            IsPoisoned -= 1;
-    //            break;
-    //        case 2:
-
-    //            IsBurned -= 1;
-    //            break;
-    //        case 3:
-
-    //            IsBleeding -= 1;
-    //            break;
-    //        default:
-    //            Debug.Log("상태이상 없음");
-    //            break;
-    //    }
-    //}
 }
 
