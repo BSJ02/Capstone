@@ -27,8 +27,8 @@ public class CardProcessing : MonoBehaviour
 
     private PlayerState playerState;
 
+    public GameObject selectedTarget = null;
 
-    private GameObject selectedTarget = null;
     [HideInInspector] public float cardUseDistance = 0;
 
     private void Awake()
@@ -136,7 +136,6 @@ public class CardProcessing : MonoBehaviour
 
     private void UseCard(Card card, GameObject selectedTarget)
     {
-        // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
             switch (card.cardRank)

@@ -203,8 +203,9 @@ MonoBehaviour:
     cardDescription: "\uB2E8\uC77C \uB300\uC0C1 \uACF5\uACA9, \uC77C\uC815\uD655\uB960\uB85C
       \uD654\uC0C1 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
+    cardPower:
+    - 100
+    cardDistance: 6
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3

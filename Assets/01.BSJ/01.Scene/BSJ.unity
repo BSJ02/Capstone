@@ -4025,6 +4025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldTeleport: 0
   teloportPos: {x: 0, y: 0, z: 0}
+  shouldFireball: 0
 --- !u!1 &617252980
 GameObject:
   m_ObjectHideFlags: 0
@@ -7289,6 +7290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a025b48750fbec449ca6224c085d6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle_Group: {fileID: 0}
   healEffectPrefab: {fileID: 9017484664307500583, guid: b6b60b986882e7e4e87bbff30371dc10,
     type: 3}
   buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
@@ -11768,6 +11770,7 @@ MonoBehaviour:
   currentPlayer: {fileID: 0}
   currentPlayerObj: {fileID: 0}
   mapGenerator: {fileID: 2082544543}
+  selectedTarget: {fileID: 0}
   cardUseDistance: 0
 --- !u!4 &1497366973
 Transform:

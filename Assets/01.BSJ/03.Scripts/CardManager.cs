@@ -119,7 +119,7 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[0]; // <- 이거 바꾸면 됨
+        Card card = cardInform.wizardCards[2]; // <- 이거 바꾸면 됨
 
         ApplyCardInfrom(card, addCardObject[0]);
 
