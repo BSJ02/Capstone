@@ -29,7 +29,7 @@ public class PlayerMoveTest : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
     }
 
-    private void SetDestination(Vector2Int clickedTargetPos)
+    public void SetDestination(Vector2Int clickedTargetPos)
     {
         playerPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
@@ -73,7 +73,13 @@ public class PlayerMoveTest : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
                 if (hit.collider.CompareTag("Player"))
+                {
+                    cardProcessing.currentPlayerObj = hit.collider.gameObject;
+                    cardProcessing.currentPlayer = cardProcessing.currentPlayerObj.GetComponent<Player>();
+
                     mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+                }
+                    
             }
 
 
@@ -85,8 +91,7 @@ public class PlayerMoveTest : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-
-                        player.ReadyToAttack(clickedMonster);
+                        cardProcessing.currentPlayer.ReadyToAttack(clickedMonster);
                     }
                 }
             }
@@ -94,7 +99,7 @@ public class PlayerMoveTest : MonoBehaviour
 
     }
 
-    private List<Vector2Int> PathFinding()
+    public List<Vector2Int> PathFinding()
     {
         OpenList.Add(StartNode);
 
@@ -157,7 +162,7 @@ public class PlayerMoveTest : MonoBehaviour
     }
 
 
-    private IEnumerator MoveSmoothly(List<Vector2Int> path)
+    public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -198,6 +203,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
+        // Monster ���� ����
         GetSurroundingTiles(finalPosition);
 
         yield break;
@@ -206,7 +212,7 @@ public class PlayerMoveTest : MonoBehaviour
 
 
 
-    private void OpenListAdd(int checkX, int checkY)
+    public void OpenListAdd(int checkX, int checkY)
     {
         if (checkX < 0 || checkX >= mapGenerator.totalMap.GetLength(0) || checkY < 0 || checkY >= mapGenerator.totalMap.GetLength(1))
             return;

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     [Header(" # Card Inform")] public CardInform cardInform;
-    [Header(" # Player Scripts")] public Player player;
+    
     private CardProcessing cardProcessing;
     
     // 카드 생성 위치
@@ -106,7 +106,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            player.playerData.activePoint = cardProcessing.TempActivePoint;
+            cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
 
             cardProcessing.usingCard = false;
             cardProcessing.waitForInput = false;
@@ -119,7 +119,7 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.warriorCards[0]; // index에 해당하는 카드를 가져옵니다.
+        Card card = cardInform.wizardCards[2]; // <- 이거 바꾸면 됨
 
         ApplyCardInfrom(card, addCardObject[0]);
 
@@ -329,7 +329,6 @@ public class CardManager : MonoBehaviour
     {
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
-
 
         float deltaTime = Time.deltaTime; // deltaTime 한 번만 계산
 

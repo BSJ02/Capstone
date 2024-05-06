@@ -20,7 +20,7 @@ public enum MonsterState
 public enum AttackState
 {
     GeneralAttack,
-    Skill
+    SkillAttack
 }
 
 public class Monster : MonoBehaviour
@@ -69,12 +69,10 @@ public class Monster : MonoBehaviour
     //[1-2] 몬스터 실제 공격
     public void Attack(Player player)
     {
-        // 스킬 공격
         switch (attack)
         {
-            // 일반 공격
-            case AttackState.Skill:
-                Debug.Log("현재 몬스터 일반공격 데미지:" + monsterData.CurrentDamage);
+            // 스킬 공격
+            case AttackState.SkillAttack:
                 player.GetHit(monsterData.CurrentDamage);
 
                 state = MonsterState.CritcalAttack; // 애니메이션(파티클 + 사운드)
@@ -83,9 +81,8 @@ public class Monster : MonoBehaviour
                 monster_UI.GetMonsterDamage(); // UI 업데이트
                 break;
 
-            // 스킬 공격 
+            // 일반 공격 
             case AttackState.GeneralAttack:
-                Debug.Log("현재 몬스터 스킬 데미지:" + monsterData.CurrentDamage);
                 player.GetHit(monsterData.CurrentDamage);
 
                 state = MonsterState.Attack; // 애니메이션(파티클 + 사운드)

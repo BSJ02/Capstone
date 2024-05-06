@@ -70,7 +70,7 @@ public class Card
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardRank cardRank; // 카드 등급
-    public WeaponType cardWeaponType;
+    public CardTarget cardTarget;
 
     public enum CardRank
     {
@@ -80,13 +80,9 @@ public class Card
         WizardCard
     }
 
-    public enum WeaponType
+    public enum CardTarget
     {
-        Sword,
-        Axe,
-        Bow,
-        Hammer,
-        Wand,
-        Shield
+        Player,
+        Etc
     }
 }
