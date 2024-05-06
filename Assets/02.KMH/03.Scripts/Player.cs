@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        playerData.ResetPlayerData();
+        playerData.ResetWarriorData();
         ResetActivePoint();
 
         isLive = true;

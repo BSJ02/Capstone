@@ -73,8 +73,14 @@ public class PlayerMoveTest : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
-                if(hit.collider.CompareTag("Player"))
-                mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+                if (hit.collider.CompareTag("Player"))
+                {
+                    cardProcessing.currentPlayerObj = hit.collider.gameObject;
+                    cardProcessing.currentPlayer = cardProcessing.currentPlayerObj.GetComponent<Player>();
+
+                    mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
+                }
+                    
             }
 
 
@@ -86,8 +92,7 @@ public class PlayerMoveTest : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-               
-                        player.ReadyToAttack(clickedMonster);
+                        cardProcessing.currentPlayer.ReadyToAttack(clickedMonster);
                     }
                 }
             }
@@ -199,6 +204,7 @@ public class PlayerMoveTest : MonoBehaviour
 
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
+        // Monster ���� ����
         GetSurroundingTiles(finalPosition);
 
         yield break;

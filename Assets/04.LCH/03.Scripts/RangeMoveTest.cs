@@ -211,7 +211,7 @@ public class RangeMoveTest : MonoBehaviour
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
 
-        switch (monster.monsterType)
+        /*switch (monster.monsterType)
         {
             case MonsterType.Short:
                 // 근거리 몬스터
@@ -248,7 +248,7 @@ public class RangeMoveTest : MonoBehaviour
                     monster.Init();
                     return;
                 }
-        }
+        }*/
     }
 
     // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
