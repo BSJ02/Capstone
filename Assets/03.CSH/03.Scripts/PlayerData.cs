@@ -16,12 +16,34 @@ public class PlayerData : ScriptableObject
     public int activePoint;
     public int MaxActivePoint;
     
-    public void ResetPlayerData()
+    public void ResetWarriorData()
     {
         MaxHp = 100f;
         Hp = MaxHp;
         Damage = 20f;
         Armor = 100f;
+        CriticalHit = 0f;
+        MaxActivePoint = 4;
+        activePoint = MaxActivePoint;
+    }
+
+    public void ResetArcherData()
+    {
+        MaxHp = 80f;
+        Hp = MaxHp;
+        Damage = 10f;
+        Armor = 70f;
+        CriticalHit = 50f;
+        MaxActivePoint = 100;
+        activePoint = MaxActivePoint;
+    }
+
+    public void ResetWizardData()
+    {
+        MaxHp = 60;
+        Hp = MaxHp;
+        Damage = 30;
+        Armor = 60;
         CriticalHit = 0f;
         MaxActivePoint = 100;
         activePoint = MaxActivePoint;

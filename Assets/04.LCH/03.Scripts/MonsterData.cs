@@ -6,7 +6,7 @@ public class MonsterData : ScriptableObject
 {
     [Header("# Monster Info")]
     public string MonsterName;
-    public int Id; 
+    public int Id;
     public float Hp; 
     public float MaxHp = 100f;
     public float Amor;

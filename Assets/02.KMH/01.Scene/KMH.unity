@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1978,19 +1978,13 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287464991}
   m_CullTransparentMesh: 1
---- !u!1 &289030524 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6,
-    type: 3}
-  m_PrefabInstance: {fileID: 1226088207}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &289030525 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -7858928112727797192, guid: e62c217a469170c4f88a8025dcb09cf6,
     type: 3}
   m_PrefabInstance: {fileID: 1226088207}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 289030524}
+  m_GameObject: {fileID: 728536916}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8d074474a72d9542ae9de520edd32b7, type: 3}
@@ -4255,6 +4249,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699416089}
   m_CullTransparentMesh: 1
+--- !u!1 &728536916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1226088207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &732902890
 GameObject:
   m_ObjectHideFlags: 0
@@ -7507,6 +7507,26 @@ PrefabInstance:
       objectReference: {fileID: 289030525}
     - target: {fileID: -7269445702220962827, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7269445702220962827, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
+      propertyPath: mapGenerator
+      value: 
+      objectReference: {fileID: 2082544543}
+    - target: {fileID: -2732297871980715122, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 289030525}
+    - target: {fileID: -2732297871980715122, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2732297871980715122, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
       propertyPath: mapGenerator
       value: 
       objectReference: {fileID: 2082544543}
@@ -7514,7 +7534,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 9a389479074643142aec1244f40bd4d8, type: 2}
+      objectReference: {fileID: 9100000, guid: d53680248e88dd14a944e619f0e2f4be, type: 2}
     - target: {fileID: 2763914743243945539, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7574,6 +7594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11070,7 +11095,7 @@ GameObject:
   - component: {fileID: 1443638532}
   m_Layer: 0
   m_Name: Dragon
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11102,9 +11127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107b616ce02075b469e08fbfa5e61043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 3421453274092336537, guid: 374257c2496d98042bc9d343d1d951ce,
-    type: 3}
-  skillPosition: {fileID: 649929090}
 --- !u!114 &1443638534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13234,7 +13256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleState: 0
   players:
-  - {fileID: 289030524}
+  - {fileID: 728536916}
   - {fileID: 584911985}
   monsters:
   - {fileID: 1443638531}
@@ -14489,11 +14511,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5311203449631223821, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 584911986}
+    - target: {fileID: -5311203449631223821, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5311203449631223821, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: mapGenerator
+      value: 
+      objectReference: {fileID: 2082544543}
     - target: {fileID: -4650269602606204629, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 584911986}
+    - target: {fileID: -4650269602606204629, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4650269602606204629, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: mapGenerator
@@ -16173,6 +16215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8017519852781684414, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}

@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   MonsterName: "\uB9C8\uBC95\uC0AC"
-  Id: 3
+  Id: 2
   Hp: 100
   MaxHp: 100
   Amor: 0
-  CurrentDamage: 0
-  IsBoss: 0
+  CurrentDamage: 9
   MoveDistance: 2
-  DetectionRagne: 5
+  DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 8
   MaxDamage: 14
+  Critical: 10
+  SkillDetectionRange: 6

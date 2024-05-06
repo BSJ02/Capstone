@@ -11,7 +11,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardProcessing : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // ´ë±â »óÅÂ ¿©ºÎ
+    [HideInInspector] public bool waitForInput = false;  // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [HideInInspector] public bool usingCard = false;
     [HideInInspector] public bool coroutineStop = false;
     [HideInInspector] public int TempActivePoint;
@@ -20,15 +20,15 @@ public class CardProcessing : MonoBehaviour
     private BattleManager battleManager;
     private CardData cardData;
     private CardManager cardManager;
+    [HideInInspector] public Player currentPlayer;
+    [HideInInspector] public GameObject currentPlayerObj;
 
-    [Header(" # Player Scripts")] public Player player;
     [Header(" # Map Scripts")] public MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
-    [Header(" # Player Object")] public GameObject playerObject;
+    public GameObject selectedTarget = null;
 
-    private GameObject selectedTarget = null;
     [HideInInspector] public float cardUseDistance = 0;
 
     private void Awake()
@@ -38,47 +38,56 @@ public class CardProcessing : MonoBehaviour
 
     private void Start()
     {
-        cardManager = FindObjectOfType<CardManager>();
-        weaponController = playerObject.GetComponent<WeaponController>();
-        battleManager = FindObjectOfType<BattleManager>();
-        player = playerObject.GetComponent<Player>();
         cardData = FindObjectOfType<CardData>();
+        cardManager = FindObjectOfType<CardManager>();
+        battleManager = FindObjectOfType<BattleManager>();
     }
 
     private void Update()
     {
         if (usingCard)
         {
-            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
+            mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
         }
     }
 
-    // Ä«µå »ç¿ë ¸Þ¼­µå
+    // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    // ´ë»ó ¼±ÅÃÀ» ±â´Ù¸®´Â ÄÚ·çÆ¾
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        TempActivePoint = player.playerData.activePoint;
-        player.playerData.activePoint = 0;
-        cardUseDistance = card.cardDistance;    // Ä«µå °Å¸® ÀúÀå
+        TempActivePoint = currentPlayer.playerData.activePoint;
+        currentPlayer.playerData.activePoint = 0;
+        cardUseDistance = card.cardDistance;    // Ä«ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+
         while (true)
         {
-            waitForInput = true;    // ´ë±â »óÅÂ·Î ÀüÈ¯
+            waitForInput = true;    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
             
-            // ´ë»ó ¼±ÅÃÀÌ ¿Ï·áµÉ ¶§±îÁö ¹Ýº¹ÇÕ´Ï´Ù.
-            while (waitForInput)
+            if (card.cardTarget == Card.CardTarget.Player)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    SelectTarget();
-                }
-                yield return null; // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±â
+                selectedTarget = currentPlayerObj;
+                waitForInput = false;
+                yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             }
+            else
+            {
+                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½ï¿½Õ´Ï´ï¿½.
+                while (waitForInput)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        SelectTarget();
+                    }
+                    yield return null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+                }
+            }
+
             if (coroutineStop)
             {
                 coroutineStop = false;
@@ -90,7 +99,7 @@ public class CardProcessing : MonoBehaviour
 
             if (waitForInput)
             {
-                Debug.Log("´ë»óÀ» ´Ù½Ã ¼±ÅÃÇÏ¼¼¿ä.");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
                 continue;
             }
 
@@ -116,9 +125,8 @@ public class CardProcessing : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
             {
-
                 selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(player.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+                if (Vector3.Distance(currentPlayerObj.transform.position, selectedTarget.transform.position) <= cardUseDistance)
                 {
                     waitForInput = false;
                 }
@@ -128,7 +136,6 @@ public class CardProcessing : MonoBehaviour
 
     private void UseCard(Card card, GameObject selectedTarget)
     {
-        // ¼±ÅÃµÈ ´ë»ó¿¡ µû¶ó Ä«µå¸¦ »ç¿ë
         if (selectedTarget != null)
         {
             switch (card.cardRank)
@@ -170,10 +177,10 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseStatBoost(card, selectedTarget);
                 break;
             case "Rest":
-                cardData.UseDivineIntervention(card, selectedTarget);
+                cardData.UseRest(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -189,17 +196,8 @@ public class CardProcessing : MonoBehaviour
             case "Lightning Strike":
                 cardData.UseLightningStrike(card, selectedTarget);
                 break;
-            case "Excalibur's Wrath":
-                cardData.UseExcalibursWrath(card, selectedTarget);
-                break;
-            case "Divine Intervention":
-                cardData.UseDivineIntervention(card, selectedTarget);
-                break;
-            case "Soul Siphon":
-                cardData.UseDivineIntervention(card, selectedTarget);
-                break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -209,6 +207,8 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
+            case "Fireball":
+                cardData.UseFireball(card, selectedTarget);
             // Warrior
             case "WallJump":
                 cardData.WallJump(card, selectedTarget);
@@ -235,7 +235,7 @@ public class CardProcessing : MonoBehaviour
                 cardData.AimedArrow(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
@@ -245,24 +245,29 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            // Warrior
+            case "Teleport":
+                cardData.UseTeleport(card, selectedTarget);
+                break;
+            case "Position Swap":
+                cardData.UsePositionSwap(card, selectedTarget);
+                break;
             case "Fireball":
                 cardData.UseFireball(card, selectedTarget);
                 break;
-            case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+            case "Flame Pillar":
+                cardData.UseFlamePillar(card, selectedTarget);
                 break;
-            case "Excalibur's Wrath":
-                cardData.UseExcalibursWrath(card, selectedTarget);
+            case "Life Drain":
+                cardData.UseLifeDrain(card, selectedTarget);
                 break;
-            case "Divine Intervention":
-                cardData.UseDivineIntervention(card, selectedTarget);
+            case "Magic Shield":
+                cardData.UseMagicShield(card, selectedTarget);
                 break;
-            case "Soul Siphon":
-                cardData.UseDivineIntervention(card, selectedTarget);
+            case "Summon Obstacle":
+                cardData.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("ÇØ´ç Ä«µå Å¸ÀÔÀ» Ã³¸®ÇÏ´Â ÄÚµå°¡ ¾øÀ½");
+                Debug.LogError("ï¿½Ø´ï¿½ Ä«ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½");
                 break;
         }
     }
