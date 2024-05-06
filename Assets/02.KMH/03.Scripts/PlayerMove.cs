@@ -75,9 +75,17 @@ public class PlayerMove : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
                 if (hit.collider.CompareTag("Player"))
+                {
                     clickedPlayer = hit.collider.gameObject;
                     Player clickplayer = clickedPlayer.GetComponent<Player>();
+
+                    cardProcessing.currentPlayerObj = clickedPlayer;
+                    cardProcessing.currentPlayer = clickplayer;
+
                     mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickplayer.playerData.activePoint);
+
+
+                }
             }
 
 
@@ -89,8 +97,7 @@ public class PlayerMove : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-                        Player clickplayer = clickedPlayer.GetComponent<Player>();
-                        clickplayer.ReadyToAttack(clickedMonster);
+                        player.ReadyToAttack(clickedMonster);
                     }
                 }
             }

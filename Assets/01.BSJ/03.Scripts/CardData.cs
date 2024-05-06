@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -206,7 +207,7 @@ public class CardData : MonoBehaviour
 
     // Archer Cards --------------------------------
     // Holy Nova
-    public void UseHolyNova(Card card, GameObject selectedTarget)
+    public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -222,16 +223,15 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Lightning Strike
-    public void UseLightningStrike(Card card, GameObject selectedTarget)
+    public void WallJump(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
+        
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            cardProcessing.currentPlayer.MacigAttack02Anim(selectedTarget);
         }
         else
         {
@@ -255,10 +255,71 @@ public class CardData : MonoBehaviour
         {
             cardProcessing.waitForInput = true;
         }
+    }
+  
+    public void Concealment(Card card, GameObject selectedTarget)
+    {
+        Player player = selectedTarget.GetComponent<Player>();
+
+        if (player != null)
+        {
+            /* 
+             * Concealment transparency 
+             material.color.a = 0.5f 
+              
+
+            scanRendererMesh use
+            become transparency 0.5
+       
+             */
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void AgilityAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= card.cardPower[0];
+            //animation
+
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
 
     }
 
-    public void TargetArrow(Card card, GameObject selectedTarget)
+    public void TurnCountAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= ArcherData.ActivePoint;
+            //monster.monsterData.Hp -= card.cardPower[0];
+
+            //animation
+            
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void MarkTargetArrow(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -279,6 +340,9 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            monster.monsterData.Hp -= card.cardPower[0];
 
         }
         else
@@ -287,6 +351,46 @@ public class CardData : MonoBehaviour
         }
 
     }
+
+    public void PoisonArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp -= card.cardPower[2];
+            //animation
+            //player.AttackTwoAnim(selectedTarget);
+
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void AimedArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp += card.cardPower[3];
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+
 
     // Wizard Cards --------------------------------
     // Teleport

@@ -99,7 +99,7 @@ public class Monster : MonoBehaviour
         if (!isLive)
             return;
 
-        damage = FindObjectOfType<Player>().playerData.Damage;
+        //damage = FindObjectOfType<Player>().playerData.Damage;
 
         float finalDamage = damage - monsterData.Amor;
         monsterData.Hp -= Mathf.FloorToInt(finalDamage);

@@ -11,7 +11,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardProcessing : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
+    [HideInInspector] public bool waitForInput = false;  
     [HideInInspector] public bool usingCard = false;
     [HideInInspector] public bool coroutineStop = false;
     [HideInInspector] public int TempActivePoint;
@@ -51,40 +51,37 @@ public class CardProcessing : MonoBehaviour
         }
     }
 
-    // 카드 사용 메서드
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
         TempActivePoint = currentPlayer.playerData.activePoint;
         currentPlayer.playerData.activePoint = 0;
-        cardUseDistance = card.cardDistance;    // 카드 거리 저장
+        cardUseDistance = card.cardDistance;
 
         while (true)
         {
-            waitForInput = true;    // 대기 상태로 전환
+            waitForInput = true;
             
             if (card.cardTarget == Card.CardTarget.Player)
             {
                 selectedTarget = currentPlayerObj;
                 waitForInput = false;
-                yield return null; // 다음 프레임까지 대기
+                yield return null;
             }
             else
             {
-                // 대상 선택이 완료될 때까지 반복합니다.
                 while (waitForInput)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
                         SelectTarget();
                     }
-                    yield return null; // 다음 프레임까지 대기
+                    yield return null;
                 }
             }
 
@@ -99,7 +96,6 @@ public class CardProcessing : MonoBehaviour
 
             if (waitForInput)
             {
-                Debug.Log("대상을 다시 선택하세요.");
                 continue;
             }
 
@@ -180,7 +176,6 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseRest(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                 break;
         }
     }
@@ -190,14 +185,10 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
-                break;
             case "Lightning Strike":
                 cardData.UseLightningStrike(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                 break;
         }
     }
@@ -207,14 +198,32 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
+            // Warrior
+            case "WallJump":
+                cardData.WallJump(card, selectedTarget);
                 break;
-            case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+            case "Concealment":
+                cardData.Concealment(card, selectedTarget);
+                break;
+            case "Agility":
+                cardData.AgilityAttack(card, selectedTarget);
+                break;
+            case "PowerOfTurn":
+                cardData.TurnCountAttack(card, selectedTarget);
+                break;
+            case "MarkAttack":
+                cardData.MarkTargetArrow(card, selectedTarget);
+                break;
+            case "DoubleShot":
+                cardData.DoubleTargetArrow(card, selectedTarget);
+                break;
+            case "PoisonAttack":
+                cardData.PoisonArrow(card, selectedTarget);
+                break;
+            case "AimedShot":
+                cardData.AimedArrow(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                 break;
         }
     }
@@ -246,7 +255,6 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
                 break;
         }
     }

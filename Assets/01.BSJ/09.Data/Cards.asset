@@ -18,6 +18,8 @@ MonoBehaviour:
     cardDescription_Power: "(\uD68C\uBCF5\uB7C9: 20)"
     cardPower:
     - 20
+    - 0
+    - 0
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 56e32878f231ecf41aff7fb6db3c724e, type: 3}
     cardPercent: 35
@@ -28,6 +30,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower:
     - 0
+    - 1
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: fe9d7e3a4781e784ca6b245ac797d643, type: 3}
     cardPercent: 35
@@ -60,6 +63,8 @@ MonoBehaviour:
       \uC911)"
     cardPower:
     - 2
+    - 0
+    - 0
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
     cardPercent: 35
@@ -71,6 +76,9 @@ MonoBehaviour:
     cardDescription_Power: "(\uD68C\uBCF5\uB7C9: 10)"
     cardPower:
     - 10
+    - 20
+    - 0
+    - 0
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 72d12fb7d88462048b18383296fad108, type: 3}
     cardPercent: 35
@@ -115,7 +123,7 @@ MonoBehaviour:
     cardTarget: 0
   archerCards:
   - cardName: Wall Jump
-    cardDescription: "\uBCBD\uC744 \uB118\uC74C"
+    cardDescription: "\uBCBD \uB118\uAE30"
     cardDescription_Power: 
     cardPower: []
     cardDistance: 0
@@ -123,7 +131,7 @@ MonoBehaviour:
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
-  - cardName: Conceal
+  - cardName: Concealment
     cardDescription: "\uC801\uC5D0\uAC8C \uAC10\uC9C0\uC548\uB418\uAC8C \uC228\uC74C"
     cardDescription_Power: 
     cardPower: []
@@ -142,22 +150,28 @@ MonoBehaviour:
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
-  - cardName: "\uD134 \uC99D\uAC00"
+  - cardName: Power Of Turn
     cardDescription: "\uD134 \uC99D\uAC00\uD560 \uC218\uB85D \uB370\uBBF8\uC9C0 \uC99D\uAC00"
     cardDescription_Power: 
-    cardPower: []
+    cardPower:
+    - 0
+    - 0
+    - 0
     cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 0333e5c19862fdf45b4965cbbde56d16, type: 3}
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
-  - cardName: "\uD45C\uC2DD"
+  - cardName: Mark Attack
     cardDescription: "\uD45C\uC2DD\uC744 \uB0A8\uACA8 \uB2E4\uC74C \uACF5\uACA9\uC2DC
       \uCD94\uAC00 \uD53C\uD574"
     cardDescription_Power: 
-    cardPower: []
+    cardPower:
+    - 0
+    - 0
+    - 0
     cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 31206e3ab58bc394b960f9a53c6972b1, type: 3}
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
@@ -171,12 +185,24 @@ MonoBehaviour:
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
-  - cardName: Poison
+  - cardName: Poison Attack
     cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower: []
+    cardPower:
+    - 0
     cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: d226ba675fbb16f4f8fb598ec67e78c8, type: 3}
+    cardPercent: 20
+    cardRank: 2
+    cardTarget: 0
+  - cardName: Aimed Shot
+    cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
+    cardDescription_Power: 
+    cardPower:
+    - 0
+    - 0
+    cardDistance: 0
+    cardSprite: {fileID: 21300000, guid: c09272fb26b43764e8ec8f8711085ffb, type: 3}
     cardPercent: 20
     cardRank: 2
     cardTarget: 0
