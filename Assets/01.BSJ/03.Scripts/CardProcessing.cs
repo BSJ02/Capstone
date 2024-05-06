@@ -11,7 +11,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardProcessing : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // ��� ���� ����
+    [HideInInspector] public bool waitForInput = false;  
     [HideInInspector] public bool usingCard = false;
     [HideInInspector] public bool coroutineStop = false;
     [HideInInspector] public int TempActivePoint;
@@ -51,40 +51,37 @@ public class CardProcessing : MonoBehaviour
         }
     }
 
-    // ī�� ��� �޼���
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    // ��� ������ ��ٸ��� �ڷ�ƾ
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
         TempActivePoint = currentPlayer.playerData.activePoint;
         currentPlayer.playerData.activePoint = 0;
-        cardUseDistance = card.cardDistance;    // ī�� �Ÿ� ����
+        cardUseDistance = card.cardDistance;
 
         while (true)
         {
-            waitForInput = true;    // ��� ���·� ��ȯ
+            waitForInput = true;
             
             if (card.cardTarget == Card.CardTarget.Player)
             {
                 selectedTarget = currentPlayerObj;
                 waitForInput = false;
-                yield return null; // ���� �����ӱ��� ���
+                yield return null;
             }
             else
             {
-                // ��� ������ �Ϸ�� ������ �ݺ��մϴ�.
                 while (waitForInput)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
                         SelectTarget();
                     }
-                    yield return null; // ���� �����ӱ��� ���
+                    yield return null;
                 }
             }
 
@@ -99,7 +96,6 @@ public class CardProcessing : MonoBehaviour
 
             if (waitForInput)
             {
-                Debug.Log("����� �ٽ� �����ϼ���.");
                 continue;
             }
 
@@ -180,7 +176,6 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseRest(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("�ش� ī�� Ÿ���� ó���ϴ� �ڵ尡 ����");
                 break;
         }
     }
@@ -190,14 +185,10 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
-                break;
             case "Lightning Strike":
                 cardData.UseLightningStrike(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("�ش� ī�� Ÿ���� ó���ϴ� �ڵ尡 ����");
                 break;
         }
     }
@@ -207,8 +198,6 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
             // Warrior
             case "WallJump":
                 cardData.WallJump(card, selectedTarget);
@@ -235,7 +224,6 @@ public class CardProcessing : MonoBehaviour
                 cardData.AimedArrow(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("�ش� ī�� Ÿ���� ó���ϴ� �ڵ尡 ����");
                 break;
         }
     }
@@ -267,7 +255,6 @@ public class CardProcessing : MonoBehaviour
                 cardData.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
-                Debug.LogError("�ش� ī�� Ÿ���� ó���ϴ� �ڵ尡 ����");
                 break;
         }
     }

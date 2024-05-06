@@ -14,24 +14,21 @@ public class CardManager : MonoBehaviour
     private CardProcessing cardProcessing;
     
     // ī�� ���� ��ġ
-    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);   // ��� �ִ� ī�� ��ġ
-    [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);   // �߰��� ī�� ��ġ 
-    [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);    // �� ��ġ
+    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);
+    [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);
+    [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
 
-    private float handCardDistance = 0.8f;  // �տ� �ִ� ī�� ���� �Ÿ�
-    private float addCardDistance = 3f; // ī�� ����â������ ī�� ���� �Ÿ�
+    private float handCardDistance = 0.8f;
+    private float addCardDistance = 3f;
 
-    [HideInInspector] public List<Card> handCardList = new List<Card>(); // ����� �� �ִ� ī�� ����Ʈ
-    [HideInInspector] public List<Card> addCardList = new List<Card>();   // �߰��� ī�� ����Ʈ
+    [HideInInspector] public List<Card> handCardList = new List<Card>();
+    [HideInInspector] public List<Card> addCardList = new List<Card>(); 
 
-    // ī�带 ���� �θ� ������Ʈ
     private GameObject deckObject;
 
-    // ������ ī�� ������Ʈ�� ���� ����Ʈ
-    [HideInInspector] public List<GameObject> handCardObject;   // ����� ī�� ������Ʈ
-    [HideInInspector] public List<GameObject> addCardObject;    // �߰��� ī�� ������Ʈ
+    [HideInInspector] public List<GameObject> handCardObject;
+    [HideInInspector] public List<GameObject> addCardObject;
 
-    // �տ� ��� �ִ� ī�� ����
     public int handCardCount;
 
     [Header(" # Card Prefab")]
@@ -43,23 +40,19 @@ public class CardManager : MonoBehaviour
     [SerializeField] public GameObject handCardPanelPrefab;
 
 
-    [HideInInspector] public bool waitAddCard = false;    // ī�� ���� ����
+    [HideInInspector] public bool waitAddCard = false;
 
-    // ����� ī��
-    [HideInInspector] public Card useCard    = null;   // ����� ī�带 ���� ����
+    [HideInInspector] public Card useCard    = null; 
 
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
 
-        // ī�带 ���� �θ� ������Ʈ ����
         deckObject = GameObject.Find("Cards");
         if (deckObject == null)
         {
-            // ������ Cards ������Ʈ�� ������ ���� ����
             deckObject = new GameObject("Cards");
         }
-        // ������ Cards ������Ʈ�� �ִ� ���� ��ġ�� ����
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
 
@@ -82,15 +75,13 @@ public class CardManager : MonoBehaviour
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        // �⺻ ī�� ����
-        handCardList.AddRange(cardInform.baseCards);   // �� �߰�
-        CreateCard(handCardList);   // �߰��� ����    ���� Card ���� 
-        StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));   // ī�� ����
+        handCardList.AddRange(cardInform.baseCards);  
+        CreateCard(handCardList);  
+        StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance)); 
 
         handCardCount = handCardList.Count;
     }
     
-    // ī�� ��� ���
     public void CardCancle()
     {
         if (useCard != null && cardProcessing.usingCard)
@@ -118,9 +109,7 @@ public class CardManager : MonoBehaviour
     public void CardGetTest()
     {
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[2]; // <- �̰� �ٲٸ� ��
-        //Card card = cardInform.warriorCards[0]; // index�� �ش��ϴ� ī�带 �����ɴϴ�.
-        Card card = cardInform.archerCards[0];
+        Card card = cardInform.wizardCards[2]; // <- change
 
         ApplyCardInfrom(card, addCardObject[0]);
 
@@ -129,13 +118,11 @@ public class CardManager : MonoBehaviour
             addCardObject[i].GetComponent<CardOrder>().SetOrder(20);
         }
 
-        // ����Ʈ �� �߰� �� ����
         handCardList.Add(card);
         addCardList.Clear();
         handCardObject.Add(addCardObject[0]);
         addCardObject.RemoveAt(0);
 
-        // ���ù��� ���� ������Ʈ ��Ȱ��ȭ / ��ġ �̵�
         for (int i = 0; i < addCardObject.Count; i++)
         {
             addCardObject[i].GetComponent<CardMove>().originalPosition = spawDeckPos;
@@ -151,17 +138,14 @@ public class CardManager : MonoBehaviour
         handCardCount = handCardList.Count;
     }
 
-    // ī�� ���
     public void UpdateCardList(GameObject cardObject)
     {
         int index = handCardObject.IndexOf(cardObject);
 
         if (index >= 0 && index < handCardList.Count)
         {
-            // ������ ������Ʈ�� handCardObject ����Ʈ �ȿ� ���� ���� �ش� ī�带 �����ɴϴ�.
-            useCard = handCardList[index]; // index�� �ش��ϴ� ī�带 �����ɴϴ�.
+            useCard = handCardList[index]; 
 
-            // ����Ʈ �� �߰� �� ����
             handCardList.RemoveAt(index);
             addCardObject.Add(cardObject);
             handCardObject.RemoveAt(index);
@@ -175,22 +159,19 @@ public class CardManager : MonoBehaviour
     }
 
 
-    // ī�� ����
     public void ChoiceCard(GameObject cardObject)
     {
         int index = addCardObject.IndexOf(cardObject);
 
         if (index >= 0 && index < addCardList.Count)
         {
-            Card card = addCardList[index]; // index�� �ش��ϴ� ī�带 �����ɴϴ�.
+            Card card = addCardList[index]; 
 
-            // ����Ʈ �� �߰� �� ����
             handCardList.Add(card);
             addCardList.Clear();
             handCardObject.Add(cardObject);
             addCardObject.RemoveAt(index);
 
-            // ���ù��� ���� ������Ʈ ��Ȱ��ȭ / ��ġ �̵�
             for (int i = 0; i < addCardObject.Count; i++)
             {
                 addCardObject[i].GetComponent<CardMove>().originalPosition = spawDeckPos;
@@ -206,13 +187,11 @@ public class CardManager : MonoBehaviour
     }
 
 
-    // ������ Ȯ���� ���� ī�� ����Ʈ�� ������ �� ����Ʈ�� ���� �����ϰ� ������
     public Card GetRandomCard()
     {
 
         waitAddCard = true;
 
-        // ������ ī�� ����Ʈ ����
         List<Card> randomList = null;
         int randNum = UnityEngine.Random.Range(1, 101);
         if (randNum <= cardInform.legendPercent)
@@ -232,13 +211,11 @@ public class CardManager : MonoBehaviour
             randomList = cardInform.baseCards;
         }
 
-        // ������ ī�� ����
         return randomList[UnityEngine.Random.Range(0, randomList.Count)];
     
     }
 
 
-    // ���� ī�� ����
     public void CreateRandomCard()
     {
         addCardPanelPrefab.SetActive(true);
@@ -250,10 +227,10 @@ public class CardManager : MonoBehaviour
         while (dedupeCard.Count < 3)
         {
             Card randomCard = GetRandomCard();
-            dedupeCard.Add(randomCard); // �ߺ��Ǹ� �߰����� ����
+            dedupeCard.Add(randomCard);
         }
 
-        addCardList = dedupeCard.ToList(); // �ߺ� ���� ī�� ��� ����
+        addCardList = dedupeCard.ToList(); 
 
         for (int i = 0; i < addCardList.Count && i < addCardObject.Count; i++)
         {
@@ -272,12 +249,10 @@ public class CardManager : MonoBehaviour
     }
 
 
-    // ī�� ����
     private void CreateCard(List<Card> cards)
     {
         int cardMaxCount = 13;
 
-        // Ȱ��ȭ�� ī�� ����
         for (int i = 0 ; i < cards.Count; i++)
         {
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
@@ -285,13 +260,11 @@ public class CardManager : MonoBehaviour
             handCardObject.Add(cardObject);
             handCardObject[i].SetActive(false);
 
-            // ������ ���� ������Ʈ�� ������ ����
             ApplyCardInfrom(cards[i], cardObject);
 
             cardObject.transform.SetParent(deckObject.transform, false);
         }
 
-        // ��Ȱ��ȭ�� ī�� ������Ʈ ����
         for (int i = 0; i < cardMaxCount - cards.Count; i++)
         {
             GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
@@ -304,10 +277,8 @@ public class CardManager : MonoBehaviour
     }
 
 
-    // ī�� ���� ���� (������ ī�� ��, �����ų ���� ������Ʈ)
     public void ApplyCardInfrom(Card card, GameObject gameObject)
     {
-        // gameObject �̸� ����
         gameObject.name = card.cardName;
 
         Text[] texts = gameObject.GetComponentsInChildren<Text>();
@@ -325,40 +296,36 @@ public class CardManager : MonoBehaviour
     }
 
 
-    // ī�� ���� (������ ī�� ����Ʈ, ������ ī�� ������Ʈ, ��ǥ ��)
     public IEnumerator CardSorting(List<Card> card, List<GameObject> cardObject, Vector3 cardPos, float cardToDistance)
     {
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
-        float deltaTime = Time.deltaTime; // deltaTime �� ���� ���
+        float deltaTime = Time.deltaTime; 
 
         for (int i = 0; i < card.Count; i++)
         {
-            float elapsedTime = 0f; // ��� �ð�
-            float duration = 0.2f;  // �̵��� �ɸ��� �ð�
+            float elapsedTime = 0f;
+            float duration = 0.2f;  
 
             CardOrder cardOrder = cardObject[i].GetComponent<CardOrder>();
             cardOrder.SetOrder(i);
             
-            float newPosX = startingPosX + i * cardToDistance;  // ���ο� X ��ǥ ���
+            float newPosX = startingPosX + i * cardToDistance;
 
-            // deckObject�� �������� ���� ��ǥ�� ���
             Vector3 targetLocalPosition = new Vector3(newPosX, cardPos.y, cardPos.z);
 
-            // ���� ��ǥ�� ���� ��ǥ�� ��ȯ
             Vector3 targetPosition = deckObject.transform.TransformPoint(targetLocalPosition);
 
-            // ���� ��ġ���� ��ǥ ��ġ���� ������ �̵�
             while (elapsedTime < duration)
             {
-                float t = elapsedTime / duration;   // ������ ���� ���� ���
-                cardObject[i].transform.position = Vector3.Lerp(cardObject[i].transform.position, targetPosition, t);   // ������Ʈ ��ġ ����
-                elapsedTime += deltaTime;  // ��� �ð� ������Ʈ
+                float t = elapsedTime / duration; 
+                cardObject[i].transform.position = Vector3.Lerp(cardObject[i].transform.position, targetPosition, t);  
+                elapsedTime += deltaTime;  
                 yield return null;
             }
             cardObject[i].SetActive(true);
-            cardObject[i].transform.position = targetPosition;  // ��ǥ ��ġ�� ��Ȯ�� �̵�
+            cardObject[i].transform.position = targetPosition;  
             cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
         }
     }

@@ -225,14 +225,13 @@ public class CardData : MonoBehaviour
 
     public void WallJump(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
+        Monster monster = selectedTarget.GetComponent<Monster>();
         
-        if (player != null)
+        if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            cardProcessing.currentPlayer.MacigAttack02Anim(selectedTarget);
         }
         else
         {
@@ -289,7 +288,6 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
             //monster.monsterData.Hp -= card.cardPower[0];
             //animation
-            player.AttackOneAnim(selectedTarget);
 
 
         }
@@ -311,7 +309,6 @@ public class CardData : MonoBehaviour
             //monster.monsterData.Hp -= card.cardPower[0];
 
             //animation
-            player.AttackOneAnim(selectedTarget);
             
 
         }
@@ -322,16 +319,12 @@ public class CardData : MonoBehaviour
 
     }
 
-   
-
     public void MarkTargetArrow(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
-
-            
 
         }
         else
@@ -368,7 +361,6 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
             monster.monsterData.Hp -= card.cardPower[2];
-            player.ChargeAnim(selectedTarget);
             //animation
             //player.AttackTwoAnim(selectedTarget);
 
@@ -390,10 +382,6 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
             monster.monsterData.Hp += card.cardPower[3];
 
-            
-
-
-            player.ChargeAnim(selectedTarget);
         }
         else
         {

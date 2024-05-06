@@ -83,7 +83,6 @@
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\PlayerMoveTest.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
