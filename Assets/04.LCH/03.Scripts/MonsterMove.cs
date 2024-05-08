@@ -14,14 +14,32 @@ public class MonsterMove : MonoBehaviour
     Vector2Int monsterPos;
     Vector2Int playerPos;
 
+    bool isMoving;
+
     private void Awake()
     {
         monster = GetComponent<Monster>();
+        isMoving = false;
     }
 
+    // 초기 시작 시 감지
+    public void StartDetection()
+    {
+        // 초기화
+        OpenList.Clear();
+        CloseList.Clear();
+        
+        // 좌표 설정 및 감지
+        SetDestination();
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true); 
+        GetSurroundingTiles(monsterPos);
 
-    // 플레이어 턴 종료 후 호출[몬스터 턴]
-    public void MoveStart()
+        // 현재 위치를 isWall로 유지
+        MapGenerator.instance.ResetTotalMap();
+    }
+
+    // 몬스터 움직임
+    public void Moving()
     {
         // 초기화
         OpenList.Clear();
@@ -140,6 +158,8 @@ public class MonsterMove : MonoBehaviour
     // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
+        isMoving = true;
+
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
@@ -189,7 +209,6 @@ public class MonsterMove : MonoBehaviour
         yield break;
     }
 
-
     // 플레이어 감지 및 공격(대각선 공격 X)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
@@ -199,26 +218,12 @@ public class MonsterMove : MonoBehaviour
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        // 일반 공격
-        if (/*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&*/
-            (distacneX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
-            (distacneY <= attackDetectionRange && monsterPos.x == playerPos.x))
-        {
-            monster.attack = AttackState.GeneralAttack;
-
-            Player player = FindObjectOfType<Player>();
-            transform.LookAt(player.transform); // 회전 값 보정
-            monster.Attack(player); // 데미지 연산
-
-            StartCoroutine(EscapeMonsterTurn());
-            return;
-        }
-
         // 스킬 공격
-        else if (/*(monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&*/
+        if (/*(monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&*/
             (distacneX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
             (distacneY <= skillDetectionRange && monsterPos.x == playerPos.x))
         {
+            isMoving = true;
             monster.attack = AttackState.SkillAttack;
 
             Player player = FindObjectOfType<Player>();
@@ -228,13 +233,33 @@ public class MonsterMove : MonoBehaviour
             StartCoroutine(EscapeMonsterTurn());
             return;
         }
-
-        // 감지 X
-        else
+        // 일반 공격
+        else if (/*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&*/
+            (distacneX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= attackDetectionRange && monsterPos.x == playerPos.x))
         {
-            monster.Init();
+            isMoving = true;
+            monster.attack = AttackState.GeneralAttack;
+
+            Player player = FindObjectOfType<Player>();
+            transform.LookAt(player.transform); // 회전 값 보정
+            monster.Attack(player); // 데미지 연산
+
             StartCoroutine(EscapeMonsterTurn());
             return;
+        }
+        else // 범위 내에 없을 경우(처음 시작 및 움직인 후)
+        {
+            if(isMoving == false) // 범위 내에 없고 && 움직이지 않았을 경우
+            {
+                Moving();
+            }
+            else if(isMoving == true) // 범위 내에 없고 && 움직였을 경우
+            {
+                monster.Init();
+                StartCoroutine(EscapeMonsterTurn());
+                return;
+            }
         }
     }
 
@@ -264,6 +289,8 @@ public class MonsterMove : MonoBehaviour
         yield return new WaitForSeconds(3f);
         BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
+
+        isMoving = false;
     }
 }
 
