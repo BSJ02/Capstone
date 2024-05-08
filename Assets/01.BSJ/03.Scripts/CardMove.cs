@@ -11,6 +11,7 @@ public class CardMove : MonoBehaviour
     private CardProcessing cardProcessing;
     private CardManager cardManager;
     private BattleManager battleManager;
+    private MapGenerator mapGenerator;
 
     private Vector3 offset;
     private float distanceToCamera;
@@ -29,6 +30,7 @@ public class CardMove : MonoBehaviour
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
+        mapGenerator = FindObjectOfType<MapGenerator>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
@@ -143,6 +145,7 @@ public class CardMove : MonoBehaviour
         if (battleManager.isPlayerTurn)
         {
             CardPanelCollision();
+            mapGenerator.ClearHighlightedTiles();
         }
         
     }
@@ -179,6 +182,12 @@ public class CardMove : MonoBehaviour
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
+
+            if (cardProcessing.currentPlayer != null)
+            {
+                int cardUseDistance = (int)cardManager.CardDrag(this.gameObject).cardDistance;
+                cardProcessing.ShowCardRange(cardUseDistance);
+            }
         }
         else
         {

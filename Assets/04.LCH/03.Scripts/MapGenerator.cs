@@ -16,6 +16,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField]
     private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+    public HashSet<Monster> rangeInMonsters = new HashSet<Monster>();
 
     private void Awake()
     {
@@ -119,34 +120,45 @@ public class MapGenerator : MonoBehaviour
     // 카드 사용 범위
     public void CardUseRange(Vector3 playerPosition, int distance)
     {
-        // 초기화
         ClearHighlightedTiles();
+        rangeInMonsters.Clear();
 
-        // 플레이어 위치의 타일을 찾음
         int playerX = Mathf.RoundToInt(playerPosition.x);
         int playerZ = Mathf.RoundToInt(playerPosition.z);
         Tile playerTile = totalMap[playerX, playerZ];
 
-        // 플레이어를 중심으로 distance 범위 내의 타일을 찾아 색깔을 변경
         for (int x = playerX - distance; x <= playerX + distance; x++)
         {
             for (int z = playerZ - distance; z <= playerZ + distance; z++)
             {
-                // 해당 타일이 맵 범위 내에 있는지 확인
                 if (x >= 0 && x < garo && z >= 0 && z < sero)
                 {
-                    // 대각선 방향에 있는 타일은 건너뜀
                     if ((x == playerX - distance || x == playerX + distance) && (z == playerZ - distance || z == playerZ + distance))
                         continue;
 
                     Tile currentTile = totalMap[x, z];
-                    // 플레이어 위치를 중심으로 distance 범위 내의 타일만 색깔을 변경
+
+                    TileOnMonster(currentTile);
+
                     if (!currentTile.coord.isWall)
                     {
                         currentTile.GetComponent<Renderer>().material.color = Color.black;
                         highlightedTiles.Add(currentTile);
                     }
                 }
+            }
+        }
+    }
+
+    public void TileOnMonster(Tile tile)
+    {
+        Monster[] monsters = FindObjectsOfType<Monster>();
+        
+        foreach (Monster monster in monsters)
+        {
+            if (monster.transform.position.x == tile.transform.position.x && monster.transform.position.z == tile.transform.position.z)
+            {
+                rangeInMonsters.Add(monster);
             }
         }
     }

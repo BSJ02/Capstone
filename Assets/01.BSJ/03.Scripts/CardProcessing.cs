@@ -47,8 +47,13 @@ public class CardProcessing : MonoBehaviour
     {
         if (usingCard)
         {
-            mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
+            ShowCardRange((int)cardUseDistance);
         }
+    }
+
+    public void ShowCardRange(int cardUseDistance)
+    {
+        mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
     }
 
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
@@ -67,13 +72,13 @@ public class CardProcessing : MonoBehaviour
         {
             waitForInput = true;
             
-            if (card.cardTarget == Card.CardTarget.Player)
+            if (card.cardTarget == Card.CardTarget.Player || card.cardTarget == Card.CardTarget.AreaTarget)
             {
                 selectedTarget = currentPlayerObj;
                 waitForInput = false;
                 yield return null;
             }
-            else
+            else 
             {
                 while (waitForInput)
                 {

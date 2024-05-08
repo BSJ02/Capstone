@@ -10,6 +10,7 @@ public class CardData : MonoBehaviour
     private WeaponController weaponController;
     private CardProcessing cardProcessing;
     private ParticleController particleController;
+    private MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
@@ -20,6 +21,7 @@ public class CardData : MonoBehaviour
 
     private void Start()
     {
+        mapGenerator = FindObjectOfType<MapGenerator>();
         particleController = FindObjectOfType<ParticleController>();
         cardProcessing = FindObjectOfType<CardProcessing>();   
     }
@@ -448,11 +450,12 @@ public class CardData : MonoBehaviour
     // Flame Pillar
     public void UseFlamePillar(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        if (mapGenerator.rangeInMonsters != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            foreach (Monster monster in mapGenerator.rangeInMonsters)
+            {
+                monster.GetHit(card.cardPower[0]);
+            }
 
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
@@ -467,10 +470,13 @@ public class CardData : MonoBehaviour
     // Life Drain
     public void UseLifeDrain(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        if (mapGenerator.rangeInMonsters != null)
         {
-            
+            foreach (Monster monster in mapGenerator.rangeInMonsters)
+            {
+                monster.GetHit(card.cardPower[0]);
+            }
+
             cardProcessing.cardUseDistance = card.cardDistance;
         }
         else

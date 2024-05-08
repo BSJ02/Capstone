@@ -28,7 +28,6 @@ public class ParticleController : MonoBehaviour
         InitializeParticlePool(fireballEffectPrefab, fireballEffectPool);
     }
 
-    // 파티클 풀 초기화
     private void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool)
     {
         const int initialPoolSize = 2;
