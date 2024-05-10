@@ -41,18 +41,15 @@ public class PlayerAnimationEvent : MonoBehaviour
 
         if (isPosSwap)
         {
-            cardProcessing.selectedTarget.transform.position = cardData.playerPos;
-            cardProcessing.currentPlayerObj.transform.position = cardData.targetPos;
+            Vector3 playerPos = cardData.playerPos;
+            Vector3 monsterPos = cardData.targetPos;
 
-            int targetObjPosX = (int)cardProcessing.currentPlayerObj.transform.position.x;
-            int targetObjPosY = (int)cardProcessing.currentPlayerObj.transform.position.y;
+            cardProcessing.selectedTarget.transform.position = playerPos; // Monster => PlayerPos
+            cardProcessing.currentPlayerObj.transform.position = monsterPos; // Player => MonsterPos
 
-            int playerObjPosX = (int)cardProcessing.currentPlayerObj.transform.position.x;
-            int playerObjPosY = (int)cardProcessing.currentPlayerObj.transform.position.y;
+            MapGenerator.instance.totalMap[(int)playerPos.x, (int)playerPos.y].SetCoord((int)playerPos.x, (int)playerPos.y, true);
+            MapGenerator.instance.totalMap[(int)monsterPos.x, (int)monsterPos.y].SetCoord((int)monsterPos.x, (int)monsterPos.y, true);
 
-            MapGenerator.instance.totalMap[targetObjPosX, targetObjPosY].SetCoord(targetObjPosX, targetObjPosY, true);
-            MapGenerator.instance.totalMap[playerObjPosX, playerObjPosY].SetCoord(playerObjPosX, playerObjPosY, false);
-            
             cardData.shouldPosSwap = false;
             isPosSwap = false;
         }
