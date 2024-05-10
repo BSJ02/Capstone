@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
-  m_Name: Dragon
+  m_Name: Orc
   m_EditorClassIdentifier: 
-  MonsterName: "\uB4DC\uB798\uACE4 "
-  Id: 1
-  Hp: 100
-  MaxHp: 100
-  Amor: 2
-  CurrentDamage: 15
-  MoveDistance: 3
+  MonsterName: "\uC624\uD06C \uC871\uC7A5"
+  Id: 3
+  Hp: 200
+  MaxHp: 200
+  Amor: 5
+  CurrentDamage: 10
+  MoveDistance: 2
   DetectionRagne: 1
-  Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
+  Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130"
   MinDamage: 10
-  MaxDamage: 20
-  Critical: 15
-  SkillDetectionRange: 5
+  MaxDamage: 18
+  Critical: 12
+  SkillDetectionRange: 3

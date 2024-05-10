@@ -49112,7 +49112,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.2222223
-    functionName: ReadyTo_MageSkill
+    functionName: MageOfSkill
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
