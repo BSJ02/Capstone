@@ -12,6 +12,7 @@
     <RootNamespace>
     </RootNamespace>
     <ProjectGuid>{84068216-F05E-C1F8-F7DD-67999CBBE322}</ProjectGuid>
+    <ProjectGuid>{1EE98971-DB57-CCE3-EB35-7D60258BAC4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
