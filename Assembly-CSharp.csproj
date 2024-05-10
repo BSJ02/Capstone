@@ -9,9 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
-    <ProjectGuid>{84068216-F05E-C1F8-F7DD-67999CBBE322}</ProjectGuid>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{1EE98971-DB57-CCE3-EB35-7D60258BAC4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -109,6 +107,7 @@
     <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\ParticleCollision.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />

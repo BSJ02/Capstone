@@ -52,6 +52,7 @@ public class PlayerMove : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
+
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
 
                     Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);

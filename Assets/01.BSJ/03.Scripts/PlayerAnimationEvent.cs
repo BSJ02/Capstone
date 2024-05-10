@@ -40,10 +40,10 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
 
         if (isPosSwap)
-            
         {
-			Vector3 playerPos = cardData.playerPos;
+            Vector3 playerPos = cardData.playerPos;
             Vector3 monsterPos = cardData.targetPos;
+
             cardProcessing.selectedTarget.transform.position = playerPos; // Monster => PlayerPos
             cardProcessing.currentPlayerObj.transform.position = monsterPos; // Player => MonsterPos
 
