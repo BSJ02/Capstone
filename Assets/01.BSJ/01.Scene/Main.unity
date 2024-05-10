@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
+  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11659,7 +11659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1172032361}
-  - component: {fileID: 1172032360}
+  - component: {fileID: 1172032362}
   m_Layer: 0
   m_Name: ParticleController
   m_TagString: Untagged
@@ -11667,25 +11667,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1172032360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172032359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a025b48750fbec449ca6224c085d6cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle_Group: {fileID: 0}
-  healEffectPrefab: {fileID: 9017484664307500583, guid: b6b60b986882e7e4e87bbff30371dc10,
-    type: 3}
-  buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
-    type: 3}
-  fireballEffectPrefab: {fileID: 8915312667134092580, guid: 7bf9b9091d74b8046a350085dfa4b0e4,
-    type: 3}
 --- !u!4 &1172032361
 Transform:
   m_ObjectHideFlags: 0
@@ -11701,6 +11682,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172032362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172032359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a025b48750fbec449ca6224c085d6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healEffectPrefab: {fileID: 9017484664307500583, guid: b6b60b986882e7e4e87bbff30371dc10,
+    type: 3}
+  buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
+    type: 3}
+  fireballEffectPrefab: {fileID: 1206498299807332555, guid: 5c393f8a8f497ae46a16e5bd69fb8f91,
+    type: 3}
+  teleportEffectPrefab: {fileID: 3280519133390621005, guid: 572b9427b6736fe4b9e0408ee2b50889,
+    type: 3}
 --- !u!1 &1177873788
 GameObject:
   m_ObjectHideFlags: 0
@@ -16445,6 +16446,7 @@ MonoBehaviour:
   mapGenerator: {fileID: 2082544543}
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
+  cardUseDistanceInRange: 0
 --- !u!4 &1497366973
 Transform:
   m_ObjectHideFlags: 0
@@ -17024,7 +17026,7 @@ Transform:
   m_GameObject: {fileID: 1547616949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7, y: 0.35, z: 5}
+  m_LocalPosition: {x: 1, y: 0.35, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23795,7 +23797,7 @@ PrefabInstance:
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -23805,7 +23807,7 @@ PrefabInstance:
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -24317,6 +24319,7 @@ MonoBehaviour:
   garo: 10
   sero: 10
   highlightedTiles: []
+  rangeInMonsters: []
 --- !u!4 &2082544544
 Transform:
   m_ObjectHideFlags: 0

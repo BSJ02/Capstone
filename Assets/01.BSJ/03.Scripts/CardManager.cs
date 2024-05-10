@@ -38,7 +38,6 @@ public class CardManager : MonoBehaviour
     [SerializeField] public GameObject useCardPanelPrefab;
     [SerializeField] public GameObject handCardPanelPrefab;
 
-
     [HideInInspector] public bool waitAddCard = false;
 
     [HideInInspector] public Card useCard = null;
@@ -108,7 +107,9 @@ public class CardManager : MonoBehaviour
     public void CardGetTest()
     {
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[3]; // <- change
+        Card card = cardInform.wizardCards[1]; // <- change
+
+        cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 
         ApplyCardInfrom(card, addCardObject[0]);
 

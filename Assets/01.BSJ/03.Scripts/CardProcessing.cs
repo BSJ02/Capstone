@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class CardProcessing : MonoBehaviour
     public GameObject selectedTarget = null;
 
     [HideInInspector] public float cardUseDistance = 0;
+    [HideInInspector] public bool cardUseDistanceInRange = false;
 
     private void Awake()
     {
@@ -53,6 +55,7 @@ public class CardProcessing : MonoBehaviour
 
     public void ShowCardRange(int cardUseDistance)
     {
+        mapGenerator.selectingTarget = true;
         mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
     }
 
@@ -124,13 +127,30 @@ public class CardProcessing : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
+            if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
             {
-                selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(currentPlayerObj.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+                selectedTarget = hit.collider.gameObject;
+
+                if (hit.collider.CompareTag("Monster"))
                 {
-                    waitForInput = false;
+                    Monster selectMonster = selectedTarget.GetComponent<Monster>();
+                    if (mapGenerator.rangeInMonsters.Contains(selectMonster))
+                    {
+                        waitForInput = false;
+                    }
                 }
+                else if (hit.collider.CompareTag("Tile"))
+                {
+                    Tile selectTile = selectedTarget.GetComponent<Tile>();
+                    if (mapGenerator.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)
+                    {
+                        waitForInput = false;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Select again");
             }
         }
     }

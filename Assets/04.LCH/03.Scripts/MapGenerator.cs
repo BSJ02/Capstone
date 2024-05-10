@@ -14,9 +14,11 @@ public class MapGenerator : MonoBehaviour
     public int garo;
     public int sero;
 
+    [HideInInspector] public bool selectingTarget;
+
     [SerializeField]
-    private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
-    public HashSet<Monster> rangeInMonsters = new HashSet<Monster>();
+    public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+    public List<Monster> rangeInMonsters = new List<Monster>();
 
     private void Awake()
     {
@@ -127,42 +129,48 @@ public class MapGenerator : MonoBehaviour
         int playerZ = Mathf.RoundToInt(playerPosition.z);
         Tile playerTile = totalMap[playerX, playerZ];
 
-        for (int x = playerX - distance; x <= playerX + distance; x++)
+        Queue<PathNode> queue = new Queue<PathNode>();
+        HashSet<Tile> visited = new HashSet<Tile>();
+        queue.Enqueue(new PathNode(playerTile, 0));
+        visited.Add(playerTile);
+
+        while (queue.Count > 0)
         {
-            for (int z = playerZ - distance; z <= playerZ + distance; z++)
+            PathNode currentNode = queue.Dequeue();
+            Tile currentTile = currentNode.tile;
+            int currentDistance = currentNode.distance;
+
+            if (currentDistance <= distance)
             {
-                if (x >= 0 && x < garo && z >= 0 && z < sero)
+                if (currentTile != playerTile)
                 {
-                    if ((x == playerX - distance || x == playerX + distance) && (z == playerZ - distance || z == playerZ + distance))
-                        continue;
-
-                    Tile currentTile = totalMap[x, z];
-
-                    TileOnMonster(currentTile);
-
-                    if (!currentTile.coord.isWall)
-                    {
-                        currentTile.GetComponent<Renderer>().material.color = Color.black;
-                        highlightedTiles.Add(currentTile);
-                    }
+                    currentTile.GetComponent<Renderer>().material.color = Color.black;
+                    highlightedTiles.Add(currentTile);
                 }
             }
+            CheckAdjacentTiles(currentTile, queue, visited, distance, currentDistance + 1);
         }
+        TileOnMonster(highlightedTiles);
+        selectingTarget = false;
     }
 
-    public void TileOnMonster(Tile tile)
+    public void TileOnMonster(List<Tile> tiles)
     {
         Monster[] monsters = FindObjectsOfType<Monster>();
         
         foreach (Monster monster in monsters)
         {
-            if (monster.transform.position.x == tile.transform.position.x && monster.transform.position.z == tile.transform.position.z)
+            foreach (Tile tile in tiles)
             {
-                rangeInMonsters.Add(monster);
+                if (monster.transform.position.x == tile.transform.position.x && monster.transform.position.z == tile.transform.position.z)
+                {
+                    rangeInMonsters.Add(monster);
+                    break;
+                }
             }
         }
     }
-
+    
 
     // 상하좌우 이동 가능한 타일 확인 및 큐에 추가
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
@@ -184,7 +192,15 @@ public class MapGenerator : MonoBehaviour
         {
             Tile tile = map[x, y];
             // 벽이 아니고, 이동 가능한 범위를 초과하지 않는 경우에만 큐에 추가
-            if (!tile.coord.isWall && !visited.Contains(tile) && nextDistance <= maxDistance)
+            if (selectingTarget)
+            {
+                if (!visited.Contains(tile) && nextDistance <= maxDistance)
+                {
+                    queue.Enqueue(new PathNode(tile, nextDistance));
+                    visited.Add(tile);
+                }
+            }
+            else if (!tile.coord.isWall && !visited.Contains(tile) && nextDistance <= maxDistance)
             {
                 queue.Enqueue(new PathNode(tile, nextDistance));
                 visited.Add(tile);

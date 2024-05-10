@@ -14,6 +14,16 @@ public class CardData : MonoBehaviour
 
     private PlayerState playerState;
 
+
+    // Wizard variables
+    [HideInInspector] public bool shouldTeleport = false;
+    [HideInInspector] public bool shouldPosSwap = false;
+    [HideInInspector] public bool shouldFireball = false;
+
+    [HideInInspector] public Vector3 tempPos;
+    [HideInInspector] public Vector3 targetPos;
+    [HideInInspector] public Vector3 playerPos;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -35,6 +45,7 @@ public class CardData : MonoBehaviour
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
             if (cardProcessing.currentPlayer.playerData.Hp + card.cardPower[0] >= cardProcessing.currentPlayer.playerData.MaxHp)
             {
                 cardProcessing.currentPlayer.playerData.Hp = cardProcessing.currentPlayer.playerData.MaxHp;
@@ -392,23 +403,20 @@ public class CardData : MonoBehaviour
 
     }
 
-
-
     // Wizard Cards --------------------------------
     // Teleport
-    public bool shouldTeleport = false;
-    public Vector3 teloportPos;
-
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
         Tile tile = selectedTarget.GetComponent<Tile>();
 
         if (tile != null)
         {
+            targetPos = tile.transform.position + new Vector3(0, 0.35f, 0);
+
             shouldTeleport = true;
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            teloportPos = tile.transform.position;
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
         }
         else
         {
@@ -422,7 +430,14 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            
+            targetPos = monster.transform.position;
+            playerPos = cardProcessing.currentPlayerObj.transform.position;
+
+            shouldPosSwap = true;
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget);
         }
         else
         {
@@ -431,7 +446,6 @@ public class CardData : MonoBehaviour
     }
 
     // Fireball
-    public bool shouldFireball = false;
     public void UseFireball(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
