@@ -211,7 +211,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
-    cardDistance: 4
+    cardDistance: 3
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -220,7 +220,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
-    cardDistance: 0
+    cardDistance: 4
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3

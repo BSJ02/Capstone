@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,13 +24,12 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public Player currentPlayer;
     [HideInInspector] public GameObject currentPlayerObj;
 
-    [Header(" # Map Scripts")] public MapGenerator mapGenerator;
-
     private PlayerState playerState;
 
     public GameObject selectedTarget = null;
 
     [HideInInspector] public float cardUseDistance = 0;
+    [HideInInspector] public bool cardUseDistanceInRange = false;
 
     private void Awake()
     {
@@ -53,7 +53,8 @@ public class CardProcessing : MonoBehaviour
 
     public void ShowCardRange(int cardUseDistance)
     {
-        mapGenerator.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
+        MapGenerator.instance.selectingTarget = true;
+        MapGenerator.instance.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
     }
 
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
@@ -93,7 +94,7 @@ public class CardProcessing : MonoBehaviour
             if (coroutineStop)
             {
                 coroutineStop = false;
-                mapGenerator.ClearHighlightedTiles();
+                MapGenerator.instance.ClearHighlightedTiles();
                 yield break;
             }
 
@@ -105,7 +106,7 @@ public class CardProcessing : MonoBehaviour
             }
 
             usingCard = false;
-            mapGenerator.ClearHighlightedTiles();
+            MapGenerator.instance.ClearHighlightedTiles();
 
             if (!waitForInput)
             {
@@ -124,13 +125,30 @@ public class CardProcessing : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
+            if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
             {
-                selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(currentPlayerObj.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+                selectedTarget = hit.collider.gameObject;
+
+                if (hit.collider.CompareTag("Monster"))
                 {
-                    waitForInput = false;
+                    Monster selectMonster = selectedTarget.GetComponent<Monster>();
+                    if (MapGenerator.instance.rangeInMonsters.Contains(selectMonster))
+                    {
+                        waitForInput = false;
+                    }
                 }
+                else if (hit.collider.CompareTag("Tile"))
+                {
+                    Tile selectTile = selectedTarget.GetComponent<Tile>();
+                    if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)
+                    {
+                        waitForInput = false;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Select again");
             }
         }
     }

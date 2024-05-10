@@ -83,8 +83,6 @@ public class PlayerMove : MonoBehaviour
                     cardProcessing.currentPlayer = clickplayer;
 
                     mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickplayer.playerData.activePoint);
-
-
                 }
             }
 
