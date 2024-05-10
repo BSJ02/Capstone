@@ -63,6 +63,8 @@
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\SkillTest.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MageSkill.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\CharacterSelector.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\SkillData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
     <Compile Include="Assets\OrcParticle\Trail\Trail.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\Asset\GothicUI\Scripts\DayDurationController.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
-  m_Name: Skeleton
+  m_Name: Dragon
   m_EditorClassIdentifier: 
-  MonsterName: "\uC2A4\uCF08\uB808\uD1A4 \uBCD1\uC0AC"
-  Id: 4
+  MonsterName: "\uBD88\uAF43 \uB4DC\uB798\uACE4"
+  Id: 1
   Hp: 100
   MaxHp: 100
   Amor: 2
-  CurrentDamage: 0
-  MoveDistance: 4
+  CurrentDamage: 15
+  MoveDistance: 3
   DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  MinDamage: 6
-  MaxDamage: 12
-  Critical: 10
-  SkillDetectionRange: 0
+  MinDamage: 10
+  MaxDamage: 20
+  Critical: 15
+  SkillDetectionRange: 5
