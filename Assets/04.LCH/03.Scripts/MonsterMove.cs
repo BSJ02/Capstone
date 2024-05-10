@@ -31,7 +31,7 @@ public class MonsterMove : MonoBehaviour
         
         // 좌표 설정 및 감지
         SetDestination();
-        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true); 
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true);
         GetSurroundingTiles(monsterPos);
 
         // 현재 위치를 isWall로 유지

@@ -10,7 +10,6 @@ public class CardData : MonoBehaviour
     private WeaponController weaponController;
     private CardProcessing cardProcessing;
     private ParticleController particleController;
-    private MapGenerator mapGenerator;
 
     private PlayerState playerState;
 
@@ -31,7 +30,6 @@ public class CardData : MonoBehaviour
 
     private void Start()
     {
-        mapGenerator = FindObjectOfType<MapGenerator>();
         particleController = FindObjectOfType<ParticleController>();
         cardProcessing = FindObjectOfType<CardProcessing>();   
     }
@@ -464,9 +462,9 @@ public class CardData : MonoBehaviour
     // Flame Pillar
     public void UseFlamePillar(Card card, GameObject selectedTarget)
     {
-        if (mapGenerator.rangeInMonsters != null)
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            foreach (Monster monster in mapGenerator.rangeInMonsters)
+            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
                 monster.GetHit(card.cardPower[0]);
             }
@@ -484,9 +482,9 @@ public class CardData : MonoBehaviour
     // Life Drain
     public void UseLifeDrain(Card card, GameObject selectedTarget)
     {
-        if (mapGenerator.rangeInMonsters != null)
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            foreach (Monster monster in mapGenerator.rangeInMonsters)
+            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
                 monster.GetHit(card.cardPower[0]);
             }

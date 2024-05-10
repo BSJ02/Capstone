@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class MapGenerator : MonoBehaviour
@@ -170,7 +171,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
 
     // 상하좌우 이동 가능한 타일 확인 및 큐에 추가
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
