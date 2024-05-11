@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
-    public GameObject particle_Group;
+    private GameObject particle_Group;
 
+    [Header("# Particle Prefabs")]
     public GameObject healEffectPrefab;
     public GameObject buffEffectPrefab;
     public GameObject fireballEffectPrefab;
+    public GameObject teleportEffectPrefab;
+
 
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
     private Queue<GameObject> buffEffectPool = new Queue<GameObject>();
     private Queue<GameObject> fireballEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
 
     private void Start()
     {
@@ -26,9 +30,9 @@ public class ParticleController : MonoBehaviour
         InitializeParticlePool(healEffectPrefab, healEffectPool);
         InitializeParticlePool(buffEffectPrefab, buffEffectPool);
         InitializeParticlePool(fireballEffectPrefab, fireballEffectPool);
+        InitializeParticlePool(teleportEffectPrefab, teleportEffectPool);
     }
 
-    // 파티클 풀 초기화
     private void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool)
     {
         const int initialPoolSize = 2;
@@ -82,6 +86,10 @@ public class ParticleController : MonoBehaviour
         else if (prefab == fireballEffectPrefab)
         {
             return fireballEffectPool;
+        }
+        else if (prefab == teleportEffectPrefab)
+        {
+            return teleportEffectPool;
         }
         else
         {

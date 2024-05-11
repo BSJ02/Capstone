@@ -83,6 +83,7 @@ public class Card
     public enum CardTarget
     {
         Player,
-        Etc
+        SingleTarget,
+        AreaTarget
     }
 }

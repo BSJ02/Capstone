@@ -14,14 +14,34 @@ public class MonsterMove : MonoBehaviour
     Vector2Int monsterPos;
     Vector2Int playerPos;
 
+    bool isMoving;
+
     private void Awake()
     {
         monster = GetComponent<Monster>();
+        isMoving = false;
     }
 
+    public IEnumerator StartDetection()
+    {
+        // 초기화
+        OpenList.Clear();
+        CloseList.Clear();
 
-    // 플레이어 턴 종료 후 호출[몬스터 턴]
-    public void MoveStart()
+        // 좌표 설정 및 감지
+        SetDestination();
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true);
+        GetSurroundingTiles(monsterPos);
+
+        // 현재 위치를 isWall로 유지
+        MapGenerator.instance.ResetTotalMap();
+
+        // 필요한 경우 대기 시간 추가
+        yield return new WaitForSeconds(1f);
+    }
+
+    // 몬스터 움직임
+    public void Moving()
     {
         // 초기화
         OpenList.Clear();
@@ -140,6 +160,8 @@ public class MonsterMove : MonoBehaviour
     // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
+        isMoving = true;
+
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
@@ -189,7 +211,6 @@ public class MonsterMove : MonoBehaviour
         yield break;
     }
 
-
     // 플레이어 감지 및 공격(대각선 공격 X)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
@@ -199,54 +220,62 @@ public class MonsterMove : MonoBehaviour
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        // 일반 공격
-        if (/*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&*/
-            (distacneX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
-            (distacneY <= attackDetectionRange && monsterPos.x == playerPos.x))
-        {
-            monster.attack = AttackState.GeneralAttack;
-
-            Player player = FindObjectOfType<Player>();
-            transform.LookAt(player.transform); // 회전 값 보정
-            monster.Attack(player); // 데미지 연산
-
-            StartCoroutine(EscapeMonsterTurn());
-            return;
-        }
-
         // 스킬 공격
-        else if (/*(monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&*/
+        if (/*(monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&*/
             (distacneX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
             (distacneY <= skillDetectionRange && monsterPos.x == playerPos.x))
         {
+            isMoving = true;
             monster.attack = AttackState.SkillAttack;
 
             Player player = FindObjectOfType<Player>();
             transform.LookAt(player.transform); // 회전 값 보정
             monster.Attack(player);
 
-            StartCoroutine(EscapeMonsterTurn());
+            isMoving = false;
+            // 스킬 이펙트 및 연산 처리
             return;
         }
-
-        // 감지 X
-        else
+        // 일반 공격
+        else if (/*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&*/
+            (distacneX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= attackDetectionRange && monsterPos.x == playerPos.x))
         {
-            monster.Init();
-            StartCoroutine(EscapeMonsterTurn());
+            isMoving = true;
+            monster.attack = AttackState.GeneralAttack;
+
+            Player player = FindObjectOfType<Player>();
+            transform.LookAt(player.transform); // 회전 값 보정
+            monster.Attack(player); // 데미지 연산
+
+            isMoving = false;
             return;
+        }
+        else // 범위 내에 없을 경우(처음 시작 및 움직인 후)
+        {
+            if(isMoving == false) // 범위 내에 없고 && 움직이지 않았을 경우
+            {
+                Moving();
+            }
+            else if(isMoving == true) // 범위 내에 없고 && 움직였을 경우
+            {
+                monster.Init();
+                isMoving = false;
+                return;
+            }
         }
     }
 
 
-    // 몬스터 턴 종료 후 대기(바로 턴 넘어가기 방지)
+    /*// 몬스터 턴 종료 후 대기(바로 턴 넘어가기 방지)
     IEnumerator EscapeMonsterTurn()
     {
+        // hitEffect 파티클이 바로 사용되지 않도록 함
         while (monster.state != MonsterState.Idle)
             yield return null;
 
-        // MonsterSkill 클래스에 등록되어 있는 스킬 일 경우
-        if(monster.attack == AttackState.SkillAttack && monster.GetComponent<MonsterSkill>() != null)
+        // 몬스터가 스킬을 사용한 경우
+        if (monster.attack == AttackState.SkillAttack && monster.GetComponent<MonsterSkill>() != null)
         {
             MonsterSkill skill = monster.GetComponent<MonsterSkill>();
             skill.StopSkill();
@@ -264,7 +293,8 @@ public class MonsterMove : MonoBehaviour
         yield return new WaitForSeconds(3f);
         BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
         BattleManager.instance.PlayerTurn();
-    }
+
+    }*/
 }
 
    
