@@ -60,8 +60,10 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\03.CSH\03.Scripts\AbnormalConditionData.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\MageSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardProcessing.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Monster.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerSelectList.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
@@ -88,24 +91,31 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\SkillData.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\DemoScript.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\SkeletonSkill.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\CharacterSelector.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
     <Compile Include="Assets\OrcParticle\Trail\Trail.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerChoice.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardMove.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\Asset\GothicUI\Scripts\DayDurationController.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\ParticleCollision.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\DragonSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
   </ItemGroup>
   <ItemGroup>

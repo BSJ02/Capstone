@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class MapGenerator : MonoBehaviour
@@ -25,7 +26,6 @@ public class MapGenerator : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -57,7 +57,7 @@ public class MapGenerator : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster"))
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item"))
                     {
                         tile.SetCoord(i, j, true);
                     }
@@ -120,7 +120,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     // 카드 사용 범위
-    public void CardUseRange(Vector3 playerPosition, int distance)
+    public void CardUseRange(Vector3 playerPosition, int cardDistance)
     {
         ClearHighlightedTiles();
         rangeInMonsters.Clear();
@@ -140,7 +140,7 @@ public class MapGenerator : MonoBehaviour
             Tile currentTile = currentNode.tile;
             int currentDistance = currentNode.distance;
 
-            if (currentDistance <= distance)
+            if (currentDistance <= cardDistance)
             {
                 if (currentTile != playerTile)
                 {
@@ -148,7 +148,7 @@ public class MapGenerator : MonoBehaviour
                     highlightedTiles.Add(currentTile);
                 }
             }
-            CheckAdjacentTiles(currentTile, queue, visited, distance, currentDistance + 1);
+            CheckAdjacentTiles(currentTile, queue, visited, cardDistance, currentDistance + 1);
         }
         TileOnMonster(highlightedTiles);
         selectingTarget = false;
@@ -170,7 +170,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
 
     // 상하좌우 이동 가능한 타일 확인 및 큐에 추가
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)

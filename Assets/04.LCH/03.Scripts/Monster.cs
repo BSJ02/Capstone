@@ -57,6 +57,9 @@ public class Monster : MonoBehaviour
     {
         state = MonsterState.Idle;
         anim.SetInteger("State", (int)state);
+
+        attack = AttackState.GeneralAttack;
+
     }
 
     // [1] 몬스터 공격력 
@@ -79,6 +82,7 @@ public class Monster : MonoBehaviour
                 anim.SetInteger("State", (int)state);
 
                 monster_UI.GetMonsterDamage(); // UI 업데이트
+
                 break;
 
             // 일반 공격 
@@ -127,20 +131,11 @@ public class Monster : MonoBehaviour
         MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
+        // 리스트에서 제거
+        BattleManager.instance.monsters.Remove(gameObject);
+
         anim.SetTrigger("Die");
 
-        // 시작하자마자 몬스터 사망 할 시 인덱스가 -2 이하로 내려가지 않도록 방지
-        if (BattleManager.instance.currentMonsterIndex >= -1)
-        {
-            BattleManager.instance.monsters.Remove(gameObject);
-            BattleManager.instance.currentMonsterIndex = -1;
-        }
-        else // 몬스터 사망시 인덱스 제거 후 전에 몬스터부터 다시 시작
-        {
-            BattleManager.instance.monsters.Remove(gameObject);
-            BattleManager.instance.currentMonsterIndex--;
-        }
-
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 4f);
     }
 }
