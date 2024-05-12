@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: "\uC804\uAE30 \uB9C8\uBC95"
   effect: {fileID: 2152964821982959313, guid: a98c7b1ee95108c4597a64b650348ce9, type: 3}
-  speed: 5
+  speed: 3

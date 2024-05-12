@@ -249,7 +249,7 @@ public class CardData : MonoBehaviour
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-
+            
         }
         else
         {
@@ -290,6 +290,7 @@ public class CardData : MonoBehaviour
             become transparency 0.5
        
              */
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
         }
         else
         {
@@ -300,14 +301,16 @@ public class CardData : MonoBehaviour
     public void AgilityAttack(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
+        Player player = selectedTarget.GetComponent<Player>();  
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
             //monster.monsterData.Hp -= card.cardPower[0];
             //animation
-
-
+            monster.monsterData.Hp -= card.cardPower[0] + card.cardDistance;
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
         }
         else
         {
@@ -327,7 +330,7 @@ public class CardData : MonoBehaviour
             //monster.monsterData.Hp -= card.cardPower[0];
 
             //animation
-            
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
 
         }
         else
@@ -343,7 +346,9 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
-
+            monster.GetHit(card.cardPower[0]);
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
+            monster.monsterData.Hp -= card.cardPower[0];   
         }
         else
         {
