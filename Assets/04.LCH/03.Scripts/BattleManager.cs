@@ -18,6 +18,8 @@ public class BattleManager : MonoBehaviour
 
     private CardManager cardManager;
 
+    private CharacterSelector characterSelector;
+
     public BattleState battleState;
 
     [Header("# 스테이지 몬스터 및 플레이어")]
@@ -66,12 +68,15 @@ public class BattleManager : MonoBehaviour
     {
         cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
+        characterSelector = FindObjectOfType<CharacterSelector>();
+        //players = characterSelector.playerSelectList.players;
 
         battleState = BattleState.Start;
 
         // 스테이지 오브젝트 활성화
         foreach (GameObject player in players)
         {
+            //Instantiate(player, new Vector3(2, 0.35f, 0), Quaternion.identity);
             player.gameObject.SetActive(true);
             playerScripts = player.GetComponent<Player>();
         }
@@ -91,7 +96,7 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
-        foreach (GameObject player in players)
+        foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
             playerScripts = player.GetComponent<Player>();
             playerScripts.ResetActivePoint();
