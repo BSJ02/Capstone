@@ -4854,8 +4854,9 @@ GameObject:
   - component: {fileID: 1206498299807332549}
   - component: {fileID: 1206498299807332548}
   - component: {fileID: 8336275602659357518}
+  - component: {fileID: 4458199454802612105}
   m_Layer: 0
-  m_Name: CFXR4 Sun
+  m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8464,9 +8465,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -8643,11 +8644,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 256
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -8659,13 +8660,7 @@ ParticleSystem:
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
-    primitives:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    primitives: []
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -9832,6 +9827,18 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 1206498299807332549}
+--- !u!114 &4458199454802612105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206498299807332555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0daff72935bcb0448edac5bb0cb938e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7747002053765534775
 GameObject:
   m_ObjectHideFlags: 0

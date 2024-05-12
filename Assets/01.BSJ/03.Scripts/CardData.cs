@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CardData : MonoBehaviour
 {
@@ -38,19 +39,20 @@ public class CardData : MonoBehaviour
     // Healing Potion
     public void UseHealingPotion(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
 
-            if (cardProcessing.currentPlayer.playerData.Hp + card.cardPower[0] >= cardProcessing.currentPlayer.playerData.MaxHp)
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
             {
-                cardProcessing.currentPlayer.playerData.Hp = cardProcessing.currentPlayer.playerData.MaxHp;
+                player.playerData.Hp = player.playerData.MaxHp;
             }
             else
             {
-                cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
+                player.playerData.Hp += card.cardPower[0];
             }
         }
         else
@@ -62,11 +64,12 @@ public class CardData : MonoBehaviour
     // Remove Ailments
     public void UseRemoveAilments(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
-            cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
+            player.playerData.Hp += card.cardPower[0];
         }
         else
         {
@@ -77,11 +80,12 @@ public class CardData : MonoBehaviour
     // Evasion Boost
     public void UseEvasionBoost(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
-            cardProcessing.currentPlayer.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
+            player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
         }
         else
         {
@@ -108,9 +112,10 @@ public class CardData : MonoBehaviour
     // Stat Boost
     public void UseStatBoost(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.buffEffectPrefab, selectedTarget);
 
@@ -118,15 +123,15 @@ public class CardData : MonoBehaviour
             switch (randNum)
             {
                 case 0:
-                    cardProcessing.currentPlayer.playerData.Armor += 20;
+                    player.playerData.Armor += 20;
 
                     break;
                 case 1:
-                    cardProcessing.currentPlayer.playerData.MaxHp += 20;
+                    player.playerData.MaxHp += 20;
 
                     break;
                 case 2:
-                    cardProcessing.currentPlayer.playerData.MaxActivePoint += 1;
+                    player.playerData.MaxActivePoint += 1;
 
                     break;
                 default:
@@ -142,19 +147,20 @@ public class CardData : MonoBehaviour
     // Rest
     public void UseRest(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
 
-            if (cardProcessing.currentPlayer.playerData.Hp + card.cardPower[0] >= cardProcessing.currentPlayer.playerData.MaxHp)
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
             {
-                cardProcessing.currentPlayer.playerData.Hp = cardProcessing.currentPlayer.playerData.MaxHp;
+                player.playerData.Hp = player.playerData.MaxHp;
             }
             else
             {
-                cardProcessing.currentPlayer.playerData.Hp += card.cardPower[0];
+                player.playerData.Hp += card.cardPower[0];
             }
         }
         else
@@ -406,7 +412,6 @@ public class CardData : MonoBehaviour
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
         Tile tile = selectedTarget.GetComponent<Tile>();
-
         if (tile != null)
         {
             targetPos = tile.transform.position + new Vector3(0, 0.35f, 0);
@@ -432,6 +437,7 @@ public class CardData : MonoBehaviour
             playerPos = cardProcessing.currentPlayerObj.transform.position;
 
             shouldPosSwap = true;
+
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
@@ -462,6 +468,7 @@ public class CardData : MonoBehaviour
     // Flame Pillar
     public void UseFlamePillar(Card card, GameObject selectedTarget)
     {
+        Player player = cardProcessing.currentPlayer;
         if (MapGenerator.instance.rangeInMonsters != null)
         {
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
@@ -469,7 +476,7 @@ public class CardData : MonoBehaviour
                 monster.GetHit(card.cardPower[0]);
             }
 
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }
@@ -482,12 +489,24 @@ public class CardData : MonoBehaviour
     // Life Drain
     public void UseLifeDrain(Card card, GameObject selectedTarget)
     {
+        Player player = cardProcessing.currentPlayer;
         if (MapGenerator.instance.rangeInMonsters != null)
         {
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
                 monster.GetHit(card.cardPower[0]);
+
+                if (player.playerData.Hp + card.cardPower[0] / 5 >= player.playerData.MaxHp)
+                {
+                    player.playerData.Hp = player.playerData.MaxHp;
+                }
+                else
+                {
+                    player.playerData.Hp += card.cardPower[0] / 5;
+                }
             }
+
+            player.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }
