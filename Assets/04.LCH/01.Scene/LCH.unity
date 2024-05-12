@@ -13405,8 +13405,6 @@ MonoBehaviour:
   players:
   - {fileID: 289030524}
   monsters:
-  - {fileID: 1443638531}
-  - {fileID: 8511647367832313347}
   - {fileID: 3972964381819250286}
   damage: 0
   heal: 0
