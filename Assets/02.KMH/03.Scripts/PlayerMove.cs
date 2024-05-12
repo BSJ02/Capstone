@@ -29,6 +29,7 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
+        battleManager = FindObjectOfType<BattleManager>();
     }
 
     private void SetDestination(Vector2Int clickedTargetPos)
@@ -88,7 +89,7 @@ public class PlayerMove : MonoBehaviour
             }
 
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true)
             {
                 if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
                 {
