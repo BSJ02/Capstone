@@ -51,6 +51,9 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int IsBurned = 0;
     [HideInInspector] public int IsBleeding = 0;
 
+   
+
+
     private void Awake()
     {
         if(instance == null)
@@ -121,6 +124,9 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
+        
+
+
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
         
