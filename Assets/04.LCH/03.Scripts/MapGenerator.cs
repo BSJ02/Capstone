@@ -26,7 +26,6 @@ public class MapGenerator : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -58,7 +57,7 @@ public class MapGenerator : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster"))
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item"))
                     {
                         tile.SetCoord(i, j, true);
                     }

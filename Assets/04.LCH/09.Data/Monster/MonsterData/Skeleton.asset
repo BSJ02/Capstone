@@ -24,4 +24,4 @@ MonoBehaviour:
   MinDamage: 6
   MaxDamage: 12
   Critical: 10
-  SkillDetectionRange: 0
+  SkillDetectionRange: 2
