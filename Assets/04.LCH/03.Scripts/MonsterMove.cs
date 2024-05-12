@@ -36,7 +36,7 @@ public class MonsterMove : MonoBehaviour
         // 현재 위치를 isWall로 유지
         MapGenerator.instance.ResetTotalMap();
 
-        // 필요한 경우 대기 시간 추가
+        // 각 몬스터 행동 후 추가 딜레이(필요한 경우 대기 시간 추가)
         yield return new WaitForSeconds(1f);
     }
 
@@ -265,36 +265,6 @@ public class MonsterMove : MonoBehaviour
             }
         }
     }
-
-
-    /*// 몬스터 턴 종료 후 대기(바로 턴 넘어가기 방지)
-    IEnumerator EscapeMonsterTurn()
-    {
-        // hitEffect 파티클이 바로 사용되지 않도록 함
-        while (monster.state != MonsterState.Idle)
-            yield return null;
-
-        // 몬스터가 스킬을 사용한 경우
-        if (monster.attack == AttackState.SkillAttack && monster.GetComponent<MonsterSkill>() != null)
-        {
-            MonsterSkill skill = monster.GetComponent<MonsterSkill>();
-            skill.StopSkill();
-
-            // 스킬 타격 이펙트 생성
-            if (skill.skillHitEffect != null)
-            {
-                Vector3 player = new Vector3(playerPos.x, 1, playerPos.y);
-                Instantiate(skill.skillHitEffect, player, Quaternion.identity);
-                monster.attack = AttackState.GeneralAttack;
-            }
-        }
-
-        // 대기 처리
-        yield return new WaitForSeconds(3f);
-        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
-        BattleManager.instance.PlayerTurn();
-
-    }*/
 }
 
    

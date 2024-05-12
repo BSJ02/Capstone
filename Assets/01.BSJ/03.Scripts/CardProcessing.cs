@@ -31,11 +31,6 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public float cardUseDistance = 0;
     [HideInInspector] public bool cardUseDistanceInRange = false;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     private void Start()
     {
         cardData = FindObjectOfType<CardData>();
@@ -125,11 +120,11 @@ public class CardProcessing : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
-            {
-                selectedTarget = hit.collider.gameObject;
+            selectedTarget = hit.collider.gameObject;
 
-                if (hit.collider.CompareTag("Monster"))
+            if (selectedTarget.layer == LayerMask.NameToLayer("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
+            {
+                if (selectedTarget.CompareTag("Monster"))
                 {
                     Monster selectMonster = selectedTarget.GetComponent<Monster>();
                     if (MapGenerator.instance.rangeInMonsters.Contains(selectMonster))
@@ -137,7 +132,7 @@ public class CardProcessing : MonoBehaviour
                         waitForInput = false;
                     }
                 }
-                else if (hit.collider.CompareTag("Tile"))
+                else if (selectedTarget.CompareTag("Tile"))
                 {
                     Tile selectTile = selectedTarget.GetComponent<Tile>();
                     if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d837b76b53ccf94681028b533e15f0f, type: 3}
-  m_Name: DragonSkil
+  m_Script: {fileID: 11500000, guid: fad44193da54b3e4f95c14faa12df2aa, type: 3}
+  m_Name: SkeletonSkill
   m_EditorClassIdentifier: 
-  SkillName: "\uBD88\uC774\uC57C!"
-  effect: {fileID: 1013337392893380462, guid: 374257c2496d98042bc9d343d1d951ce, type: 3}
+  SkillName: "\uCC0C\uB974\uAE30"
+  effect: {fileID: 23972775740142940, guid: 112d0ef32b559a74297aafbd14a7c055, type: 3}

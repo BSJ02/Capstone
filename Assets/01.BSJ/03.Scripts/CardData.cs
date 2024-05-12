@@ -25,11 +25,6 @@ public class CardData : MonoBehaviour
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public Vector3 playerPos;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     private void Start()
     {
         particleController = FindObjectOfType<ParticleController>();
@@ -525,9 +520,21 @@ public class CardData : MonoBehaviour
     // Magic Shield
     public void UseMagicShield(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
         }
         else
         {

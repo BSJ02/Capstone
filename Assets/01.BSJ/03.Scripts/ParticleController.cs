@@ -13,7 +13,6 @@ public class ParticleController : MonoBehaviour
     public GameObject fireballEffectPrefab;
     public GameObject teleportEffectPrefab;
 
-
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
     private Queue<GameObject> buffEffectPool = new Queue<GameObject>();
     private Queue<GameObject> fireballEffectPool = new Queue<GameObject>();
@@ -27,25 +26,25 @@ public class ParticleController : MonoBehaviour
             particle_Group = new GameObject("Particle_Group");
         }
         
-        InitializeParticlePool(healEffectPrefab, healEffectPool);
-        InitializeParticlePool(buffEffectPrefab, buffEffectPool);
-        InitializeParticlePool(fireballEffectPrefab, fireballEffectPool);
-        InitializeParticlePool(teleportEffectPrefab, teleportEffectPool);
+        InitializeParticlePool(healEffectPrefab, healEffectPool, particle_Group);
+        InitializeParticlePool(buffEffectPrefab, buffEffectPool, particle_Group);
+        InitializeParticlePool(fireballEffectPrefab, fireballEffectPool, particle_Group);
+        InitializeParticlePool(teleportEffectPrefab, teleportEffectPool, particle_Group);
     }
 
-    private void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool)
+    public void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool, GameObject parentObj)
     {
         const int initialPoolSize = 2;
         for (int i = 0; i < initialPoolSize; i++)
         {
             GameObject particleObject = Instantiate(prefab, transform.position, Quaternion.identity);
-            particleObject.transform.SetParent(particle_Group.transform, false);
+            particleObject.transform.SetParent(parentObj.transform, false);
             particleObject.SetActive(false);
             pool.Enqueue(particleObject);
         }
     }
 
-    private GameObject GetAvailableParticle(GameObject prefab, Queue<GameObject> pool)
+    public GameObject GetAvailableParticle(GameObject prefab, Queue<GameObject> pool)
     {
         if (pool.Count > 0)
         {
@@ -61,13 +60,13 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    private void ReturnToPool(GameObject particleObject, Queue<GameObject> pool)
+    public void ReturnToPool(GameObject particleObject, Queue<GameObject> pool)
     {
         particleObject.SetActive(false);
         pool.Enqueue(particleObject);
     }
 
-    private IEnumerator ReturnParticleToPool(GameObject particleObject, Queue<GameObject> pool, float duration)
+    public IEnumerator ReturnParticleToPool(GameObject particleObject, Queue<GameObject> pool, float duration)
     {
         yield return new WaitForSeconds(duration);
         ReturnToPool(particleObject, pool);

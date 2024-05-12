@@ -269,7 +269,7 @@ MonoBehaviour:
     cardDescription: "\uBCBD\uC744 \uC18C\uD658\uD568"
     cardDescription_Power: 
     cardPower: []
-    cardDistance: 11
+    cardDistance: 5
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
