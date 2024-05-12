@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +8,15 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 
-    //scriptable object
-    private PlayerData playerData;
-
-    private Text remainingDistance;
-
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
     public GameObject gameOverUI;
+
+    public PlayerData playerData;
+
+    public CardProcessing cardProcessing;
+   
 
     //턴 페이드 인 / 아웃
     private CanvasGroup cg;
@@ -24,6 +25,10 @@ public class UIManager : MonoBehaviour
     private Coroutine fadeCor;
 
     private static UIManager instance;
+
+    //HP Bar material
+    public Text energyValue;
+    public Material energyFillMaterial;
 
 
 
@@ -41,8 +46,11 @@ public class UIManager : MonoBehaviour
 
 
 
-    private void Awake()
+    void Awake()
     {
+
+        cardProcessing = FindObjectOfType<CardProcessing>();
+
 
         if (instance == null)
         {
@@ -54,16 +62,34 @@ public class UIManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        
+
     }
 
-    private void Update()
+    void Update()
     {
+
+        if(cardProcessing.selectedTarget != null)
+        {
+            energyFillMaterial.SetFloat("_FillLevel", playerData.activePoint * 0.2f);
+            energyValue.text = playerData.activePoint.ToString();
+
+        }
+        /*
+        
         if(GameManager.Instance.isGameOver)
         {
             GameManager.Instance.isGameOver = false;
             GameOverFade();
             
         }
+        */
+
+        //Energy Bar Material
+
+        
+        
+
     }
 
     public void ShowLayerWindow(int index)
@@ -129,4 +155,10 @@ public class UIManager : MonoBehaviour
 
     }
     */
+
+
+    public void SetEnergyText()
+    {
+        
+    }
 }
