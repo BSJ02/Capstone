@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum BattleState 
 {
@@ -14,6 +15,10 @@ public enum BattleState
 
 public class BattleManager : MonoBehaviour
 {
+    public AbnormalConditionData abnormalConditionData;
+
+    MonsterData monsterData;
+
     public static BattleManager instance;
 
     private CardManager cardManager;
@@ -126,6 +131,7 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
+
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
         
@@ -147,6 +153,9 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator NextMonster()
     {
+        //fixed
+        
+
         // 지정된 delay 시간 동안 대기(MonsterTurn UI 재생 때문에)
         yield return new WaitForSeconds(delay);
 
@@ -156,10 +165,33 @@ public class BattleManager : MonoBehaviour
             int randIndex = Random.Range(0, monsters.Count); // 몬스터 리스트에서 랜덤 인덱스 선택
             GameObject selectedMonster = monsters[randIndex]; // 선택된 몬스터
 
+
+            //fixed
+            if (abnormalConditionData.abConditions.Count > 0)
+            {
+                Monster monster = selectedMonster.GetComponent<Monster>();
+
+                foreach (string AbnormalName in abnormalConditionData.abConditions)
+                {
+                    foreach (KeyValuePair<string, int> pair in abnormalConditionData.elementValues)
+                    {
+                        if (AbnormalName.Equals(pair.Key))
+                        {
+                            Debug.Log(AbnormalName + ": value" + pair.Value);
+                            monster.monsterData.Hp -= pair.Value;
+                            
+                        }
+
+                    }
+                }
+            }
+
             // HashSet에 이미 선택된 몬스터가 있는지 확인하고 추가
             if (!selectedMonsters.Contains(randIndex))
             {
                 selectedMonsters.Add(randIndex);
+
+
 
                 // 선택된 몬스터의 특정 메서드 실행
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
