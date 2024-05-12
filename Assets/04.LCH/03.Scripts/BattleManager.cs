@@ -37,7 +37,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("# UI")]
     public GameObject[] turn_UI; // 턴 UI
-    public GameObject buff_UI;
+    private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
@@ -53,15 +53,12 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int IsBurned = 0;
     [HideInInspector] public int IsBleeding = 0;
 
-   
-
 
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -129,9 +126,6 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
-        
-
-
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
         
@@ -159,29 +153,31 @@ public class BattleManager : MonoBehaviour
         // MaximumOfMonster에 설정되어 있는 값 만큼 몬스터 움직이기
         for (int i = 0; i < MaximumOfMonster; i++)
         {
-            int randValue = Random.Range(0, monsters.Count);
+            int randIndex = Random.Range(0, monsters.Count); // 몬스터 리스트에서 랜덤 인덱스 선택
+            GameObject selectedMonster = monsters[randIndex]; // 선택된 몬스터
 
-            // 중복된 몬스터 설정(!몬스터가 두 번 움직이는 것도 가능함. 따라서, 이 부분은 확실히 정해야함)
-            while (selectedMonsters.Contains(randValue))
+            // HashSet에 이미 선택된 몬스터가 있는지 확인하고 추가
+            if (!selectedMonsters.Contains(randIndex))
             {
-                randValue = Random.Range(0, monsters.Count);
+                selectedMonsters.Add(randIndex);
+
+                // 선택된 몬스터의 특정 메서드 실행
+                MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
+                IEnumerator detectionCoroutine = monsterMove.StartDetection();
+                yield return StartCoroutine(detectionCoroutine);
+
+                // 스킬을 쓰는 동안 다음 몬스터로 넘어가지 않도록 방지
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                    yield return null;
+
+                // 각 몬스터 이동 후 delay 만큼 대기
+                yield return new WaitForSeconds(delay);
             }
-            // HashSet에 랜덤 몬스터 추가
-            selectedMonsters.Add(randValue);
-
-            // 몬스터[randValue]의 StartDetection() 코루틴 실행
-            MonsterMove monsterMove = monsters[randValue].GetComponent<MonsterMove>();
-            IEnumerator detectionCoroutine = monsterMove.StartDetection();
-            yield return StartCoroutine(detectionCoroutine);
-
-            // 스킬을 쓰는 동안 다음 몬스터로 넘어가지 않도록 방지
-            while (monsters[randValue].GetComponent<Monster>().attack == AttackState.SkillAttack)
-                yield return null;
-            // 각 몬스터 이동 후 delay 만큼 대기
-            yield return new WaitForSeconds(delay);
         }
-        // HashSet에 선택되었던 몬스터들 초기화(버그 예방 차원) 
+
+        // 선택된 몬스터들 초기화(버그 예방 차원) 
         selectedMonsters.Clear();
+
         // 모든 몬스터 행동 종료 후 턴 넘기기
         StartCoroutine(EscapeMonsterTurn());
     }

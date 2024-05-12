@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d837b76b53ccf94681028b533e15f0f, type: 3}
   m_Name: DragonSkil
   m_EditorClassIdentifier: 
-  SkillName: "\uBD88\uC774\uC57C"
+  SkillName: "\uBD88\uC774\uC57C!"
   effect: {fileID: 1013337392893380462, guid: 374257c2496d98042bc9d343d1d951ce, type: 3}

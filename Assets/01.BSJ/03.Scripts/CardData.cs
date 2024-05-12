@@ -19,15 +19,11 @@ public class CardData : MonoBehaviour
     [HideInInspector] public bool shouldTeleport = false;
     [HideInInspector] public bool shouldPosSwap = false;
     [HideInInspector] public bool shouldFireball = false;
+    [HideInInspector] public bool shouldSummon = false;
 
     [HideInInspector] public Vector3 tempPos;
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public Vector3 playerPos;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     private void Start()
     {
@@ -524,9 +520,21 @@ public class CardData : MonoBehaviour
     // Magic Shield
     public void UseMagicShield(Card card, GameObject selectedTarget)
     {
-        if (cardProcessing.currentPlayer != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
         }
         else
         {
@@ -538,10 +546,16 @@ public class CardData : MonoBehaviour
     public void UseSummonObstacle(Card card, GameObject selectedTarget)
     {
         Tile tile = selectedTarget.GetComponent<Tile>();
+        Player player = cardProcessing.currentPlayer;
         if (tile != null)
         {
+            targetPos = tile.transform.position;
 
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            shouldSummon = true;
+
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

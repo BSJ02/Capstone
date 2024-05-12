@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public MapGenerator mapGenerator;
+    private MapGenerator mapGenerator;
     public Player player;
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
@@ -22,6 +23,7 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
+    [SerializeField]
     private GameObject clickedPlayer;
 
     private bool isMoving = false;
@@ -30,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
+        mapGenerator = FindObjectOfType<MapGenerator>();
     }
 
     private void SetDestination(Vector2Int clickedTargetPos)
