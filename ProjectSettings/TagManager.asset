@@ -11,6 +11,8 @@ TagManager:
   - CardPanel
   - Weapon
   - FxTemporaire
+  - Item
+  - PlayerChoice
   layers:
   - Default
   - TransparentFX

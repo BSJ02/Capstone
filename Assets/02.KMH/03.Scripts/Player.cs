@@ -21,6 +21,8 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
+    public GameObject playerChoice; //수정
+
     public PlayerData playerData;
     private CardProcessing cardProcessing;
 
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        playerData.Hp = playerData.MaxHp;
+        playerData.ResetWarriorData();
         ResetActivePoint();
 
         isLive = true;
@@ -63,7 +65,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // �ִϸ��̼� ����
     public void UpdateAnimation()
     {
         switch (playerState)
@@ -159,7 +160,6 @@ public class Player : MonoBehaviour
     }
 
 
-    // �÷��̾� ����
     public void ReadyToAttack(Monster monster)
     {
         float monsterHp = monster.monsterData.Hp;
@@ -176,6 +176,8 @@ public class Player : MonoBehaviour
 
 
         monster.GetHit(playerData.Damage);
+
+        playerChoice.SetActive(false);
 
         return;
     }
@@ -216,7 +218,6 @@ public class Player : MonoBehaviour
 
     }
 
-    // [3] ���� ��� ó��
     public void Die()
     {
         /*if (isLive) 

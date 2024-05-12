@@ -11,6 +11,7 @@ public class CardMove : MonoBehaviour
     private CardProcessing cardProcessing;
     private CardManager cardManager;
     private BattleManager battleManager;
+    private MapGenerator mapGenerator;
 
     private Vector3 offset;
     private float distanceToCamera;
@@ -29,6 +30,7 @@ public class CardMove : MonoBehaviour
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
+        mapGenerator = FindObjectOfType<MapGenerator>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
@@ -36,7 +38,7 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
+        /*if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
         {
             index = cardManager.handCardObject.IndexOf(gameObject) + 1;
             AnimateCard(scaleFactor, originalPosition + Vector3.up * 0.5f);
@@ -50,7 +52,7 @@ public class CardMove : MonoBehaviour
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
                 AnimateCard(1f, originalPosition);
             }
-        }
+        }*/
     }
 
     void AnimateCard(float scale, Vector3 position)
@@ -105,7 +107,7 @@ public class CardMove : MonoBehaviour
             }
             else
             {
-                cardManager.useCardPanelPrefab.SetActive(false);
+                cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(false);
             }
         }
     }
@@ -126,7 +128,7 @@ public class CardMove : MonoBehaviour
                 else
                 {
                     MoveCardToScale(0f);
-                    cardManager.useCardPanelPrefab.SetActive(false);
+                    cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(false);
                     cardManager.UpdateCardList(this.gameObject);
                     cardProcessing.UseCardAndSelectTarget(cardManager.useCard, this.gameObject);
                 }
@@ -143,6 +145,7 @@ public class CardMove : MonoBehaviour
         if (battleManager.isPlayerTurn)
         {
             CardPanelCollision();
+            mapGenerator.ClearHighlightedTiles();
         }
         
     }
@@ -158,7 +161,7 @@ public class CardMove : MonoBehaviour
             }
             else if (!cardProcessing.waitForInput && !cardManager.waitAddCard)
             {
-                cardManager.useCardPanelPrefab.SetActive(true);
+                cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(true);
             }
         }
         if (cardProcessing.waitForInput)
@@ -179,6 +182,12 @@ public class CardMove : MonoBehaviour
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
+
+            if (cardProcessing.currentPlayer != null)
+            {
+                int cardUseDistance = (int)cardManager.CardDrag(this.gameObject).cardDistance;
+                cardProcessing.ShowCardRange(cardUseDistance);
+            }
         }
         else
         {

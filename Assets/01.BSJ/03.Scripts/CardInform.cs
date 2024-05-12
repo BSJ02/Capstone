@@ -8,10 +8,9 @@ public class CardInform : ScriptableObject
 {
     [Header(" # 카드 종류")]
     [SerializeField] public List<Card> baseCards;
-    [SerializeField] public List<Card> commonCards;
-    [SerializeField] public List<Card> rareCards;
-    [SerializeField] public List<Card> epicCards;
-    [SerializeField] public List<Card> legendCards;
+    [SerializeField] public List<Card> warriorCards;
+    [SerializeField] public List<Card> archerCards;
+    [SerializeField] public List<Card> wizardCards;
 
     [Header(" # 카드 확률 값")]
     public int basePercent = 35;
@@ -30,16 +29,14 @@ public class CardInform : ScriptableObject
     private void OnValidate()
     {
         FixCardPercent(baseCards, basePercent);
-        FixCardPercent(commonCards, commonPercent);
-        FixCardPercent(rareCards, rarePercent);
-        FixCardPercent(epicCards, epicPercent);
-        FixCardPercent(legendCards, legendPercent);
+        FixCardPercent(warriorCards, commonPercent);
+        FixCardPercent(archerCards, rarePercent);
+        FixCardPercent(wizardCards, epicPercent);
 
-        ApplyCardRank(baseCards, Card.CardRank.BaseCards);
-        ApplyCardRank(commonCards, Card.CardRank.CommonCards);
-        ApplyCardRank(rareCards, Card.CardRank.RareCards);
-        ApplyCardRank(epicCards, Card.CardRank.EpicCards);
-        ApplyCardRank(legendCards, Card.CardRank.LegendCards);
+        ApplyCardRank(baseCards, Card.CardRank.BaseCard);
+        ApplyCardRank(warriorCards, Card.CardRank.WarriorCard);
+        ApplyCardRank(archerCards, Card.CardRank.ArcherCard);
+        ApplyCardRank(wizardCards, Card.CardRank.WizardCard);
     }
 
     // 리스트에 있는 카드들의 percent를 원하는 값으로 설정
@@ -68,28 +65,25 @@ public class Card
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
     public string cardDescription_Power;
-    [Header(" # Power1, Power2, Distance")] public float[] cardPower;   // 공격력, 힐량, 이동거리
+    public float[] cardPower;   // 공격력, 힐량
+    public float cardDistance;  // 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
     public CardRank cardRank; // 카드 등급
-    public WeaponType cardWeaponType;
+    public CardTarget cardTarget;
 
     public enum CardRank
     {
-        BaseCards,  // 기본
-        CommonCards,    // 일반
-        RareCards,  // 레어
-        EpicCards,  // 에픽
-        LegendCards // 전설
+        BaseCard,
+        WarriorCard, 
+        ArcherCard,
+        WizardCard
     }
 
-    public enum WeaponType
+    public enum CardTarget
     {
-        Sword,
-        Axe,
-        Bow,
-        Hammer,
-        Wand,
-        Shield
+        Player,
+        SingleTarget,
+        AreaTarget
     }
 }

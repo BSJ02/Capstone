@@ -16,10 +16,11 @@ public enum MonsterState
     CritcalAttack = 4 
 }
 
-public enum MonsterType
+
+public enum AttackState
 {
-    Short,
-    Long
+    GeneralAttack,
+    SkillAttack
 }
 
 public class Monster : MonoBehaviour
@@ -28,13 +29,11 @@ public class Monster : MonoBehaviour
     private MonsterUI monster_UI;
 
     public MonsterState state;
-    public MonsterType monsterType;
+    public AttackState attack;
 
     private Animator anim;
 
     private bool isLive;
-    
-    [SerializeField] public float critaical = 3; // CriticalDamage = MinDamage + critcal
 
     void Awake()
     {
@@ -50,6 +49,7 @@ public class Monster : MonoBehaviour
     void Start()
     {
         Init();
+        
     }
 
     // [0] 애니메이션 초기화
@@ -57,38 +57,43 @@ public class Monster : MonoBehaviour
     {
         state = MonsterState.Idle;
         anim.SetInteger("State", (int)state);
+
+        attack = AttackState.GeneralAttack;
+
     }
 
-    // [1] 몬스터 공격 
-    public void ReadyToAttack(Player player)
+    // [1] 몬스터 공격력 
+    public void ReadyToAttack()
     {
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
-        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage);
-        float critcalDamage = monsterData.MinDamage + critaical;
+        monsterData.CurrentDamage = Mathf.RoundToInt(randDamage); 
+    }
 
-        if (randDamage >= critcalDamage)
+    //[1-2] 몬스터 실제 공격
+    public void Attack(Player player)
+    {
+        switch (attack)
         {
-            // 크리티컬 공격
-            player.GetHit(randDamage);
+            // 스킬 공격
+            case AttackState.SkillAttack:
+                player.GetHit(monsterData.CurrentDamage);
 
-            state = MonsterState.CritcalAttack; // 애니메이션
-            anim.SetInteger("State", (int)state);
+                state = MonsterState.CritcalAttack; // 애니메이션(파티클 + 사운드)
+                anim.SetInteger("State", (int)state);
 
-            monster_UI.GetMonsterDamage(); // UI 업데이트
-            Debug.Log("플레이어 체력:" + player.playerData.Hp + $", 크리티컬 공격:{(int)randDamage}");
-            return;
-        }
-        else
-        {
-            // 일반 공격
-            player.GetHit(randDamage);
+                monster_UI.GetMonsterDamage(); // UI 업데이트
 
-            state = MonsterState.Attack; // 애니메이션
-            anim.SetInteger("State", (int)state);
+                break;
 
-            monster_UI.GetMonsterDamage(); // UI 업데이트
-            Debug.Log("플레이어 체력:" + (int)player.playerData.Hp + $", 일반 공격:{(int)randDamage}");
-            return;
+            // 일반 공격 
+            case AttackState.GeneralAttack:
+                player.GetHit(monsterData.CurrentDamage);
+
+                state = MonsterState.Attack; // 애니메이션(파티클 + 사운드)
+                anim.SetInteger("State", (int)state);
+
+                monster_UI.GetMonsterDamage(); // UI 업데이트
+                break;
         }
     }
 
@@ -98,13 +103,11 @@ public class Monster : MonoBehaviour
         if (!isLive)
             return;
 
-        damage = FindObjectOfType<Player>().playerData.Damage;
+        //damage = FindObjectOfType<Player>().playerData.Damage;
 
         float finalDamage = damage - monsterData.Amor;
         monsterData.Hp -= Mathf.FloorToInt(finalDamage);
         monster_UI.GetMonsterHp();
-
-        Debug.Log("몬스터 피격 당한 데미지:" + (int)finalDamage);
 
         // 몬스터 사망
         if (monsterData.Hp <= 0)
@@ -128,31 +131,11 @@ public class Monster : MonoBehaviour
         MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
-            anim.SetTrigger("Die");
-    }
+        // 리스트에서 제거
+        BattleManager.instance.monsters.Remove(gameObject);
 
+        anim.SetTrigger("Die");
 
-    // 후처리(사운드 및 이펙트)
-
-    // 공격 시 이벤트
-    public void EventToAttack()
-    {
-        // 공격 사운드 재생
-        // 공격 효과
-    }
-
-    // 피격 시 이벤트
-    public void EventToGetHit()
-    {
-        // ShowFloatingText();
-        // 피격 사운드 재생
-        // 피격 효과 
-    }
-
-    // 사망 후 이벤트
-    public void EventToDie()
-    {
-        // 사망 사운드 재생
-        // 사망 효과
+        Destroy(gameObject, 4f);
     }
 }

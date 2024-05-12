@@ -18,12 +18,17 @@ public class BattleManager : MonoBehaviour
 
     private CardManager cardManager;
 
+    private CharacterSelector characterSelector;
+
     public BattleState battleState;
 
     [Header("# 스테이지 몬스터 및 플레이어")]
-    public GameObject player;
+    public List<GameObject> players = new List<GameObject>();
     public List<GameObject> monsters = new List<GameObject>();
     private Player playerScripts;
+
+    // 랜덤으로 선택된 몬스터를 HashSet에 저장
+    HashSet<int> selectedMonsters = new HashSet<int>();
 
     [Header("# 몬스터 버프")] 
     public float damage;
@@ -32,22 +37,28 @@ public class BattleManager : MonoBehaviour
 
     [Header("# UI")]
     public GameObject[] turn_UI; // 턴 UI
-    public GameObject buff_UI;
+    private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
 
-    private int currentMonsterIndex = -1;
+    public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
 
     [HideInInspector] public bool isPlayerMove = false;
     [HideInInspector] public bool isPlayerTurn = false;
     [HideInInspector] public bool isRandomCard = false;
 
+    // Player Buff & DeBuff
+    [HideInInspector] public int IsHealing = 0;
+    [HideInInspector] public int IsPoisoned = 0;
+    [HideInInspector] public int IsBurned = 0;
+    [HideInInspector] public int IsBleeding = 0;
+
+
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -57,13 +68,20 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        playerScripts = player.GetComponent<Player>();
+        CardData cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
+        characterSelector = FindObjectOfType<CharacterSelector>();
+        //players = characterSelector.playerSelectList.players;
 
         battleState = BattleState.Start;
 
         // 스테이지 오브젝트 활성화
-        player.gameObject.SetActive(true);
+        foreach (GameObject player in players)
+        {
+            //Instantiate(player, new Vector3(2, 0.35f, 0), Quaternion.identity);
+            player.gameObject.SetActive(true);
+            playerScripts = player.GetComponent<Player>();
+        }
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
@@ -78,54 +96,100 @@ public class BattleManager : MonoBehaviour
     
     public void PlayerTurn()
     {
+        battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
-        playerScripts.ResetActivePoint();
-        cardManager.CreateRandomCard();
+        foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
+        {
+            playerScripts = player.GetComponent<Player>();
+            playerScripts.ResetActivePoint();
+        }
+        if (cardManager.handCardCount < 8)
+        {
+            cardManager.CreateRandomCard();
+        }
+        else
+        {
+            Debug.Log("카드가 너무 많음");
+        }
         isPlayerTurn = true;
         battleState = BattleState.PlayerTurn;
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
-        player.gameObject.layer = LayerMask.NameToLayer("Player");
-    }
+        
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
 
+    }
 
     public void MonsterTurn()
     {
-        isPlayerTurn = false;
         battleState = BattleState.MonsterTurn;
+        isPlayerTurn = false;
+        
+        // 플레이어 턴 UI 비활성화
+        turn_UI[0].gameObject.SetActive(false);
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        } // 레이캐스트 비활성호 
+
+        // 몬스터 턴 UI 활성화
         turn_UI[1].gameObject.SetActive(true);
         turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
         turnEnd_Btn.interactable = false;  
-        StartCoroutine(NextMonster());
-        player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-    }
 
+        StartCoroutine(NextMonster());
+
+    }
 
     IEnumerator NextMonster()
     {
+        // 지정된 delay 시간 동안 대기(MonsterTurn UI 재생 때문에)
         yield return new WaitForSeconds(delay);
 
-        if (currentMonsterIndex < monsters.Count - 1)
+        // MaximumOfMonster에 설정되어 있는 값 만큼 몬스터 움직이기
+        for (int i = 0; i < MaximumOfMonster; i++)
         {
-            currentMonsterIndex++;
-            monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
+            int randIndex = Random.Range(0, monsters.Count); // 몬스터 리스트에서 랜덤 인덱스 선택
+            GameObject selectedMonster = monsters[randIndex]; // 선택된 몬스터
 
-            // 몬스터 순회 완료
-            if (currentMonsterIndex == monsters.Count - 1)
+            // HashSet에 이미 선택된 몬스터가 있는지 확인하고 추가
+            if (!selectedMonsters.Contains(randIndex))
             {
-                // 몬스터 버프
-                for (int i = 0; i < monsters.Count; i++)
-                {
-                    buff_UI.gameObject.SetActive(true);
-                    buff_UI.GetComponent<Animator>().Play("Buff", -1, 0f);
-                    monsters[i].GetComponent<Monster>().monsterData.IncreaseDamage(damage);
-                    Debug.Log(monsters[i].name + "의 스탯이 증가하였습니다.");
-                }
-                // 초기화 
-                currentMonsterIndex = -1;
+                selectedMonsters.Add(randIndex);
+
+                // 선택된 몬스터의 특정 메서드 실행
+                MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
+                IEnumerator detectionCoroutine = monsterMove.StartDetection();
+                yield return StartCoroutine(detectionCoroutine);
+
+                // 스킬을 쓰는 동안 다음 몬스터로 넘어가지 않도록 방지
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                    yield return null;
+
+                // 각 몬스터 이동 후 delay 만큼 대기
+                yield return new WaitForSeconds(delay);
             }
         }
+
+        // 선택된 몬스터들 초기화(버그 예방 차원) 
+        selectedMonsters.Clear();
+
+        // 모든 몬스터 행동 종료 후 턴 넘기기
+        StartCoroutine(EscapeMonsterTurn());
     }
+
+    IEnumerator EscapeMonsterTurn()
+    {
+        // 대기 처리
+        yield return new WaitForSeconds(3f);
+        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
+        BattleManager.instance.PlayerTurn();
+
+    }
+
 }
 

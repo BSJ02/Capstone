@@ -14,14 +14,34 @@ public class MonsterMove : MonoBehaviour
     Vector2Int monsterPos;
     Vector2Int playerPos;
 
+    bool isMoving;
+
     private void Awake()
     {
         monster = GetComponent<Monster>();
+        isMoving = false;
     }
 
+    public IEnumerator StartDetection()
+    {
+        // 초기화
+        OpenList.Clear();
+        CloseList.Clear();
 
-    // 플레이어 턴 종료 후 호출[몬스터 턴]
-    public void MoveStart()
+        // 좌표 설정 및 감지
+        SetDestination();
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true);
+        GetSurroundingTiles(monsterPos);
+
+        // 현재 위치를 isWall로 유지
+        MapGenerator.instance.ResetTotalMap();
+
+        // 각 몬스터 행동 후 추가 딜레이(필요한 경우 대기 시간 추가)
+        yield return new WaitForSeconds(1f);
+    }
+
+    // 몬스터 움직임
+    public void Moving()
     {
         // 초기화
         OpenList.Clear();
@@ -140,6 +160,8 @@ public class MonsterMove : MonoBehaviour
     // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path) 
     {
+        isMoving = true;
+
         monster.state = MonsterState.Moving;
         monster.gameObject.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
@@ -178,66 +200,72 @@ public class MonsterMove : MonoBehaviour
         Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
         // 최종 좌표 isWall 설정(몬스터 및 플레이어 겹침 방지)
-        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true); 
+        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true);
+
+        // RandomDamage 선택
+        monster.ReadyToAttack();
 
         // 플레이어 감지 후 공격
         GetSurroundingTiles(finalPosition);
 
-        // 몬스터 턴 종료
-        StartCoroutine(EscapeMonsterTurn());
         yield break;
     }
 
-
-    // 플레이어 감지 및 공격
+    // 플레이어 감지 및 공격(대각선 공격 X)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
-        int detectionRange = monster.monsterData.DetectionRagne;
+        int attackDetectionRange = monster.monsterData.DetectionRagne;
+        int skillDetectionRange = monster.monsterData.SkillDetectionRange;
 
         int distacneX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distacneY = Mathf.Abs(monsterPos.y - playerPos.y);
 
-        // 근거리 몬스터
-        if ((distacneX <= detectionRange && monsterPos.y == playerPos.y) || (distacneY <= detectionRange && monsterPos.x == playerPos.x))
+        // 스킬 공격
+        if (/*(monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&*/
+            (distacneX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= skillDetectionRange && monsterPos.x == playerPos.x))
         {
-            // 감지 O 
+            isMoving = true;
+            monster.attack = AttackState.SkillAttack;
+
             Player player = FindObjectOfType<Player>();
             transform.LookAt(player.transform); // 회전 값 보정
-            monster.ReadyToAttack(player);
-            return;
-        }
-        else
-        {
-            // 감지 X
-            monster.Init();
-            return;
-        }
-        /*// 원거리 몬스터
-        if (distacneX <= detectionRange && distacneY <= detectionRange)
-        {
-            // 대각선 감지 O (원거리 몬스터)
-            if (monster.monsterType != MonsterType.Long)
-                return;
+            monster.Attack(player);
 
-            // 감지 O
+            isMoving = false;
+            // 스킬 이펙트 및 연산 처리
+            return;
+        }
+        // 일반 공격
+        else if (/*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&*/
+            (distacneX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
+            (distacneY <= attackDetectionRange && monsterPos.x == playerPos.x))
+        {
+            isMoving = true;
+            monster.attack = AttackState.GeneralAttack;
+
             Player player = FindObjectOfType<Player>();
-            monster.ReadyToAttack(player);
+            transform.LookAt(player.transform); // 회전 값 보정
+            monster.Attack(player); // 데미지 연산
+
+            isMoving = false;
             return;
         }
-        else
+        else // 범위 내에 없을 경우(처음 시작 및 움직인 후)
         {
-            // 감지 X
-            monster.Init();
-            return;
-        }*/
-    }
-
-    // 몬스터 턴 종료 후 2초 대기(바로 공격 방지)
-    IEnumerator EscapeMonsterTurn()
-    {
-        yield return new WaitForSeconds(2f);
-        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
-        BattleManager.instance.PlayerTurn();
+            if(isMoving == false) // 범위 내에 없고 && 움직이지 않았을 경우
+            {
+                Moving();
+            }
+            else if(isMoving == true) // 범위 내에 없고 && 움직였을 경우
+            {
+                monster.Init();
+                isMoving = false;
+                return;
+            }
+        }
     }
 }
+
+   
 

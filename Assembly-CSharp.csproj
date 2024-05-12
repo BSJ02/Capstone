@@ -60,64 +60,105 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\03.CSH\03.Scripts\AbnormalConditionData.cs" />
+    <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\MageSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
+    <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\Asset\GothicUI\Scripts\HPFlowController.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\GameManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardProcessing.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Monster.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerSelectList.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\WeaponController.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\PlayerAnimationEvent.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\LookAtCamera.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\UIManager.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\RangeMoveTest.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\SkillData.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\DemoScript.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardColorChanger.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\SkeletonSkill.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\CharacterSelector.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardInform.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
+    <Compile Include="Assets\OrcParticle\Trail\Trail.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\PlayerChoice.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardMove.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\PlayerMoveTest.cs" />
+    <Compile Include="Assets\Asset\GothicUI\Scripts\DayDurationController.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\ParticleCollision.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\Skill\DragonSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\06.Shader" />
+    <None Include="Assets\Asset\GothicUI\Shaders\FluidDouble.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Particle\Cartoon FX (legacy)\Shaders\CFX3 Multiply Color.shader" />
     <None Include="Assets\Asset\Monster\HowToTestHDRP_URP.txt" />
     <None Include="Assets\Asset\Card\ReadMe.txt" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Particle\Cartoon FX (legacy)\CartoonFX Free.txt" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Asset\GothicUI\Shaders\BarShader.shader" />
     <None Include="Assets\Asset\Player\HowToTestHDRP_URP.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Asset\GothicUI\Shaders\Fluid.shader" />
     <None Include="Assets\Asset\Player\Shader\PolyartMaskTint.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Readme Cartoon FX Remaster FREE.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Readme Cartoon FX Remaster BUNDLE.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Asset\Card_Icon\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_PASSES.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Asset\Monster\CommonStuffs\Shader\PAMaskTint.shader" />
+    <None Include="Assets\Particle\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Hovl Studio\Magic effects pack\Demo scene\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -1115,9 +1156,25 @@
       <Project>{7F56E623-E214-5249-7A68-5A6003024663}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="KinoBloom.Runtime.csproj">
+      <Project>{84166465-4A34-530D-18CA-1BE40643B88D}</Project>
+      <Name>KinoBloom.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Runtime.csproj">
       <Project>{1E43A89D-88DE-E9DD-85B9-50563888E289}</Project>
       <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXR.WelcomeScreen.csproj">
+      <Project>{D22E5256-2AAF-23E4-A235-FD0D31169DF1}</Project>
+      <Name>CFXR.WelcomeScreen</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{7FC9ECF0-0632-52FC-9AA7-AF7CD14898A0}</Project>
+      <Name>CFXREditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{64E8DE3C-DD7A-5CB3-CE4E-8B941323D7F3}</Project>
+      <Name>CFXRRuntime</Name>
     </ProjectReference>
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Demo.csproj">
       <Project>{FA33F588-D01F-4B7E-9E7A-472109C48276}</Project>
@@ -1126,6 +1183,14 @@
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Editor.csproj">
       <Project>{FE0BD25A-5864-13D6-C85D-9CE8DB78CC0B}</Project>
       <Name>OccaSoftware.SuperSimpleSkybox.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{63CC35C5-3B99-4DBD-461A-2791AA4A6F26}</Project>
+      <Name>CFXRDemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
+      <Project>{AD5E3B1F-AD85-CE98-DCD7-7BF3429DA824}</Project>
+      <Name>ToonyColorsPro.Demo.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,43 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class CardData : MonoBehaviour
 {
     private WeaponController weaponController;
     private CardProcessing cardProcessing;
-
-    [Header(" # Player Scripts")] public Player player;
+    private ParticleController particleController;
 
     private PlayerState playerState;
 
-    [Header(" # Player Object")] public GameObject playerObject;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
+    // Wizard variables
+    [HideInInspector] public bool shouldTeleport = false;
+    [HideInInspector] public bool shouldPosSwap = false;
+    [HideInInspector] public bool shouldFireball = false;
+    [HideInInspector] public bool shouldSummon = false;
+
+    [HideInInspector] public Vector3 tempPos;
+    [HideInInspector] public Vector3 targetPos;
+    [HideInInspector] public Vector3 playerPos;
 
     private void Start()
     {
-        cardProcessing = FindObjectOfType<CardProcessing>();
-        weaponController = playerObject.GetComponent<WeaponController>();
-        player = playerObject.GetComponent<Player>();
+        particleController = FindObjectOfType<ParticleController>();
+        cardProcessing = FindObjectOfType<CardProcessing>();   
     }
 
     // Base Cards --------------------------------
-    // Sword Slash
-    public void UseSwordSlash(Card card, GameObject selectedTarget)
+    // Healing Potion
+    public void UseHealingPotion(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-
-        if (monster != null)
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
         {
-            player.AttackTwoAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-            cardProcessing.cardUseDistance = card.cardPower[1];
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
         }
         else
         {
@@ -45,17 +57,15 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Healing Salve
-    public void UseHealingSalve(Card card, GameObject selectedTarget)
+    // Remove Ailments
+    public void UseRemoveAilments(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-
+        Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
             player.ChargeAnim(selectedTarget);
 
             player.playerData.Hp += card.cardPower[0];
-            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
@@ -63,18 +73,15 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Sprint
-    public void UseSprint(Card card, GameObject selectedTarget)
+    // Evasion Boost
+    public void UseEvasionBoost(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
+        Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
-            Debug.Log("Sprint ī�带 ���");
-
             player.ChargeAnim(selectedTarget);
 
             player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
-            cardProcessing.cardUseDistance = card.cardPower[0];
         }
         else
         {
@@ -82,17 +89,15 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Basic Strike
-    public void UseBasicStrike(Card card, GameObject selectedTarget)
+    // Transmission
+    public void UseTransmission(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            player.StabAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
-            cardProcessing.cardUseDistance = card.cardPower[1];
         }
         else
         {
@@ -100,17 +105,34 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Shield Block
-    public void UseShieldBlock(Card card, GameObject selectedTarget)
+    // Stat Boost
+    public void UseStatBoost(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
+        Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
             player.ChargeAnim(selectedTarget);
 
-            Debug.Log(card.cardName + " ī�带 ��� / " + player + " Armor: " + player.playerData.Armor);
-            player.playerData.Armor += card.cardPower[0];
-            cardProcessing.cardUseDistance = card.cardPower[1];
+            particleController.ApplyPlayerEffect(particleController.buffEffectPrefab, selectedTarget);
+
+            int randNum = Random.Range(0, 3);
+            switch (randNum)
+            {
+                case 0:
+                    player.playerData.Armor += 20;
+
+                    break;
+                case 1:
+                    player.playerData.MaxHp += 20;
+
+                    break;
+                case 2:
+                    player.playerData.MaxActivePoint += 1;
+
+                    break;
+                default:
+                    break;
+            }
         }
         else
         {
@@ -118,14 +140,38 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Common Cards --------------------------------
+    // Rest
+    public void UseRest(Card card, GameObject selectedTarget)
+    {
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
+        {
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Warrior Cards --------------------------------
     // Ax Slash
     public void UseAxSlash(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            player.SpinAttackAnim(selectedTarget);
 
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
@@ -155,25 +201,6 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Teleport
-    public void UseTeleport(Card card, GameObject selectedTarget)
-    {
-        Tile tile = selectedTarget.GetComponent<Tile>();
-        if (tile != null)
-        {
-            player.ChargeAnim(selectedTarget);
-
-            Debug.Log("Teleport ī�带 ���");
-
-            player.transform.position = new Vector3(tile.transform.position.x, 0.35f, tile.transform.position.z);//tile.transform.position;
-
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
     // Guardian Spirit
     public void UseGuardianSpirit(Card card, GameObject selectedTarget)
     {
@@ -183,7 +210,7 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);  
 
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
         }
         else
         {
@@ -191,9 +218,9 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Rare Cards --------------------------------
+    // Archer Cards --------------------------------
     // Holy Nova
-    public void UseHolyNova(Card card, GameObject selectedTarget)
+    public void UseLightningStrike(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -201,7 +228,221 @@ public class CardData : MonoBehaviour
             Debug.Log(card.cardName + " / TargetName: " + monster);
             monster.GetHit(card.cardPower[0]);
 
-            player.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void WallJump(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+    
+
+    public void UsePoisonArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>(); 
+        if(monster!= null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            //animation
+            
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+  
+    public void Concealment(Card card, GameObject selectedTarget)
+    {
+        Player player = selectedTarget.GetComponent<Player>();
+
+        if (player != null)
+        {
+            /* 
+             * Concealment transparency 
+             material.color.a = 0.5f 
+              
+
+            scanRendererMesh use
+            become transparency 0.5
+       
+             */
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void AgilityAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        Player player = selectedTarget.GetComponent<Player>();  
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= card.cardPower[0];
+            //animation
+            monster.monsterData.Hp -= card.cardPower[0] + card.cardDistance;
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void TurnCountAttack(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            //monster.monsterData.Hp -= ArcherData.ActivePoint;
+            //monster.monsterData.Hp -= card.cardPower[0];
+
+            //animation
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void MarkTargetArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            cardProcessing.currentPlayer.AttackOneAnim(selectedTarget);
+            monster.monsterData.Hp -= card.cardPower[0];   
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void DoubleTargetArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+
+            monster.monsterData.Hp -= card.cardPower[0];
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void PoisonArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp -= card.cardPower[2];
+            //animation
+            //player.AttackTwoAnim(selectedTarget);
+
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    public void AimedArrow(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            Debug.Log(card.cardName + " / TargetName: " + monster);
+            monster.GetHit(card.cardPower[0]);
+            monster.monsterData.Hp += card.cardPower[3];
+
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+
+    }
+
+    // Wizard Cards --------------------------------
+    // Teleport
+    public void UseTeleport(Card card, GameObject selectedTarget)
+    {
+        Tile tile = selectedTarget.GetComponent<Tile>();
+        if (tile != null)
+        {
+            targetPos = tile.transform.position + new Vector3(0, 0.35f, 0);
+
+            shouldTeleport = true;
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Position Swap
+    public void UsePositionSwap(Card card, GameObject selectedTarget)
+    {
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
+        {
+            targetPos = monster.transform.position;
+            playerPos = cardProcessing.currentPlayerObj.transform.position;
+
+            shouldPosSwap = true;
+
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget);
         }
         else
         {
@@ -215,10 +456,9 @@ public class CardData : MonoBehaviour
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            player.MacigAttack01Anim(selectedTarget);
+            shouldFireball = true;
+            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -226,51 +466,20 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Lightning Strike
-    public void UseLightningStrike(Card card, GameObject selectedTarget)
+    // Flame Pillar
+    public void UseFlamePillar(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Player player = cardProcessing.currentPlayer;
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0] + monster.monsterData.Amor);
-
-            player.MacigAttack02Anim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
-    // Epic Cards --------------------------------
-    // Excalibur's Wrath
-    public void UseExcalibursWrath(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
-            player.MacigAttack03Anim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
-    // Divine Intervention
-    public void UseDivineIntervention(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
+            {
+                monster.GetHit(card.cardPower[0]);
+            }
 
             player.ChargeAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -278,20 +487,77 @@ public class CardData : MonoBehaviour
         }
     }
 
-    // Legend Cards --------------------------------
-    // Soul Siphon
-    public void UseSoulSiphon(Card card, GameObject selectedTarget)
+    // Life Drain
+    public void UseLifeDrain(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Player player = cardProcessing.currentPlayer;
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
+            {
+                monster.GetHit(card.cardPower[0]);
 
-            player.MacigAttack03Anim(selectedTarget);
+                if (player.playerData.Hp + card.cardPower[0] / 5 >= player.playerData.MaxHp)
+                {
+                    player.playerData.Hp = player.playerData.MaxHp;
+                }
+                else
+                {
+                    player.playerData.Hp += card.cardPower[0] / 5;
+                }
+            }
 
-            player = playerObject.GetComponent<Player>();
-            player.playerData.Hp += card.cardPower[1];
+            player.ChargeAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Magic Shield
+    public void UseMagicShield(Card card, GameObject selectedTarget)
+    {
+        Player player = cardProcessing.currentPlayer;
+        if (player != null)
+        {
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+
+            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
+            {
+                player.playerData.Hp = player.playerData.MaxHp;
+            }
+            else
+            {
+                player.playerData.Hp += card.cardPower[0];
+            }
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Summon Obstacle
+    public void UseSummonObstacle(Card card, GameObject selectedTarget)
+    {
+        Tile tile = selectedTarget.GetComponent<Tile>();
+        Player player = cardProcessing.currentPlayer;
+        if (tile != null)
+        {
+            targetPos = tile.transform.position;
+
+            shouldSummon = true;
+
+            player.ChargeAnim(selectedTarget);
+
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {

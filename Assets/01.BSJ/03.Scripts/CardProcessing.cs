@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,7 +12,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class CardProcessing : MonoBehaviour
 {
-    [HideInInspector] public bool waitForInput = false;  // 대기 상태 여부
+    [HideInInspector] public bool waitForInput = false;  
     [HideInInspector] public bool usingCard = false;
     [HideInInspector] public bool coroutineStop = false;
     [HideInInspector] public int TempActivePoint;
@@ -20,71 +21,75 @@ public class CardProcessing : MonoBehaviour
     private BattleManager battleManager;
     private CardData cardData;
     private CardManager cardManager;
-
-    [Header(" # Player Scripts")] public Player player;
-    [Header(" # Map Scripts")] public MapGenerator mapGenerator;
+    [HideInInspector] public Player currentPlayer;
+    [HideInInspector] public GameObject currentPlayerObj;
 
     private PlayerState playerState;
 
-    [Header(" # Player Object")] public GameObject playerObject;
+    public GameObject selectedTarget = null;
 
-    private GameObject selectedTarget = null;
     [HideInInspector] public float cardUseDistance = 0;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
+    [HideInInspector] public bool cardUseDistanceInRange = false;
 
     private void Start()
     {
-        cardManager = FindObjectOfType<CardManager>();
-        weaponController = playerObject.GetComponent<WeaponController>();
-        battleManager = FindObjectOfType<BattleManager>();
-        player = playerObject.GetComponent<Player>();
         cardData = FindObjectOfType<CardData>();
+        cardManager = FindObjectOfType<CardManager>();
+        battleManager = FindObjectOfType<BattleManager>();
     }
 
     private void Update()
     {
         if (usingCard)
         {
-            mapGenerator.CardUseRange(playerObject.transform.position, (int)cardUseDistance);
+            ShowCardRange((int)cardUseDistance);
         }
     }
 
-    // 카드 사용 메서드
+    public void ShowCardRange(int cardUseDistance)
+    {
+        MapGenerator.instance.selectingTarget = true;
+        MapGenerator.instance.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
+    }
+
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)
     {
         StartCoroutine(WaitForTargetSelection(card));
     }
 
-    // 대상 선택을 기다리는 코루틴
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        TempActivePoint = player.playerData.activePoint;
-        player.playerData.activePoint = 0;
-        cardUseDistance = card.cardPower[2];    // 카드 거리 저장
+        TempActivePoint = currentPlayer.playerData.activePoint;
+        currentPlayer.playerData.activePoint = 0;
+        cardUseDistance = card.cardDistance;
+
         while (true)
         {
-            waitForInput = true;    // 대기 상태로 전환
+            waitForInput = true;
             
-            // 대상 선택이 완료될 때까지 반복합니다.
-            while (waitForInput)
+            if (card.cardTarget == Card.CardTarget.Player || card.cardTarget == Card.CardTarget.AreaTarget)
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-
-                    SelectTarget();
-                
-                }
-                yield return null; // 다음 프레임까지 대기
+                selectedTarget = currentPlayerObj;
+                waitForInput = false;
+                yield return null;
             }
+            else 
+            {
+                while (waitForInput)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        SelectTarget();
+                    }
+                    yield return null;
+                }
+            }
+
             if (coroutineStop)
             {
                 coroutineStop = false;
-                mapGenerator.ClearHighlightedTiles();
+                MapGenerator.instance.ClearHighlightedTiles();
                 yield break;
             }
 
@@ -92,12 +97,11 @@ public class CardProcessing : MonoBehaviour
 
             if (waitForInput)
             {
-                Debug.Log("대상을 다시 선택하세요.");
                 continue;
             }
 
             usingCard = false;
-            mapGenerator.ClearHighlightedTiles();
+            MapGenerator.instance.ClearHighlightedTiles();
 
             if (!waitForInput)
             {
@@ -116,94 +120,160 @@ public class CardProcessing : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Tile"))
-            {
+            selectedTarget = hit.collider.gameObject;
 
-                selectedTarget = hit.collider.gameObject;            
-                if (Vector3.Distance(player.transform.position, selectedTarget.transform.position) <= cardUseDistance)
+            if (selectedTarget.layer == LayerMask.NameToLayer("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
+            {
+                if (selectedTarget.CompareTag("Monster"))
                 {
-                    waitForInput = false;
+                    Monster selectMonster = selectedTarget.GetComponent<Monster>();
+                    if (MapGenerator.instance.rangeInMonsters.Contains(selectMonster))
+                    {
+                        waitForInput = false;
+                    }
                 }
+                else if (selectedTarget.CompareTag("Tile"))
+                {
+                    Tile selectTile = selectedTarget.GetComponent<Tile>();
+                    if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)
+                    {
+                        waitForInput = false;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Select again");
             }
         }
     }
 
     private void UseCard(Card card, GameObject selectedTarget)
     {
-        // 선택된 대상에 따라 카드를 사용
         if (selectedTarget != null)
         {
-            // cardName을 사용하는 로직을 호출
-            switch (card.cardName)
+            switch (card.cardRank)
             {
-                case "Sword Slash":
-                    cardData.UseSwordSlash(card, selectedTarget);
+                case CardRank.WarriorCard:
+                    WarriorCards(card);
                     break;
-                case "Healing Salve":
-                    cardData.UseHealingSalve(card, selectedTarget);
+                case CardRank.ArcherCard:
+                    ArcherCards(card);
                     break;
-                case "Sprint":
-                    cardData.UseSprint(card, selectedTarget);
-                    break;
-                case "Basic Strike":
-                    cardData.UseBasicStrike(card, selectedTarget);
-                    break;
-                case "Shield Block":
-                    cardData.UseShieldBlock(card, selectedTarget);
-                    break;
-                case "Ax Slash":
-                    cardData.UseAxSlash(card, selectedTarget);
-                    break;
-                case "Heal!!":
-                    cardData.UseHeal(card, selectedTarget);
-                    break;
-                case "Teleport":
-                    cardData.UseTeleport(card, selectedTarget);
-                    break;
-                case "Guardian Spirit":
-                    cardData.UseGuardianSpirit(card, selectedTarget);
-                    break;
-                case "Holy Nova":
-                    cardData.UseHolyNova(card, selectedTarget);
-                    break;
-                case "Fireball":
-                    cardData.UseFireball(card, selectedTarget);
-                    break;
-                case "Lightning Strike":
-                    cardData.UseLightningStrike(card, selectedTarget);
-                    break;
-                case "Excalibur's Wrath":
-                    cardData.UseExcalibursWrath(card, selectedTarget);
-                    break;
-                case "Divine Intervention":
-                    cardData.UseDivineIntervention(card, selectedTarget);
-                    break;
-                case "Soul Siphon":
-                    cardData.UseSoulSiphon(card, selectedTarget);
+                case CardRank.WizardCard:
+                    WizardCards(card);
                     break;
                 default:
-                    Debug.LogError("해당 카드 타입을 처리하는 코드가 없음");
+                    BaseCards(card);
                     break;
             }
-           
         }
     }
 
-    // 검을 들고 있을 때의 효과
-    private void ApplySwordEffect(Card card, GameObject selectedTarget)
+    // Base
+    private void BaseCards(Card card)
     {
-        // 효과를 증폭시키는 처리
+        switch (card.cardName)
+        {
+            case "Healing Potion":
+                cardData.UseHealingPotion(card, selectedTarget);
+                break;
+            case "Remove Ailments":
+                cardData.UseRemoveAilments(card, selectedTarget);
+                break;
+            case "Evasion Boost":
+                cardData.UseEvasionBoost(card, selectedTarget);
+                break;
+            case "Transmission":
+                cardData.UseTransmission(card, selectedTarget);
+                break;
+            case "Stat Boost":
+                cardData.UseStatBoost(card, selectedTarget);
+                break;
+            case "Rest":
+                cardData.UseRest(card, selectedTarget);
+                break;
+            default:
+                break;
+        }
     }
 
-    // 다른 무기를 들고 있을 때의 효과
-    private void ApplyOtherWeaponEffect(Card card, GameObject selectedTarget)
+    // Warrior
+    private void WarriorCards(Card card)
     {
-        // 효과를 약화시키는 처리
+        switch (card.cardName)
+        {
+            case "Lightning Strike":
+                cardData.UseLightningStrike(card, selectedTarget);
+                break;
+            default:
+                break;
+        }
     }
 
-    // 기본적인 효과 처리
-    private void ApplyDefaultEffect(Card card, GameObject selectedTarget)
+    // Archer
+    private void ArcherCards(Card card)
     {
-        // 특별한 처리가 필요 없는 경우
+        switch (card.cardName)
+        {
+            // Warrior
+            case "WallJump":
+                cardData.WallJump(card, selectedTarget);
+                break;
+            case "Concealment":
+                cardData.Concealment(card, selectedTarget);
+                break;
+            case "Agility":
+                cardData.AgilityAttack(card, selectedTarget);
+                break;
+            case "PowerOfTurn":
+                cardData.TurnCountAttack(card, selectedTarget);
+                break;
+            case "MarkAttack":
+                cardData.MarkTargetArrow(card, selectedTarget);
+                break;
+            case "DoubleShot":
+                cardData.DoubleTargetArrow(card, selectedTarget);
+                break;
+            case "PoisonAttack":
+                cardData.PoisonArrow(card, selectedTarget);
+                break;
+            case "AimedShot":
+                cardData.AimedArrow(card, selectedTarget);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Wizard
+    private void WizardCards(Card card)
+    {
+        switch (card.cardName)
+        {
+            case "Teleport":
+                cardData.UseTeleport(card, selectedTarget);
+                break;
+            case "Position Swap":
+                cardData.UsePositionSwap(card, selectedTarget);
+                break;
+            case "Fireball":
+                cardData.UseFireball(card, selectedTarget);
+                break;
+            case "Flame Pillar":
+                cardData.UseFlamePillar(card, selectedTarget);
+                break;
+            case "Life Drain":
+                cardData.UseLifeDrain(card, selectedTarget);
+                break;
+            case "Magic Shield":
+                cardData.UseMagicShield(card, selectedTarget);
+                break;
+            case "Summon Obstacle":
+                cardData.UseSummonObstacle(card, selectedTarget);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2EB0A03E-1693-41A6-950A-A8DF1729ADE7}</ProjectGuid>
+    <ProjectGuid>{84166465-4A34-530D-18CA-1BE40643B88D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>KinoBloom.Runtime</AssemblyName>
@@ -55,18 +55,18 @@
     <UnityVersion>2022.3.14f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Bloom.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX Remaster\Demo Assets\Kino Bloom\Bloom.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.shader" />
-    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.cginc" />
-    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\KinoBloom.Runtime.asmdef" />
-    <None Include="Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Kino Bloom License.txt" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.shader" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.cginc" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Demo Assets\Kino Bloom\KinoBloom.Runtime.asmdef" />
+    <None Include="Assets\Particle\Cartoon FX Remaster\Demo Assets\Kino Bloom\Kino Bloom License.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
