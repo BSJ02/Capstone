@@ -13,7 +13,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject gameOverUI;
 
-    public PlayerData playerData;
+    public ScriptableObject playerData;
+
 
     public CardProcessing cardProcessing;
    
@@ -50,7 +51,7 @@ public class UIManager : MonoBehaviour
     {
 
         cardProcessing = FindObjectOfType<CardProcessing>();
-
+        
 
         if (instance == null)
         {
@@ -69,12 +70,10 @@ public class UIManager : MonoBehaviour
     void Update()
     {
 
-        if(cardProcessing.selectedTarget != null)
-        {
-            energyFillMaterial.SetFloat("_FillLevel", playerData.activePoint * 0.2f);
-            energyValue.text = playerData.activePoint.ToString();
 
-        }
+      
+            energyFillMaterial.SetFloat("_FillLevel", cardProcessing.currentPlayer.playerData.activePoint * 0.2f);
+            energyValue.text =cardProcessing.currentPlayer.playerData.activePoint.ToString();
         /*
         
         if(GameManager.Instance.isGameOver)
