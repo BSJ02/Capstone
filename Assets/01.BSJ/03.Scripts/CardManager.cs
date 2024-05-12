@@ -107,7 +107,7 @@ public class CardManager : MonoBehaviour
     public void CardGetTest()
     {
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[1]; // <- change
+        Card card = cardInform.wizardCards[6]; // <- change
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 
