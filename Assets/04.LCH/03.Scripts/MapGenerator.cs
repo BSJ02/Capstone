@@ -121,7 +121,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     // 카드 사용 범위
-    public void CardUseRange(Vector3 playerPosition, int distance)
+    public void CardUseRange(Vector3 playerPosition, int cardDistance)
     {
         ClearHighlightedTiles();
         rangeInMonsters.Clear();
@@ -141,7 +141,7 @@ public class MapGenerator : MonoBehaviour
             Tile currentTile = currentNode.tile;
             int currentDistance = currentNode.distance;
 
-            if (currentDistance <= distance)
+            if (currentDistance <= cardDistance)
             {
                 if (currentTile != playerTile)
                 {
@@ -149,7 +149,7 @@ public class MapGenerator : MonoBehaviour
                     highlightedTiles.Add(currentTile);
                 }
             }
-            CheckAdjacentTiles(currentTile, queue, visited, distance, currentDistance + 1);
+            CheckAdjacentTiles(currentTile, queue, visited, cardDistance, currentDistance + 1);
         }
         TileOnMonster(highlightedTiles);
         selectingTarget = false;

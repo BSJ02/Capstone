@@ -25,11 +25,6 @@ public class CardData : MonoBehaviour
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public Vector3 playerPos;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     private void Start()
     {
         particleController = FindObjectOfType<ParticleController>();
