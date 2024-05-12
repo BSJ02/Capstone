@@ -57,6 +57,9 @@ public class Monster : MonoBehaviour
     {
         state = MonsterState.Idle;
         anim.SetInteger("State", (int)state);
+
+        attack = AttackState.GeneralAttack;
+
     }
 
     // [1] 몬스터 공격력 
@@ -79,6 +82,7 @@ public class Monster : MonoBehaviour
                 anim.SetInteger("State", (int)state);
 
                 monster_UI.GetMonsterDamage(); // UI 업데이트
+
                 break;
 
             // 일반 공격 
