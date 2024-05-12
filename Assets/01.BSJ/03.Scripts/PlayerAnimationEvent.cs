@@ -12,6 +12,7 @@ public class PlayerAnimationEvent : MonoBehaviour
     private bool isFireball = false;
     private bool isTeleport = false;
     private bool isPosSwap = false;
+    private bool isSummonObstacle = false;
 
     private void Awake()
     {
@@ -53,6 +54,21 @@ public class PlayerAnimationEvent : MonoBehaviour
             cardData.shouldPosSwap = false;
             isPosSwap = false;
         }
+
+        if (isSummonObstacle)
+        {
+            Vector3 tilePos = cardData.targetPos;
+            Vector3 moveTilePos = tilePos + new Vector3(0, 0.5f, 0);
+
+            float t = Time.deltaTime * 0.5f;
+            Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y];
+
+            tile.transform.position = Vector3.Lerp(tilePos, moveTilePos, t);
+            tile.SetCoord((int)tilePos.x, (int)tilePos.y, true);
+
+            cardData.shouldSummon = false;
+            isSummonObstacle = false;
+        }
     }
 
     public void OnTeleportAnimationEvent()
@@ -76,6 +92,14 @@ public class PlayerAnimationEvent : MonoBehaviour
         if (cardData.shouldPosSwap)
         {
             isPosSwap = true;
+        }
+    }
+
+    public void OnSummonObstacleAnimationEvent()
+    {
+        if (cardData.shouldPosSwap)
+        {
+            isSummonObstacle = true;
         }
     }
 }

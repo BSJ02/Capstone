@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skills/MageSkill")]
+[CreateAssetMenu(menuName = "Skills/Mage")]
 public class MageSkill : SkillData
 {
     public GameObject effect;
@@ -29,5 +29,4 @@ public class MageSkill : SkillData
         projectile.gameObject.GetComponent<Rigidbody>().AddForce(directionToPlayer * speed, ForceMode.VelocityChange);
 
     }
-
 }

@@ -13,7 +13,7 @@ public class CardManager : MonoBehaviour
     
     private CardProcessing cardProcessing;
     
-    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.42f, 0);
+    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4f, 0);
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);
     [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
 
@@ -65,7 +65,7 @@ public class CardManager : MonoBehaviour
         useCardPanelPrefab = Instantiate(useCardPanelPrefab, new Vector3(-2, 6, -2), Quaternion.Euler(45, 45, 0));
         useCardPanelPrefab.SetActive(false);
 
-        handCardPanelPrefab = Instantiate(handCardPanelPrefab, new Vector3(-3f, 0.35f, -3f), Quaternion.Euler(0, 45, 0));
+        handCardPanelPrefab = Instantiate(handCardPanelPrefab, new Vector3(-3f, 0.28f, -3f), Quaternion.Euler(0, 45, 0));
     }
 
 
@@ -107,7 +107,7 @@ public class CardManager : MonoBehaviour
     public void CardGetTest()
     {
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[1]; // <- change
+        Card card = cardInform.wizardCards[6]; // <- change
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 

@@ -10,8 +10,8 @@ public class ProjectileHitEffect : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Instantiate(hitEffect, other.transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
         }
     }
-
 }

@@ -37,7 +37,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("# UI")]
     public GameObject[] turn_UI; // 턴 UI
-    public GameObject buff_UI;
+    private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
@@ -52,6 +52,9 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int IsPoisoned = 0;
     [HideInInspector] public int IsBurned = 0;
     [HideInInspector] public int IsBleeding = 0;
+
+   
+
 
     private void Awake()
     {
@@ -126,6 +129,9 @@ public class BattleManager : MonoBehaviour
 
     public void MonsterTurn()
     {
+        
+
+
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
         
@@ -168,6 +174,9 @@ public class BattleManager : MonoBehaviour
             IEnumerator detectionCoroutine = monsterMove.StartDetection();
             yield return StartCoroutine(detectionCoroutine);
 
+            // 스킬을 쓰는 동안 다음 몬스터로 넘어가지 않도록 방지
+            while (monsters[randValue].GetComponent<Monster>().attack == AttackState.SkillAttack)
+                yield return null;
             // 각 몬스터 이동 후 delay 만큼 대기
             yield return new WaitForSeconds(delay);
         }

@@ -114,6 +114,22 @@ public class ParticleController : MonoBehaviour
         }
     }
 
+    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height)
+    {
+        if (prefab != null && playerObject != null)
+        {
+            GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
+            particleObject.transform.position = playerObject.transform.position + new Vector3(0, height, 0);
+
+            ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Play();
+                StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration));
+            }
+        }
+    }
+
     public IEnumerator ProjectileEffect(GameObject prefab, GameObject playerObject, GameObject targetObject)
     {
         if (healEffectPrefab != null && playerObject != null)

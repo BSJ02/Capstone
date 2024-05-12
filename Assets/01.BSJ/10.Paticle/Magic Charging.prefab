@@ -14655,7 +14655,7 @@ GameObject:
   - component: {fileID: 3280519133390621004}
   - component: {fileID: 3280519133390621041}
   m_Layer: 0
-  m_Name: Magic Chargin
+  m_Name: Magic Charging
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
