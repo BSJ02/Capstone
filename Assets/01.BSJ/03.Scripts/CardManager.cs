@@ -119,7 +119,7 @@ public class CardManager : MonoBehaviour
     {
 
         addCardObject[0].SetActive(true);
-        Card card = cardInform.commonCards[2]; // index에 해당하는 카드를 가져옵니다.
+        Card card = cardInform.rareCards[1]; // index에 해당하는 카드를 가져옵니다.
 
         ApplyCardInfrom(card, addCardObject[0]);
 

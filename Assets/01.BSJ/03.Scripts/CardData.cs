@@ -158,7 +158,6 @@ public class CardData : MonoBehaviour
     // Teleport
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
-        // ����� ���� ����
         Tile tile = selectedTarget.GetComponent<Tile>();
         if (tile != null)
         {
@@ -166,8 +165,7 @@ public class CardData : MonoBehaviour
 
             Debug.Log("Teleport ī�带 ���");
 
-            // �÷��̾� �߰� �̵�
-            player.transform.position = tile.transform.position;
+            player.transform.position = new Vector3(tile.transform.position.x, 0.35f, tile.transform.position.z);//tile.transform.position;
 
         }
         else
@@ -183,7 +181,7 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            monster.GetHit(card.cardPower[0]);  
 
             player.ChargeAnim(selectedTarget);
         }
@@ -235,7 +233,7 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            monster.GetHit(card.cardPower[0] + monster.monsterData.Amor);
 
             player.MacigAttack02Anim(selectedTarget);
         }
@@ -291,6 +289,9 @@ public class CardData : MonoBehaviour
             monster.GetHit(card.cardPower[0]);
 
             player.MacigAttack03Anim(selectedTarget);
+
+            player = playerObject.GetComponent<Player>();
+            player.playerData.Hp += card.cardPower[1];
         }
         else
         {

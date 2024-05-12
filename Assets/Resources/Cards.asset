@@ -102,7 +102,7 @@ MonoBehaviour:
     cardPower:
     - 4
     - 0
-    - 0
+    - 4
     cardSprite: {fileID: 21300000, guid: 0ad28630a5cd17948966d487491b7432, type: 3}
     cardPercent: 25
     cardRank: 1

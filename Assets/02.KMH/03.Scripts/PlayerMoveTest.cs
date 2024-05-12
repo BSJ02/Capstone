@@ -51,11 +51,9 @@ public class PlayerMoveTest : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
-                    // Ÿ���� Ŭ������ �� �÷��̾� �̵�
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
 
-                    // target�� ��ġ ����
-                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord); // Ŭ���� ��ǥ�� = targetPos
+                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
 
                     OpenList.Clear();
                     CloseList.Clear();
