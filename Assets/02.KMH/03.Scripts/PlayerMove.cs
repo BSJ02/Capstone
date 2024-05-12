@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private MapGenerator mapGenerator;
     public Player player;
+
+    public GameObject playerChoice; //수정
+
+    private MapGenerator mapGenerator;
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
+    private PlayerManager playerManager;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -27,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     private GameObject clickedPlayer;
 
     private bool isMoving = false;
+    private bool isActionSelect = false;
 
     private void Awake()
     {
@@ -79,20 +85,17 @@ public class PlayerMove : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
             {
+
                 if (hit.collider.CompareTag("Player"))
                 {
+                    playerChoice.SetActive(true);
                     clickedPlayer = hit.collider.gameObject;
-                    Player clickplayer = clickedPlayer.GetComponent<Player>();
-
-                    cardProcessing.currentPlayerObj = clickedPlayer;
-                    cardProcessing.currentPlayer = clickplayer;
-
-                    mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickplayer.playerData.activePoint);
+                    isActionSelect = true;
                 }
             }
 
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true)
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true && isActionSelect == true)
             {
                 if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
                 {
@@ -100,12 +103,44 @@ public class PlayerMove : MonoBehaviour
 
                     if (detectedMonsters.Contains(clickedMonster))
                     {
-                        player.ReadyToAttack(clickedMonster);
+                        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+
+                        clickPlayer.ReadyToAttack(clickedMonster);
+                        isActionSelect = false;
                     }
                 }
             }
         }
 
+    }
+
+    // Clicked MoveButton
+    public void OnMoveButtonClick()
+    {
+        // Code
+        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+
+        cardProcessing.currentPlayerObj = clickedPlayer;
+        cardProcessing.currentPlayer = clickPlayer;
+
+        if(clickPlayer.playerData.activePoint <= 0)
+        {
+            Debug.Log("No remaining ActivePoints");
+            playerChoice.SetActive(false);
+        }
+        else
+        {
+            mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
+        }
+    }
+
+    // Clicked AttackButton
+    public void OnAttackButtonClick()
+    {
+        // Code
+        Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+
+        GetSurroundingTiles(finalPosition);
     }
 
     private List<Vector2Int> PathFinding()
@@ -175,8 +210,9 @@ public class PlayerMove : MonoBehaviour
     {
         isMoving = true;
         clickedPlayer.layer = LayerMask.NameToLayer("Ignore Raycast");
-        Player clickplayer = clickedPlayer.GetComponent<Player>();
-        clickplayer.playerState = PlayerState.Moving;
+        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+        clickPlayer.playerState = PlayerState.Moving;
+        playerChoice.SetActive(false);
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
@@ -201,19 +237,18 @@ public class PlayerMove : MonoBehaviour
             clickedPlayer.transform.position = nextPosition;
 
 
-            clickplayer.playerData.activePoint--;
+            clickPlayer.playerData.activePoint--;
 
-            if (0 >= clickplayer.playerData.activePoint)
+            if (0 >= clickPlayer.playerData.activePoint)
                 break;
         }
 
         isMoving = false;
+        isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
-        clickplayer.playerState = PlayerState.Idle;
+        clickPlayer.playerState = PlayerState.Idle;
 
-        Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
 
-        GetSurroundingTiles(finalPosition);
         clickedPlayer = null;
 
         yield break;
