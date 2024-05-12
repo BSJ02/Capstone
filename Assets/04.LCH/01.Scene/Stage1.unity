@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07079832, g: 0.16074449, b: 0.18547891, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3919,6 +3919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147737434a1435149a17257a4ed94d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclePrefab: {fileID: 0}
 --- !u!1 &289607973
 GameObject:
   m_ObjectHideFlags: 0
@@ -7979,6 +7980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147737434a1435149a17257a4ed94d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclePrefab: {fileID: 0}
 --- !u!1 &597887344
 GameObject:
   m_ObjectHideFlags: 0

@@ -73,17 +73,10 @@ public class PlayerAnimationEvent : MonoBehaviour
 
         if (isSummonObstacle)
         {
-            float elapsedTime = 0f;
-            float duration = 0.2f;
-
             Vector3 tilePos = cardData.targetPos;
             Vector3 goalPosition = tilePos + new Vector3(0, 0.35f, 0);
 
-
-            float t = elapsedTime / duration;
-            GameObject obsacleObj = particleController.GetAvailableParticle(obstaclePrefab, obstacleQueue);
-            obsacleObj.transform.position = Vector3.Lerp(tilePos, goalPosition, t);
-            elapsedTime += Time.deltaTime;
+            StartCoroutine(SpawnWall(tilePos, goalPosition));
 
             Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y];
             tile.SetCoord((int)tilePos.x, (int)tilePos.y, true);
@@ -93,35 +86,41 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
     }
 
-    public void OnTeleportAnimationEvent()
+    private void OnCardEffectAnimationEvent()
     {
         if (cardData.shouldTeleport)
         {
             isTeleport = true;
         }
-    }
-
-    public void OnFireballAnimationEvent()
-    {
-        if (cardData.shouldFireball)
+        else if (cardData.shouldFireball)
         {
             isFireball = true;
         }
-    }
-
-    public void OnPositionSwapAnimationEvent()
-    {
-        if (cardData.shouldPosSwap)
+        else if (cardData.shouldPosSwap)
         {
             isPosSwap = true;
         }
     }
 
-    public void OnSummonObstacleAnimationEvent()
+    private void OnSummonObstacle()
     {
-        if (cardData.shouldSummon)
+        isSummonObstacle = true;
+    }
+
+    public IEnumerator SpawnWall(Vector3 tilePos, Vector3 goalPosition)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.2f;
+        float deltaTime = Time.deltaTime;
+
+        GameObject obsacleObj = particleController.GetAvailableParticle(obstaclePrefab, obstacleQueue);
+
+        while (elapsedTime < duration)
         {
-            isSummonObstacle = true;
+            float t = elapsedTime / duration;
+            obsacleObj.transform.position = Vector3.Lerp(tilePos, goalPosition, t);
+            elapsedTime += deltaTime;
+            yield return null;
         }
     }
 }
