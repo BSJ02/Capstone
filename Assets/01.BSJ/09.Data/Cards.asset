@@ -211,7 +211,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
-    cardDistance: 4
+    cardDistance: 3
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -220,7 +220,7 @@ MonoBehaviour:
     cardDescription: 
     cardDescription_Power: 
     cardPower: []
-    cardDistance: 0
+    cardDistance: 4
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -231,7 +231,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower:
     - 100
-    cardDistance: 6
+    cardDistance: 3
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
@@ -240,12 +240,13 @@ MonoBehaviour:
     cardDescription: "\uC5EC\uB7EC\uBA85 \uD0C0\uACA9, \uC77C\uC815 \uD655\uB960\uB85C
       \uD654\uC0C1 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
+    cardPower:
+    - 30
+    cardDistance: 3
     cardSprite: {fileID: 0}
     cardPercent: 15
     cardRank: 3
-    cardTarget: 1
+    cardTarget: 0
   - cardName: Life Drain
     cardDescription: "\uB300\uC0C1\uC758 \uCCB4\uB825\uC744 \uAC15\uD0C8\uD568"
     cardDescription_Power: 

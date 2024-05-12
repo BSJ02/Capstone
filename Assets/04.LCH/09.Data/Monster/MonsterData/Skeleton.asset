@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e3dec54678a854ab9c12327fd41fa6, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: 
+  MonsterName: "\uC5B8\uB370\uB4DC \uC2A4\uCF08\uB808\uD1A4"
+  Id: 4
+  Hp: 100
+  MaxHp: 100
+  Amor: 2
+  CurrentDamage: 0
+  MoveDistance: 4
+  DetectionRagne: 1
+  Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
+  MinDamage: 6
+  MaxDamage: 12
+  Critical: 10
+  SkillDetectionRange: 0

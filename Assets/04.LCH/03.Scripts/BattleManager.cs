@@ -27,6 +27,9 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> monsters = new List<GameObject>();
     private Player playerScripts;
 
+    // 랜덤으로 선택된 몬스터를 HashSet에 저장
+    HashSet<int> selectedMonsters = new HashSet<int>();
+
     [Header("# 몬스터 버프")] 
     public float damage;
     public float heal;
@@ -37,7 +40,7 @@ public class BattleManager : MonoBehaviour
     public GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
 
-    private int currentMonsterIndex = -1;
+    public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
 
     [HideInInspector] public bool isPlayerMove = false;
@@ -50,7 +53,6 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int IsBurned = 0;
     [HideInInspector] public int IsBleeding = 0;
 
-    private CardData cardData;
     private void Awake()
     {
         if(instance == null)
@@ -66,7 +68,7 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        cardData = FindObjectOfType<CardData>();
+        CardData cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
         characterSelector = FindObjectOfType<CharacterSelector>();
         //players = characterSelector.playerSelectList.players;
@@ -126,40 +128,62 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
+        
+        // 플레이어 턴 UI 비활성화
         turn_UI[0].gameObject.SetActive(false);
-        turn_UI[1].gameObject.SetActive(true);
-        turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
-        turnEnd_Btn.interactable = false;  
-        StartCoroutine(NextMonster());
         foreach (GameObject player in players)
         {
             player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        }
+        } // 레이캐스트 비활성호 
+
+        // 몬스터 턴 UI 활성화
+        turn_UI[1].gameObject.SetActive(true);
+        turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
+        turnEnd_Btn.interactable = false;  
+
+        StartCoroutine(NextMonster());
+
     }
 
     IEnumerator NextMonster()
     {
+        // 지정된 delay 시간 동안 대기(MonsterTurn UI 재생 때문에)
         yield return new WaitForSeconds(delay);
 
-        if (currentMonsterIndex < monsters.Count - 1)
+        // MaximumOfMonster에 설정되어 있는 값 만큼 몬스터 움직이기
+        for (int i = 0; i < MaximumOfMonster; i++)
         {
-            currentMonsterIndex++;
-            monsters[currentMonsterIndex].GetComponent<MonsterMove>().MoveStart();
+            int randValue = Random.Range(0, monsters.Count);
 
-            // 몬스터 순회 완료
-            if (currentMonsterIndex == monsters.Count - 1)
+            // 중복된 몬스터 설정(!몬스터가 두 번 움직이는 것도 가능함. 따라서, 이 부분은 확실히 정해야함)
+            while (selectedMonsters.Contains(randValue))
             {
-                /*// 몬스터 버프
-                for (int i = 0; i < monsters.Count; i++)
-                {
-                    buff_UI.gameObject.SetActive(true);
-                    buff_UI.GetComponent<Animator>().Play("Buff", -1, 0f);
-                    monsters[i].GetComponent<Monster>().monsterData.IncreaseDamage(damage); // 원하는 스탯을 랜덤하게 뽑기
-                }*/
-                // 초기화 
-                currentMonsterIndex = -1;
+                randValue = Random.Range(0, monsters.Count);
             }
+            // HashSet에 랜덤 몬스터 추가
+            selectedMonsters.Add(randValue);
+
+            // 몬스터[randValue]의 StartDetection() 코루틴 실행
+            MonsterMove monsterMove = monsters[randValue].GetComponent<MonsterMove>();
+            IEnumerator detectionCoroutine = monsterMove.StartDetection();
+            yield return StartCoroutine(detectionCoroutine);
+
+            // 각 몬스터 이동 후 delay 만큼 대기
+            yield return new WaitForSeconds(delay);
         }
+        // HashSet에 선택되었던 몬스터들 초기화(버그 예방 차원) 
+        selectedMonsters.Clear();
+        // 모든 몬스터 행동 종료 후 턴 넘기기
+        StartCoroutine(EscapeMonsterTurn());
+    }
+
+    IEnumerator EscapeMonsterTurn()
+    {
+        // 대기 처리
+        yield return new WaitForSeconds(3f);
+        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
+        BattleManager.instance.PlayerTurn();
+
     }
 
 }

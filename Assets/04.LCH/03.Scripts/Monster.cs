@@ -127,6 +127,11 @@ public class Monster : MonoBehaviour
         MapGenerator.instance.totalMap[(int)transform.position.x, (int)transform.position.z]
             .SetCoord((int)transform.position.x, (int)transform.position.z, false);
 
-            anim.SetTrigger("Die");
+        // 리스트에서 제거
+        BattleManager.instance.monsters.Remove(gameObject);
+
+        anim.SetTrigger("Die");
+
+        Destroy(gameObject, 4f);
     }
 }

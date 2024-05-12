@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class MapGenerator : MonoBehaviour
@@ -14,8 +15,11 @@ public class MapGenerator : MonoBehaviour
     public int garo;
     public int sero;
 
+    [HideInInspector] public bool selectingTarget;
+
     [SerializeField]
-    private List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+    public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+    public List<Monster> rangeInMonsters = new List<Monster>();
 
     private void Awake()
     {
@@ -119,38 +123,54 @@ public class MapGenerator : MonoBehaviour
     // 카드 사용 범위
     public void CardUseRange(Vector3 playerPosition, int distance)
     {
-        // 초기화
         ClearHighlightedTiles();
+        rangeInMonsters.Clear();
 
-        // 플레이어 위치의 타일을 찾음
         int playerX = Mathf.RoundToInt(playerPosition.x);
         int playerZ = Mathf.RoundToInt(playerPosition.z);
         Tile playerTile = totalMap[playerX, playerZ];
 
-        // 플레이어를 중심으로 distance 범위 내의 타일을 찾아 색깔을 변경
-        for (int x = playerX - distance; x <= playerX + distance; x++)
-        {
-            for (int z = playerZ - distance; z <= playerZ + distance; z++)
-            {
-                // 해당 타일이 맵 범위 내에 있는지 확인
-                if (x >= 0 && x < garo && z >= 0 && z < sero)
-                {
-                    // 대각선 방향에 있는 타일은 건너뜀
-                    if ((x == playerX - distance || x == playerX + distance) && (z == playerZ - distance || z == playerZ + distance))
-                        continue;
+        Queue<PathNode> queue = new Queue<PathNode>();
+        HashSet<Tile> visited = new HashSet<Tile>();
+        queue.Enqueue(new PathNode(playerTile, 0));
+        visited.Add(playerTile);
 
-                    Tile currentTile = totalMap[x, z];
-                    // 플레이어 위치를 중심으로 distance 범위 내의 타일만 색깔을 변경
-                    if (!currentTile.coord.isWall)
-                    {
-                        currentTile.GetComponent<Renderer>().material.color = Color.black;
-                        highlightedTiles.Add(currentTile);
-                    }
+        while (queue.Count > 0)
+        {
+            PathNode currentNode = queue.Dequeue();
+            Tile currentTile = currentNode.tile;
+            int currentDistance = currentNode.distance;
+
+            if (currentDistance <= distance)
+            {
+                if (currentTile != playerTile)
+                {
+                    currentTile.GetComponent<Renderer>().material.color = Color.black;
+                    highlightedTiles.Add(currentTile);
+                }
+            }
+            CheckAdjacentTiles(currentTile, queue, visited, distance, currentDistance + 1);
+        }
+        TileOnMonster(highlightedTiles);
+        selectingTarget = false;
+    }
+
+    public void TileOnMonster(List<Tile> tiles)
+    {
+        Monster[] monsters = FindObjectsOfType<Monster>();
+        
+        foreach (Monster monster in monsters)
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (monster.transform.position.x == tile.transform.position.x && monster.transform.position.z == tile.transform.position.z)
+                {
+                    rangeInMonsters.Add(monster);
+                    break;
                 }
             }
         }
     }
-
 
     // 상하좌우 이동 가능한 타일 확인 및 큐에 추가
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
@@ -172,7 +192,15 @@ public class MapGenerator : MonoBehaviour
         {
             Tile tile = map[x, y];
             // 벽이 아니고, 이동 가능한 범위를 초과하지 않는 경우에만 큐에 추가
-            if (!tile.coord.isWall && !visited.Contains(tile) && nextDistance <= maxDistance)
+            if (selectingTarget)
+            {
+                if (!visited.Contains(tile) && nextDistance <= maxDistance)
+                {
+                    queue.Enqueue(new PathNode(tile, nextDistance));
+                    visited.Add(tile);
+                }
+            }
+            else if (!tile.coord.isWall && !visited.Contains(tile) && nextDistance <= maxDistance)
             {
                 queue.Enqueue(new PathNode(tile, nextDistance));
                 visited.Add(tile);
