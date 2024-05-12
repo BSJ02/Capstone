@@ -21,6 +21,8 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
+    public GameObject playerChoice; //수정
+
     public PlayerData playerData;
     private CardProcessing cardProcessing;
 
@@ -174,6 +176,8 @@ public class Player : MonoBehaviour
 
 
         monster.GetHit(playerData.Damage);
+
+        playerChoice.SetActive(false);
 
         return;
     }
