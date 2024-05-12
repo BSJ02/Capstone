@@ -4319,8 +4319,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 0}
-  player: {fileID: 0}
+  player: {fileID: 1438304488987421560}
   detectionRange: 1
+  clickedPlayer: {fileID: 0}
 --- !u!1 &8017519852781684414
 GameObject:
   m_ObjectHideFlags: 0
