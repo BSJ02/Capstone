@@ -457,7 +457,7 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             shouldFireball = true;
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            cardProcessing.currentPlayer.MacigAttack02Anim(selectedTarget);
             cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
@@ -473,7 +473,7 @@ public class CardData : MonoBehaviour
         if (MapGenerator.instance.rangeInMonsters != null)
         {
             shouldFlamePillar = true;
-            player.ChargeAnim(selectedTarget);
+            player.MacigAttack03Anim(selectedTarget);
             cardProcessing.cardUseDistance = card.cardDistance;
         }
         else

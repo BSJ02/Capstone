@@ -5,7 +5,14 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
+    private GameObject obstacle_Group;
     private GameObject particle_Group;
+
+
+    [Header("# Wall Prefab")]
+    public GameObject obstaclePrefab;
+
+    private Queue<GameObject> obstacleQueue = new Queue<GameObject>();
 
     [Header("# Particle Prefabs")]
     public GameObject healEffectPrefab;
@@ -22,17 +29,25 @@ public class ParticleController : MonoBehaviour
 
     private void Start()
     {
+        obstacle_Group = GameObject.Find("Particle_Group");
+        if (obstacle_Group == null)
+        {
+            obstacle_Group = new GameObject("Particle_Group");
+        }
+        InitializeParticlePool(obstaclePrefab, obstacleQueue, obstacle_Group);
+
+
         particle_Group = GameObject.Find("Particle_Group");
-        if (particle_Group == null ) 
+        if (particle_Group == null)
         {
             particle_Group = new GameObject("Particle_Group");
         }
-        
         InitializeParticlePool(healEffectPrefab, healEffectPool, particle_Group);
         InitializeParticlePool(buffEffectPrefab, buffEffectPool, particle_Group);
         InitializeParticlePool(fireballEffectPrefab, fireballEffectPool, particle_Group);
         InitializeParticlePool(teleportEffectPrefab, teleportEffectPool, particle_Group);
         InitializeParticlePool(flamePillarEffectPrefab, flamePillarEffectPool, particle_Group);
+
     }
 
     public void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool, GameObject parentObj)
@@ -122,57 +137,83 @@ public class ParticleController : MonoBehaviour
 
     public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height)
     {
-        if (prefab != null && playerObject != null)
-        {
-            GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
-            particleObject.transform.position = playerObject.transform.position + new Vector3(0, height, 0);
+        GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
+        particleObject.transform.position = playerObject.transform.position + new Vector3(0, height, 0);
 
-            ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
-            if (particleSystem != null)
-            {
-                particleSystem.Play();
-                StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration));
-            }
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+            StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration));
         }
     }
 
     public IEnumerator ProjectileEffect(GameObject prefab, GameObject playerObject, GameObject targetObject)
     {
-        if (healEffectPrefab != null && playerObject != null)
+
+        Vector3 startPosition = playerObject.transform.position + new Vector3(0, 1, 0);
+        Vector3 targetPosition = targetObject.transform.position;
+
+        GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
+        particleObject.transform.position = playerObject.transform.position;
+
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+
+        float distance = Vector3.Distance(startPosition, targetPosition);
+        particleSystem.Stop();
+
+        var main = particleSystem.main;
+        main.duration = distance / 10f;
+
+        if (particleSystem != null)
         {
-            Vector3 startPosition = playerObject.transform.position;
-            Vector3 targetPosition = targetObject.transform.position;
+            particleSystem.Play();
+            StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration + 0.5f));
+        }
 
-            GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
-            particleObject.transform.position = playerObject.transform.position;
+        float duration = 0.5f;
 
-            ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+        float elapsedTime = 0f;
 
-            float distance = Vector3.Distance(startPosition, targetPosition);
-            particleSystem.Stop();
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
 
-            var main = particleSystem.main;
-            main.duration = distance / 10f;
+            particleObject.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
 
-            if (particleSystem != null)
-            {
-                particleSystem.Play();
-                StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration + 1f));
-            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 
-            float duration = 0.5f;
+    public IEnumerator elevateObject(Vector3 tilePos, Vector3 goalPosition)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.2f;
+        float deltaTime = Time.deltaTime;
 
-            float elapsedTime = 0f;
+        GameObject obsacleObj = GetAvailableParticle(obstaclePrefab, obstacleQueue);
 
-            while (elapsedTime < duration)
-            {
-                float t = elapsedTime / duration;
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            obsacleObj.transform.position = Vector3.Lerp(tilePos, goalPosition, t);
+            elapsedTime += deltaTime;
+            yield return null;
+        }
+    }
 
-                particleObject.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+    public void AreaAttack(GameObject prefab, GameObject playerObj, float rotationY)
+    {
+        GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
+        particleObject.transform.position = playerObj.transform.position;
+        particleObject.transform.rotation = new Quaternion(0, rotationY, 0, 0);
 
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+            StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration));
         }
     }
 }

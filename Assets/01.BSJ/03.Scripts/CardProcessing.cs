@@ -123,7 +123,7 @@ public class CardProcessing : MonoBehaviour
         {
             selectedTarget = hit.collider.gameObject;
 
-            if (selectedTarget.layer == LayerMask.NameToLayer("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
+            if (selectedTarget.CompareTag("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
             {
                 if (selectedTarget.CompareTag("Monster"))
                 {
@@ -133,7 +133,7 @@ public class CardProcessing : MonoBehaviour
                         waitForInput = false;
                     }
                 }
-                else if (selectedTarget.CompareTag("Tile"))
+                else if (selectedTarget.layer == LayerMask.NameToLayer("Tile"))
                 {
                     Tile selectTile = selectedTarget.GetComponent<Tile>();
                     if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)

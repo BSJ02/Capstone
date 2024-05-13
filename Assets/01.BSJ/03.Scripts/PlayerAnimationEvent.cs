@@ -16,11 +16,6 @@ public class PlayerAnimationEvent : MonoBehaviour
     private bool isFlamePillar = false;
     private bool isSummonObstacle = false;
 
-    [HideInInspector] public Queue<GameObject> obstacleQueue = new Queue<GameObject>();
-    [Header("# Wall Prefab")]
-    public GameObject obstaclePrefab;
-    private GameObject obstacle_Group;
-
     private void Awake()
     {
         cardData = FindObjectOfType<CardData>();
@@ -28,16 +23,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
         particleController = FindObjectOfType<ParticleController>();
     }
-    private void Start()
-    {
-        obstacle_Group = GameObject.Find("Particle_Group");
-        if (obstacle_Group == null)
-        {
-            obstacle_Group = new GameObject("Particle_Group");
-        }
-
-        particleController.InitializeParticlePool(obstaclePrefab, obstacleQueue, obstacle_Group);
-    }
+    
 
     private void Update()
     {
@@ -87,18 +73,18 @@ public class PlayerAnimationEvent : MonoBehaviour
 
         if (isFlamePillar)
         {
-            GameObject particlePrefab = particleController.flamePillarEffectPrefab;
+            GameObject particlePrefab_One = particleController.flamePillarEffectPrefab;
+            GameObject particlePrefab_Two = particleController.flamePillarEffectPrefab;
             GameObject playerObj = cardProcessing.currentPlayerObj;
             Card useCard = cardManager.useCard;
 
-
-          /*  Monster monster = targetObj.GetComponent<Monster>();
+            particleController.AreaAttack(particlePrefab_One, playerObj, 0);
+            particleController.AreaAttack(particlePrefab_Two, playerObj, 90);
 
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
                 monster.GetHit(useCard.cardPower[0]);
-            }*/
-
+            }
             cardData.shouldFlamePillar = false;
             isFlamePillar = false;
         }
@@ -108,7 +94,7 @@ public class PlayerAnimationEvent : MonoBehaviour
             Vector3 tilePos = cardData.targetPos;
             Vector3 goalPosition = tilePos + new Vector3(0, 0.35f, 0);
 
-            StartCoroutine(elevateObject(tilePos, goalPosition));
+            StartCoroutine(particleController.elevateObject(tilePos, goalPosition));
 
             Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y];
             tile.SetCoord((int)tilePos.x, (int)tilePos.y, true);
@@ -118,7 +104,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
     }
 
-    private void OnCardEffectAnimationEvent()
+    private void OnChargeAnimationEvent()
     {
         if (cardData.shouldTeleport)
         {
@@ -128,13 +114,14 @@ public class PlayerAnimationEvent : MonoBehaviour
         {
             isPosSwap = true;
         }
-        else if (cardData.shouldFireball)
+        
+    }
+
+    private void OnFireballAnimationEvent()
+    {
+        if (cardData.shouldFireball)
         {
             isFireball = true;
-        }
-        else if (cardData.shouldFlamePillar)
-        {
-            isFlamePillar = true;
         }
     }
 
@@ -146,25 +133,13 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
     }
 
-    public IEnumerator elevateObject(Vector3 tilePos, Vector3 goalPosition)
+    private void OnFlamePillar()
     {
-        float elapsedTime = 0f;
-        float duration = 0.2f;
-        float deltaTime = Time.deltaTime;
-
-        GameObject obsacleObj = particleController.GetAvailableParticle(obstaclePrefab, obstacleQueue);
-
-        while (elapsedTime < duration)
+        if (cardData.shouldFlamePillar)
         {
-            float t = elapsedTime / duration;
-            obsacleObj.transform.position = Vector3.Lerp(tilePos, goalPosition, t);
-            elapsedTime += deltaTime;
-            yield return null;
+            isFlamePillar = true;
         }
     }
 
-    private void AreaAttack(GameObject prefab)
-    {
 
-    }
 }

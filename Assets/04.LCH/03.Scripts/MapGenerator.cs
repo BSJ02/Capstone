@@ -147,6 +147,10 @@ public class MapGenerator : MonoBehaviour
                     currentTile.GetComponent<Renderer>().material.color = Color.black;
                     highlightedTiles.Add(currentTile);
                 }
+                else if (currentTile.coord.isWall)
+                {
+                    currentTile.GetComponent<Renderer>().material.color = Color.gray;
+                }
             }
             CheckAdjacentTiles(currentTile, queue, visited, cardDistance, currentDistance + 1);
         }
