@@ -93,6 +93,8 @@ public class PlayerMove : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
+                    mapGenerator.ClearHighlightedTiles();
+                    detectedMonsters.Clear();
                     playerChoice.SetActive(true);
                     clickedPlayer = hit.collider.gameObject;
                     isActionSelect = true;
