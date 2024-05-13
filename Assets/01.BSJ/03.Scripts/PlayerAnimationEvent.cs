@@ -13,6 +13,7 @@ public class PlayerAnimationEvent : MonoBehaviour
     private bool isFireball = false;
     private bool isTeleport = false;
     private bool isPosSwap = false;
+    private bool isFlamePillar = false;
     private bool isSummonObstacle = false;
 
     [HideInInspector] public Queue<GameObject> obstacleQueue = new Queue<GameObject>();
@@ -42,18 +43,16 @@ public class PlayerAnimationEvent : MonoBehaviour
     {
         if (isTeleport)
         {
-            cardProcessing.currentPlayerObj.transform.position = cardData.targetPos;
+            Vector3 playerPos = cardProcessing.currentPlayerObj.transform.position;
+            Vector3 tilePos = cardData.targetPos;
+
+            cardProcessing.currentPlayerObj.transform.position = tilePos; // Player => TilePos
+
+            MapGenerator.instance.totalMap[(int)playerPos.x, (int)playerPos.y].SetCoord((int)playerPos.x, (int)playerPos.y, false);
+            MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y].SetCoord((int)tilePos.x, (int)tilePos.y, true);
+
             cardData.shouldTeleport = false;
             isTeleport = false;
-        }
-
-        if (isFireball)
-        {
-            StartCoroutine(particleController.ProjectileEffect(particleController.fireballEffectPrefab, cardProcessing.currentPlayerObj, cardProcessing.selectedTarget));
-            Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
-            monster.GetHit(cardManager.useCard.cardPower[0]);
-            cardData.shouldFireball = false;
-            isFireball = false;
         }
 
         if (isPosSwap)
@@ -71,12 +70,45 @@ public class PlayerAnimationEvent : MonoBehaviour
             isPosSwap = false;
         }
 
+        if (isFireball)
+        {
+            GameObject particlePrefab = particleController.fireballEffectPrefab;
+            GameObject playerObj = cardProcessing.currentPlayerObj;
+            GameObject targetObj = cardProcessing.selectedTarget;
+            Card useCard = cardManager.useCard;
+
+            StartCoroutine(particleController.ProjectileEffect(particlePrefab, playerObj, targetObj));
+            Monster monster = targetObj.GetComponent<Monster>();
+            monster.GetHit(useCard.cardPower[0]);
+
+            cardData.shouldFireball = false;
+            isFireball = false;
+        }
+
+        if (isFlamePillar)
+        {
+            GameObject particlePrefab = particleController.flamePillarEffectPrefab;
+            GameObject playerObj = cardProcessing.currentPlayerObj;
+            Card useCard = cardManager.useCard;
+
+
+          /*  Monster monster = targetObj.GetComponent<Monster>();
+
+            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
+            {
+                monster.GetHit(useCard.cardPower[0]);
+            }*/
+
+            cardData.shouldFlamePillar = false;
+            isFlamePillar = false;
+        }
+
         if (isSummonObstacle)
         {
             Vector3 tilePos = cardData.targetPos;
             Vector3 goalPosition = tilePos + new Vector3(0, 0.35f, 0);
 
-            StartCoroutine(SpawnWall(tilePos, goalPosition));
+            StartCoroutine(elevateObject(tilePos, goalPosition));
 
             Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y];
             tile.SetCoord((int)tilePos.x, (int)tilePos.y, true);
@@ -92,22 +124,29 @@ public class PlayerAnimationEvent : MonoBehaviour
         {
             isTeleport = true;
         }
+        else if (cardData.shouldPosSwap)
+        {
+            isPosSwap = true;
+        }
         else if (cardData.shouldFireball)
         {
             isFireball = true;
         }
-        else if (cardData.shouldPosSwap)
+        else if (cardData.shouldFlamePillar)
         {
-            isPosSwap = true;
+            isFlamePillar = true;
         }
     }
 
     private void OnSummonObstacle()
     {
-        isSummonObstacle = true;
+        if (cardData.shouldSummon)
+        {
+            isSummonObstacle = true;
+        }
     }
 
-    public IEnumerator SpawnWall(Vector3 tilePos, Vector3 goalPosition)
+    public IEnumerator elevateObject(Vector3 tilePos, Vector3 goalPosition)
     {
         float elapsedTime = 0f;
         float duration = 0.2f;
@@ -122,5 +161,10 @@ public class PlayerAnimationEvent : MonoBehaviour
             elapsedTime += deltaTime;
             yield return null;
         }
+    }
+
+    private void AreaAttack(GameObject prefab)
+    {
+
     }
 }

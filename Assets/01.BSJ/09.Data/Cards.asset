@@ -212,7 +212,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower: []
     cardDistance: 3
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 0ad28630a5cd17948966d487491b7432, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 1
@@ -221,7 +221,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower: []
     cardDistance: 4
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 86e8af0758da7ac4caf8101ae5bda8ef, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 1
@@ -232,7 +232,7 @@ MonoBehaviour:
     cardPower:
     - 100
     cardDistance: 3
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: b227bc84d5a73df478000e171622c240, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 1
@@ -243,7 +243,7 @@ MonoBehaviour:
     cardPower:
     - 30
     cardDistance: 3
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 931ae8816e9fc694aaac730cd1c0d0d6, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower: []
     cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: faf3c54d2a2ca7f418437b0fb8ff9152, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 1
@@ -261,7 +261,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower: []
     cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: a7a6bf065a5534843be999a79ed724a9, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 0
@@ -270,7 +270,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower: []
     cardDistance: 5
-    cardSprite: {fileID: 0}
+    cardSprite: {fileID: 21300000, guid: 2385d0b60df8ba94982b7dcc78a9cc3f, type: 3}
     cardPercent: 15
     cardRank: 3
     cardTarget: 1

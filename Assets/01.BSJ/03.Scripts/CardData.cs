@@ -14,16 +14,16 @@ public class CardData : MonoBehaviour
 
     private PlayerState playerState;
 
+    [HideInInspector] public Vector3 tempPos;
+    [HideInInspector] public Vector3 targetPos;
+    [HideInInspector] public Vector3 playerPos;
 
     // Wizard variables
     [HideInInspector] public bool shouldTeleport = false;
     [HideInInspector] public bool shouldPosSwap = false;
     [HideInInspector] public bool shouldFireball = false;
     [HideInInspector] public bool shouldSummon = false;
-
-    [HideInInspector] public Vector3 tempPos;
-    [HideInInspector] public Vector3 targetPos;
-    [HideInInspector] public Vector3 playerPos;
+    [HideInInspector] public bool shouldFlamePillar = false;
 
     private void Start()
     {
@@ -472,13 +472,8 @@ public class CardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (MapGenerator.instance.rangeInMonsters != null)
         {
-            foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
-            {
-                monster.GetHit(card.cardPower[0]);
-            }
-
+            shouldFlamePillar = true;
             player.ChargeAnim(selectedTarget);
-
             cardProcessing.cardUseDistance = card.cardDistance;
         }
         else

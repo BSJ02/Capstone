@@ -38,7 +38,7 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        /*if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
+        if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
         {
             index = cardManager.handCardObject.IndexOf(gameObject) + 1;
             AnimateCard(scaleFactor, originalPosition + Vector3.up * 0.5f);
@@ -52,7 +52,7 @@ public class CardMove : MonoBehaviour
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
                 AnimateCard(1f, originalPosition);
             }
-        }*/
+        }
     }
 
     void AnimateCard(float scale, Vector3 position)
@@ -159,7 +159,7 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard)
+            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.usingCard)
             {
                 cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(true);
             }
@@ -178,7 +178,7 @@ public class CardMove : MonoBehaviour
     private void OnMouseDrag()
     {
         // 카드 클릭 & !대상 선택 & !카드 선택
-        if (!cardProcessing.waitForInput && !cardManager.waitAddCard && battleManager.isPlayerTurn)
+        if (!cardProcessing.waitForInput && cardProcessing.usingCard && !cardManager.waitAddCard && battleManager.isPlayerTurn)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;

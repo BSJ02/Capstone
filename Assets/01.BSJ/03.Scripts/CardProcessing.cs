@@ -60,8 +60,8 @@ public class CardProcessing : MonoBehaviour
     private IEnumerator WaitForTargetSelection(Card card)
     {
         battleManager.isPlayerMove = false;
-        TempActivePoint = currentPlayer.playerData.activePoint;
-        currentPlayer.playerData.activePoint = 0;
+        //TempActivePoint = currentPlayer.playerData.activePoint;
+        //currentPlayer.playerData.activePoint = 0;
         cardUseDistance = card.cardDistance;
 
         while (true)
@@ -101,6 +101,7 @@ public class CardProcessing : MonoBehaviour
             }
 
             usingCard = false;
+            cardUseDistance = 0;
             MapGenerator.instance.ClearHighlightedTiles();
 
             if (!waitForInput)
