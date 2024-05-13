@@ -208,7 +208,7 @@ public class CardData : MonoBehaviour
         if (monster != null)
         {
             Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            monster.GetHit(card.cardPower[0]);  
 
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
         }
