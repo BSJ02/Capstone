@@ -214,102 +214,39 @@ public class MonsterMove : MonoBehaviour
     // 플레이어 감지 및 공격(대각선 공격 X)
     public void GetSurroundingTiles(Vector2Int monsterPos)
     {
-        /* int attackDetectionRange = monster.monsterData.DetectionRagne;
-         int skillDetectionRange = monster.monsterData.SkillDetectionRange;
-
-         int distanceX = Mathf.Abs(monsterPos.x - playerPos.x);
-         int distanceY = Mathf.Abs(monsterPos.y - playerPos.y);
-
-         // 스킬 공격
-         if ((distanceX <= skillDetectionRange && monsterPos.y == playerPos.y && isMoving == false) ||
-             (distanceY <= skillDetectionRange && monsterPos.x == playerPos.x && isMoving == false))
-         {
-             // X축이 같을 때
-             if (monsterPos.x != playerPos.x)
-                 return;
-
-             for (int i = monsterPos.y; i > playerPos.y; --i)
-                 {
-                     Tile checkedTile = MapGenerator.instance.totalMap[monsterPos.x, i];
-                     if (checkedTile.coord.isWall)
-                         break;
-
-                     isMoving = true;
-                     monster.attack = AttackState.SkillAttack;
-
-                     Player player = FindObjectOfType<Player>();
-                     transform.LookAt(player.transform); // 회전 값 보정
-                     monster.Attack(player);
-
-                     isMoving = false;
-                     // 스킬 이펙트 및 연산 처리
-                 }
-             else if (monsterPos.y == playerPos.y)
-             {
-                 for (int i = monsterPos.x; i > playerPos.x; --i)
-                 {
-                     Tile checkedTile = MapGenerator.instance.totalMap[i, monsterPos.y];
-                     if (checkedTile.coord.isWall)
-                         break;
-
-                     isMoving = true;
-                     monster.attack = AttackState.SkillAttack;
-
-                     Player player = FindObjectOfType<Player>();
-                     transform.LookAt(player.transform); // 회전 값 보정
-                     monster.Attack(player);
-
-                     isMoving = false;
-                     // 스킬 이펙트 및 연산 처리
-                 }
-             }
-         }
-         // 일반 공격
-         else if (//*(monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&
-             (distanceX <= attackDetectionRange && monsterPos.y == playerPos.y && isMoving == false) ||
-             (distanceY <= attackDetectionRange && monsterPos.x == playerPos.x))
-         {
-             isMoving = true;
-             monster.attack = AttackState.GeneralAttack;
-
-             Player player = FindObjectOfType<Player>();
-             transform.LookAt(player.transform); // 회전 값 보정
-             monster.Attack(player); // 데미지 연산
-
-             isMoving = false;
-             return;
-         }
-         else
-         {
-             if (isMoving == false)
-             {
-                 Moving();
-             }
-             else if (isMoving == true)
-             {
-                 isMoving = false;
-                 monster.Init();
-                 return;
-             }
-         }
- */
-
-
-
-
-
-
-
         // 스킬 공격(벽 뚫 O)
         int attackDetectionRange = monster.monsterData.DetectionRagne;
         int skillDetectionRange = monster.monsterData.SkillDetectionRange;
 
         int distanceX = Mathf.Abs(monsterPos.x - playerPos.x);
         int distanceY = Mathf.Abs(monsterPos.y - playerPos.y);
+
+
+        int isWallTileX = monsterPos.x + attackDetectionRange;
+        int isWallTileY = monsterPos.y = attackDetectionRange;
+
+        // [1] 스킬 공격 범위 내에 플레이어가 존재 할 경우
         if ((monster.monsterData.CurrentDamage >= monster.monsterData.Critical) &&
             (distanceX <= skillDetectionRange && monsterPos.y == playerPos.y) ||
             (distanceY <= skillDetectionRange && monsterPos.x == playerPos.x))
         {
+            List<Tile> checkisWallTiles = new List<Tile>();
+
+            for (int i = monsterPos.x; i < isWallTileX; i++)
+            {
+                for (int j = monsterPos.y; j < isWallTileY; j++)
+                {
+                    checkisWallTiles.Add(MapGenerator.instance.totalMap[i, j]);
+                }
+            }
+
+            foreach (var checkTile in checkisWallTiles)
+            {
+                Debug.Log("감지한 타일 이름:" + checkTile.name);
+                Debug.Log("감지한 타일 개수:" + checkisWallTiles.Count);
+            }
+
+
             isMoving = true;
             monster.attack = AttackState.SkillAttack;
 
@@ -318,10 +255,9 @@ public class MonsterMove : MonoBehaviour
             monster.Attack(player);
 
             isMoving = false;
-            // 스킬 이펙트 및 연산 처리
             return;
         }
-        // 일반 공격
+        // [2] 일반 공격 범위 내에 플레이어가 존재 할 경우
         else if ((monster.monsterData.CurrentDamage <= monster.monsterData.Critical) &&
             (distanceX <= attackDetectionRange && monsterPos.y == playerPos.y) ||
             (distanceY <= attackDetectionRange && monsterPos.x == playerPos.x))
@@ -336,7 +272,7 @@ public class MonsterMove : MonoBehaviour
             isMoving = false;
             return;
         }
-        else // 범위 내에 없을 경우(처음 시작 및 움직인 후)
+        else // [3] 범위 내에 없을 경우(처음 시작 및 움직인 후)
         {
             if (isMoving == false) // 범위 내에 없고 && 움직이지 않았을 경우
             {
