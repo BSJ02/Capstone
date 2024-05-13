@@ -98,10 +98,12 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
+
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
             playerScripts = player.GetComponent<Player>();
             playerScripts.ResetActivePoint();
+            playerScripts.isAttack = false;
         }
         if (cardManager.handCardCount < 8)
         {

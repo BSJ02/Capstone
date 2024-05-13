@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
 {
     public Player player;
 
-    public GameObject playerChoice; //수정
+    private GameObject playerChoice;
 
     private MapGenerator mapGenerator;
     private BattleManager battleManager;
@@ -28,7 +28,6 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
-    [SerializeField]
     private GameObject clickedPlayer;
 
     private bool isMoving = false;
@@ -39,6 +38,12 @@ public class PlayerMove : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
         mapGenerator = FindObjectOfType<MapGenerator>();
+        playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
+    }
+
+    private void Start()
+    {
+        playerChoice.SetActive(false);
     }
 
     private void SetDestination(Vector2Int clickedTargetPos)
@@ -104,12 +109,19 @@ public class PlayerMove : MonoBehaviour
                     if (detectedMonsters.Contains(clickedMonster))
                     {
                         Player clickPlayer = clickedPlayer.GetComponent<Player>();
-
-                        clickPlayer.ReadyToAttack(clickedMonster);
-                        isActionSelect = false;
+                        if(clickPlayer.isAttack == false)
+                        {
+                            clickPlayer.ReadyToAttack(clickedMonster);
+                            isActionSelect = false;
+                        }
                     }
                 }
             }
+        }
+
+        if(battleManager.isPlayerTurn == false)
+        {
+            playerChoice.SetActive(false);
         }
 
     }
@@ -137,10 +149,19 @@ public class PlayerMove : MonoBehaviour
     // Clicked AttackButton
     public void OnAttackButtonClick()
     {
-        // Code
-        Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+        Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        GetSurroundingTiles(finalPosition);
+        // Code
+        if (clickPlayer.isAttack == true)
+        {
+            Debug.Log("Already Attack");
+            playerChoice.SetActive(false);
+        }
+        else
+        {
+            Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+            GetSurroundingTiles(finalPosition);
+        }
     }
 
     private List<Vector2Int> PathFinding()
