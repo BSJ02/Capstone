@@ -21,23 +21,28 @@ public enum PlayerState
 
 public class Player : MonoBehaviour
 {
+    private GameObject playerChoice;
+
     public PlayerData playerData;
     private CardProcessing cardProcessing;
 
     private Animator anim;
     public PlayerState playerState;
 
+    public bool isAttack;
     protected bool isLive;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         cardProcessing = FindObjectOfType<CardProcessing>();
+        playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
 
         playerData.ResetWarriorData();
         ResetActivePoint();
 
         isLive = true;
+
     }
 
     void Start()
@@ -174,6 +179,9 @@ public class Player : MonoBehaviour
 
 
         monster.GetHit(playerData.Damage);
+
+        playerChoice.SetActive(false);
+        isAttack = true;
 
         return;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerAnimationEvent : MonoBehaviour
@@ -14,12 +15,27 @@ public class PlayerAnimationEvent : MonoBehaviour
     private bool isPosSwap = false;
     private bool isSummonObstacle = false;
 
+    [HideInInspector] public Queue<GameObject> obstacleQueue = new Queue<GameObject>();
+    [Header("# Wall Prefab")]
+    public GameObject obstaclePrefab;
+    private GameObject obstacle_Group;
+
     private void Awake()
     {
         cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
         particleController = FindObjectOfType<ParticleController>();
+    }
+    private void Start()
+    {
+        obstacle_Group = GameObject.Find("Particle_Group");
+        if (obstacle_Group == null)
+        {
+            obstacle_Group = new GameObject("Particle_Group");
+        }
+
+        particleController.InitializeParticlePool(obstaclePrefab, obstacleQueue, obstacle_Group);
     }
 
     private void Update()
@@ -58,12 +74,11 @@ public class PlayerAnimationEvent : MonoBehaviour
         if (isSummonObstacle)
         {
             Vector3 tilePos = cardData.targetPos;
-            Vector3 moveTilePos = tilePos + new Vector3(0, 0.5f, 0);
+            Vector3 goalPosition = tilePos + new Vector3(0, 0.35f, 0);
 
-            float t = Time.deltaTime * 0.5f;
+            StartCoroutine(SpawnWall(tilePos, goalPosition));
+
             Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y];
-
-            tile.transform.position = Vector3.Lerp(tilePos, moveTilePos, t);
             tile.SetCoord((int)tilePos.x, (int)tilePos.y, true);
 
             cardData.shouldSummon = false;
@@ -71,35 +86,41 @@ public class PlayerAnimationEvent : MonoBehaviour
         }
     }
 
-    public void OnTeleportAnimationEvent()
+    private void OnCardEffectAnimationEvent()
     {
         if (cardData.shouldTeleport)
         {
             isTeleport = true;
         }
-    }
-
-    public void OnFireballAnimationEvent()
-    {
-        if (cardData.shouldFireball)
+        else if (cardData.shouldFireball)
         {
             isFireball = true;
         }
-    }
-
-    public void OnPositionSwapAnimationEvent()
-    {
-        if (cardData.shouldPosSwap)
+        else if (cardData.shouldPosSwap)
         {
             isPosSwap = true;
         }
     }
 
-    public void OnSummonObstacleAnimationEvent()
+    private void OnSummonObstacle()
     {
-        if (cardData.shouldPosSwap)
+        isSummonObstacle = true;
+    }
+
+    public IEnumerator SpawnWall(Vector3 tilePos, Vector3 goalPosition)
+    {
+        float elapsedTime = 0f;
+        float duration = 0.2f;
+        float deltaTime = Time.deltaTime;
+
+        GameObject obsacleObj = particleController.GetAvailableParticle(obstaclePrefab, obstacleQueue);
+
+        while (elapsedTime < duration)
         {
-            isSummonObstacle = true;
+            float t = elapsedTime / duration;
+            obsacleObj.transform.position = Vector3.Lerp(tilePos, goalPosition, t);
+            elapsedTime += deltaTime;
+            yield return null;
         }
     }
 }
