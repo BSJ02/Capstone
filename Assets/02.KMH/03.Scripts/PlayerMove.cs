@@ -97,6 +97,10 @@ public class PlayerMove : MonoBehaviour
                     detectedMonsters.Clear();
                     playerChoice.SetActive(true);
                     clickedPlayer = hit.collider.gameObject;
+
+                    cardProcessing.currentPlayerObj = clickedPlayer;
+                    cardProcessing.currentPlayer = clickedPlayer.GetComponent<Player>();
+
                     isActionSelect = true;
                 }
             }
@@ -134,8 +138,7 @@ public class PlayerMove : MonoBehaviour
         // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        cardProcessing.currentPlayerObj = clickedPlayer;
-        cardProcessing.currentPlayer = clickPlayer;
+        
 
         if(clickPlayer.playerData.activePoint <= 0)
         {
@@ -164,6 +167,12 @@ public class PlayerMove : MonoBehaviour
             Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
             GetSurroundingTiles(finalPosition);
         }
+    }
+
+    public void OnCardButtonClick()
+    {
+        cardProcessing.usingCard = true;
+        playerChoice.SetActive(false);
     }
 
     private List<Vector2Int> PathFinding()
@@ -218,7 +227,6 @@ public class PlayerMove : MonoBehaviour
 
         return path;
     }
-
 
 
     private Vector2Int ReturnTargetPosition(Coord destination)

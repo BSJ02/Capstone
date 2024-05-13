@@ -67,7 +67,7 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        handCardList.AddRange(cardInform.baseCards);
+        handCardList.AddRange(cardInform.wizardCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 

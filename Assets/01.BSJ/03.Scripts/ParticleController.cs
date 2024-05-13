@@ -12,11 +12,13 @@ public class ParticleController : MonoBehaviour
     public GameObject buffEffectPrefab;
     public GameObject fireballEffectPrefab;
     public GameObject teleportEffectPrefab;
+    public GameObject flamePillarEffectPrefab;
 
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
     private Queue<GameObject> buffEffectPool = new Queue<GameObject>();
     private Queue<GameObject> fireballEffectPool = new Queue<GameObject>();
     private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> flamePillarEffectPool = new Queue<GameObject>();
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class ParticleController : MonoBehaviour
         InitializeParticlePool(buffEffectPrefab, buffEffectPool, particle_Group);
         InitializeParticlePool(fireballEffectPrefab, fireballEffectPool, particle_Group);
         InitializeParticlePool(teleportEffectPrefab, teleportEffectPool, particle_Group);
+        InitializeParticlePool(flamePillarEffectPrefab, flamePillarEffectPool, particle_Group);
     }
 
     public void InitializeParticlePool(GameObject prefab, Queue<GameObject> pool, GameObject parentObj)
@@ -89,6 +92,10 @@ public class ParticleController : MonoBehaviour
         else if (prefab == teleportEffectPrefab)
         {
             return teleportEffectPool;
+        }
+        else if (prefab == flamePillarEffectPrefab)
+        {
+            return flamePillarEffectPool;
         }
         else
         {
