@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
     private PlayerManager playerManager;
+
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -138,9 +140,9 @@ public class PlayerMove : MonoBehaviour
         // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        
+        cardProcessing.isCardMoving = false;
 
-        if(clickPlayer.playerData.activePoint <= 0)
+        if (clickPlayer.playerData.activePoint <= 0)
         {
             Debug.Log("No remaining ActivePoints");
             playerChoice.SetActive(false);
@@ -155,6 +157,8 @@ public class PlayerMove : MonoBehaviour
     public void OnAttackButtonClick()
     {
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
+
+        cardProcessing.isCardMoving = false;
 
         // Code
         if (clickPlayer.isAttack == true)
@@ -171,7 +175,7 @@ public class PlayerMove : MonoBehaviour
 
     public void OnCardButtonClick()
     {
-        cardProcessing.usingCard = true;
+        cardProcessing.isCardMoving = true;
         playerChoice.SetActive(false);
     }
 
@@ -274,7 +278,6 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
 
-        isMoving = false;
         isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
         clickPlayer.playerState = PlayerState.Idle;
@@ -350,3 +353,4 @@ public class PlayerMove : MonoBehaviour
         }
     }
 }
+

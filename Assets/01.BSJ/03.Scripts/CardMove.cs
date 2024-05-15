@@ -21,8 +21,6 @@ public class CardMove : MonoBehaviour
     private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
-    //private bool cardMoveAble = false;
-
     private int index;
 
     private void Start()
@@ -159,26 +157,16 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.usingCard)
+            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving)
             {
                 cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(true);
             }
         }
-        if (cardProcessing.waitForInput)
-        {
-            UnityEngine.Debug.Log("cardProcessing.waitForInput" + battleManager.isPlayerTurn);
-        }
-        if (cardManager.waitAddCard)
-        {
-            UnityEngine.Debug.Log("cardManager.waitAddCard" + battleManager.isPlayerTurn);
-        }
     }
-  
 
     private void OnMouseDrag()
     {
-        // 카드 클릭 & !대상 선택 & !카드 선택
-        if (!cardProcessing.waitForInput && cardProcessing.usingCard && !cardManager.waitAddCard && battleManager.isPlayerTurn)
+        if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
@@ -189,12 +177,7 @@ public class CardMove : MonoBehaviour
                 cardProcessing.ShowCardRange(cardUseDistance);
             }
         }
-        else
-        {
-            return;
-        }
     }
-
 
     private Vector3 GetMouseWorldPosition()
     {
@@ -203,4 +186,8 @@ public class CardMove : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
 
+    private void CompareObjectNameWithCardType(GameObject obj)
+    {
+
+    }
 }

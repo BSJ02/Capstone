@@ -7501,6 +7501,7 @@ MonoBehaviour:
   shouldFireball: 0
   shouldSummon: 0
   shouldFlamePillar: 0
+  shouldLifeDrain: 0
 --- !u!1 &618011864
 GameObject:
   m_ObjectHideFlags: 0
@@ -14027,11 +14028,15 @@ MonoBehaviour:
     type: 3}
   buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
     type: 3}
-  fireballEffectPrefab: {fileID: 1206498299807332555, guid: 5c393f8a8f497ae46a16e5bd69fb8f91,
-    type: 3}
   teleportEffectPrefab: {fileID: 3280519133390621005, guid: 572b9427b6736fe4b9e0408ee2b50889,
     type: 3}
-  flamePillarEffectPrefab: {fileID: 8172849020266659018, guid: 5948adfc986bef145ba923a5c9fa6878,
+  fireballEffectPrefab: {fileID: 1206498299807332555, guid: 5c393f8a8f497ae46a16e5bd69fb8f91,
+    type: 3}
+  flamePillarEffectPrefab: {fileID: 1727626132299242, guid: a8231b58c5ae89f4b86cfe28fe376b28,
+    type: 3}
+  fireChargeEffectPrefab: {fileID: 100000, guid: a71d728d83fcde5418d160514d5d8610,
+    type: 3}
+  lifeDrainEffectPrefab: {fileID: 5642766282230003982, guid: ab9420df991b16a438b84cb697ba1ffe,
     type: 3}
 --- !u!4 &1172032361
 Transform:
@@ -19432,6 +19437,7 @@ MonoBehaviour:
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
   cardUseDistanceInRange: 0
+  isCardMoving: 0
 --- !u!4 &1497366973
 Transform:
   m_ObjectHideFlags: 0

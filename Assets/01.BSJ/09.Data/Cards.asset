@@ -242,7 +242,7 @@ MonoBehaviour:
     cardDescription_Power: 
     cardPower:
     - 30
-    cardDistance: 3
+    cardDistance: 4
     cardSprite: {fileID: 21300000, guid: 931ae8816e9fc694aaac730cd1c0d0d6, type: 3}
     cardPercent: 15
     cardRank: 3
@@ -250,12 +250,14 @@ MonoBehaviour:
   - cardName: Life Drain
     cardDescription: "\uB300\uC0C1\uC758 \uCCB4\uB825\uC744 \uAC15\uD0C8\uD568"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
+    cardPower:
+    - 20
+    - 10
+    cardDistance: 4
     cardSprite: {fileID: 21300000, guid: faf3c54d2a2ca7f418437b0fb8ff9152, type: 3}
     cardPercent: 15
     cardRank: 3
-    cardTarget: 1
+    cardTarget: 2
   - cardName: Magic Shield
     cardDescription: "\uBAAC\uC2A4\uD130 \uC2A4\uD0AC 1\uD68C \uBC29\uC5B4"
     cardDescription_Power: 

@@ -19,7 +19,6 @@ public class CardProcessing : MonoBehaviour
 
     private WeaponController weaponController;
     private BattleManager battleManager;
-    private CardData cardData;
     private CardManager cardManager;
     [HideInInspector] public Player currentPlayer;
     [HideInInspector] public GameObject currentPlayerObj;
@@ -31,9 +30,10 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public float cardUseDistance = 0;
     [HideInInspector] public bool cardUseDistanceInRange = false;
 
+    [HideInInspector] public bool isCardMoving = false;
+
     private void Start()
     {
-        cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
         battleManager = FindObjectOfType<BattleManager>();
     }
@@ -177,22 +177,22 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             case "Healing Potion":
-                cardData.UseHealingPotion(card, selectedTarget);
+                BaseCardData.instance.UseHealingPotion(card, selectedTarget);
                 break;
             case "Remove Ailments":
-                cardData.UseRemoveAilments(card, selectedTarget);
+                BaseCardData.instance.UseRemoveAilments(card, selectedTarget);
                 break;
             case "Evasion Boost":
-                cardData.UseEvasionBoost(card, selectedTarget);
+                BaseCardData.instance.UseEvasionBoost(card, selectedTarget);
                 break;
             case "Transmission":
-                cardData.UseTransmission(card, selectedTarget);
+                BaseCardData.instance.UseTransmission(card, selectedTarget);
                 break;
             case "Stat Boost":
-                cardData.UseStatBoost(card, selectedTarget);
+                BaseCardData.instance.UseStatBoost(card, selectedTarget);
                 break;
             case "Rest":
-                cardData.UseRest(card, selectedTarget);
+                BaseCardData.instance.UseRest(card, selectedTarget);
                 break;
             default:
                 break;
@@ -205,7 +205,7 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+                WarriorCardData.instance.UseAxSlash(card, selectedTarget);
                 break;
             default:
                 break;
@@ -219,28 +219,28 @@ public class CardProcessing : MonoBehaviour
         {
             // Warrior
             case "WallJump":
-                cardData.WallJump(card, selectedTarget);
+                ArcherCardData.instance.WallJump(card, selectedTarget);
                 break;
             case "Concealment":
-                cardData.Concealment(card, selectedTarget);
+                ArcherCardData.instance.Concealment(card, selectedTarget);
                 break;
             case "Agility":
-                cardData.AgilityAttack(card, selectedTarget);
+                ArcherCardData.instance.AgilityAttack(card, selectedTarget);
                 break;
             case "PowerOfTurn":
-                cardData.TurnCountAttack(card, selectedTarget);
+                ArcherCardData.instance.TurnCountAttack(card, selectedTarget);
                 break;
             case "MarkAttack":
-                cardData.MarkTargetArrow(card, selectedTarget);
+                ArcherCardData.instance.MarkTargetArrow(card, selectedTarget);
                 break;
             case "DoubleShot":
-                cardData.DoubleTargetArrow(card, selectedTarget);
+                ArcherCardData.instance.DoubleTargetArrow(card, selectedTarget);
                 break;
             case "PoisonAttack":
-                cardData.PoisonArrow(card, selectedTarget);
+                ArcherCardData.instance.PoisonArrow(card, selectedTarget);
                 break;
             case "AimedShot":
-                cardData.AimedArrow(card, selectedTarget);
+                ArcherCardData.instance.AimedArrow(card, selectedTarget);
                 break;
             default:
                 break;
@@ -253,25 +253,25 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             case "Teleport":
-                cardData.UseTeleport(card, selectedTarget);
+                WizardCardData.instance.UseTeleport(card, selectedTarget);
                 break;
             case "Position Swap":
-                cardData.UsePositionSwap(card, selectedTarget);
+                WizardCardData.instance.UsePositionSwap(card, selectedTarget);
                 break;
             case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
+                WizardCardData.instance.UseFireball(card, selectedTarget);
                 break;
             case "Flame Pillar":
-                cardData.UseFlamePillar(card, selectedTarget);
+                WizardCardData.instance.UseFlamePillar(card, selectedTarget);
                 break;
             case "Life Drain":
-                cardData.UseLifeDrain(card, selectedTarget);
+                WizardCardData.instance.UseLifeDrain(card, selectedTarget);
                 break;
             case "Magic Shield":
-                cardData.UseMagicShield(card, selectedTarget);
+                WizardCardData.instance.UseMagicShield(card, selectedTarget);
                 break;
             case "Summon Obstacle":
-                cardData.UseSummonObstacle(card, selectedTarget);
+                WizardCardData.instance.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
                 break;

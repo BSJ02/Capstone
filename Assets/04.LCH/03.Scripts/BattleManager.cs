@@ -68,7 +68,6 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        CardData cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
         characterSelector = FindObjectOfType<CharacterSelector>();
         //players = characterSelector.playerSelectList.players;

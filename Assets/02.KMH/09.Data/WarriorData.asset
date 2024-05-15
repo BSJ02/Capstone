@@ -17,5 +17,5 @@ MonoBehaviour:
   Damage: 20
   Armor: 100
   CriticalHit: 0
-  activePoint: 0
+  activePoint: 4
   MaxActivePoint: 4
