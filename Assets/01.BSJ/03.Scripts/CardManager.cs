@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> handCardObject;
     [HideInInspector] public List<GameObject> addCardObject;
 
-    public int handCardCount;
+    [HideInInspector] public int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
@@ -40,6 +40,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] public GameObject handCardPanelPrefab;
 
     [HideInInspector] public bool waitAddCard = false;
+    public bool isMainCameraMoving = false;
 
     [HideInInspector] public Card useCard = null;
 
@@ -104,7 +105,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
+            //cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
 
             cardProcessing.usingCard = false;
             cardProcessing.waitForInput = false;
@@ -233,9 +234,7 @@ public class CardManager : MonoBehaviour
         }
 
         return randomList[UnityEngine.Random.Range(0, randomList.Count)];
-    
     }
-
 
     public void CreateRandomCard()
     {

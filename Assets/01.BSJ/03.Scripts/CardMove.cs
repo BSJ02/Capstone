@@ -5,13 +5,12 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
 using System;
+using static Card;
 
 public class CardMove : MonoBehaviour
 {
     private CardProcessing cardProcessing;
     private CardManager cardManager;
-    private BattleManager battleManager;
-    private MapGenerator mapGenerator;
 
     private Vector3 offset;
     private float distanceToCamera;
@@ -27,8 +26,6 @@ public class CardMove : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
-        battleManager = FindObjectOfType<BattleManager>();
-        mapGenerator = FindObjectOfType<MapGenerator>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
@@ -36,24 +33,31 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
+        if (cardManager.isMainCameraMoving)
         {
-            index = cardManager.handCardObject.IndexOf(gameObject) + 1;
-            AnimateCard(scaleFactor, originalPosition + Vector3.up * 0.5f);
-            gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
+            originalPosition = this.gameObject.transform.position;
         }
         else
         {
-            index = cardManager.handCardObject.IndexOf(gameObject) + 1;
-            if (cardManager.handCardObject.IndexOf(gameObject) >= 0)
+            if (IsMouseOverCard(this.gameObject) && !cardManager.waitAddCard)
             {
-                gameObject.GetComponent<CardOrder>().SetOrder(index);
-                AnimateCard(1f, originalPosition);
+                index = cardManager.handCardObject.IndexOf(gameObject) + 1;
+                AnimateCard(originalPosition + Vector3.up * 0.5f, scaleFactor);
+                gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
+            }
+            else
+            {
+                index = cardManager.handCardObject.IndexOf(gameObject) + 1;
+                if (cardManager.handCardObject.IndexOf(gameObject) >= 0)
+                {
+                    gameObject.GetComponent<CardOrder>().SetOrder(index);
+                    AnimateCard(originalPosition, 1f);
+                }
             }
         }
     }
 
-    void AnimateCard(float scale, Vector3 position)
+    void AnimateCard(Vector3 position, float scale)
     {
         transform.DOKill();
         transform.DOMove(position, animationDuration);
@@ -138,18 +142,36 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseUp()
     {
-        transform.DOKill();
+        //transform.DOKill();
 
-        if (battleManager.isPlayerTurn)
+        if (BattleManager.instance.isPlayerTurn)
         {
             CardPanelCollision();
-            mapGenerator.ClearHighlightedTiles();
+            MapGenerator.instance.ClearHighlightedTiles();
         }
         
     }
 
     private void OnMouseDown()
     {
+        int index = cardManager.handCardObject.IndexOf(this.gameObject);
+        Card card = null;
+
+        if (index >= 0 && index < cardManager.handCardList.Count)
+        {
+            card = cardManager.handCardList[index]; ;
+        }
+        else
+        {
+            card = null;
+        }
+
+        if (cardProcessing.currentPlayerObj != null && card != null)
+        {
+            GameObject playerObj = cardProcessing.currentPlayerObj;
+            ComparePlayerTypeWithCardType(playerObj, card);
+        }
+
         if (IsMouseOverCard(gameObject))
         {
             offset = transform.position - GetMouseWorldPosition();
@@ -157,7 +179,7 @@ public class CardMove : MonoBehaviour
             {
                 cardManager.ChoiceCard(this.gameObject);
             }
-            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving)
+            else if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving && card.isCardMoveEnabled)
             {
                 cardManager.FindMainCameraChildObject("Use Card Panel(Clone)").SetActive(true);
             }
@@ -166,7 +188,25 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving)
+        int index = cardManager.handCardObject.IndexOf(this.gameObject);
+        Card card = null;
+
+        if (index >= 0 && index < cardManager.handCardList.Count)
+        {
+            card = cardManager.handCardList[index]; ;
+        }
+        else
+        {
+            card = null;
+        }
+
+        if (cardProcessing.currentPlayerObj != null && card != null)
+        {
+            GameObject playerObj = cardProcessing.currentPlayerObj;
+            ComparePlayerTypeWithCardType(playerObj, card);
+        }
+
+        if (!cardProcessing.waitForInput && !cardManager.waitAddCard && cardProcessing.isCardMoving && card.isCardMoveEnabled)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
@@ -186,8 +226,28 @@ public class CardMove : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
 
-    private void CompareObjectNameWithCardType(GameObject obj)
+    public void ComparePlayerTypeWithCardType(GameObject player, Card card)
     {
-
+        if (card.cardType == CardType.BaseCard)
+        {
+            card.isCardMoveEnabled = true;
+        }
+        else if (player == GameObject.Find("Warrior") && card.cardType == CardType.WarriorCard)
+        {
+            card.isCardMoveEnabled = true;
+        }
+        else if (player == GameObject.Find("Archer") && card.cardType == CardType.ArcherCard)
+        {
+            card.isCardMoveEnabled = true;
+        }
+        else if (player == GameObject.Find("Wizard") && card.cardType == CardType.WizardCard)
+        {
+            card.isCardMoveEnabled = true;
+        }
+        else
+        {
+            card.isCardMoveEnabled = false;
+        }
+        
     }
 }

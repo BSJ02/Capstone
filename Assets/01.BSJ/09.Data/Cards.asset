@@ -125,6 +125,28 @@ MonoBehaviour:
     cardPercent: 25
     cardRank: 1
     cardTarget: 1
+  - cardName: Warrior's Roar
+    cardDescription: "\uCD5C\uB300\uCCB4\uB825\uC758 10%\uB97C \uC18C\uBAA8\uD558\uC5EC
+      \uC8FC\uBCC0 \uC544\uAD70\uC744 \uD604\uC7AC \uCCB4\uB825\uC758 50%\uB9CC\uD07C
+      \uD68C\uBCF5\uC2DC"
+    cardDescription_Power: 
+    cardPower:
+    - 10
+    cardDistance: 2
+    cardSprite: {fileID: 21300000, guid: c581884bb67a44545bff4bf976c04cf4, type: 3}
+    cardPercent: 25
+    cardRank: 1
+    cardTarget: 2
+  - cardName: Armor Crush
+    cardDescription: "\uC801\uC758 \uBC29\uC5B4\uB825 \uAC10\uC18C"
+    cardDescription_Power: 
+    cardPower:
+    - 20
+    cardDistance: 1
+    cardSprite: {fileID: 21300000, guid: 22b34e0d638fa7046906320f5ec7b36c, type: 3}
+    cardPercent: 25
+    cardRank: 1
+    cardTarget: 1
   archerCards:
   - cardName: Wall Jump
     cardDescription: "\uBCBD \uB118\uAE30"

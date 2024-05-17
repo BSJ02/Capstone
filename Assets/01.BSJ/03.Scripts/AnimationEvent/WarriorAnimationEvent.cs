@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WarriorAnimationEvent : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class WarriorAnimationEvent : MonoBehaviour
     private bool isShieldBash = false;
     private bool isDesperateStrike = false;
     private bool isDash = false;
+    private bool isWarriorsRoar = false;
+    private bool isArmorCrush = false;
 
     private void Awake()
     {
@@ -31,9 +34,9 @@ public class WarriorAnimationEvent : MonoBehaviour
             Card useCard = cardManager.useCard;
 
             Quaternion rotation = Quaternion.Euler(90, 0, 0);
-            float height = 0.5f;
+            float height = 0.85f;
 
-            particleController.ApplyPlayerEffect(particlePrefab, playerObj, height, rotation);
+            particleController.ApplyPlayerEffect(particlePrefab, playerObj, height, rotation, 1.3f);
 
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
@@ -111,6 +114,57 @@ public class WarriorAnimationEvent : MonoBehaviour
             WarriorCardData.instance.shouldDash = false;
             isDash = false;
         }
+
+        if (isWarriorsRoar)
+        {
+            GameObject particlePrefab_Player = particleController.WarriorsRoarEffectPrefab;
+            GameObject particlePrefab_OtherPlayer = particleController.healEffectPrefab;
+            Player player = cardProcessing.currentPlayerObj.GetComponent<Player>();
+
+            float height = 1.2f;
+            float scale = 0.45f;
+
+            particleController.ApplyPlayerEffect(particlePrefab_Player, player.gameObject, height, Quaternion.identity, scale);
+
+            player.playerData.Hp -= player.playerData.MaxHp * 0.1f;
+
+
+            foreach (Player otherPlayer in MapGenerator.instance.rangeInPlayers)
+            {
+                float healAmount = otherPlayer.playerData.Hp * 0.5f;
+                Vector3 targetPos = otherPlayer.transform.position + new Vector3(0, 0.5f, 0);
+
+                particleController.ApplyTargetEffect(particlePrefab_OtherPlayer, targetPos, Quaternion.identity, 0.2f);
+
+                if (player.playerData.Hp + healAmount >= player.playerData.MaxHp)
+                {
+                    player.playerData.Hp = player.playerData.MaxHp;
+                }
+                else
+                {
+                    player.playerData.Hp += healAmount;
+                }
+            }
+
+            WarriorCardData.instance.shouldWarriorsRoar = false;
+            isWarriorsRoar = false;
+        }
+
+        if (isArmorCrush)
+        {
+            GameObject particlePrefab = particleController.ArmorCrushEffectPrefab;
+            Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
+            Card useCard = cardManager.useCard;
+            Vector3 targetPos = monster.transform.position + new Vector3(0, 0.5f, 0);
+
+            particleController.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
+
+            monster.GetHit(useCard.cardPower[0]);
+            monster.monsterData.Amor *= 9 / 10;
+
+            WarriorCardData.instance.shouldArmorCrush = false;
+            isArmorCrush = false;
+        }
     }
 
     private void SpinAttackAnimationEvent()
@@ -142,6 +196,22 @@ public class WarriorAnimationEvent : MonoBehaviour
         if (WarriorCardData.instance.shouldDash)
         {
             isDash = true;
+        }
+    }
+
+    private void WarriorsRoarAnimationEvent()
+    {
+        if (WarriorCardData.instance.shouldWarriorsRoar)
+        {
+            isWarriorsRoar = true;
+        }
+    }
+
+    private void ArmorCrushAnimationEvent()
+    {
+        if (WarriorCardData.instance.shouldArmorCrush)
+        {
+            isArmorCrush = true;
         }
     }
 

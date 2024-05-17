@@ -18,8 +18,6 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public int TempActivePoint;
 
     private WeaponController weaponController;
-    private BattleManager battleManager;
-    private CardManager cardManager;
     [HideInInspector] public Player currentPlayer;
     [HideInInspector] public GameObject currentPlayerObj;
 
@@ -29,14 +27,7 @@ public class CardProcessing : MonoBehaviour
 
     [HideInInspector] public float cardUseDistance = 0;
     [HideInInspector] public bool cardUseDistanceInRange = false;
-
     [HideInInspector] public bool isCardMoving = false;
-
-    private void Start()
-    {
-        cardManager = FindObjectOfType<CardManager>();
-        battleManager = FindObjectOfType<BattleManager>();
-    }
 
     private void Update()
     {
@@ -59,7 +50,7 @@ public class CardProcessing : MonoBehaviour
 
     private IEnumerator WaitForTargetSelection(Card card)
     {
-        battleManager.isPlayerMove = false;
+        BattleManager.instance.isPlayerMove = false;
         //TempActivePoint = currentPlayer.playerData.activePoint;
         //currentPlayer.playerData.activePoint = 0;
         cardUseDistance = card.cardDistance;
@@ -153,15 +144,15 @@ public class CardProcessing : MonoBehaviour
     {
         if (selectedTarget != null)
         {
-            switch (card.cardRank)
+            switch (card.cardType)
             {
-                case CardRank.WarriorCard:
+                case CardType.WarriorCard:
                     WarriorCards(card);
                     break;
-                case CardRank.ArcherCard:
+                case CardType.ArcherCard:
                     ArcherCards(card);
                     break;
-                case CardRank.WizardCard:
+                case CardType.WizardCard:
                     WizardCards(card);
                     break;
                 default:
@@ -215,6 +206,12 @@ public class CardProcessing : MonoBehaviour
                 break;
             case "Dash":
                 WarriorCardData.instance.UseDash(card, selectedTarget);
+                break;
+            case "Warrior's Roar":
+                WarriorCardData.instance.UseWarriorsRoar(card, selectedTarget);
+                break;
+            case "Armor Crush":
+                WarriorCardData.instance.UseArmorCrush(card, selectedTarget);
                 break;
             default:
                 break;

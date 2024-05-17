@@ -22,6 +22,8 @@ public class ParticleController : MonoBehaviour
     public GameObject shieldBashEffectPrefab;
     public GameObject desperateStrikeEffectPrefab;
     public GameObject dashEffectPrefab;
+    public GameObject WarriorsRoarEffectPrefab;
+    public GameObject ArmorCrushEffectPrefab;
 
     [Header("# Archer Particle Prefabs")]
 
@@ -41,6 +43,8 @@ public class ParticleController : MonoBehaviour
     private Queue<GameObject> shieldBashEffectPool = new Queue<GameObject>();
     private Queue<GameObject> desperateStrikeEffectPool = new Queue<GameObject>();
     private Queue<GameObject> dashEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> WarriorsRoarEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> ArmorCrushEffectPool = new Queue<GameObject>();
 
     // Archer Queue Pool
 
@@ -82,6 +86,8 @@ public class ParticleController : MonoBehaviour
         InitializeParticlePool(shieldBashEffectPrefab, particle_Group);
         InitializeParticlePool(desperateStrikeEffectPrefab, particle_Group);
         InitializeParticlePool(dashEffectPrefab, particle_Group);
+        InitializeParticlePool(WarriorsRoarEffectPrefab, particle_Group);
+        InitializeParticlePool(ArmorCrushEffectPrefab, particle_Group);
 
         // Archer
 
@@ -200,6 +206,14 @@ public class ParticleController : MonoBehaviour
         {
             return dashEffectPool;
         }
+        else if (prefab == WarriorsRoarEffectPrefab)
+        {
+            return WarriorsRoarEffectPool;
+        }
+        else if (prefab == ArmorCrushEffectPrefab)
+        {
+            return ArmorCrushEffectPool;
+        }
         else
         {
             return null;
@@ -260,13 +274,15 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height, Quaternion rotation)
+    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height, Quaternion rotation, float scale)
     {
         GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
-        particleObject.transform.position = playerObject.transform.position + new Vector3(0, height, 0);
+        particleObject.transform.position = new Vector3(playerObject.transform.position.x, height, playerObject.transform.position.z);
         particleObject.transform.rotation = rotation;
+        particleObject.transform.localScale = new Vector3(scale, scale, scale);
 
         ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+
         if (particleSystem != null)
         {
             particleSystem.Play();

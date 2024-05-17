@@ -20,6 +20,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
     public List<Monster> rangeInMonsters = new List<Monster>();
+    public List<Player> rangeInPlayers = new List<Player>();
 
     private void Awake()
     {
@@ -124,6 +125,7 @@ public class MapGenerator : MonoBehaviour
     {
         ClearHighlightedTiles();
         rangeInMonsters.Clear();
+        rangeInPlayers.Clear();
 
         int playerX = Mathf.RoundToInt(playerPosition.x);
         int playerZ = Mathf.RoundToInt(playerPosition.z);
@@ -154,14 +156,15 @@ public class MapGenerator : MonoBehaviour
             }
             CheckAdjacentTiles(currentTile, queue, visited, cardDistance, currentDistance + 1);
         }
-        TileOnMonster(highlightedTiles);
+        TileOnObject(highlightedTiles);
         selectingTarget = false;
     }
 
-    public void TileOnMonster(List<Tile> tiles)
+    public void TileOnObject(List<Tile> tiles)
     {
         Monster[] monsters = FindObjectsOfType<Monster>();
-        
+        Player[] players = FindObjectsOfType<Player>();
+
         foreach (Monster monster in monsters)
         {
             foreach (Tile tile in tiles)
@@ -169,6 +172,18 @@ public class MapGenerator : MonoBehaviour
                 if (monster.transform.position.x == tile.transform.position.x && monster.transform.position.z == tile.transform.position.z)
                 {
                     rangeInMonsters.Add(monster);
+                    break;
+                }
+            }
+        }
+
+        foreach (Player player in players)
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (player.transform.position.x == tile.transform.position.x && player.transform.position.z == tile.transform.position.z)
+                {
+                    rangeInPlayers.Add(player);
                     break;
                 }
             }

@@ -19,6 +19,8 @@ public class WarriorCardData : MonoBehaviour
     [HideInInspector] public bool shouldShieldBash;
     [HideInInspector] public bool shouldDesperateStrike;
     [HideInInspector] public bool shouldDash;
+    [HideInInspector] public bool shouldWarriorsRoar;
+    [HideInInspector] public bool shouldArmorCrush;
 
 
     private void Awake()
@@ -103,7 +105,43 @@ public class WarriorCardData : MonoBehaviour
         {
             shouldDash = true;
 
-            player.RollFWD(selectedTarget);
+            player.RollFWDAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void UseWarriorsRoar(Card card, GameObject selectedTarget)
+    {
+        Player player = cardProcessing.currentPlayer;
+
+        if (MapGenerator.instance.rangeInMonsters != null)
+        {
+            shouldWarriorsRoar = true;
+
+            player.VictoryAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    public void UseArmorCrush(Card card, GameObject selectedTarget)
+    {
+        Player player = cardProcessing.currentPlayer;
+
+        if (MapGenerator.instance.rangeInMonsters != null)
+        {
+            shouldArmorCrush = true;
+
+            player.AttackTwoAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

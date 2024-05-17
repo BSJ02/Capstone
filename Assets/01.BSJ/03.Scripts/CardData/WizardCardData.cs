@@ -175,7 +175,7 @@ public class WizardCardData : MonoBehaviour
 
             player.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f, Quaternion.identity);
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f, Quaternion.identity , 1);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }
