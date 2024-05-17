@@ -254,8 +254,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
+            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y);
+            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y);
 
             float startTime = Time.time;
 
@@ -281,9 +281,6 @@ public class PlayerMove : MonoBehaviour
         isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
         clickPlayer.playerState = PlayerState.Idle;
-
-
-        clickedPlayer = null;
 
         yield break;
     }

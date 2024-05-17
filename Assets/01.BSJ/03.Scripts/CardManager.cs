@@ -31,7 +31,6 @@ public class CardManager : MonoBehaviour
 
     public int handCardCount;
 
-
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
 
@@ -67,7 +66,7 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        handCardList.AddRange(cardInform.wizardCards);
+        handCardList.AddRange(cardInform.warriorCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 

@@ -14,6 +14,13 @@ public class WarriorCardData : MonoBehaviour
 
     private PlayerState playerState;
 
+    // Warrior variables
+    [HideInInspector] public bool shouldSpinAttack;
+    [HideInInspector] public bool shouldShieldBash;
+    [HideInInspector] public bool shouldDesperateStrike;
+    [HideInInspector] public bool shouldDash;
+
+
     private void Awake()
     {
         if (instance == null)
@@ -33,16 +40,17 @@ public class WarriorCardData : MonoBehaviour
 
 
     // Warrior Cards --------------------------------
-    // Ax Slash
-    public void UseAxSlash(Card card, GameObject selectedTarget)
+    // Spin Attack
+    public void UseSpinAttack(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Player player = cardProcessing.currentPlayer;
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
+            shouldSpinAttack = true;
 
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-            cardProcessing.cardUseDistance = card.cardPower[1];
+            player.SpinAttackAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -50,17 +58,17 @@ public class WarriorCardData : MonoBehaviour
         }
     }
 
-    // Heal!!
-    public void UseHeal(Card card, GameObject selectedTarget)
+    // Shield Bash
+    public void UseShieldBash(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-        if (player != null)
+        Player player = cardProcessing.currentPlayer;
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            player.ChargeAnim(selectedTarget);
+            shouldShieldBash = true;
 
-            Debug.Log(card.cardName + " ī�带 ��� / " + player + " Hp: " + player.playerData.Hp);
-            player.playerData.Hp += card.cardPower[0];
-            cardProcessing.cardUseDistance = card.cardPower[1];
+            player.DefendAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -68,16 +76,36 @@ public class WarriorCardData : MonoBehaviour
         }
     }
 
-    // Guardian Spirit
-    public void UseGuardianSpirit(Card card, GameObject selectedTarget)
+    // Desperate Strike
+    public void UseDesperateStrike(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Player player = cardProcessing.currentPlayer;
+        if (MapGenerator.instance.rangeInMonsters != null)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            shouldDesperateStrike = true;
 
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+            player.StabAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
+        }
+        else
+        {
+            cardProcessing.waitForInput = true;
+        }
+    }
+
+    // Dash
+    public void UseDash(Card card, GameObject selectedTarget)
+    {
+        Player player = cardProcessing.currentPlayer;
+
+        if (MapGenerator.instance.rangeInMonsters != null)
+        {
+            shouldDash = true;
+
+            player.RollFWD(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {

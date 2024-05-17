@@ -105,8 +105,8 @@ public class BaseCardData : MonoBehaviour
         }
     }
 
-    // Stat Boost
-    public void UseStatBoost(Card card, GameObject selectedTarget)
+    // Limit Break
+    public void UseLimitBreak(Card card, GameObject selectedTarget)
     {
         Player player = cardProcessing.currentPlayer;
         if (player != null)

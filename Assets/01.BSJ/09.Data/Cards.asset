@@ -21,7 +21,7 @@ MonoBehaviour:
     - 0
     - 0
     cardDistance: 0
-    cardSprite: {fileID: 21300000, guid: 56e32878f231ecf41aff7fb6db3c724e, type: 3}
+    cardSprite: {fileID: 21300000, guid: 2a28e21868ecdee4fa4d31c60830ad80, type: 3}
     cardPercent: 35
     cardRank: 0
     cardTarget: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
     - 0
     - 1
     cardDistance: 0
-    cardSprite: {fileID: 21300000, guid: fe9d7e3a4781e784ca6b245ac797d643, type: 3}
+    cardSprite: {fileID: 21300000, guid: 32a0f7a49b785fd40a22154721b5e3e7, type: 3}
     cardPercent: 35
     cardRank: 0
     cardTarget: 0
@@ -53,20 +53,18 @@ MonoBehaviour:
     cardPower:
     - 1
     cardDistance: 3
-    cardSprite: {fileID: 21300000, guid: d2d734d7fb094e240915d71c663c8b57, type: 3}
+    cardSprite: {fileID: 21300000, guid: 8a24eaff207b05c49b8aeb365a4e9c73, type: 3}
     cardPercent: 35
     cardRank: 0
     cardTarget: 1
-  - cardName: Stat Boost
+  - cardName: Limit Break
     cardDescription: "\uB79C\uB364\uD55C \uC2A4\uD0EF \uD68D\uB4DD"
     cardDescription_Power: "(\uCCB4\uB825, \uBC29\uC5B4\uB825, \uCD5C\uB300 \uC774\uB3D9\uAC70\uB9AC
       \uC911)"
     cardPower:
     - 2
-    - 0
-    - 0
     cardDistance: 0
-    cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
+    cardSprite: {fileID: 21300000, guid: 9a3c93b2af430a845a79644a585592cc, type: 3}
     cardPercent: 35
     cardRank: 0
     cardTarget: 0
@@ -85,42 +83,48 @@ MonoBehaviour:
     cardRank: 0
     cardTarget: 0
   warriorCards:
-  - cardName: "\uC2A4\uD540\uACF5\uACA9"
+  - cardName: Spin Attack
     cardDescription: "\uC8FC\uC704 \uC801 \uACF5\uACA9"
-    cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardDescription_Power: "(\uACF5\uACA9: 20)"
+    cardPower:
+    - 20
+    cardDistance: 2
+    cardSprite: {fileID: 21300000, guid: c61764d9951f75a46ae3d35af4a358df, type: 3}
     cardPercent: 25
     cardRank: 1
-    cardTarget: 0
-  - cardName: "\uBC29\uD328\uACF5\uACA9"
+    cardTarget: 2
+  - cardName: Shield Bash
     cardDescription: "\uBC29\uC5B4\uB825\uB9CC\uD07C \uCD94\uAC00 \uD53C\uD574"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 0
+    cardDistance: 1
+    cardSprite: {fileID: 21300000, guid: 9157b4b8fd959164e84aa97f0c7d0bce, type: 3}
     cardPercent: 25
     cardRank: 1
-    cardTarget: 0
-  - cardName: "\uD55C\uACC4\uB3CC\uD30C"
-    cardDescription: "\uC783\uC740 \uCCB4\uB825\uB9CC\uD07C \uACF5\uACA9\uB825 \uC5BB\uC74C"
+    cardTarget: 1
+  - cardName: Desperate Strike
+    cardDescription: "\uC783\uC740 \uCCB4\uB825\uC5D0 \uBE44\uB840\uD574 \uD53C\uD574\uB97C
+      \uC785\uD798"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
+    cardPower:
+    - 0
+    cardDistance: 1
     cardSprite: {fileID: 0}
     cardPercent: 25
     cardRank: 1
-    cardTarget: 0
-  - cardName: "\uACF5\uC911\uD0C0\uACA9"
-    cardDescription: "\uC77C\uC815\uAC70\uB9AC \uC774\uB3D9\uD574\uC11C \uACF5\uACA9"
+    cardTarget: 1
+  - cardName: Dash
+    cardDescription: "\uC0C1\uB300\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD788\uACE0
+      \uB4A4\uB85C \uC774\uB3D9"
     cardDescription_Power: 
-    cardPower: []
-    cardDistance: 0
-    cardSprite: {fileID: 0}
+    cardPower:
+    - 20
+    cardDistance: 2
+    cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
     cardPercent: 25
     cardRank: 1
-    cardTarget: 0
+    cardTarget: 1
   archerCards:
   - cardName: Wall Jump
     cardDescription: "\uBCBD \uB118\uAE30"

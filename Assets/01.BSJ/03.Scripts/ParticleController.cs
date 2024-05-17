@@ -5,32 +5,50 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
+    // Group
     private GameObject obstacle_Group;
     private GameObject particle_Group;
 
-
     [Header("# Wall Prefab")]
     public GameObject obstaclePrefab;
-
     private Queue<GameObject> obstacleQueue = new Queue<GameObject>();
 
     [Header("# Particle Prefabs")]
     public GameObject healEffectPrefab;
     public GameObject buffEffectPrefab;
 
+    [Header("# Warrior Particle Prefabs")]
+    public GameObject spinAttackEffectPrefab;
+    public GameObject shieldBashEffectPrefab;
+    public GameObject desperateStrikeEffectPrefab;
+    public GameObject dashEffectPrefab;
+
+    [Header("# Archer Particle Prefabs")]
+
+
     [Header("# Wizard Particle Prefabs")]
     public GameObject teleportEffectPrefab;
     public GameObject fireballEffectPrefab;
     public GameObject flamePillarEffectPrefab;
-    public GameObject fireChargeEffectPrefab;
     public GameObject lifeDrainEffectPrefab;
 
+    // Base Queue Pool
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
     private Queue<GameObject> buffEffectPool = new Queue<GameObject>();
+
+    // Warrior Queue Pool
+    private Queue<GameObject> spinAttackEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> shieldBashEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> desperateStrikeEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> dashEffectPool = new Queue<GameObject>();
+
+    // Archer Queue Pool
+
+
+    // Wizard Queue Pool
     private Queue<GameObject> fireballEffectPool = new Queue<GameObject>();
     private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
     private Queue<GameObject> flamePillarEffectPool = new Queue<GameObject>();
-    private Queue<GameObject> fireChargeEffectPool = new Queue<GameObject>();
     private Queue<GameObject> lifeDrainEffectPool = new Queue<GameObject>();
 
     private void Start()
@@ -40,6 +58,7 @@ public class ParticleController : MonoBehaviour
         {
             obstacle_Group = new GameObject("Particle_Group");
         }
+
         InitializeParticlePool(obstaclePrefab, obstacle_Group);
 
 
@@ -54,12 +73,23 @@ public class ParticleController : MonoBehaviour
 
     private void InitializeParticlePools()
     {
+        // Base
         InitializeParticlePool(healEffectPrefab, particle_Group);
         InitializeParticlePool(buffEffectPrefab, particle_Group);
+
+        // Warrior
+        InitializeParticlePool(spinAttackEffectPrefab, particle_Group);
+        InitializeParticlePool(shieldBashEffectPrefab, particle_Group);
+        InitializeParticlePool(desperateStrikeEffectPrefab, particle_Group);
+        InitializeParticlePool(dashEffectPrefab, particle_Group);
+
+        // Archer
+
+
+        // Wizard
         InitializeParticlePool(fireballEffectPrefab, particle_Group);
         InitializeParticlePool(teleportEffectPrefab, particle_Group);
         InitializeParticlePool(flamePillarEffectPrefab, particle_Group);
-        InitializeParticlePool(fireChargeEffectPrefab, particle_Group);
         InitializeParticlePool(lifeDrainEffectPrefab, particle_Group);
     }
 
@@ -147,7 +177,6 @@ public class ParticleController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("?particle prefab?");
             return null;
         }
     }
@@ -155,13 +184,24 @@ public class ParticleController : MonoBehaviour
     // Warrior
     private Queue<GameObject> GetAppropriatePool_Warrior(GameObject prefab)
     {
-        if (prefab == fireballEffectPrefab)
+        if (prefab == spinAttackEffectPrefab)
         {
-            return fireballEffectPool;
+            return spinAttackEffectPool;
+        }
+        else if (prefab == shieldBashEffectPrefab)
+        {
+            return shieldBashEffectPool;
+        }
+        else if (prefab == desperateStrikeEffectPrefab)
+        {
+            return desperateStrikeEffectPool;
+        }
+        else if (prefab == dashEffectPrefab)
+        {
+            return dashEffectPool;
         }
         else
         {
-            Debug.LogError("?particle prefab?");
             return null;
         }
     }
@@ -175,7 +215,6 @@ public class ParticleController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("?particle prefab?");
             return null;
         }
     }
@@ -195,22 +234,15 @@ public class ParticleController : MonoBehaviour
         {
             return flamePillarEffectPool;
         }
-        else if (prefab == fireChargeEffectPrefab)
-        {
-            return fireChargeEffectPool;
-        }
         else if (prefab == lifeDrainEffectPrefab)
         {
             return lifeDrainEffectPool;
         }
         else
         {
-            Debug.LogError("?particle prefab?");
             return null;
         }
     }
-
-
 
     public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject)
     {
@@ -228,16 +260,31 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height)
+    public void ApplyPlayerEffect(GameObject prefab, GameObject playerObject, float height, Quaternion rotation)
     {
         GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
         particleObject.transform.position = playerObject.transform.position + new Vector3(0, height, 0);
+        particleObject.transform.rotation = rotation;
 
         ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
         if (particleSystem != null)
         {
             particleSystem.Play();
             StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration));
+        }
+    }
+
+    public void ApplyTargetEffect(GameObject prefab, Vector3 targetObjPos, Quaternion rotation, float plusTime)
+    {
+        GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
+        particleObject.transform.position = targetObjPos;
+        particleObject.transform.rotation = rotation;
+
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+            StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration + plusTime));
         }
     }
 
@@ -279,7 +326,7 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    public IEnumerator objectElevateEffect(Vector3 tilePos, Vector3 goalPosition)
+    public IEnumerator ObjectElevateEffect(Vector3 tilePos, Vector3 goalPosition)
     {
         float elapsedTime = 0f;
         float duration = 0.2f;
@@ -296,17 +343,20 @@ public class ParticleController : MonoBehaviour
         }
     }
 
-    public void ApplyTargetEffect(GameObject prefab, Vector3 targetObjPos, Quaternion rotation)
+    public IEnumerator PlayerMoveEffect(GameObject playerObj, Vector3 goalPosition)
     {
-        GameObject particleObject = GetAvailableParticle(prefab, GetAppropriatePool(prefab));
-        particleObject.transform.position = targetObjPos;
-        particleObject.transform.rotation = rotation;
+        Vector3 startPos = playerObj.transform.position;
 
-        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
-        if (particleSystem != null)
+        float elapsedTime = 0f;
+        float duration = 0.2f;
+        float deltaTime = Time.deltaTime;
+
+        while (elapsedTime < duration)
         {
-            particleSystem.Play();
-            StartCoroutine(ReturnParticleToPool(particleObject, GetAppropriatePool(prefab), particleSystem.main.duration + 0.5f));
+            float t = elapsedTime / duration;
+            playerObj.transform.position = Vector3.Lerp(startPos, goalPosition, t);
+            elapsedTime += deltaTime;
+            yield return null;
         }
     }
 }

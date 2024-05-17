@@ -188,8 +188,8 @@ public class CardProcessing : MonoBehaviour
             case "Transmission":
                 BaseCardData.instance.UseTransmission(card, selectedTarget);
                 break;
-            case "Stat Boost":
-                BaseCardData.instance.UseStatBoost(card, selectedTarget);
+            case "Limit Break":
+                BaseCardData.instance.UseLimitBreak(card, selectedTarget);
                 break;
             case "Rest":
                 BaseCardData.instance.UseRest(card, selectedTarget);
@@ -204,8 +204,17 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Lightning Strike":
-                WarriorCardData.instance.UseAxSlash(card, selectedTarget);
+            case "Spin Attack":
+                WarriorCardData.instance.UseSpinAttack(card, selectedTarget);
+                break;
+            case "Shield Bash":
+                WarriorCardData.instance.UseShieldBash(card, selectedTarget);
+                break;
+            case "Desperate Strike":
+                WarriorCardData.instance.UseDesperateStrike(card, selectedTarget);
+                break;
+            case "Dash":
+                WarriorCardData.instance.UseDash(card, selectedTarget);
                 break;
             default:
                 break;
