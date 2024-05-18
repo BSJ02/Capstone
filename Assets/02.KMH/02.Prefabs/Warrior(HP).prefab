@@ -4304,6 +4304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d074474a72d9542ae9de520edd32b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerChoice: {fileID: 0}
   playerData: {fileID: 11400000, guid: bc1caf33aa36c514698b9b64d4e2878b, type: 2}
   playerState: 0
 --- !u!114 &-5311203449631223821
@@ -4318,8 +4319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8e3ee6ba1e3ee43a70b03aeae5a368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGenerator: {fileID: 0}
   player: {fileID: 1438304488987421560}
+  playerChoice: {fileID: 0}
   detectionRange: 1
   clickedPlayer: {fileID: 0}
 --- !u!1 &8017519852781684414

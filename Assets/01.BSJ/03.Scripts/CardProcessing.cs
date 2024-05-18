@@ -18,9 +18,6 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public int TempActivePoint;
 
     private WeaponController weaponController;
-    private BattleManager battleManager;
-    private CardData cardData;
-    private CardManager cardManager;
     [HideInInspector] public Player currentPlayer;
     [HideInInspector] public GameObject currentPlayerObj;
 
@@ -30,13 +27,7 @@ public class CardProcessing : MonoBehaviour
 
     [HideInInspector] public float cardUseDistance = 0;
     [HideInInspector] public bool cardUseDistanceInRange = false;
-
-    private void Start()
-    {
-        cardData = FindObjectOfType<CardData>();
-        cardManager = FindObjectOfType<CardManager>();
-        battleManager = FindObjectOfType<BattleManager>();
-    }
+    [HideInInspector] public bool isCardMoving = false;
 
     private void Update()
     {
@@ -59,9 +50,9 @@ public class CardProcessing : MonoBehaviour
 
     private IEnumerator WaitForTargetSelection(Card card)
     {
-        battleManager.isPlayerMove = false;
-        TempActivePoint = currentPlayer.playerData.activePoint;
-        currentPlayer.playerData.activePoint = 0;
+        BattleManager.instance.isPlayerMove = false;
+        //TempActivePoint = currentPlayer.playerData.activePoint;
+        //currentPlayer.playerData.activePoint = 0;
         cardUseDistance = card.cardDistance;
 
         while (true)
@@ -101,6 +92,7 @@ public class CardProcessing : MonoBehaviour
             }
 
             usingCard = false;
+            cardUseDistance = 0;
             MapGenerator.instance.ClearHighlightedTiles();
 
             if (!waitForInput)
@@ -122,7 +114,7 @@ public class CardProcessing : MonoBehaviour
         {
             selectedTarget = hit.collider.gameObject;
 
-            if (selectedTarget.layer == LayerMask.NameToLayer("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
+            if (selectedTarget.CompareTag("Monster") || selectedTarget.layer == LayerMask.NameToLayer("Tile"))
             {
                 if (selectedTarget.CompareTag("Monster"))
                 {
@@ -132,7 +124,7 @@ public class CardProcessing : MonoBehaviour
                         waitForInput = false;
                     }
                 }
-                else if (selectedTarget.CompareTag("Tile"))
+                else if (selectedTarget.layer == LayerMask.NameToLayer("Tile"))
                 {
                     Tile selectTile = selectedTarget.GetComponent<Tile>();
                     if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)
@@ -152,15 +144,15 @@ public class CardProcessing : MonoBehaviour
     {
         if (selectedTarget != null)
         {
-            switch (card.cardRank)
+            switch (card.cardType)
             {
-                case CardRank.WarriorCard:
+                case CardType.WarriorCard:
                     WarriorCards(card);
                     break;
-                case CardRank.ArcherCard:
+                case CardType.ArcherCard:
                     ArcherCards(card);
                     break;
-                case CardRank.WizardCard:
+                case CardType.WizardCard:
                     WizardCards(card);
                     break;
                 default:
@@ -176,22 +168,22 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             case "Healing Potion":
-                cardData.UseHealingPotion(card, selectedTarget);
+                BaseCardData.instance.UseHealingPotion(card, selectedTarget);
                 break;
             case "Remove Ailments":
-                cardData.UseRemoveAilments(card, selectedTarget);
+                BaseCardData.instance.UseRemoveAilments(card, selectedTarget);
                 break;
             case "Evasion Boost":
-                cardData.UseEvasionBoost(card, selectedTarget);
+                BaseCardData.instance.UseEvasionBoost(card, selectedTarget);
                 break;
             case "Transmission":
-                cardData.UseTransmission(card, selectedTarget);
+                BaseCardData.instance.UseTransmission(card, selectedTarget);
                 break;
-            case "Stat Boost":
-                cardData.UseStatBoost(card, selectedTarget);
+            case "Limit Break":
+                BaseCardData.instance.UseLimitBreak(card, selectedTarget);
                 break;
             case "Rest":
-                cardData.UseRest(card, selectedTarget);
+                BaseCardData.instance.UseRest(card, selectedTarget);
                 break;
             default:
                 break;
@@ -203,8 +195,23 @@ public class CardProcessing : MonoBehaviour
     {
         switch (card.cardName)
         {
-            case "Lightning Strike":
-                cardData.UseLightningStrike(card, selectedTarget);
+            case "Spin Attack":
+                WarriorCardData.instance.UseSpinAttack(card, selectedTarget);
+                break;
+            case "Shield Bash":
+                WarriorCardData.instance.UseShieldBash(card, selectedTarget);
+                break;
+            case "Desperate Strike":
+                WarriorCardData.instance.UseDesperateStrike(card, selectedTarget);
+                break;
+            case "Dash":
+                WarriorCardData.instance.UseDash(card, selectedTarget);
+                break;
+            case "Warrior's Roar":
+                WarriorCardData.instance.UseWarriorsRoar(card, selectedTarget);
+                break;
+            case "Armor Crush":
+                WarriorCardData.instance.UseArmorCrush(card, selectedTarget);
                 break;
             default:
                 break;
@@ -218,28 +225,28 @@ public class CardProcessing : MonoBehaviour
         {
             // Warrior
             case "WallJump":
-                cardData.WallJump(card, selectedTarget);
+                ArcherCardData.instance.WallJump(card, selectedTarget);
                 break;
             case "Concealment":
-                cardData.Concealment(card, selectedTarget);
+                ArcherCardData.instance.Concealment(card, selectedTarget);
                 break;
             case "Agility":
-                cardData.AgilityAttack(card, selectedTarget);
+                ArcherCardData.instance.AgilityAttack(card, selectedTarget);
                 break;
             case "PowerOfTurn":
-                cardData.TurnCountAttack(card, selectedTarget);
+                ArcherCardData.instance.TurnCountAttack(card, selectedTarget);
                 break;
             case "MarkAttack":
-                cardData.MarkTargetArrow(card, selectedTarget);
+                ArcherCardData.instance.MarkTargetArrow(card, selectedTarget);
                 break;
             case "DoubleShot":
-                cardData.DoubleTargetArrow(card, selectedTarget);
+                ArcherCardData.instance.DoubleTargetArrow(card, selectedTarget);
                 break;
             case "PoisonAttack":
-                cardData.PoisonArrow(card, selectedTarget);
+                ArcherCardData.instance.PoisonArrow(card, selectedTarget);
                 break;
             case "AimedShot":
-                cardData.AimedArrow(card, selectedTarget);
+                ArcherCardData.instance.AimedArrow(card, selectedTarget);
                 break;
             default:
                 break;
@@ -252,25 +259,25 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             case "Teleport":
-                cardData.UseTeleport(card, selectedTarget);
+                WizardCardData.instance.UseTeleport(card, selectedTarget);
                 break;
             case "Position Swap":
-                cardData.UsePositionSwap(card, selectedTarget);
+                WizardCardData.instance.UsePositionSwap(card, selectedTarget);
                 break;
             case "Fireball":
-                cardData.UseFireball(card, selectedTarget);
+                WizardCardData.instance.UseFireball(card, selectedTarget);
                 break;
             case "Flame Pillar":
-                cardData.UseFlamePillar(card, selectedTarget);
+                WizardCardData.instance.UseFlamePillar(card, selectedTarget);
                 break;
             case "Life Drain":
-                cardData.UseLifeDrain(card, selectedTarget);
+                WizardCardData.instance.UseLifeDrain(card, selectedTarget);
                 break;
             case "Magic Shield":
-                cardData.UseMagicShield(card, selectedTarget);
+                WizardCardData.instance.UseMagicShield(card, selectedTarget);
                 break;
             case "Summon Obstacle":
-                cardData.UseSummonObstacle(card, selectedTarget);
+                WizardCardData.instance.UseSummonObstacle(card, selectedTarget);
                 break;
             default:
                 break;

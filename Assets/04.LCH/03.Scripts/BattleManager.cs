@@ -72,7 +72,6 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        CardData cardData = FindObjectOfType<CardData>();
         cardManager = FindObjectOfType<CardManager>();
         characterSelector = FindObjectOfType<CharacterSelector>();
         //players = characterSelector.playerSelectList.players;
@@ -102,10 +101,12 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
+
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
             playerScripts = player.GetComponent<Player>();
             playerScripts.ResetActivePoint();
+            playerScripts.isAttack = false;
         }
         if (cardManager.handCardCount < 8)
         {
@@ -158,11 +159,23 @@ public class BattleManager : MonoBehaviour
         // 지정된 delay 시간 동안 대기(MonsterTurn UI 재생 때문에)
         yield return new WaitForSeconds(delay);
 
+        // 선택되지 않은 몬스터 리스트 초기화
+        List<int> availableMonsters = new List<int>();
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            if (!selectedMonsters.Contains(i))
+            {
+                availableMonsters.Add(i);
+            }
+        }
+
         // MaximumOfMonster에 설정되어 있는 값 만큼 몬스터 움직이기
         for (int i = 0; i < MaximumOfMonster; i++)
         {
-            int randIndex = Random.Range(0, monsters.Count); // 몬스터 리스트에서 랜덤 인덱스 선택
-            GameObject selectedMonster = monsters[randIndex]; // 선택된 몬스터
+            // 선택되지 않은 몬스터 중 랜덤하게 선택
+            int randIndex = Random.Range(0, availableMonsters.Count);
+            int selectedIndex = availableMonsters[randIndex];
+            GameObject selectedMonster = monsters[selectedIndex];
 
 
             //fixed
@@ -196,14 +209,19 @@ public class BattleManager : MonoBehaviour
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
                 yield return StartCoroutine(detectionCoroutine);
+            // 선택된 몬스터의 특정 메서드 실행
+            MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
+            IEnumerator detectionCoroutine = monsterMove.StartDetection();
+            yield return StartCoroutine(detectionCoroutine);
 
-                // 스킬을 쓰는 동안 다음 몬스터로 넘어가지 않도록 방지
-                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
-                    yield return null;
+            selectedMonsters.Add(selectedIndex);
+            
+            // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
+            while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                yield return null;
 
-                // 각 몬스터 이동 후 delay 만큼 대기
-                yield return new WaitForSeconds(delay);
-            }
+            // 각 몬스터 이동 후 delay 만큼 대기
+            yield return new WaitForSeconds(delay);
         }
 
         // 선택된 몬스터들 초기화(버그 예방 차원) 

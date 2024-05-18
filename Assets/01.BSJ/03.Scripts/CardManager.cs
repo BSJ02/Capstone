@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);
     [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
 
-    private float handCardDistance = 0.8f;
+    private float handCardDistance = 0.9f;
     private float addCardDistance = 3f;
 
     [HideInInspector] public List<Card> handCardList = new List<Card>();
@@ -29,8 +29,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> handCardObject;
     [HideInInspector] public List<GameObject> addCardObject;
 
-    public int handCardCount;
-
+    [HideInInspector] public int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject handCardPrefab;
@@ -41,6 +40,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] public GameObject handCardPanelPrefab;
 
     [HideInInspector] public bool waitAddCard = false;
+    public bool isMainCameraMoving = false;
 
     [HideInInspector] public Card useCard = null;
 
@@ -67,7 +67,7 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        handCardList.AddRange(cardInform.baseCards);
+        handCardList.AddRange(cardInform.warriorCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
@@ -105,7 +105,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
+            //cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
 
             cardProcessing.usingCard = false;
             cardProcessing.waitForInput = false;
@@ -235,9 +235,7 @@ public class CardManager : MonoBehaviour
         }
 
         return randomList[UnityEngine.Random.Range(0, randomList.Count)];
-    
     }
-
 
     public void CreateRandomCard()
     {

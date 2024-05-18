@@ -4,17 +4,19 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PlayerMove : MonoBehaviour
 {
     public Player player;
 
-    public GameObject playerChoice; //수정
+    private GameObject playerChoice;
 
     private MapGenerator mapGenerator;
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
     private PlayerManager playerManager;
+
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -28,7 +30,6 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
-    [SerializeField]
     private GameObject clickedPlayer;
 
     [HideInInspector] public static bool isMoving = false;
@@ -40,6 +41,12 @@ public class PlayerMove : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
         mapGenerator = FindObjectOfType<MapGenerator>();
+        playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
+    }
+
+    private void Start()
+    {
+        playerChoice.SetActive(false);
     }
 
     private void SetDestination(Vector2Int clickedTargetPos)
@@ -89,8 +96,14 @@ public class PlayerMove : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
+                    mapGenerator.ClearHighlightedTiles();
+                    detectedMonsters.Clear();
                     playerChoice.SetActive(true);
                     clickedPlayer = hit.collider.gameObject;
+
+                    cardProcessing.currentPlayerObj = clickedPlayer;
+                    cardProcessing.currentPlayer = clickedPlayer.GetComponent<Player>();
+
                     isActionSelect = true;
                 }
             }
@@ -105,12 +118,19 @@ public class PlayerMove : MonoBehaviour
                     if (detectedMonsters.Contains(clickedMonster))
                     {
                         Player clickPlayer = clickedPlayer.GetComponent<Player>();
-
-                        clickPlayer.ReadyToAttack(clickedMonster);
-                        isActionSelect = false;
+                        if(clickPlayer.isAttack == false)
+                        {
+                            clickPlayer.ReadyToAttack(clickedMonster);
+                            isActionSelect = false;
+                        }
                     }
                 }
             }
+        }
+
+        if(battleManager.isPlayerTurn == false)
+        {
+            playerChoice.SetActive(false);
         }
 
     }
@@ -121,10 +141,9 @@ public class PlayerMove : MonoBehaviour
         // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        cardProcessing.currentPlayerObj = clickedPlayer;
-        cardProcessing.currentPlayer = clickPlayer;
+        cardProcessing.isCardMoving = false;
 
-        if(clickPlayer.playerData.activePoint <= 0)
+        if (clickPlayer.playerData.activePoint <= 0)
         {
             Debug.Log("No remaining ActivePoints");
             playerChoice.SetActive(false);
@@ -138,10 +157,27 @@ public class PlayerMove : MonoBehaviour
     // Clicked AttackButton
     public void OnAttackButtonClick()
     {
-        // Code
-        Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+        Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        GetSurroundingTiles(finalPosition);
+        cardProcessing.isCardMoving = false;
+
+        // Code
+        if (clickPlayer.isAttack == true)
+        {
+            Debug.Log("Already Attack");
+            playerChoice.SetActive(false);
+        }
+        else
+        {
+            Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+            GetSurroundingTiles(finalPosition);
+        }
+    }
+
+    public void OnCardButtonClick()
+    {
+        cardProcessing.isCardMoving = true;
+        playerChoice.SetActive(false);
     }
 
     private List<Vector2Int> PathFinding()
@@ -198,7 +234,6 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
@@ -221,8 +256,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
+            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y);
+            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y);
 
             float startTime = Time.time;
 
@@ -245,13 +280,9 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
 
-        isMoving = false;
         isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
         clickPlayer.playerState = PlayerState.Idle;
-
-
-        clickedPlayer = null;
 
         yield break;
     }
@@ -321,3 +352,4 @@ public class PlayerMove : MonoBehaviour
         }
     }
 }
+
