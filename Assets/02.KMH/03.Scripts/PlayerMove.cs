@@ -31,8 +31,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private GameObject clickedPlayer;
 
-    private bool isMoving = false;
+    [HideInInspector] public static bool isMoving = false;
     private bool isActionSelect = false;
+
 
     private void Awake()
     {
@@ -209,6 +210,7 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
+
         clickedPlayer.layer = LayerMask.NameToLayer("Ignore Raycast");
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
         clickPlayer.playerState = PlayerState.Moving;

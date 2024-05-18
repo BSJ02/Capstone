@@ -14,6 +14,7 @@ public class CardData : MonoBehaviour
 
     private PlayerState playerState;
 
+    AbnormalConditionData abnormalConditionData;
 
     // Wizard variables
     [HideInInspector] public bool shouldTeleport = false;
@@ -381,7 +382,7 @@ public class CardData : MonoBehaviour
             monster.monsterData.Hp -= card.cardPower[2];
             //animation
             //player.AttackTwoAnim(selectedTarget);
-
+            abnormalConditionData.abConditions.Add("ice");
 
         }
         else
