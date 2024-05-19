@@ -23,7 +23,6 @@ public class WizardAnimationEvent : MonoBehaviour
         particleController = FindObjectOfType<ParticleController>();
     }
     
-
     private void Update()
     {
         if (isTeleport)
