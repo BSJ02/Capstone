@@ -16,7 +16,10 @@ public enum PlayerState
     SpinAttack = 7,
     MacigAttack01 = 8,
     MacigAttack02 = 9,
-    MacigAttack03 = 10
+    MacigAttack03 = 10,
+    Defend = 11,
+    RollFWD = 12,
+    Victory = 13
 }
 
 public class Player : MonoBehaviour
@@ -159,6 +162,27 @@ public class Player : MonoBehaviour
     {
         transform.LookAt(monster.transform);
         playerState = PlayerState.MacigAttack03;
+        anim.SetInteger("State", (int)playerState);
+    }
+
+    public void DefendAnim(GameObject monster)
+    {
+        transform.LookAt(monster.transform);
+        playerState = PlayerState.Defend;
+        anim.SetInteger("State", (int)playerState);
+    }
+
+    public void RollFWDAnim(GameObject monster)
+    {
+        transform.LookAt(monster.transform);
+        playerState = PlayerState.RollFWD;
+        anim.SetInteger("State", (int)playerState);
+    }
+
+    public void VictoryAnim(GameObject monster)
+    {
+        transform.LookAt(monster.transform);
+        playerState = PlayerState.Victory;
         anim.SetInteger("State", (int)playerState);
     }
 

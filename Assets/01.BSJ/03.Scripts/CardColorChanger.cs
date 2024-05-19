@@ -14,20 +14,20 @@ public class CardColorChanger : MonoBehaviour
     {
         if (cardRenderers != null)
         {
-            Color color = GetColorForCardRank(card.cardRank);
+            Color color = GetColorForCardType(card.cardType);
             ApplyColorToRenderers(color);
         }
     }
 
-    private Color GetColorForCardRank(Card.CardRank rank)
+    private Color GetColorForCardType(Card.CardType rank)
     {
         switch (rank)
         {
-            case Card.CardRank.WarriorCard:
+            case Card.CardType.WarriorCard:
                 return cardInform.commonColor;
-            case Card.CardRank.ArcherCard:
+            case Card.CardType.ArcherCard:
                 return cardInform.rareColor;
-            case Card.CardRank.WizardCard:
+            case Card.CardType.WizardCard:
                 return cardInform.epicColor;
             default:
                 return Color.white;
