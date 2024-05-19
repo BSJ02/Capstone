@@ -18,7 +18,7 @@ public class CardManager : MonoBehaviour
 
     private Vector3 handCardPos = new Vector3(0, 4.3f, 0);
     private Vector3 addCardPos = new Vector3(0, 10f, 0);
-    private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
+    private Vector3 spawDeckPos = new Vector3(-4f, -3.3f, -4f);
 
     private float handCardDistance = 0.9f;
     private float addCardDistance = 3f;
@@ -81,7 +81,7 @@ public class CardManager : MonoBehaviour
 
         CreatePanelPrefab(addCardPanelPrefab, new Vector3(-3f, 6f, -3f), Quaternion.Euler(0, 45, 0), false);
         CreatePanelPrefab(useCardPanelPrefab, new Vector3(-2f, 6f, -2f), Quaternion.Euler(45, 45, 0), false);
-        CreatePanelPrefab(handCardPanelPrefab, new Vector3(-4f, 1f, -4f), Quaternion.Euler(0, 45, 0), true);
+        CreatePanelPrefab(handCardPanelPrefab, new Vector3(-5f, 1.8f, -5f), Quaternion.Euler(0, 45, 0), true);
 
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();

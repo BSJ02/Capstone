@@ -22,7 +22,6 @@ public class CardMove : MonoBehaviour
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
     private int index;
-    [HideInInspector] public bool mouseOverCard = false;
 
     private void Start()
     {
@@ -42,23 +41,22 @@ public class CardMove : MonoBehaviour
         {
             if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
             {
-                mouseOverCard = true;
                 index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-                AnimateCard(originalPosition, scaleFactor);
+                AnimateCard(originalPosition + Vector3.up * 0.5f, scaleFactor);
                 gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
             }
-            else
+            else if (!IsMouseOverCard(gameObject))
             {
-                mouseOverCard = false;
                 index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
                 if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
                 {
                     gameObject.GetComponent<CardOrder>().SetOrder(index);
-                    MoveCardToScale(1f);
+                    AnimateCard(originalPosition, 1f);
                 }
             }
         }
     }
+
     public void UpdateOriginalPosition()
     {
         originalPosition = this.transform.position;
@@ -149,14 +147,14 @@ public class CardMove : MonoBehaviour
 
     private void OnMouseUp()
     {
-        MoveCardToPosition(originalPosition);
         if (BattleManager.instance.isPlayerTurn)
         {
             CardPanelCollision();
             MapGenerator.instance.ClearHighlightedTiles();
         }
-        
     }
+
+
 
     private void OnMouseDown()
     {

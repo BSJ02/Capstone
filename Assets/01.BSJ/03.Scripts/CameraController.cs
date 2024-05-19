@@ -22,34 +22,25 @@ public class CameraController : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         Vector3 move = Vector3.zero;
         float time = Time.deltaTime;
-        bool mouseOverCard = false;
 
-        foreach (var cardObject in CardManager.instance.handCardObject)
+        if (mousePos.x < edgeSize || mousePos.y < edgeSize)
         {
-            var cardMove = cardObject.GetComponent<CardMove>();
-            if (cardMove != null && cardMove.mouseOverCard)
-            {
-                mouseOverCard = true;
-                break;
-            }
+            CardManager.instance.isMainCameraMoving = true;
+            move.x = -moveSpeed * time;
+        }
+        else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
+        {
+            CardManager.instance.isMainCameraMoving = true;
+            move.x = moveSpeed * time;
+        }
+        else
+        {
+            CardManager.instance.isMainCameraMoving = false;
         }
 
-        if (!mouseOverCard)
+        if (CardManager.instance.isMainCameraMoving)
         {
-            if (mousePos.x < edgeSize || mousePos.y < edgeSize)
-            {
-                CardManager.instance.isMainCameraMoving = true;
-                move.x = -moveSpeed * time;
-            }
-            else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
-            {
-                CardManager.instance.isMainCameraMoving = true;
-                move.x = moveSpeed * time;
-            }
-            else
-            {
-                CardManager.instance.isMainCameraMoving = false;
-            }
+            UpdateCardPositions(move);
         }
 
         CardManager.instance.panelObject_Group.transform.position += move;
@@ -57,4 +48,17 @@ public class CameraController : MonoBehaviour
         virtualCamera.transform.position += move;
     }
 
+    private void UpdateCardPositions(Vector3 move)
+    {
+        foreach (var cardObject in CardManager.instance.handCardObject)
+        {
+            cardObject.transform.position += move;
+
+            var cardMove = cardObject.GetComponent<CardMove>();
+            if (cardMove != null)
+            {
+                cardMove.UpdateOriginalPosition();
+            }
+        }
+    }
 }
