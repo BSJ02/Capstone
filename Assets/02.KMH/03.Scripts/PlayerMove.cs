@@ -131,7 +131,6 @@ public class PlayerMove : MonoBehaviour
     // Clicked MoveButton
     public void OnMoveButtonClick()
     {
-        // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
         cardProcessing.currentPlayerObj = clickedPlayer;
@@ -153,7 +152,6 @@ public class PlayerMove : MonoBehaviour
     {
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        // Code
         if (clickPlayer.isAttack == true)
         {
             Debug.Log("Already Attack");
