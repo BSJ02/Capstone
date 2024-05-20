@@ -33,26 +33,19 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        if (CardManager.instance.isMainCameraMoving)
+        if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
         {
-            UpdateOriginalPosition();
+            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            MoveCardToScale(scaleFactor);
+            gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
         }
         else
         {
-            if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
+            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
             {
-                index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-                AnimateCard(originalPosition + Vector3.up * 0.5f, scaleFactor);
-                gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
-            }
-            else if (!IsMouseOverCard(gameObject))
-            {
-                index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-                if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
-                {
-                    gameObject.GetComponent<CardOrder>().SetOrder(index);
-                    AnimateCard(originalPosition, 1f);
-                }
+                gameObject.GetComponent<CardOrder>().SetOrder(index);
+                MoveCardToScale(1f);
             }
         }
     }
@@ -60,20 +53,6 @@ public class CardMove : MonoBehaviour
     public void UpdateOriginalPosition()
     {
         originalPosition = this.transform.position;
-    }
-
-    void AnimateCard(Vector3 position, float scale)
-    {
-        transform.DOKill();
-        transform.DOMove(position, animationDuration);
-        transform.DOScale(originalScale * scale, animationDuration);
-    }
-
-    // Position 이동
-    private void MoveCardToPosition(Vector3 position)
-    {
-        transform.DOKill();
-        transform.DOMove(position, animationDuration);
     }
 
     // Scale 변경
@@ -154,16 +133,14 @@ public class CardMove : MonoBehaviour
         }
     }
 
-
-
     private void OnMouseDown()
     {
         int index = CardManager.instance.handCardObject.IndexOf(this.gameObject);
         Card card = null;
 
-        if (index >= 0 && index < CardManager.instance.handCardList.Count)
+        if (IsMouseOverCard(gameObject) && index >= 0 && index < CardManager.instance.handCardList.Count)
         {
-            card = CardManager.instance.handCardList[index]; ;
+            card = CardManager.instance.handCardList[index];
         }
         else
         {

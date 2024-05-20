@@ -30,6 +30,7 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
+    [SerializeField]
     private GameObject clickedPlayer;
 
     private bool isMoving = false;

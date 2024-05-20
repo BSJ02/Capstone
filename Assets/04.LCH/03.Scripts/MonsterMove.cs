@@ -64,7 +64,7 @@ public class MonsterMove : MonoBehaviour
         Vector3 player = FindObjectOfType<Player>().transform.position;
         playerPos = new Vector2Int((int)player.x, (int)player.z);
 
-        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false); 
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false);
 
         StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
         TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
