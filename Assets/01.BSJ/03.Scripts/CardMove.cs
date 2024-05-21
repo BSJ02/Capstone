@@ -6,6 +6,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using System;
 using static Card;
+using UnityEngine.UIElements;
 
 public class CardMove : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class CardMove : MonoBehaviour
 
     private void Start()
     {
+        DOTween.Init();
+
         cardProcessing = FindObjectOfType<CardProcessing>();
         cameraController = FindObjectOfType<CameraController>();
 
@@ -39,13 +42,17 @@ public class CardMove : MonoBehaviour
             MoveCardToScale(scaleFactor);
             gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
         }
-        else
+        else if (CardManager.instance.isMainCameraMoving)
+        {
+            cameraController.UpdatePositions();
+        }
+        else if (!IsMouseOverCard(gameObject))
         {
             index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
             if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
             {
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
-                MoveCardToScale(1f);
+                MoveCardToPosAndScale(originalPosition ,1f);
             }
         }
     }
@@ -55,7 +62,19 @@ public class CardMove : MonoBehaviour
         originalPosition = this.transform.position;
     }
 
-    // Scale 변경
+    private void MoveCardToPosAndScale(Vector3 position, float scale)
+    {
+        transform.DOKill();
+        transform.DOMove(originalPosition, animationDuration);
+        transform.DOScale(originalScale * scale, animationDuration);
+    }
+
+    private void MoveCardToPosition(Vector3 position)
+    {
+        transform.DOKill();
+        transform.DOMove(originalPosition, animationDuration);
+    }
+
     private void MoveCardToScale(float scale)
     {
         transform.DOKill();

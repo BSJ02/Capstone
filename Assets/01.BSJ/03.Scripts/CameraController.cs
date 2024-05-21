@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
-    public float moveSpeed = 8f;
+    public float moveSpeed = 10f;
     public float edgeSize = 10f;
     public bool setPos = false;
 
@@ -48,19 +48,6 @@ public class CameraController : MonoBehaviour
         return move;
     }
 
-    private void UpdatePositions()
-    {
-        CardManager.instance.panelObject_Group.transform.position += HandleMouseMovement();
-        CardManager.instance.deckObject.transform.position += HandleMouseMovement();
-
-        if (CardManager.instance.isMainCameraMoving)
-        {
-            UpdateCardPositions();
-        }
-
-        virtualCamera.transform.position += HandleMouseMovement();
-    }
-
     private void UpdateCardPositions()
     {
         foreach (var cardObject in CardManager.instance.handCardObject)
@@ -71,5 +58,18 @@ public class CameraController : MonoBehaviour
                 cardMove.UpdateOriginalPosition();
             }
         }
+    }
+
+    public void UpdatePositions()
+    {
+        CardManager.instance.panelObject_Group.transform.position += HandleMouseMovement();
+        CardManager.instance.deckObject.transform.position += HandleMouseMovement();
+
+        if (CardManager.instance.isMainCameraMoving)
+        {
+            UpdateCardPositions();
+        }
+
+        virtualCamera.transform.position += HandleMouseMovement();
     }
 }
