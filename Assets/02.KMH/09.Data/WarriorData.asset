@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: WarriorData
   m_EditorClassIdentifier: 
-  Hp: 100
-  MaxHp: 100
+  Hp: 120
+  MaxHp: 120
   Damage: 20
   Armor: 100
   CriticalHit: 0
-  activePoint: 0
+  activePoint: 4
   MaxActivePoint: 4

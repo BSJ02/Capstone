@@ -136,7 +136,7 @@ public class BattleManager : MonoBehaviour
         foreach (GameObject player in players)
         {
             player.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        } // 레이캐스트 비활성호 
+        } // 레이캐스트 비활성화
 
         // 몬스터 턴 UI 활성화
         turn_UI[1].gameObject.SetActive(true);
@@ -170,19 +170,28 @@ public class BattleManager : MonoBehaviour
             int selectedIndex = availableMonsters[randIndex];
             GameObject selectedMonster = monsters[selectedIndex];
 
-            // 선택된 몬스터의 특정 메서드 실행
-            MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
-            IEnumerator detectionCoroutine = monsterMove.StartDetection();
-            yield return StartCoroutine(detectionCoroutine);
+            // 선택된 몬스터가 이미 움직였는지 확인
+            if (!selectedMonsters.Contains(selectedIndex))
+            {
+                // 선택된 몬스터의 특정 메서드 실행
+                MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
+                IEnumerator detectionCoroutine = monsterMove.StartDetection();
+                yield return StartCoroutine(detectionCoroutine);
 
-            selectedMonsters.Add(selectedIndex);
-            
-            // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
-            while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
-                yield return null;
+                selectedMonsters.Add(selectedIndex);
 
-            // 각 몬스터 이동 후 delay 만큼 대기
-            yield return new WaitForSeconds(delay);
+                // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                    yield return null;
+
+                // 각 몬스터 이동 후 delay 만큼 대기
+                yield return new WaitForSeconds(delay);
+            }
+            else
+            {
+                // 이미 선택된 몬스터는 스킵
+                Debug.Log("이미 선택된 몬스터입니다.");
+            }
         }
 
         // 선택된 몬스터들 초기화(버그 예방 차원) 
@@ -196,9 +205,8 @@ public class BattleManager : MonoBehaviour
     {
         // 대기 처리
         yield return new WaitForSeconds(3f);
-        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
-        BattleManager.instance.PlayerTurn();
-
+        turn_UI[1].gameObject.SetActive(false);
+        PlayerTurn();
     }
 
 }

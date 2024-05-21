@@ -21,9 +21,10 @@ public class MageSkill : SkillData
 
         GameObject projectile = Instantiate(effect, particlePosition, particleRotation);
 
-        Transform playerTarget = FindObjectOfType<Player>().transform;
+        Vector2Int playerPosition = FindObjectOfType<MonsterMove>().playerPos;
+        Vector3 target = new Vector3(playerPosition.x, 0, playerPosition.y);
 
-        Vector3 directionToPlayer = (playerTarget.position + Vector3.up) - startPosition.position;
+        Vector3 directionToPlayer = (target + Vector3.up) - startPosition.position;
         directionToPlayer.Normalize();
 
         projectile.gameObject.GetComponent<Rigidbody>().AddForce(directionToPlayer * speed, ForceMode.VelocityChange);

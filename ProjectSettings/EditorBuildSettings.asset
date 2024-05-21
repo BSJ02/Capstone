@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/04.LCH/01.Scene/LCH.unity
     guid: 25edb907a5f4c464ca3c070df794e7f3
   - enabled: 1
