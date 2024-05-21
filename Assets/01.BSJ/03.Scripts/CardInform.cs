@@ -33,10 +33,10 @@ public class CardInform : ScriptableObject
         FixCardPercent(archerCards, rarePercent);
         FixCardPercent(wizardCards, epicPercent);
 
-        ApplyCardRank(baseCards, Card.CardRank.BaseCard);
-        ApplyCardRank(warriorCards, Card.CardRank.WarriorCard);
-        ApplyCardRank(archerCards, Card.CardRank.ArcherCard);
-        ApplyCardRank(wizardCards, Card.CardRank.WizardCard);
+        ApplyCardRank(baseCards, Card.CardType.BaseCard);
+        ApplyCardRank(warriorCards, Card.CardType.WarriorCard);
+        ApplyCardRank(archerCards, Card.CardType.ArcherCard);
+        ApplyCardRank(wizardCards, Card.CardType.WizardCard);
     }
 
     // 리스트에 있는 카드들의 percent를 원하는 값으로 설정
@@ -49,11 +49,11 @@ public class CardInform : ScriptableObject
     }
 
     // 각 카드 리스트에 따라 색상을 변경하는 메서드
-    public void ApplyCardRank(List<Card> cardList, Card.CardRank rank)
+    public void ApplyCardRank(List<Card> cardList, Card.CardType type)
     {
         foreach (Card card in cardList)
         {
-            card.cardRank = rank;
+            card.cardType = type;
         }
     }
 }
@@ -69,10 +69,11 @@ public class Card
     public float cardDistance;  // 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
-    public CardRank cardRank; // 카드 등급
+    public CardType cardType; // 카드 등급
     public CardTarget cardTarget;
+    [HideInInspector] public bool isCardMoveEnabled = false;
 
-    public enum CardRank
+    public enum CardType
     {
         BaseCard,
         WarriorCard, 

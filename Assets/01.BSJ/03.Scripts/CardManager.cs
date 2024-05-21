@@ -10,73 +10,92 @@ using UnityEngine.UIElements;
 
 public class CardManager : MonoBehaviour
 {
+    public static CardManager instance;
+
     [Header(" # Card Inform")] public CardInform cardInform;
     
     private CardProcessing cardProcessing;
-    
-    [HideInInspector] private Vector3 handCardPos = new Vector3(0, 4.3f, 0);
-    [HideInInspector] private Vector3 addCardPos = new Vector3(0, 10f, 0);
-    [HideInInspector] private Vector3 spawDeckPos = new Vector3(-3.6f, -3.6f, -3.6f);
 
-    private float handCardDistance = 0.8f;
+    private Vector3 handCardPos = new Vector3(0, 4.3f, 0);
+    private Vector3 addCardPos = new Vector3(0, 10f, 0);
+    private Vector3 spawDeckPos = new Vector3(-4f, -3.3f, -4f);
+
+    private float handCardDistance = 0.9f;
     private float addCardDistance = 3f;
 
     [HideInInspector] public List<Card> handCardList = new List<Card>();
-    [HideInInspector] public List<Card> addCardList = new List<Card>(); 
+    [HideInInspector] public List<Card> addCardList = new List<Card>();
 
-    private GameObject deckObject;
+    [HideInInspector] public GameObject deckObject;
+    [HideInInspector] public GameObject panelObject_Group;
 
     [HideInInspector] public List<GameObject> handCardObject;
     [HideInInspector] public List<GameObject> addCardObject;
 
-    public int handCardCount;
-
+    [HideInInspector] public int handCardCount;
 
     [Header(" # Card Prefab")]
-    [SerializeField] private GameObject handCardPrefab;
+    [SerializeField] private GameObject cardPrefab;
 
     [Header(" # Panel Prefab")]
-    [SerializeField] private GameObject addCardPanelPrefab;
-    [SerializeField] public GameObject useCardPanelPrefab;
-    [SerializeField] public GameObject handCardPanelPrefab;
+    public GameObject addCardPanelPrefab;
+    public GameObject useCardPanelPrefab;
+    public GameObject handCardPanelPrefab;
 
     [HideInInspector] public bool waitAddCard = false;
+    [HideInInspector] public bool isCardSorting = false;
+    [HideInInspector] public bool isMainCameraMoving = false;
 
     [HideInInspector] public Card useCard = null;
 
-    [Header(" # MainCamera Object")]
-    public GameObject mainCamera;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        deckObject = GameObject.Find("Cards");
+        deckObject = GameObject.Find("Deck");
         if (deckObject == null)
         {
-            deckObject = new GameObject("Cards");
+            deckObject = new GameObject("Deck");
         }
-        deckObject.transform.SetParent(mainCamera.transform, false);
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
 
+        panelObject_Group = GameObject.Find("PanelObject_Group");
+        if (panelObject_Group == null)
+        {
+            panelObject_Group = new GameObject("PanelObject_Group");
+        }
+        panelObject_Group.transform.position = Vector3.zero;
+
         CreatePanelPrefab(addCardPanelPrefab, new Vector3(-3f, 6f, -3f), Quaternion.Euler(0, 45, 0), false);
         CreatePanelPrefab(useCardPanelPrefab, new Vector3(-2f, 6f, -2f), Quaternion.Euler(45, 45, 0), false);
-        CreatePanelPrefab(handCardPanelPrefab, new Vector3(-3f, 0.28f, -3f), Quaternion.Euler(0, 45, 0), true);
+        CreatePanelPrefab(handCardPanelPrefab, new Vector3(-5f, 1.8f, -5f), Quaternion.Euler(0, 45, 0), true);
 
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-        handCardList.AddRange(cardInform.wizardCards);
+        handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
         handCardCount = handCardList.Count;
     }
-    
-    public GameObject FindMainCameraChildObject(string childObjectName)
+
+    public GameObject FindPanelGroupChildObject(string childObjectName)
     {
-        Transform childTransform = mainCamera.transform.Find(childObjectName);
+        Transform childTransform = panelObject_Group.transform.Find(childObjectName);
         GameObject childGameObject = childTransform.gameObject;
         return childGameObject;
     }
@@ -84,7 +103,7 @@ public class CardManager : MonoBehaviour
     private void CreatePanelPrefab(GameObject prefab, Vector3 worldPos, Quaternion quaternion, bool setActive)
     {
         prefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        prefab.transform.SetParent(mainCamera.transform, false);
+        prefab.transform.SetParent(panelObject_Group.transform, false);
         prefab.transform.position = worldPos;
         prefab.transform.rotation = quaternion;
         prefab.SetActive(setActive);
@@ -105,7 +124,7 @@ public class CardManager : MonoBehaviour
             ApplyCardInfrom(card, cardObject);
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
+            //cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.TempActivePoint;
 
             cardProcessing.usingCard = false;
             cardProcessing.waitForInput = false;
@@ -203,7 +222,7 @@ public class CardManager : MonoBehaviour
 
             StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
-            FindMainCameraChildObject("Add Card Panel(Clone)").SetActive(false);
+            FindPanelGroupChildObject("Add Card Panel(Clone)").SetActive(false);
         }
         waitAddCard = false;
     }
@@ -234,13 +253,11 @@ public class CardManager : MonoBehaviour
         }
 
         return randomList[UnityEngine.Random.Range(0, randomList.Count)];
-    
     }
-
 
     public void CreateRandomCard()
     {
-        FindMainCameraChildObject("Add Card Panel(Clone)").SetActive(true);
+        FindPanelGroupChildObject("Add Card Panel(Clone)").SetActive(true);
 
         addCardList = new List<Card>();
 
@@ -277,7 +294,7 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0 ; i < cards.Count; i++)
         {
-            GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
+            GameObject cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
 
             handCardObject.Add(cardObject);
             handCardObject[i].SetActive(false);
@@ -289,7 +306,7 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < cardMaxCount - cards.Count; i++)
         {
-            GameObject cardObject = Instantiate(handCardPrefab, Vector3.zero, Quaternion.identity);
+            GameObject cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
 
             addCardObject.Add(cardObject);
             addCardObject[i].SetActive(false);
@@ -320,6 +337,8 @@ public class CardManager : MonoBehaviour
 
     public IEnumerator CardSorting(List<Card> card, List<GameObject> cardObject, Vector3 cardPos, float cardToDistance)
     {
+        isCardSorting = true;
+
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
@@ -350,6 +369,8 @@ public class CardManager : MonoBehaviour
             cardObject[i].transform.position = targetPosition;  
             cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
         }
+
+        isCardSorting = false;
     }
 
 }
