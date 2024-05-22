@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.Playables;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -15,12 +14,9 @@ public class PlayerMove : MonoBehaviour
     private MapGenerator mapGenerator;
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
-    private PlayerManager playerManager;
-
 
     Vector2Int playerPos;
     Vector2Int targetPos;
-    Vector2Int monsterPos;
 
     Tile StartNode, EndNode, CurrentNode;
     List<Tile> OpenList = new List<Tile>();
@@ -30,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
+    [SerializeField]
     private GameObject clickedPlayer;
 
     private bool isMoving = false;
@@ -59,17 +56,17 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
             //int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity/*, TileLayerMask*/) && !cardProcessing.usingCard)
             {
                 if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
                 {
-
                     Tile clickedTile = hit.collider.GetComponent<Tile>();
 
                     Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
@@ -82,12 +79,33 @@ public class PlayerMove : MonoBehaviour
                     mapGenerator.ResetTotalMap();
                 }
             }
+
         }
+
+/*        if (Physics.Raycast(ray, out hit))
+        {
+            Monster monster = GetComponent<Monster>();
+            if (hit.collider.CompareTag("Monster"))
+            {
+                // 클릭된 오브젝트가 몬스터인 경우
+                if (monster != null)
+                {
+                    // 2. 클릭된 몬스터 주변에 있는 타일을 가져와서 스킬 범위 표시
+                    List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking
+                        (new Vector2Int((int)monster.transform.position.x, (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
+
+                    foreach (var tile in tiles)
+                    {
+                        Tile coord = MapGenerator.instance.totalMap[tile.x, tile.y];
+                        coord.SetColor(Color.red);
+                    }
+                }
+            }
+        }*/
+
 
         if (Input.GetMouseButtonDown(0) && !isMoving /*&& !cardData.usingCard*/)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
             int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
@@ -117,7 +135,7 @@ public class PlayerMove : MonoBehaviour
                     if (detectedMonsters.Contains(clickedMonster))
                     {
                         Player clickPlayer = clickedPlayer.GetComponent<Player>();
-                        if(clickPlayer.isAttack == false)
+                        if (clickPlayer.isAttack == false)
                         {
                             clickPlayer.ReadyToAttack(clickedMonster);
                             isActionSelect = false;
@@ -127,7 +145,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if(battleManager.isPlayerTurn == false)
+        if (battleManager.isPlayerTurn == false)
         {
             playerChoice.SetActive(false);
         }
@@ -137,9 +155,8 @@ public class PlayerMove : MonoBehaviour
     // Clicked MoveButton
     public void OnMoveButtonClick()
     {
+        // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
-
-        cardProcessing.isCardMoving = false;
 
         if (clickPlayer.playerData.activePoint <= 0)
         {
@@ -157,8 +174,6 @@ public class PlayerMove : MonoBehaviour
     {
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        cardProcessing.isCardMoving = false;
-
         // Code
         if (clickPlayer.isAttack == true)
         {
@@ -174,7 +189,7 @@ public class PlayerMove : MonoBehaviour
 
     public void OnCardButtonClick()
     {
-        cardProcessing.isCardMoving = true;
+        cardProcessing.usingCard = true;
         playerChoice.SetActive(false);
     }
 
@@ -253,8 +268,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y);
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y);
+            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
+            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
 
             float startTime = Time.time;
 
@@ -277,9 +292,13 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
 
+        isMoving = false;
         isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
         clickPlayer.playerState = PlayerState.Idle;
+
+
+        clickedPlayer = null;
 
         yield break;
     }
@@ -349,4 +368,3 @@ public class PlayerMove : MonoBehaviour
         }
     }
 }
-

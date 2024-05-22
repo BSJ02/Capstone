@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
-  m_Name: WizardData
+  m_Name: Warrior(ATK)Data
   m_EditorClassIdentifier: 
-  Hp: 100
+  Hp: 0
   MaxHp: 100
   Damage: 20
   Armor: 100
   CriticalHit: 0
-  activePoint: 100
+  activePoint: 0
   MaxActivePoint: 100
