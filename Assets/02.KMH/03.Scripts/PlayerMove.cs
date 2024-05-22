@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.Playables;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -196,8 +195,6 @@ public class PlayerMove : MonoBehaviour
         // Code
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        cardProcessing.isCardMoving = false;
-
         if (clickPlayer.playerData.activePoint <= 0)
         {
             Debug.Log("No remaining ActivePoints");
@@ -214,8 +211,6 @@ public class PlayerMove : MonoBehaviour
     {
         Player clickPlayer = clickedPlayer.GetComponent<Player>();
 
-        cardProcessing.isCardMoving = false;
-
         // Code
         if (clickPlayer.isAttack == true)
         {
@@ -231,7 +226,7 @@ public class PlayerMove : MonoBehaviour
 
     public void OnCardButtonClick()
     {
-        cardProcessing.isCardMoving = true;
+        cardProcessing.usingCard = true;
         playerChoice.SetActive(false);
     }
 
@@ -332,9 +327,13 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
 
+        isMoving = false;
         isActionSelect = false;
         clickedPlayer.layer = LayerMask.NameToLayer("Player");
         clickPlayer.playerState = PlayerState.Idle;
+
+
+        clickedPlayer = null;
 
         yield break;
     }
@@ -401,4 +400,3 @@ public class PlayerMove : MonoBehaviour
         }
     }
 }
-

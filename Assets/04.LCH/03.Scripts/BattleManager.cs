@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum BattleState 
 {
@@ -9,21 +10,20 @@ public enum BattleState
     PlayerTurn,
     MonsterTurn,
     Won,
-    Lost 
+    Lost,
+    EndStage
 }
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
-
     private CardManager cardManager;
-
-    private CharacterSelector characterSelector;
 
     public BattleState battleState;
 
     [Header("# 스테이지 몬스터 및 플레이어")]
     public List<GameObject> players = new List<GameObject>();
+    public List<int> playerList = new List<int>();
     public List<GameObject> monsters = new List<GameObject>();
     private Player playerScripts;
 
@@ -39,9 +39,12 @@ public class BattleManager : MonoBehaviour
     public GameObject[] turn_UI; // 턴 UI
     private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
+    public GameObject stageEnd; // StageEnd 이미지
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
+
+    bool stageClear = false;
 
     [HideInInspector] public bool isPlayerMove = false;
     [HideInInspector] public bool isPlayerTurn = false;
@@ -64,23 +67,67 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
-        characterSelector = FindObjectOfType<CharacterSelector>();
         //players = characterSelector.playerSelectList.players;
+
 
         battleState = BattleState.Start;
 
+
         // 스테이지 오브젝트 활성화
-        foreach (GameObject player in players)
+        foreach (int playerIndex in characterSelector.playerSelectList.playerList)
         {
-            //Instantiate(player, new Vector3(2, 0.35f, 0), Quaternion.identity);
-            player.gameObject.SetActive(true);
-            playerScripts = player.GetComponent<Player>();
+            switch (playerIndex)
+            {
+                case 0:
+                    players[0].gameObject.SetActive(true);
+                    playerScripts = players[0].GetComponent<Player>();
+                    break;
+                case 1:
+                    players[1].gameObject.SetActive(true);
+                    playerScripts = players[1].GetComponent<Player>();
+                    break;
+                case 2:
+                    players[2].gameObject.SetActive(true);
+                    playerScripts = players[2].GetComponent<Player>();
+                    break;
+                case 3:
+                    players[3].gameObject.SetActive(true);
+                    playerScripts = players[3].GetComponent<Player>();
+                    break;
+            }
         }
+
+
+        // 비활성화된 오브젝트 삭제
+        for (int i = players.Count - 1; i >= 0; i--)
+        {
+            if (!players[i].activeSelf)
+            {
+                Destroy(players[i]);
+                players.RemoveAt(i);
+            }
+        }
+
+        /*        for (int i = 0; i < 2; i++)
+                {
+                    Instantiate(players[i], new Vector3(2 + i, 0.35f, 0), Quaternion.identity);
+                    players[i].gameObject.SetActive(true);
+                    playerScripts = players[i].GetComponent<Player>();
+                }*/
+
+        // 스테이지 오브젝트 활성화
+        /*        foreach (GameObject player in players)
+                {
+                    player.gameObject.SetActive(true);
+                    playerScripts = player.GetComponent<Player>();
+                }*/
+
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
@@ -91,8 +138,35 @@ public class BattleManager : MonoBehaviour
 
         PlayerTurn();
     }
-
     
+    // 스테이지 종료 감지
+    private void Update()
+    {
+        // 모든 몬스터가 죽으면 스테이지 종료
+        if(monsters.Count <= 0)
+        {
+            StartCoroutine(EndStage());
+        }
+    }
+
+
+    IEnumerator EndStage()
+    {
+        // Stage 종료가 종료될 때 실행되는 것들(사운드, UI, 페이드 인 & 아웃 애니메이션, 다음 씬 이동 등..)
+        yield return new WaitForSeconds(delay);
+
+        battleState = BattleState.EndStage;
+        stageClear = true;
+
+        stageEnd.SetActive(true);
+
+        // 씬 로드
+        yield return new WaitForSeconds(delay * 3);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
+
+    }
+
     public void PlayerTurn()
     {
         battleState = BattleState.PlayerTurn;

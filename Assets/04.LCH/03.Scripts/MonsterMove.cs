@@ -284,7 +284,6 @@ public class MonsterMove : MonoBehaviour
         // 최종 좌표 isWall 설정(몬스터 및 플레이어 겹침 방지)
         MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true);
 
-
         // RandomDamage 선택
         monster.ReadyToAttack();
 
@@ -315,9 +314,14 @@ public class MonsterMove : MonoBehaviour
                 if (tile == playerPos && monster.monsterData.CurrentDamage >= monster.monsterData.Critical)
                 {
                     isMoving = true;
+
+                    // 공격 로직 실행 
                     monster.attack = AttackState.SkillAttack;
-                    transform.LookAt(playerObj.transform);
+                    monster.ReadyToAttack();
                     monster.Attack(playerComponent);
+
+                    // 회전값 보정 
+                    transform.LookAt(playerObj.transform);
                     return true;
                 }
             }
@@ -333,9 +337,14 @@ public class MonsterMove : MonoBehaviour
                 if (tile == playerPos)
                 {
                     isMoving = true;
+
+                    // 공격 로직 실행 
                     monster.attack = AttackState.GeneralAttack;
-                    transform.LookAt(playerObj.transform);
+                    monster.ReadyToAttack();
                     monster.Attack(playerComponent);
+
+                    // 회전값 보정
+                    transform.LookAt(playerObj.transform);
                     return true;
                 }
             }
