@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
 
+
     Vector2Int playerPos;
     Vector2Int targetPos;
 
@@ -61,96 +62,132 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            //int TileLayerMask = 1 << LayerMask.NameToLayer("Tile");
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity/*, TileLayerMask*/) && !cardProcessing.usingCard)
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !cardProcessing.usingCard)
             {
-                if (hit.collider.CompareTag("Tile") && mapGenerator.IsHighlightedTile(hit.collider.GetComponent<Tile>()))
+                if (hit.collider != null)
                 {
-                    Tile clickedTile = hit.collider.GetComponent<Tile>();
-
-                    Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
-
-                    OpenList.Clear();
-                    CloseList.Clear();
-                    SetDestination(targetPos);
-                    List<Vector2Int> move = PathFinding();
-                    StartCoroutine(MoveSmoothly(move));
-                    mapGenerator.ResetTotalMap();
-                }
-            }
-
-        }
-
-/*        if (Physics.Raycast(ray, out hit))
-        {
-            Monster monster = GetComponent<Monster>();
-            if (hit.collider.CompareTag("Monster"))
-            {
-                // 클릭된 오브젝트가 몬스터인 경우
-                if (monster != null)
-                {
-                    // 2. 클릭된 몬스터 주변에 있는 타일을 가져와서 스킬 범위 표시
-                    List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking
-                        (new Vector2Int((int)monster.transform.position.x, (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
-
-                    foreach (var tile in tiles)
+                    if (hit.collider.CompareTag("Tile"))
                     {
-                        Tile coord = MapGenerator.instance.totalMap[tile.x, tile.y];
-                        coord.SetColor(Color.red);
+                        Tile clickedTile = hit.collider.GetComponent<Tile>();
+                        if (clickedTile != null && mapGenerator.IsHighlightedTile(clickedTile))
+                        {
+                            Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
+
+                            OpenList.Clear();
+                            CloseList.Clear();
+                            SetDestination(targetPos);
+                            List<Vector2Int> move = PathFinding();
+                            StartCoroutine(MoveSmoothly(move));
+                            mapGenerator.ResetTotalMap();
+                        }
+                        else
+                        {
+                            ResetSelection();
+                        }
+                    }
+                    else if (hit.collider.CompareTag("Monster"))
+                    {
+                        Monster monster = hit.collider.GetComponent<Monster>();
+                        if (monster != null)
+                        {
+                            List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking
+                                (new Vector2Int((int)monster.transform.position.x, (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
+
+                            // Reset all tile colors to white
+                            ResetTilesColor();
+
+                            // Highlight monster's range
+                            foreach (var tile in tiles)
+                            {
+                                Tile coord = MapGenerator.instance.totalMap[tile.x, tile.y];
+                                if (coord != null)
+                                {
+                                    coord.SetColor(Color.red);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ResetSelection();
                     }
                 }
             }
-        }*/
 
 
-        if (Input.GetMouseButtonDown(0) && !isMoving /*&& !cardData.usingCard*/)
-        {
-            int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
+            if (Input.GetMouseButtonDown(0) && !isMoving)
             {
+                int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
 
-                if (hit.collider.CompareTag("Player"))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
                 {
-                    mapGenerator.ClearHighlightedTiles();
-                    detectedMonsters.Clear();
-                    playerChoice.SetActive(true);
-                    clickedPlayer = hit.collider.gameObject;
 
-                    cardProcessing.currentPlayerObj = clickedPlayer;
-                    cardProcessing.currentPlayer = clickedPlayer.GetComponent<Player>();
-
-                    isActionSelect = true;
-                }
-            }
-
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true && isActionSelect == true)
-            {
-                if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
-                {
-                    clickedMonster = hit.collider.GetComponent<Monster>();
-
-                    if (detectedMonsters.Contains(clickedMonster))
+                    if (hit.collider.CompareTag("Player"))
                     {
-                        Player clickPlayer = clickedPlayer.GetComponent<Player>();
-                        if (clickPlayer.isAttack == false)
+                        mapGenerator.ClearHighlightedTiles();
+                        detectedMonsters.Clear();
+                        playerChoice.SetActive(true);
+                        clickedPlayer = hit.collider.gameObject;
+
+                        cardProcessing.currentPlayerObj = clickedPlayer;
+                        cardProcessing.currentPlayer = clickedPlayer.GetComponent<Player>();
+
+                        isActionSelect = true;
+                    }
+                }
+
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true && isActionSelect == true)
+                {
+                    if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
+                    {
+                        clickedMonster = hit.collider.GetComponent<Monster>();
+
+                        if (detectedMonsters.Contains(clickedMonster))
                         {
-                            clickPlayer.ReadyToAttack(clickedMonster);
-                            isActionSelect = false;
+                            Player clickPlayer = clickedPlayer.GetComponent<Player>();
+                            if (clickPlayer.isAttack == false)
+                            {
+                                clickPlayer.ReadyToAttack(clickedMonster);
+                                isActionSelect = false;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (battleManager.isPlayerTurn == false)
-        {
-            playerChoice.SetActive(false);
-        }
 
+            if (battleManager.isPlayerTurn == false)
+            {
+                playerChoice.SetActive(false);
+            }
+
+        }
     }
+
+    private void ResetSelection()
+    {
+        mapGenerator.ClearHighlightedTiles();
+        detectedMonsters.Clear();
+        clickedPlayer = null;
+        clickedMonster = null;
+        playerChoice.SetActive(false);
+
+        // Reset all tile colors to white
+        ResetTilesColor();
+    }
+
+    private void ResetTilesColor()
+    {
+        foreach (Tile tile in mapGenerator.totalMap)
+        {
+            if (tile != null)
+            {
+                tile.SetColor(Color.white);
+            }
+        }
+    }
+
 
     // Clicked MoveButton
     public void OnMoveButtonClick()
@@ -246,14 +283,12 @@ public class PlayerMove : MonoBehaviour
         return path;
     }
 
-
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
         mapGenerator.ClearHighlightedTiles();
         return clickedCoord;
     }
-
 
     private IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
@@ -268,8 +303,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y); // X�� Y ��ǥ�� Mathf.Round�� ����Ͽ� ���� ����� ������ �ݿø�
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y); // �������� ��ǥ�� ������ �ݿø�
+            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y);
+            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y);
 
             float startTime = Time.time;
 
@@ -302,9 +337,6 @@ public class PlayerMove : MonoBehaviour
 
         yield break;
     }
-
-
-
 
     private void OpenListAdd(int checkX, int checkY)
     {

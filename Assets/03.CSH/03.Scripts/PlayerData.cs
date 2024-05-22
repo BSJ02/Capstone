@@ -18,7 +18,6 @@ public class PlayerData : ScriptableObject
     
     public void ResetWarriorData()
     {
-        MaxHp = 100f;
         Hp = MaxHp;
         Damage = 20f;
         Armor = 100f;
@@ -29,7 +28,6 @@ public class PlayerData : ScriptableObject
 
     public void ResetArcherData()
     {
-        MaxHp = 80f;
         Hp = MaxHp;
         Damage = 10f;
         Armor = 70f;
@@ -40,7 +38,6 @@ public class PlayerData : ScriptableObject
 
     public void ResetWizardData()
     {
-        MaxHp = 60;
         Hp = MaxHp;
         Damage = 30;
         Armor = 60;

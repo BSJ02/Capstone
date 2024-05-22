@@ -17,9 +17,9 @@ MonoBehaviour:
   Hp: 100
   MaxHp: 100
   Amor: 0
-  CurrentDamage: 0
+  CurrentDamage: 10
   MoveDistance: 2
-  DetectionRagne: 4
+  DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 8
   MaxDamage: 14

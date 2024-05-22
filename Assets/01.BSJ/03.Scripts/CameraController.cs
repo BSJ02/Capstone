@@ -6,18 +6,20 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
-    public float moveSpeed = 5f;
-    public float edgeSize = 10f; // 화면 가장자리 감지 범위
+    public float moveSpeed = 10f;
+    public float edgeSize = 10f;
+    public bool setPos = false;
 
     void Update()
     {
         if (!CardManager.instance.isCardSorting && !CardManager.instance.waitAddCard)
         {
             HandleMouseMovement();
+            UpdatePositions();
         }
     }
 
-    private void HandleMouseMovement()
+    private Vector3 HandleMouseMovement()
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 move = Vector3.zero;
@@ -26,39 +28,48 @@ public class CameraController : MonoBehaviour
         if (mousePos.x < edgeSize || mousePos.y < edgeSize)
         {
             CardManager.instance.isMainCameraMoving = true;
+            setPos = true;
+
             move.x = -moveSpeed * time;
         }
         else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
         {
             CardManager.instance.isMainCameraMoving = true;
+            setPos = true;
+
             move.x = moveSpeed * time;
         }
         else
         {
             CardManager.instance.isMainCameraMoving = false;
-        }
+            setPos = false;
 
-        if (CardManager.instance.isMainCameraMoving)
-        {
-            UpdateCardPositions(move);
         }
-
-        CardManager.instance.panelObject_Group.transform.position += move;
-        CardManager.instance.deckObject.transform.position += move;
-        virtualCamera.transform.position += move;
+        return move;
     }
 
-    private void UpdateCardPositions(Vector3 move)
+    private void UpdateCardPositions()
     {
         foreach (var cardObject in CardManager.instance.handCardObject)
         {
-            cardObject.transform.position += move;
-
             var cardMove = cardObject.GetComponent<CardMove>();
             if (cardMove != null)
             {
                 cardMove.UpdateOriginalPosition();
             }
         }
+    }
+
+    public void UpdatePositions()
+    {
+        CardManager.instance.panelObject_Group.transform.position += HandleMouseMovement();
+        CardManager.instance.deckObject.transform.position += HandleMouseMovement();
+
+        if (CardManager.instance.isMainCameraMoving)
+        {
+            UpdateCardPositions();
+        }
+
+        virtualCamera.transform.position += HandleMouseMovement();
     }
 }

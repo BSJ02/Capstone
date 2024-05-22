@@ -49,7 +49,6 @@ public class Monster : MonoBehaviour
     void Start()
     {
         Init();
-        
     }
 
     // [0] 애니메이션 초기화
@@ -59,7 +58,6 @@ public class Monster : MonoBehaviour
         anim.SetInteger("State", (int)state);
 
         attack = AttackState.GeneralAttack;
-
     }
 
     // [1] 몬스터 공격력 
@@ -138,4 +136,9 @@ public class Monster : MonoBehaviour
 
         Destroy(gameObject, 4f);
     }
+
+
+ 
+
+
 }

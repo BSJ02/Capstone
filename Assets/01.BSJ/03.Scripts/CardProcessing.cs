@@ -182,9 +182,6 @@ public class CardProcessing : MonoBehaviour
             case "Limit Break":
                 BaseCardData.instance.UseLimitBreak(card, selectedTarget);
                 break;
-            case "Rest":
-                BaseCardData.instance.UseRest(card, selectedTarget);
-                break;
             default:
                 break;
         }
