@@ -252,5 +252,8 @@ public class Player : MonoBehaviour
             return;*/
 
         anim.SetTrigger("Die");
+        Destroy(gameObject, 3.5f);
+        BattleManager.instance.players.Remove(gameObject);
     }
+
 }

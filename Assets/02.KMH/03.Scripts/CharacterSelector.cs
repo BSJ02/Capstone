@@ -14,19 +14,7 @@ public class CharacterSelector : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         playerSelectList.players.Clear();
-    }
-
-    public void AtkWarriorSelect()
-    {
-        if (playerSelectList.players.Count < 2)
-        {
-            playerSelectList.players.Add(atkWarrior);
-            playerSelectList.playerList.Add(0);
-        }
-        else
-        {
-            Debug.Log("The maximum number is 2.");
-        }
+        playerSelectList.playerList.Clear();
     }
 
     public void HpWarriorSelect()
@@ -34,7 +22,13 @@ public class CharacterSelector : MonoBehaviour
         if (playerSelectList.players.Count < 2)
         {
             playerSelectList.players.Add(hpWarrior);
-            playerSelectList.playerList.Add(1);
+            playerSelectList.playerList.Add(0);
+
+            Debug.Log("=== Player List ===");
+            foreach (GameObject obj in playerSelectList.players)
+            {
+                Debug.Log(obj.name);
+            }
         }
         else
         {
@@ -42,12 +36,38 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
+    public void AtkWarriorSelect()
+    {
+        if (playerSelectList.players.Count < 2)
+        {
+            playerSelectList.players.Add(atkWarrior);
+            playerSelectList.playerList.Add(1);
+
+            Debug.Log("=== Player List ===");
+            foreach (GameObject obj in playerSelectList.players)
+            {
+                Debug.Log(obj.name);
+            }
+        }
+        else
+        {
+            Debug.Log("The maximum number is 2.");
+        }
+    }
+
+
     public void WizardSelect()
     {
         if (playerSelectList.players.Count < 2)
         {
             playerSelectList.players.Add(wizard);
             playerSelectList.playerList.Add(2);
+
+            Debug.Log("=== Player List ===");
+            foreach (GameObject obj in playerSelectList.players)
+            {
+                Debug.Log(obj.name);
+            }
         }
         else
         {
@@ -61,6 +81,12 @@ public class CharacterSelector : MonoBehaviour
         {
             playerSelectList.players.Add(archer);
             playerSelectList.playerList.Add(3);
+
+            Debug.Log("=== Player List ===");
+            foreach (GameObject obj in playerSelectList.players)
+            {
+                Debug.Log(obj.name);
+            }
         }
         else
         {
@@ -68,8 +94,15 @@ public class CharacterSelector : MonoBehaviour
         }
     }
 
+    public void Initialize()
+    {
+        playerSelectList.players.Clear();
+        playerSelectList.playerList.Clear();
+        Debug.Log("Initialization Complete");
+    }
+
     public void GameStart()
     {
-        SceneManager.LoadScene("KMH");
+        SceneManager.LoadScene("KMH1");
     }
 }

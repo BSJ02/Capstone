@@ -1833,6 +1833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 29cb0aabcffdb3649b6385bcc691405f, type: 2}
   playerState: 0
+  isAttack: 0
 --- !u!114 &-2732297871980715122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1845,7 +1846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8e3ee6ba1e3ee43a70b03aeae5a368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGenerator: {fileID: 0}
   player: {fileID: -7858928112727797192}
   detectionRange: 1
   clickedPlayer: {fileID: 0}
