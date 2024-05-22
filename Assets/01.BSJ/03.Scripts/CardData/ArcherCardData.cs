@@ -12,7 +12,19 @@ public class ArcherCardData : MonoBehaviour
     [Header(" # CardProcessing")]
     public CardProcessing cardProcessing;
 
+    [HideInInspector] public Vector3 tempPos;
+    [HideInInspector] public Vector3 targetPos;
+    [HideInInspector] public Vector3 playerPos;
 
+    [HideInInspector] public bool shouldWallJump = false;
+    [HideInInspector] public bool shouldConcealment = false;
+    [HideInInspector] public bool shouldAgility = false;
+    [HideInInspector] public bool shouldPowerOfTurn = false;
+    [HideInInspector] public bool shouldMarkAttack = false;
+    [HideInInspector] public bool shouldTripleShot = false;
+    [HideInInspector] public bool shouldPoisonAttack = false;
+    [HideInInspector] public bool shouldAimedShot = false;
+    
     private PlayerState playerState;
 
     private void Awake()
@@ -33,32 +45,17 @@ public class ArcherCardData : MonoBehaviour
     }
 
     // Archer Cards --------------------------------
-    // Holy Nova
-    public void UseLightningStrike(Card card, GameObject selectedTarget)
+    public void UseWallJump(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
+        Tile tile = selectedTarget.GetComponent<Tile>();
+        if (tile != null && tile.coord.isWall)
         {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
+            shouldWallJump = true;
 
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
 
-    public void WallJump(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-
+            // 전사 카드 응용
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
         }
         else
         {
@@ -67,7 +64,7 @@ public class ArcherCardData : MonoBehaviour
     }
 
 
-    public void UsePoisonArrow(Card card, GameObject selectedTarget)
+    public void UseConcealment(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -84,22 +81,16 @@ public class ArcherCardData : MonoBehaviour
         }
     }
 
-    public void Concealment(Card card, GameObject selectedTarget)
+    public void UseAgility(Card card, GameObject selectedTarget)
     {
-        Player player = selectedTarget.GetComponent<Player>();
-
-        if (player != null)
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
         {
-            /* 
-             * Concealment transparency 
-             material.color.a = 0.5f 
-              
+            shouldAgility = true;
 
-            scanRendererMesh use
-            become transparency 0.5
-       
-             */
-            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            cardProcessing.currentPlayer.MacigAttack02Anim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -107,7 +98,7 @@ public class ArcherCardData : MonoBehaviour
         }
     }
 
-    public void AgilityAttack(Card card, GameObject selectedTarget)
+    public void UsePowerOfTurn(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         Player player = selectedTarget.GetComponent<Player>();
@@ -128,7 +119,7 @@ public class ArcherCardData : MonoBehaviour
 
     }
 
-    public void TurnCountAttack(Card card, GameObject selectedTarget)
+    public void UseMarkAttack(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -149,7 +140,7 @@ public class ArcherCardData : MonoBehaviour
 
     }
 
-    public void MarkTargetArrow(Card card, GameObject selectedTarget)
+    public void UseTripleShot(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -166,7 +157,7 @@ public class ArcherCardData : MonoBehaviour
 
     }
 
-    public void DoubleTargetArrow(Card card, GameObject selectedTarget)
+    public void UsePoisonAttack(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -184,7 +175,7 @@ public class ArcherCardData : MonoBehaviour
 
     }
 
-    public void PoisonArrow(Card card, GameObject selectedTarget)
+    public void UseAimedShot(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();
         if (monster != null)
@@ -196,23 +187,6 @@ public class ArcherCardData : MonoBehaviour
             //animation
             //player.AttackTwoAnim(selectedTarget);
 
-
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-
-    }
-
-    public void AimedArrow(Card card, GameObject selectedTarget)
-    {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            Debug.Log(card.cardName + " / TargetName: " + monster);
-            monster.GetHit(card.cardPower[0]);
-            monster.monsterData.Hp += card.cardPower[3];
 
         }
         else

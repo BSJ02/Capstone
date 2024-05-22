@@ -36,23 +36,26 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
+        if (cameraController.isMainCameraMoving)
         {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-            MoveCardToScale(scaleFactor);
-            gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
+            UpdateOriginalPosition();
         }
-        else if (CardManager.instance.isMainCameraMoving)
+        else
         {
-            cameraController.UpdatePositions();
-        }
-        else if (!IsMouseOverCard(gameObject))
-        {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-            if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
+            if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
             {
-                gameObject.GetComponent<CardOrder>().SetOrder(index);
-                MoveCardToPosAndScale(originalPosition ,1f);
+                index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+                MoveCardToPosAndScale(originalPosition + Vector3.up * 0.5f, scaleFactor);
+                gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
+            }
+            else
+            {
+                index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+                if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
+                {
+                    gameObject.GetComponent<CardOrder>().SetOrder(index);
+                    MoveCardToPosAndScale(originalPosition, 1f);
+                }
             }
         }
     }

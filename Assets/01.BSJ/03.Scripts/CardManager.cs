@@ -44,7 +44,6 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public bool waitAddCard = false;
     [HideInInspector] public bool isCardSorting = false;
-    [HideInInspector] public bool isMainCameraMoving = false;
 
     [HideInInspector] public Card useCard = null;
 

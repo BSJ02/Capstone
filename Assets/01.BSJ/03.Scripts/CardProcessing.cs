@@ -127,7 +127,7 @@ public class CardProcessing : MonoBehaviour
                 else if (selectedTarget.layer == LayerMask.NameToLayer("Tile"))
                 {
                     Tile selectTile = selectedTarget.GetComponent<Tile>();
-                    if (MapGenerator.instance.highlightedTiles.Contains(selectTile) && !selectTile.coord.isWall)
+                    if (MapGenerator.instance.highlightedTiles.Contains(selectTile))
                     {
                         waitForInput = false;
                     }
@@ -221,29 +221,29 @@ public class CardProcessing : MonoBehaviour
         switch (card.cardName)
         {
             // Warrior
-            case "WallJump":
-                ArcherCardData.instance.WallJump(card, selectedTarget);
+            case "Wall Jump":
+                ArcherCardData.instance.UseWallJump(card, selectedTarget);
                 break;
             case "Concealment":
-                ArcherCardData.instance.Concealment(card, selectedTarget);
+                ArcherCardData.instance.UseConcealment(card, selectedTarget);
                 break;
             case "Agility":
-                ArcherCardData.instance.AgilityAttack(card, selectedTarget);
+                ArcherCardData.instance.UseAgility(card, selectedTarget);
                 break;
-            case "PowerOfTurn":
-                ArcherCardData.instance.TurnCountAttack(card, selectedTarget);
+            case "Power Of Turn":
+                ArcherCardData.instance.UsePowerOfTurn(card, selectedTarget);
                 break;
-            case "MarkAttack":
-                ArcherCardData.instance.MarkTargetArrow(card, selectedTarget);
+            case "Mark Attack":
+                ArcherCardData.instance.UseMarkAttack(card, selectedTarget);
                 break;
-            case "DoubleShot":
-                ArcherCardData.instance.DoubleTargetArrow(card, selectedTarget);
+            case "Triple Shot":
+                ArcherCardData.instance.UseTripleShot(card, selectedTarget);
                 break;
-            case "PoisonAttack":
-                ArcherCardData.instance.PoisonArrow(card, selectedTarget);
+            case "Poison Attack":
+                ArcherCardData.instance.UsePoisonAttack(card, selectedTarget);
                 break;
-            case "AimedShot":
-                ArcherCardData.instance.AimedArrow(card, selectedTarget);
+            case "Aimed Shot":
+                ArcherCardData.instance.UseAimedShot(card, selectedTarget);
                 break;
             default:
                 break;
