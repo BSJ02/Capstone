@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum BattleState 
 {
@@ -9,16 +10,14 @@ public enum BattleState
     PlayerTurn,
     MonsterTurn,
     Won,
-    Lost 
+    Lost,
+    EndStage
 }
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
-
     private CardManager cardManager;
-
-    private CharacterSelector characterSelector;
 
     public BattleState battleState;
 
@@ -39,9 +38,12 @@ public class BattleManager : MonoBehaviour
     public GameObject[] turn_UI; // 턴 UI
     private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
+    public GameObject stageEnd; // StageEnd 이미지
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
+
+    bool stageClear = false;
 
     [HideInInspector] public bool isPlayerMove = false;
     [HideInInspector] public bool isPlayerTurn = false;
@@ -64,12 +66,12 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public void Start()
     {
         cardManager = FindObjectOfType<CardManager>();
-        characterSelector = FindObjectOfType<CharacterSelector>();
         //players = characterSelector.playerSelectList.players;
 
         battleState = BattleState.Start;
@@ -91,8 +93,35 @@ public class BattleManager : MonoBehaviour
 
         PlayerTurn();
     }
-
     
+    // 스테이지 종료 감지
+    private void Update()
+    {
+        // 모든 몬스터가 죽으면 스테이지 종료
+        if(monsters.Count <= 0)
+        {
+            StartCoroutine(EndStage());
+        }
+    }
+
+
+    IEnumerator EndStage()
+    {
+        // Stage 종료가 종료될 때 실행되는 것들(사운드, UI, 페이드 인 & 아웃 애니메이션, 다음 씬 이동 등..)
+        yield return new WaitForSeconds(delay);
+
+        battleState = BattleState.EndStage;
+        stageClear = true;
+
+        stageEnd.SetActive(true);
+
+        // 씬 로드
+        yield return new WaitForSeconds(delay * 3);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
+
+    }
+
     public void PlayerTurn()
     {
         battleState = BattleState.PlayerTurn;

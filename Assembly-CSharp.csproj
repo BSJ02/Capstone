@@ -63,6 +63,7 @@
     <Compile Include="Assets\03.CSH\03.Scripts\AbnormalConditionData.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WizardCardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Skill\MageSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Asset\GothicUI\Scripts\HPFlowController.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardData\ArcherCardData.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\GameManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardProcessing.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
@@ -78,10 +80,11 @@
     <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterData.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardData\BaseCardData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\WeaponController.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
-    <Compile Include="Assets\01.BSJ\03.Scripts\PlayerAnimationEvent.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CameraController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\LookAtCamera.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
@@ -89,6 +92,8 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardManager.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardOrder.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\WizardAnimationEvent.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WarriorCardData.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Skill\SkillData.cs" />
@@ -106,12 +111,11 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardMove.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Skill\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
-    <Compile Include="Assets\01.BSJ\03.Scripts\CardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\Asset\GothicUI\Scripts\DayDurationController.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\WarriorAnimationEvent.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
-    <Compile Include="Assets\01.BSJ\03.Scripts\ParticleCollision.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapGenerator.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />
@@ -1068,6 +1072,10 @@
       <Project>{2EB0A03E-1693-41A6-950A-A8DF1729ADE7}</Project>
       <Name>KinoBloom.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{44DBB6BC-3DA9-C47D-C46D-5E0F676E27D6}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
       <Project>{9A83896A-120B-3D97-D38A-AC51FA8333AE}</Project>
       <Name>Unity.Postprocessing.Runtime</Name>
@@ -1191,6 +1199,10 @@
     <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
       <Project>{83B3661C-02A0-F445-5D90-6930A87D213C}</Project>
       <Name>ToonyColorsPro.Demo.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{FBDCF933-5328-B871-37D4-5D0700B64969}</Project>
+      <Name>Cinemachine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

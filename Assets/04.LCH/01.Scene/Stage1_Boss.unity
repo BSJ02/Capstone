@@ -6691,7 +6691,7 @@ PrefabInstance:
     - target: {fileID: 2763914743243945539, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2763914743243945539, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
@@ -26844,7 +26844,7 @@ PrefabInstance:
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7224149203388998861, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
@@ -29027,7 +29027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1790864430
 Transform:
   m_ObjectHideFlags: 0
@@ -29433,7 +29433,7 @@ MonoBehaviour:
   - {fileID: 1661996711}
   - {fileID: 447148709}
   monsters:
-  - {fileID: 1409608988}
+  - {fileID: 1919193073}
   damage: 0
   heal: 0
   amor: 0
@@ -31088,7 +31088,7 @@ Transform:
   m_GameObject: {fileID: 1919193073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7, y: 0.35, z: 9}
+  m_LocalPosition: {x: 8, y: 0.35, z: 4}
   m_LocalScale: {x: 0.8000001, y: 0.8, z: 0.8000001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33439,8 +33439,8 @@ MonoBehaviour:
   - {fileID: 4008368103816103496, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
   - {fileID: 624648965016542229, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
   - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
-  garo: 30
-  sero: 8
+  garo: 10
+  sero: 10
   selectingTarget: 0
   highlightedTiles: []
   rangeInMonsters: []
@@ -35420,8 +35420,8 @@ SceneRoots:
   - {fileID: 163024367}
   - {fileID: 1023125449}
   - {fileID: 51023610}
-  - {fileID: 838023531}
   - {fileID: 30976965}
+  - {fileID: 838023531}
   - {fileID: 1981349007}
   - {fileID: 623322887}
   - {fileID: 1117834685}

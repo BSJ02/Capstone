@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/04.LCH/01.Scene/LCH.unity
-    guid: 25edb907a5f4c464ca3c070df794e7f3
   - enabled: 1
-    path: Assets/02.KMH/01.Scene/KMH.unity
-    guid: c1d2bae9425c5884ab63600dd4f937ea
+    path: Assets/04.LCH/01.Scene/Stage1.unity
+    guid: 2284b9c4824dc234f84095bb784eef6f
+  - enabled: 1
+    path: Assets/04.LCH/01.Scene/Stage1_Boss.unity
+    guid: ace50bfa15abcb44cb3eb5a35d4e021d
   m_configObjects: {}
