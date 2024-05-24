@@ -7,7 +7,10 @@ public class FadeController : MonoBehaviour
     public static FadeController instance;
 
     public Image fadeImage;
-    public float fadeDuration = 0.01f;
+
+    private float fadeDuration = 0.1f;
+    private float waitDuration = 0.1f;
+    public float totalFadeDuration = 0.3f;
 
     private void Awake()
     {
@@ -21,45 +24,36 @@ public class FadeController : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeIn()
+    public IEnumerator FadeInOut()
+    {
+        yield return StartCoroutine(Fade(0f, 1f));
+
+        yield return new WaitForSeconds(waitDuration);
+
+        yield return StartCoroutine(Fade(1f, 0f));
+    }
+
+    private IEnumerator Fade(float startAlpha, float endAlpha)
     {
         fadeImage.gameObject.SetActive(true);
         float elapsedTime = 0f;
         Color color = fadeImage.color;
+
         while (elapsedTime < fadeDuration)
         {
-            color.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
             fadeImage.color = color;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        color.a = 1f;
-        fadeImage.color = color;
-    }
 
-    public IEnumerator FadeOut()
-    {
-        float elapsedTime = 0f;
-        Color color = fadeImage.color;
-        while (elapsedTime < fadeDuration)
+        color.a = endAlpha;
+        fadeImage.color = color;
+
+        if (endAlpha == 0f)
         {
-            color.a = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-            fadeImage.color = color;
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            fadeImage.gameObject.SetActive(false);
         }
-        color.a = 0f;
-        fadeImage.color = color;
-        fadeImage.gameObject.SetActive(false);
     }
 
-    public IEnumerator Transition()
-    {
-        
-        yield return StartCoroutine(FadeIn());
-        
-        yield return new WaitForSeconds(0.1f);
-        
-        yield return StartCoroutine(FadeOut());
-    }
 }

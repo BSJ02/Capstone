@@ -173,6 +173,26 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
 
+        StartCoroutine(CameraController.instance.StartCameraMoving());
+        StartCoroutine(StartPlayerTurn());
+        
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+
+    }
+
+    IEnumerator StartPlayerTurn()
+    {
+        turn_UI[0].gameObject.SetActive(true);
+        turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
+        turnEnd_Btn.interactable = true;
+
+        yield return new WaitForSeconds(1f);
+
+        turn_UI[0].gameObject.SetActive(false);
+
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
             playerScripts = player.GetComponent<Player>();
@@ -187,17 +207,8 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("카드가 너무 많음");
         }
-        isPlayerTurn = true;
-        battleState = BattleState.PlayerTurn;
-        turn_UI[0].gameObject.SetActive(true);
-        turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
-        turnEnd_Btn.interactable = true;
-        
-        foreach (GameObject player in players)
-        {
-            player.gameObject.layer = LayerMask.NameToLayer("Player");
-        }
 
+        yield return null;
     }
 
     public void MonsterTurn()
@@ -247,9 +258,9 @@ public class BattleManager : MonoBehaviour
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
-                CameraController.instance.FollowTarget(selectedMonster);
-
                 // 선택된 몬스터의 특정 메서드 실행
+                yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.3f);
+
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
                 yield return StartCoroutine(detectionCoroutine);
