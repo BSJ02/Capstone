@@ -1065,34 +1065,6 @@
       <Project>{84166465-4A34-530D-18CA-1BE40643B88D}</Project>
       <Name>KinoBloom.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
-      <Project>{44DBB6BC-3DA9-C47D-C46D-5E0F676E27D6}</Project>
-      <Name>com.unity.cinemachine.editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{9A83896A-120B-3D97-D38A-AC51FA8333AE}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{8D769A60-7956-EA2D-0D9B-05AF6069BC85}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{889C699D-9B1C-4301-086E-80B4571A3197}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{F67E9715-A330-E330-092E-46E10DB07B9C}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{D4856B63-6835-527E-9454-8599BD1515B1}</Project>
-      <Name>Unity.Timeline.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
-      <Project>{B28A9D09-5F7C-2A8A-C62E-52C99E662559}</Project>
-      <Name>Unity.VisualScripting.Shared.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Runtime.csproj">
       <Project>{1E43A89D-88DE-E9DD-85B9-50563888E289}</Project>
       <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
@@ -1124,10 +1096,6 @@
     <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
       <Project>{AD5E3B1F-AD85-CE98-DCD7-7BF3429DA824}</Project>
       <Name>ToonyColorsPro.Demo.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Cinemachine.csproj">
-      <Project>{FBDCF933-5328-B871-37D4-5D0700B64969}</Project>
-      <Name>Cinemachine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

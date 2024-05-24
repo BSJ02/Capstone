@@ -46,6 +46,7 @@ public class BattleManager : MonoBehaviour
 
     bool stageClear = false;
 
+    [HideInInspector] public GameObject monsterObj = null;
     [HideInInspector] public bool isPlayerMove = false;
     [HideInInspector] public bool isPlayerTurn = false;
     [HideInInspector] public bool isRandomCard = false;
@@ -74,7 +75,7 @@ public class BattleManager : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
         //players = characterSelector.playerSelectList.players;
-
+        CharacterSelector characterSelector = FindObjectOfType<CharacterSelector>();
 
         battleState = BattleState.Start;
 
@@ -246,6 +247,8 @@ public class BattleManager : MonoBehaviour
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
+                CameraController.instance.FollowTarget(selectedMonster);
+
                 // 선택된 몬스터의 특정 메서드 실행
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();

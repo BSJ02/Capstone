@@ -11,4 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/04.LCH/01.Scene/Stage1_Boss.unity
     guid: ace50bfa15abcb44cb3eb5a35d4e021d
+  - enabled: 1
+    path: Assets/02.KMH/01.Scene/Select.unity
+    guid: bd52b8a549f57f3488266d04739a65d8
+  - enabled: 1
+    path: Assets/02.KMH/01.Scene/KMH1.unity
+    guid: 6e05b0baf4b37d74e8583e0fa99f2374
+  - enabled: 1
+    path: Assets/01.BSJ/01.Scene/BSJ.unity
+    guid: 0787104b450b9f8499c9f3ba918ea711
+  - enabled: 1
+    path: Assets/01.BSJ/01.Scene/Select.unity
+    guid: 533fa10433ccac64aaec6bb17b2a6a92
   m_configObjects: {}

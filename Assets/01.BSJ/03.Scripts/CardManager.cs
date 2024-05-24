@@ -20,6 +20,9 @@ public class CardManager : MonoBehaviour
     private Vector3 addCardPos = new Vector3(0, 10f, 0);
     private Vector3 spawDeckPos = new Vector3(-4f, -3.3f, -4f);
 
+    [HideInInspector] public Vector3 deckOffset = new Vector3(2f, -11.3f, 2f);
+    [HideInInspector] public Vector3 panelOffset = new Vector3(6f, -8f, 6f);
+
     private float handCardDistance = 0.9f;
     private float addCardDistance = 3f;
 
@@ -70,6 +73,7 @@ public class CardManager : MonoBehaviour
         }
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
+        Debug.Log(deckObject.transform.position);
 
         panelObject_Group = GameObject.Find("PanelObject_Group");
         if (panelObject_Group == null)
@@ -364,9 +368,14 @@ public class CardManager : MonoBehaviour
                 elapsedTime += deltaTime;  
                 yield return null;
             }
+
             cardObject[i].SetActive(true);
-            cardObject[i].transform.position = targetPosition;  
-            cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
+            cardObject[i].GetComponent<CardMove>().cardOffset = deckObject.transform.position - targetPosition;
+            
+            Vector3 newCardPos = deckObject.transform.position - cardObject[i].GetComponent<CardMove>().cardOffset;
+            
+            cardObject[i].transform.position = newCardPos;  
+            cardObject[i].GetComponent<CardMove>().originalPosition = newCardPos;
         }
 
         isCardSorting = false;
