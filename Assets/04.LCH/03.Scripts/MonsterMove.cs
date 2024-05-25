@@ -62,20 +62,43 @@ public class MonsterMove : MonoBehaviour
         StartCoroutine(MoveSmoothly(move));
     }
 
-    // 플레이어 및 몬스터 초기 좌표 설정
     public void SetDestination()
     {
-        int playerLength = 2;
+        int playerLength = BattleManager.instance.players.Count;
         float[] currentPlayerHp = new float[playerLength];
         Vector2Int[] playersPosition = new Vector2Int[playerLength];
         GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
 
         monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
+        // 유효한 플레이어 오브젝트를 찾고 있는지 검증
+        if (playersObj.Length != playerLength)
+        {
+            return;
+        }
+
         for (int i = 0; i < playerLength; i++)
         {
             Vector3 player = playersObj[i].transform.position;
             playersPosition[i] = new Vector2Int((int)player.x, (int)player.z);
+        }
+
+        // 몬스터와 플레이어의 위치가 맵의 범위를 벗어나지 않는지 검증
+        int mapWidth = MapGenerator.instance.totalMap.GetLength(0);
+        int mapHeight = MapGenerator.instance.totalMap.GetLength(1);
+
+        if (monsterPos.x < 0 || monsterPos.x >= mapWidth || monsterPos.y < 0 || monsterPos.y >= mapHeight)
+        {
+            return;
+        }
+
+        // 플레이어 위치 검증
+        foreach (var pos in playersPosition)
+        {
+            if (pos.x < 0 || pos.x >= mapWidth || pos.y < 0 || pos.y >= mapHeight)
+            {
+                return;
+            }
         }
 
         int attackDetectionRange = monster.monsterData.DetectionRagne;
@@ -153,6 +176,7 @@ public class MonsterMove : MonoBehaviour
         StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
         TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
     }
+
 
     // 길찾기 시작
     public List<Vector2Int> PathFinding()

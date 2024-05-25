@@ -83,8 +83,8 @@
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Helpers\CinemachineTriggerActionEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineSmoothPathEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Utility\CinemachineEditorAnalytics.cs" />
-    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineNoiseSettingsEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Timeline\CinemachineShotClipEditor.cs" />
+    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineNoiseSettingsEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineColliderEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Impulse\CinemachineImpulseDefinitionPropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\Cinemachine3rdPersonFollowEditor.cs" />
@@ -92,8 +92,8 @@
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineMixingCameraEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineHardLookAtEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Windows\CinemachineSettings.cs" />
-    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Impulse\CinemachineImpulseEnvelopePropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Experimental\CinemachineNewVirtualCameraEditor.cs" />
+    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Impulse\CinemachineImpulseEnvelopePropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachinePathEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Utility\SerializedPropertyHelper.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.7\Editor\Editors\CinemachineConfinerEditor.cs" />

@@ -193,11 +193,11 @@
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\UI\DrawActionButton.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\Views\PendingChanges\FilesFilterPatternsMenuBuilder.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\PlasticMenuItem.cs" />
-    <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\SwitchModeConfirmationDialog.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\Developer\UpdateReport\UpdateReportLineListViewItem.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\Configuration\ConfigurePartialWorkspace.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\AssetsUtils\RefreshAsset.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\UI\ResponseType.cs" />
+    <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\SwitchModeConfirmationDialog.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\AssetOverlays\DrawAssetOverlay.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\Views\PendingChanges\PendingChangesMultiColumnHeader.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@2.3.1\Editor\PlasticSCM\Views\ConfirmContinueWithPendingChangesDialog.cs" />

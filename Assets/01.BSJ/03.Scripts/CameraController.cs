@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
     public GameObject canvas;
     public GameObject zoomPanel;
     private float originalOrthographicSize = 6f;
+
     public float zoomSize = 4f;
 
     private void Awake()
@@ -150,6 +151,11 @@ public class CameraController : MonoBehaviour
 
     public void ZoomCamera(bool zoomIn)
     {
+        CardManager.instance.deckObject.SetActive(!zoomIn);
+        CardManager.instance.panelObject_Group.SetActive(!zoomIn);
+        canvas.SetActive(!zoomIn);
+        zoomPanel.SetActive(zoomIn);
+
         if (zoomIn)
         {
             virtualCamera.m_Lens.OrthographicSize = zoomSize;
@@ -172,6 +178,7 @@ public class CameraController : MonoBehaviour
         ZoomCamera(true);
 
         yield return new WaitForSeconds(1f);
+        Vector3 startCameraPos = virtualCamera.transform.position;
 
         Vector3 move = Vector3.zero;
         float time = Time.deltaTime;
@@ -185,11 +192,19 @@ public class CameraController : MonoBehaviour
                 StartCoroutine(FadeController.instance.FadeInOut());
                 virtualCamera.transform.position = originalCameraPos;
                 CardManager.instance.StartSettingCards();
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(FadeController.instance.FadeInOut());
+                virtualCamera.transform.position = startCameraPos;
+                break;
             }
 
             move.x = moveSpeed * time;
             virtualCamera.transform.position += move;
             yield return null;
         }
+
+        ZoomCamera(false);
+
+        yield return new WaitForSeconds(1f);
     }
 }

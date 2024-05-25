@@ -360,7 +360,7 @@ public class CardManager : MonoBehaviour
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
-        float deltaTime = Time.deltaTime; 
+        float deltaTime = Time.deltaTime;
 
         for (int i = 0; i < card.Count; i++)
         {
@@ -388,8 +388,8 @@ public class CardManager : MonoBehaviour
             cardObject[i].GetComponent<CardMove>().cardOffset = deckObject.transform.position - targetPosition;
             
             Vector3 newCardPos = deckObject.transform.position - cardObject[i].GetComponent<CardMove>().cardOffset;
-            
-            cardObject[i].transform.position = newCardPos;  
+
+            cardObject[i].transform.position = newCardPos;
             cardObject[i].GetComponent<CardMove>().originalPosition = newCardPos;
         }
 
