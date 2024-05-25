@@ -1,75 +1,196 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
+    private CardProcessing cardProcessing;
+    public Camera mainCamera;
     public CinemachineVirtualCamera virtualCamera;
-    public float moveSpeed = 10f;
+
+    public float moveSpeed = 7f;
     public float edgeSize = 10f;
-    public bool setPos = false;
 
-    void Update()
+    [HideInInspector] public bool isMainCameraMoving = false;
+    private bool hasTransitioned = false;
+
+    private Vector3 characterOffset;
+    private GameObject lastTarget = null;
+
+    // Zoom
+    public GameObject canvas;
+    private float originalOrthographicSize;
+    public float zoomSize = 4.5f;
+
+    private void Awake()
     {
-        if (!CardManager.instance.isCardSorting && !CardManager.instance.waitAddCard)
+        if (instance == null)
         {
-            HandleMouseMovement();
-            UpdatePositions();
-        }
-    }
-
-    private Vector3 HandleMouseMovement()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 move = Vector3.zero;
-        float time = Time.deltaTime;
-
-        if (mousePos.x < edgeSize || mousePos.y < edgeSize)
-        {
-            CardManager.instance.isMainCameraMoving = true;
-            setPos = true;
-
-            move.x = -moveSpeed * time;
-        }
-        else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
-        {
-            CardManager.instance.isMainCameraMoving = true;
-            setPos = true;
-
-            move.x = moveSpeed * time;
+            instance = this;
         }
         else
         {
-            CardManager.instance.isMainCameraMoving = false;
-            setPos = false;
-
+            Destroy(gameObject);
         }
-        return move;
     }
 
-    private void UpdateCardPositions()
+    private void Start()
     {
-        foreach (var cardObject in CardManager.instance.handCardObject)
+        cardProcessing = FindObjectOfType<CardProcessing>();
+
+        characterOffset = new Vector3(-9f, 7.65f, -9f);
+        originalOrthographicSize = virtualCamera.m_Lens.OrthographicSize;
+    }
+
+    private void Update()
+    {
+        if (BattleManager.instance.battleState == BattleState.PlayerTurn)
         {
-            var cardMove = cardObject.GetComponent<CardMove>();
-            if (cardMove != null)
+            CameraFollowObject();
+
+            if (isMainCameraMoving)
             {
-                cardMove.UpdateOriginalPosition();
+                HandleMouseMovement();
+                ZoomCamera(true);
+            }
+            else if (cardProcessing.currentPlayerObj != null)
+            {
+                FollowTarget(cardProcessing.currentPlayerObj);
+            }
+            if (Input.GetMouseButton(0) && isMainCameraMoving)
+            {
+                hasTransitioned = false;
+                HasTransition();
+                ZoomCamera(false);
+
+                hasTransitioned = false;
+                isMainCameraMoving = false;
             }
         }
     }
 
-    public void UpdatePositions()
+    private void HasTransition()
     {
-        CardManager.instance.panelObject_Group.transform.position += HandleMouseMovement();
-        CardManager.instance.deckObject.transform.position += HandleMouseMovement();
-
-        if (CardManager.instance.isMainCameraMoving)
+        if (!hasTransitioned)
         {
-            UpdateCardPositions();
+            StartCoroutine(FadeController.instance.FadeInOut());
+            hasTransitioned = true;
+        }
+    }
+
+    public void CameraMoveButton()
+    {
+        isMainCameraMoving = true;
+    }
+
+    private void HandleMouseMovement()
+    {
+        HasTransition();
+
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 move = Vector3.zero;
+        float time = Time.deltaTime;
+
+        mainCamera.orthographicSize = 2f;
+
+        if (mousePos.x < edgeSize || mousePos.y < edgeSize)
+        {
+            move.x = -moveSpeed * time;
+        }
+        else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
+        {
+            move.x = moveSpeed * time;
         }
 
-        virtualCamera.transform.position += HandleMouseMovement();
+        if (mainCamera.transform.position == virtualCamera.transform.position)
+        {
+            virtualCamera.transform.position += move;
+        }
+        else
+        {
+            virtualCamera.transform.position = mainCamera.transform.position;
+        }
+    }
+
+    public void FollowTarget(GameObject target)
+    {
+        if (target != lastTarget)
+        {
+            hasTransitioned = false;
+            HasTransition();
+            lastTarget = target;
+        }
+
+        if (target != null)
+        {
+            Vector3 newPosition = target.transform.position + characterOffset;
+            virtualCamera.transform.position = newPosition;
+
+            if (target.CompareTag("Monster"))
+            {
+                ZoomCamera(true);
+            }
+        }
+    }
+
+    private void CameraFollowObject()
+    {
+        Vector3 newDeckPosition = mainCamera.transform.position + CardManager.instance.deckOffset;
+        Vector3 newPanelPosition = mainCamera.transform.position + CardManager.instance.panelOffset;
+
+        if (newDeckPosition != Vector3.zero && newPanelPosition != Vector3.zero)
+        {
+            CardManager.instance.deckObject.transform.position = newDeckPosition;
+            CardManager.instance.panelObject_Group.transform.position = newPanelPosition;
+        }
+    }
+
+    public void ZoomCamera(bool zoomIn)
+    {
+        CardManager.instance.deckObject.SetActive(!zoomIn);
+        CardManager.instance.panelObject_Group.SetActive(!zoomIn);
+        canvas.SetActive(!zoomIn);
+
+        if (zoomIn)
+        {
+            virtualCamera.m_Lens.OrthographicSize = zoomSize;
+        }
+        else
+        {
+            virtualCamera.m_Lens.OrthographicSize = originalOrthographicSize;
+        }
+    }
+
+    public IEnumerator StartCameraMoving()
+    {
+        ZoomCamera(true);
+        yield return new WaitForSeconds(1f);
+
+        Vector3 startCameraPos = virtualCamera.transform.position;
+        Vector3 endCameraPos = virtualCamera.transform.position;
+
+        Vector3 move = Vector3.zero;
+        float time = Time.deltaTime;
+
+        while (true)
+        {
+            if (mainCamera.transform.position != virtualCamera.transform.position)
+            {
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(FadeController.instance.FadeInOut());
+                virtualCamera.transform.position = startCameraPos;
+                ZoomCamera(false);
+                break;
+            }
+
+            move.x = moveSpeed * time;
+            virtualCamera.transform.position += move;
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
     }
 }

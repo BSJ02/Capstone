@@ -49,7 +49,7 @@ MonoBehaviour:
     cardPercent: 35
     cardType: 0
     cardTarget: 0
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   - cardName: Transmission
     cardDescription: "\uC0C1\uD0DC\uC774\uC0C1 \uC804\uC774\uC2DC\uD0B4"
     cardDescription_Power: "(\uC0AC\uAC70\uB9AC: 1)"
@@ -203,7 +203,7 @@ MonoBehaviour:
     cardType: 2
     cardTarget: 0
     isCardMoveEnabled: 0
-  - cardName: Double Shot
+  - cardName: Triple Shot
     cardDescription: "2\uAC1C\uC758 \uD654\uC0B4\uC744 \uB0A0\uB824 \uD53C\uD574\uB97C
       \uC785\uD798"
     cardDescription_Power: 

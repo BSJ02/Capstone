@@ -268,6 +268,8 @@ public class MonsterMove : MonoBehaviour
     // 몬스터 물리적 움직임
     public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
+        CameraController.instance.FollowTarget(gameObject);
+
         // 몬스터 최대 이동 거리(moveDistance 만큼 리스트 반환)
         int maxMoveDistance = monster.monsterData.MoveDistance;
 

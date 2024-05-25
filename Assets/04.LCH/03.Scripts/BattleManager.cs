@@ -24,6 +24,7 @@ public class BattleManager : MonoBehaviour
     [Header("# 스테이지 몬스터 및 플레이어")]
     public List<GameObject> players = new List<GameObject>();
     public List<GameObject> monsters = new List<GameObject>();
+    public List<int> playerList = new List<int>();
     private Player playerScripts;
 
     // 랜덤으로 선택된 몬스터를 HashSet에 저장
@@ -39,6 +40,7 @@ public class BattleManager : MonoBehaviour
     float delay = 1.5f;
     bool isEnd;
 
+    [HideInInspector] public GameObject monsterObj = null;
     [HideInInspector] public bool isPlayerMove = false;
     [HideInInspector] public bool isPlayerTurn = false;
     [HideInInspector] public bool isRandomCard = false;
@@ -74,11 +76,53 @@ public class BattleManager : MonoBehaviour
 
 
         // 스테이지 오브젝트 활성화
-        foreach (GameObject player in players)
+        foreach (int playerIndex in characterSelector.playerSelectList.playerList)
         {
-            player.gameObject.SetActive(true);
-            playerScripts = player.GetComponent<Player>();
+            switch (playerIndex)
+            {
+                case 0:
+                    players[0].gameObject.SetActive(true);
+                    playerScripts = players[0].GetComponent<Player>();
+                    break;
+                case 1:
+                    players[1].gameObject.SetActive(true);
+                    playerScripts = players[1].GetComponent<Player>();
+                    break;
+                case 2:
+                    players[2].gameObject.SetActive(true);
+                    playerScripts = players[2].GetComponent<Player>();
+                    break;
+                case 3:
+                    players[3].gameObject.SetActive(true);
+                    playerScripts = players[3].GetComponent<Player>();
+                    break;
+            }
         }
+
+
+        // 비활성화된 오브젝트 삭제
+        for (int i = players.Count - 1; i >= 0; i--)
+        {
+            if (!players[i].activeSelf)
+            {
+                Destroy(players[i]);
+                players.RemoveAt(i);
+            }
+        }
+
+        /*        for (int i = 0; i < 2; i++)
+                {
+                    Instantiate(players[i], new Vector3(2 + i, 0.35f, 0), Quaternion.identity);
+                    players[i].gameObject.SetActive(true);
+                    playerScripts = players[i].GetComponent<Player>();
+                }*/
+
+        // 스테이지 오브젝트 활성화
+        /*        foreach (GameObject player in players)
+                {
+                    player.gameObject.SetActive(true);
+                    playerScripts = player.GetComponent<Player>();
+                }*/
 
         foreach (GameObject monster in monsters)
         {
@@ -89,6 +133,11 @@ public class BattleManager : MonoBehaviour
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
 
         PlayerTurn();
+        
+     
+        
+
+       
     }
     
     // 스테이지 종료 감지
@@ -129,6 +178,26 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
 
+        StartCoroutine(CameraController.instance.StartCameraMoving());
+        StartCoroutine(StartPlayerTurn());
+        
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+
+    }
+
+    IEnumerator StartPlayerTurn()
+    {
+        turn_UI[0].gameObject.SetActive(true);
+        turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
+        turnEnd_Btn.interactable = true;
+
+        yield return new WaitForSeconds(1f);
+
+        turn_UI[0].gameObject.SetActive(false);
+
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
             playerScripts = player.GetComponent<Player>();
@@ -153,6 +222,7 @@ public class BattleManager : MonoBehaviour
             player.gameObject.layer = LayerMask.NameToLayer("Player");
         }
 
+        yield return null;
     }
 
     public void MonsterTurn()
