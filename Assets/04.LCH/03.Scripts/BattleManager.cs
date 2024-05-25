@@ -159,6 +159,7 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.EndStage;
         stageClear = true;
 
+        CameraController.instance.startGame = true;
         stageEnd.SetActive(true);
 
         // 씬 로드
@@ -173,14 +174,23 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
 
-        StartCoroutine(CameraController.instance.StartCameraMoving());
-        StartCoroutine(StartPlayerTurn());
-        
+        if (CameraController.instance.startGame)
+        {
+            StartCoroutine(CameraController.instance.StartCameraMoving());
+            StartCoroutine(StartPlayerTurn());
+            
+            CameraController.instance.startGame = false;
+        }
+        else
+        {
+            StartCoroutine(StartPlayerTurn());
+        }
+
+
         foreach (GameObject player in players)
         {
             player.gameObject.layer = LayerMask.NameToLayer("Player");
         }
-
     }
 
     IEnumerator StartPlayerTurn()
@@ -190,7 +200,6 @@ public class BattleManager : MonoBehaviour
         turnEnd_Btn.interactable = true;
 
         yield return new WaitForSeconds(1f);
-
         turn_UI[0].gameObject.SetActive(false);
 
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
@@ -259,7 +268,7 @@ public class BattleManager : MonoBehaviour
             if (!selectedMonsters.Contains(selectedIndex))
             {
                 // 선택된 몬스터의 특정 메서드 실행
-                yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.3f);
+                //yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.3f);
 
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
