@@ -11,27 +11,28 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        playerMove = FindObjectOfType<PlayerMove>();
+
     }
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0) && !playerMove.isMoving /*&& !cardData.usingCard*/)
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
-        //    int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
+        // ClickedPlayer
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int PlayerLayerMask = 1 << LayerMask.NameToLayer("Player");
 
-        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
-        //    {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, PlayerLayerMask))
+            {
 
-        //        if (hit.collider.CompareTag("Player"))
-        //        {
-        //            playerMove.playerChoice.SetActive(true);
-        //            clickedPlayer = hit.collider.gameObject;
-        //            playerMove.isActionSelect = true;
-        //        }
-        //    }
-        //}
+                if (hit.collider.CompareTag("Player"))
+                {
+                    //playerMove.playerChoice.SetActive(true);
+                    clickedPlayer = hit.collider.gameObject;
+                    //playerMove.isActionSelect = true;
+                }
+            }
+        }
     }
 }

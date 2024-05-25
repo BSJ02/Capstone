@@ -21,27 +21,6 @@ public class MonsterData : ScriptableObject
     public float MaxDamage;
     public float Critical;
     public int SkillDetectionRange;
-
-    public void IncreaseDamage(float damage)
-    {
-        if (CurrentDamage >= MaxDamage)
-            CurrentDamage = MaxDamage;
-
-        CurrentDamage += damage;
-    }
-
-    public void IncreaseHp(float heal)
-    {
-        if (Hp >= MaxHp)
-            Hp = MaxHp;
-
-        Hp += heal;
-    }
-
-    public void IncreaseAmor(float amor)
-    {
-        Amor = amor;
-    }
 }
 
 

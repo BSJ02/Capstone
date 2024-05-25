@@ -5,13 +5,15 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  - deckObject: {instanceID: 0}
+  - panelObject_Group: {instanceID: 0}
+  - cardPrefab: {fileID: 8317238898173453788, guid: fc41759a818988143a8b1fcd803ec190,
+      type: 3}
   - addCardPanelPrefab: {fileID: 2020583034978801655, guid: 7d88c60230728774eb1617770b62830d,
       type: 3}
-  - handCardPrefab: {fileID: 8317238898173453788, guid: fc41759a818988143a8b1fcd803ec190,
+  - useCardPanelPrefab: {fileID: 3501754106597754513, guid: a22557141d0ca814982913fb4675a551,
       type: 3}
-  - useCardPanelPrefab: {fileID: 1478144224971682508, guid: 3bfdaa0eca5f8b34f93e4b251981fe11,
-      type: 3}
-  - handCardPanelPrefab: {fileID: 2147907010715691983, guid: 5d8a49064d3d4004e8b42f69d9b8a2fd,
+  - handCardPanelPrefab: {fileID: 7289520757176262495, guid: cfe53505b43bec9428c52ee4b3659838,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
