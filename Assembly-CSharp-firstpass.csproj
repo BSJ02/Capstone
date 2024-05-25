@@ -1101,13 +1101,13 @@
       <Project>{BDEC6256-41FB-428E-7BAA-A1C535AD9547}</Project>
       <Name>Unity.VSCode.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
-      <Project>{83B3661C-02A0-F445-5D90-6930A87D213C}</Project>
-      <Name>ToonyColorsPro.Demo.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Cinemachine.csproj">
       <Project>{FBDCF933-5328-B871-37D4-5D0700B64969}</Project>
       <Name>Cinemachine</Name>
+    </ProjectReference>
+    <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
+      <Project>{83B3661C-02A0-F445-5D90-6930A87D213C}</Project>
+      <Name>ToonyColorsPro.Demo.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

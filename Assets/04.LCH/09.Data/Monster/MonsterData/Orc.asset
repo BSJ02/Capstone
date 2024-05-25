@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterName: "\uC624\uD06C \uC871\uC7A5"
   Id: 3
-  Hp: 200
-  MaxHp: 200
-  Amor: 5
-  CurrentDamage: 10
+  Hp: 150
+  MaxHp: 150
+  Amor: 3
+  CurrentDamage: 0
   MoveDistance: 2
   DetectionRagne: 1
   Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130"
-  MinDamage: 10
-  MaxDamage: 18
-  Critical: 12
-  SkillDetectionRange: 3
+  MinDamage: 8
+  MaxDamage: 12
+  Critical: 10
+  SkillDetectionRange: 2
