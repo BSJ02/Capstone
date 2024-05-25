@@ -34,7 +34,7 @@ public class BattleManager : MonoBehaviour
     // 랜덤으로 선택된 몬스터를 HashSet에 저장
     HashSet<int> selectedMonsters = new HashSet<int>();
 
-    [Header("# 몬스터 버프")] 
+    [Header("# 몬스터 버프")]
     public float damage;
     public float heal;
     public float amor;
@@ -60,7 +60,7 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -121,7 +121,7 @@ public class BattleManager : MonoBehaviour
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
-        
+
         foreach (GameObject player in players)
         {
             player.gameObject.layer = LayerMask.NameToLayer("Player");
@@ -134,7 +134,7 @@ public class BattleManager : MonoBehaviour
 
         battleState = BattleState.MonsterTurn;
         isPlayerTurn = false;
-        
+
         // 플레이어 턴 UI 비활성화
         turn_UI[0].gameObject.SetActive(false);
         foreach (GameObject player in players)
@@ -145,7 +145,7 @@ public class BattleManager : MonoBehaviour
         // 몬스터 턴 UI 활성화
         turn_UI[1].gameObject.SetActive(true);
         turn_UI[1].gameObject.GetComponent<Animator>().Play("MonsterTurn", -1, 0f);
-        turnEnd_Btn.interactable = false;  
+        turnEnd_Btn.interactable = false;
 
         StartCoroutine(NextMonster());
 
@@ -154,7 +154,7 @@ public class BattleManager : MonoBehaviour
     IEnumerator NextMonster()
     {
         //fixed
-        
+
 
         // 지정된 delay 시간 동안 대기(MonsterTurn UI 재생 때문에)
         yield return new WaitForSeconds(delay);
@@ -191,7 +191,7 @@ public class BattleManager : MonoBehaviour
                         {
                             Debug.Log(AbnormalName + ": value" + pair.Value);
                             monster.monsterData.Hp -= pair.Value;
-                            
+
                         }
 
                     }
@@ -209,36 +209,34 @@ public class BattleManager : MonoBehaviour
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
                 yield return StartCoroutine(detectionCoroutine);
-            // 선택된 몬스터의 특정 메서드 실행
-            MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
-            IEnumerator detectionCoroutine = monsterMove.StartDetection();
-            yield return StartCoroutine(detectionCoroutine);
+                // 선택된 몬스터의 특정 메서드 실행
 
-            selectedMonsters.Add(selectedIndex);
-            
-            // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
-            while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
-                yield return null;
+                selectedMonsters.Add(selectedIndex);
 
-            // 각 몬스터 이동 후 delay 만큼 대기
-            yield return new WaitForSeconds(delay);
+                // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                    yield return null;
+
+                // 각 몬스터 이동 후 delay 만큼 대기
+                yield return new WaitForSeconds(delay);
+            }
+
+            // 선택된 몬스터들 초기화(버그 예방 차원) 
+            selectedMonsters.Clear();
+
+            // 모든 몬스터 행동 종료 후 턴 넘기기
+            StartCoroutine(EscapeMonsterTurn());
         }
 
-        // 선택된 몬스터들 초기화(버그 예방 차원) 
-        selectedMonsters.Clear();
+        IEnumerator EscapeMonsterTurn()
+        {
+            // 대기 처리
+            yield return new WaitForSeconds(3f);
+            BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
+            BattleManager.instance.PlayerTurn();
 
-        // 모든 몬스터 행동 종료 후 턴 넘기기
-        StartCoroutine(EscapeMonsterTurn());
-    }
-
-    IEnumerator EscapeMonsterTurn()
-    {
-        // 대기 처리
-        yield return new WaitForSeconds(3f);
-        BattleManager.instance.turn_UI[1].gameObject.SetActive(false);
-        BattleManager.instance.PlayerTurn();
+        }
 
     }
-
 }
 

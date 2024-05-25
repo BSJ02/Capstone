@@ -556,7 +556,7 @@ public class CardData : MonoBehaviour
 
             player.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f);
+            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f, Quaternion.identity, 1);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

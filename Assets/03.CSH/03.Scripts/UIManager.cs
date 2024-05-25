@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -219,5 +219,15 @@ public class UIManager : MonoBehaviour
         buttonLayoutGroup.DOAnchorPos(new Vector3(1180, 470, 0), 1);
         inGroupButton.SetActive(true);
         outGroupButton.SetActive(false);
+    }
+
+    public void ButtonInformWindowMove()
+    {
+
+    }
+
+    public void ButtonInformWindowMoveExit()
+    {
+     
     }
 }
