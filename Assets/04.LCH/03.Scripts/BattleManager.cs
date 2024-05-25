@@ -178,7 +178,6 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
 
-        StartCoroutine(CameraController.instance.StartCameraMoving());
         StartCoroutine(StartPlayerTurn());
         
         foreach (GameObject player in players)
@@ -190,6 +189,8 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator StartPlayerTurn()
     {
+        yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
