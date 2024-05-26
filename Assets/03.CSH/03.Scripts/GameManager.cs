@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadSceneButton()
     {
-        LoadingSceneController.Instance.LoadScene("SelectTest");
+        LoadingSceneController.Instance.LoadScene("03.Select");
     }
 
     public void GameExitButton()

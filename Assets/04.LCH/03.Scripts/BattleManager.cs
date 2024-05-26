@@ -46,7 +46,6 @@ public class BattleManager : MonoBehaviour
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
 
-    bool stageClear = false;
     bool isEnd;
 
     [HideInInspector] public GameObject monsterObj = null;
@@ -161,7 +160,6 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         battleState = BattleState.EndStage;
-        stageClear = true;
 
         // UI 오브젝트 제어
         CameraController.instance.startGame = true;
