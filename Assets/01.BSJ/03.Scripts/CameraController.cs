@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour
     public Camera mainCamera;
     public CinemachineVirtualCamera virtualCamera;
 
-    public float moveSpeed = 7f;
-    public float edgeSize = 10f;
+    private float moveSpeed = 7f;
+    private float edgeSize = 10f;
 
     [HideInInspector] public bool isMainCameraMoving = false;
     private bool hasTransitioned = false;
@@ -19,11 +19,13 @@ public class CameraController : MonoBehaviour
     private Vector3 characterOffset;
     private GameObject lastTarget = null;
 
+    [HideInInspector] public bool startGame = true;
+
     // Zoom
     public GameObject canvas;
     public GameObject zoomPanel;
     private float originalOrthographicSize;
-    public float zoomSize = 4f;
+    private float zoomSize = 4f;
 
     private void Awake()
     {
@@ -58,16 +60,18 @@ public class CameraController : MonoBehaviour
             }
             else if (cardProcessing.currentPlayerObj != null)
             {
+                CameraFollowObject();
                 FollowTarget(cardProcessing.currentPlayerObj);
             }
             if (Input.GetMouseButton(0) && isMainCameraMoving)
             {
                 hasTransitioned = false;
                 HasTransition();
-                ZoomCamera(false);
 
                 hasTransitioned = false;
                 isMainCameraMoving = false;
+
+                ZoomCamera(false);
             }
         }
     }
@@ -147,11 +151,6 @@ public class CameraController : MonoBehaviour
 
     public void ZoomCamera(bool zoomIn)
     {
-        CardManager.instance.deckObject.SetActive(!zoomIn);
-        CardManager.instance.panelObject_Group.SetActive(!zoomIn);
-        canvas.SetActive(!zoomIn);
-        zoomPanel.SetActive(zoomIn);
-
         if (zoomIn)
         {
             virtualCamera.m_Lens.OrthographicSize = zoomSize;
@@ -160,31 +159,38 @@ public class CameraController : MonoBehaviour
         {
             virtualCamera.m_Lens.OrthographicSize = originalOrthographicSize;
         }
+
+        CardManager.instance.deckObject.SetActive(!zoomIn);
+        CardManager.instance.panelObject_Group.SetActive(!zoomIn);
+        canvas.SetActive(!zoomIn);
+        zoomPanel.SetActive(zoomIn);
     }
 
     public IEnumerator StartCameraMoving()
     {
-        ZoomCamera(true);
-        yield return new WaitForSeconds(1f);
+        Vector3 originalCameraPos = mainCamera.transform.position;
 
+        ZoomCamera(true);
+
+        yield return new WaitForSeconds(1f);
         Vector3 startCameraPos = virtualCamera.transform.position;
 
         Vector3 move = Vector3.zero;
         float time = Time.deltaTime;
 
-        while (true)
+        while (!CardManager.instance.isSettingCards)
         {
             if (mainCamera.transform.position != virtualCamera.transform.position)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
+                ZoomCamera(false);
                 StartCoroutine(FadeController.instance.FadeInOut());
-                virtualCamera.transform.position = startCameraPos;
+                virtualCamera.transform.position = originalCameraPos;
                 break;
             }
 
             move.x = moveSpeed * time;
             virtualCamera.transform.position += move;
-
             yield return null;
         }
 

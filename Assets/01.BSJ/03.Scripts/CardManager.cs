@@ -47,6 +47,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public bool waitAddCard = false;
     [HideInInspector] public bool isCardSorting = false;
+    [HideInInspector] public bool isSettingCards = false;
 
     [HideInInspector] public Card useCard = null;
 
@@ -73,7 +74,6 @@ public class CardManager : MonoBehaviour
         }
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
-        Debug.Log(deckObject.transform.position);
 
         panelObject_Group = GameObject.Find("PanelObject_Group");
         if (panelObject_Group == null)
@@ -89,11 +89,26 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
+
+    }
+
+    public void StartSettingCards()
+    {
         handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
         handCardCount = handCardList.Count;
+
+        if (handCardCount < 8)
+        {
+            CreateRandomCard();
+        }
+        else
+        {
+            Debug.Log("카드가 너무 많음");
+        }
+        isSettingCards = true;
     }
 
     public GameObject FindPanelGroupChildObject(string childObjectName)

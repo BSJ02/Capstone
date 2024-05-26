@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07080153, g: 0.16076261, b: 0.1854797, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4307,6 +4307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  deckOffset: {x: 2, y: -11.3, z: 2}
+  panelOffset: {x: 6, y: -8, z: 6}
   handCardList: []
   addCardList: []
   deckObject: {fileID: 0}
@@ -4324,7 +4326,7 @@ MonoBehaviour:
     type: 3}
   waitAddCard: 0
   isCardSorting: 0
-  isMainCameraMoving: 0
+  isSettingCards: 0
   useCard:
     cardName: 
     cardDescription: 
@@ -4935,6 +4937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &432558537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7519,6 +7522,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardProcessing: {fileID: 1497366972}
+  tempPos: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  playerPos: {x: 0, y: 0, z: 0}
+  shouldWallJump: 0
+  shouldConcealment: 0
+  shouldAgility: 0
+  shouldPowerOfTurn: 0
+  shouldMarkAttack: 0
+  shouldTripleShot: 0
+  shouldPoisonAttack: 0
+  shouldAimedShot: 0
 --- !u!1 &618011864
 GameObject:
   m_ObjectHideFlags: 0
@@ -10198,6 +10212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &850452629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10535,6 +10550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &882541842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18159,6 +18175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &1409608991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19223,7 +19240,6 @@ MonoBehaviour:
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
   cardUseDistanceInRange: 0
-  isCardMoving: 0
 --- !u!4 &1497366973
 Transform:
   m_ObjectHideFlags: 0
@@ -22654,7 +22670,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1894330871}
+      objectReference: {fileID: 588313575}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -22678,12 +22694,12 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnAttackButtonClick
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMove, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -22698,7 +22714,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998170, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -23128,7 +23144,10 @@ MonoBehaviour:
   - {fileID: 1020102575}
   - {fileID: 674450086}
   turnEnd_Btn: {fileID: 350077607}
+  stageEnd: {fileID: 0}
+  controlAllUI: []
   MaximumOfMonster: 3
+  monsterObj: {fileID: 0}
   isPlayerMove: 0
   isPlayerTurn: 0
   isRandomCard: 0
@@ -23383,9 +23402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34385028ae8754641864fd4515fa0872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   virtualCamera: {fileID: 1247779662}
-  moveSpeed: 5
-  edgeSize: 10
+  isMainCameraMoving: 0
+  startGame: 1
+  canvas: {fileID: 0}
+  zoomPanel: {fileID: 0}
 --- !u!4 &1865087729
 Transform:
   m_ObjectHideFlags: 0
@@ -24032,18 +24054,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1894330869}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1894330871 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -3005185934104490755, guid: 7072d6c33eb6c8945b0d630d732a6620,
-    type: 3}
-  m_PrefabInstance: {fileID: 1894330869}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894330870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8e3ee6ba1e3ee43a70b03aeae5a368, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1894645275
 GameObject:
   m_ObjectHideFlags: 0
@@ -24461,6 +24471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &1919193076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24599,6 +24610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d421d0e122fbb4a9381954715a651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPos: {x: 0, y: 0}
 --- !u!114 &1926790813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24940,7 +24952,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2001148318}
+      objectReference: {fileID: 588313575}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -24969,7 +24981,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMove, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -25548,18 +25560,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f138f49e5a5c8d4da25e65ed277008b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2001148318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -5311203449631223821, guid: e77bc5b981553b942a305281b23b4012,
-    type: 3}
-  m_PrefabInstance: {fileID: 2001148315}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001148316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8e3ee6ba1e3ee43a70b03aeae5a368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2002792529

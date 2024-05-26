@@ -126,7 +126,7 @@ public class CardMove : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     private void OnMouseUp()
@@ -234,6 +234,6 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = false;
         }
-        
+
     }
 }
