@@ -6,7 +6,6 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using System;
 using static Card;
-using UnityEngine.UIElements;
 
 public class CardMove : MonoBehaviour
 {
@@ -46,9 +45,15 @@ public class CardMove : MonoBehaviour
             if (index > 0)
             {
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
+                UpdateOriginalPos();
                 MoveCardToPosAndScale(originalPosition, 1f);
             }
         }
+    }
+
+    private void UpdateOriginalPos()
+    {
+        originalPosition = CardManager.instance.deckObject.transform.position - cardOffset;
     }
 
     private void MoveCardToPosAndScale(Vector3 position, float scale)

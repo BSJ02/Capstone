@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        //playerMove = FindObjectOfType<PlayerMove>();
+        playerMove = FindObjectOfType<PlayerMove>();
         cardProcessing = FindObjectOfType<CardProcessing>();
 
 
@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
       
         */
 
-        if (cardProcessing.currentPlayer!= null && PlayerMove.isMoving == true)
+        if (cardProcessing.currentPlayer!= null && playerMove.isMoving == true)
         {
             NTest();
         }

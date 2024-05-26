@@ -31,7 +31,7 @@ public class PlayerMove : MonoBehaviour
 /*    [SerializeField]
     private GameObject clickedPlayer;*/
 
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isActionSelect = false;
 
     private void Awake()
