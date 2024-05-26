@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour
     public Camera mainCamera;
     public CinemachineVirtualCamera virtualCamera;
 
-    public float moveSpeed = 7f;
-    public float edgeSize = 10f;
+    private float moveSpeed = 7f;
+    private float edgeSize = 10f;
 
     [HideInInspector] public bool isMainCameraMoving = false;
     private bool hasTransitioned = false;
@@ -24,9 +24,8 @@ public class CameraController : MonoBehaviour
     // Zoom
     public GameObject canvas;
     public GameObject zoomPanel;
-    private float originalOrthographicSize = 6f;
-
-    public float zoomSize = 4f;
+    private float originalOrthographicSize;
+    private float zoomSize = 4f;
 
     private void Awake()
     {
@@ -45,6 +44,7 @@ public class CameraController : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
 
         characterOffset = new Vector3(-9f, 7.65f, -9f);
+        originalOrthographicSize = 6f;
     }
 
     private void Update()
@@ -151,11 +151,6 @@ public class CameraController : MonoBehaviour
 
     public void ZoomCamera(bool zoomIn)
     {
-        CardManager.instance.deckObject.SetActive(!zoomIn);
-        CardManager.instance.panelObject_Group.SetActive(!zoomIn);
-        canvas.SetActive(!zoomIn);
-        zoomPanel.SetActive(zoomIn);
-
         if (zoomIn)
         {
             virtualCamera.m_Lens.OrthographicSize = zoomSize;
@@ -191,10 +186,6 @@ public class CameraController : MonoBehaviour
                 ZoomCamera(false);
                 StartCoroutine(FadeController.instance.FadeInOut());
                 virtualCamera.transform.position = originalCameraPos;
-                CardManager.instance.StartSettingCards();
-                yield return new WaitForSeconds(0.5f);
-                StartCoroutine(FadeController.instance.FadeInOut());
-                virtualCamera.transform.position = startCameraPos;
                 break;
             }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.070797116, g: 0.1607486, b: 0.18547788, a: 1}
+  m_IndirectSpecularColor: {r: 0.07083052, g: 0.16078284, b: 0.18551223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4501,6 +4501,7 @@ MonoBehaviour:
     type: 3}
   waitAddCard: 0
   isCardSorting: 0
+  isSettingCards: 0
   useCard:
     cardName: 
     cardDescription: 
@@ -15037,7 +15038,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 125}
+  m_SizeDelta: {x: 1920, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1219756429
 MonoBehaviour:
@@ -17188,6 +17189,7 @@ RectTransform:
   m_Children:
   - {fileID: 380832204}
   - {fileID: 1723633693}
+  - {fileID: 1279241708}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -23864,10 +23866,13 @@ MonoBehaviour:
   - {fileID: 885093493}
   - {fileID: 374080099}
   - {fileID: 1229610214}
+  playerList: 
   monsters:
   - {fileID: 1919193073}
   - {fileID: 882541838}
-  playerList: 
+  damage: 0
+  heal: 0
+  amor: 0
   turn_UI:
   - {fileID: 1020102575}
   - {fileID: 674450086}
@@ -24209,12 +24214,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1209350605}
   virtualCamera: {fileID: 1247779662}
-  moveSpeed: 5
-  edgeSize: 10
   isMainCameraMoving: 0
+  startGame: 1
   canvas: {fileID: 1023125445}
   zoomPanel: {fileID: 1723633692}
-  zoomSize: 5
 --- !u!4 &1865087729
 Transform:
   m_ObjectHideFlags: 0
@@ -24886,7 +24889,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 125}
+  m_SizeDelta: {x: 1920, y: 200}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1896677552
 MonoBehaviour:

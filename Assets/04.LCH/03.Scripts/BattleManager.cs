@@ -40,11 +40,13 @@ public class BattleManager : MonoBehaviour
     private GameObject buff_UI;
     public Button turnEnd_Btn; // Turn End 버튼
     public GameObject stageEnd; // StageEnd 이미지
+    public GameObject[] controlAllUI; // 스테이지 클리어 후 모든 UI 끄기
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
 
     bool stageClear = false;
+    bool isEnd;
 
     [HideInInspector] public GameObject monsterObj = null;
     [HideInInspector] public bool isPlayerMove = false;
@@ -144,9 +146,10 @@ public class BattleManager : MonoBehaviour
     private void Update()
     {
         // 모든 몬스터가 죽으면 스테이지 종료
-        if(monsters.Count <= 0)
+        if (monsters.Count <= 0 && !isEnd)
         {
             StartCoroutine(EndStage());
+            isEnd = true;
         }
     }
 
@@ -159,8 +162,15 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.EndStage;
         stageClear = true;
 
+        // UI 오브젝트 제어
         CameraController.instance.startGame = true;
         stageEnd.SetActive(true);
+        foreach (var ui in controlAllUI)
+        {
+            ui.SetActive(false);
+        }
+        GameObject.Find("Deck").SetActive(false);
+        GameObject.Find("PanelObject_Group").SetActive(false);
 
         // 씬 로드
         yield return new WaitForSeconds(delay * 3);
@@ -174,18 +184,7 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
 
-        if (CameraController.instance.startGame)
-        {
-            StartCoroutine(CameraController.instance.StartCameraMoving());
-            StartCoroutine(StartPlayerTurn());
-            
-            CameraController.instance.startGame = false;
-        }
-        else
-        {
-            StartCoroutine(StartPlayerTurn());
-        }
-
+        StartCoroutine(StartPlayerTurn());
 
         foreach (GameObject player in players)
         {
@@ -195,11 +194,12 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator StartPlayerTurn()
     {
+        yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
 
-        yield return new WaitForSeconds(1f);
         turn_UI[0].gameObject.SetActive(false);
 
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
@@ -208,6 +208,13 @@ public class BattleManager : MonoBehaviour
             playerScripts.ResetActivePoint();
             playerScripts.isAttack = false;
         }
+
+        if (CameraController.instance.startGame)
+        {
+            CardManager.instance.StartSettingCards();
+            CameraController.instance.startGame = false;
+        }
+
         if (cardManager.handCardCount < 8)
         {
             cardManager.CreateRandomCard();
@@ -215,6 +222,11 @@ public class BattleManager : MonoBehaviour
         else
         {
             Debug.Log("카드가 너무 많음");
+        }
+
+        foreach (GameObject player in players)
+        {
+            player.gameObject.layer = LayerMask.NameToLayer("Player");
         }
 
         yield return null;
@@ -264,6 +276,11 @@ public class BattleManager : MonoBehaviour
             int selectedIndex = availableMonsters[randIndex];
             GameObject selectedMonster = monsters[selectedIndex];
 
+            //// 몬스터 중 랜덤하게 선택(중복 가능)
+            //int randIndex = Random.Range(0, monsters.Count - 1);
+            //GameObject selectedMonster = monsters[randIndex]; // 랜덤하게 뽑힌 몬스터
+
+
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
@@ -275,8 +292,13 @@ public class BattleManager : MonoBehaviour
                 yield return StartCoroutine(detectionCoroutine);
 
                 selectedMonsters.Add(selectedIndex);
+                // 중복 방지용 HastSet(중복 방지 시 사용 예정)
+                selectedMonsters.Add(randIndex);
 
                 // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                    yield return null;
+                // 선택된 몬스터 스킬을 쓰는 동안 대기
                 while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
                     yield return null;
 
@@ -288,7 +310,10 @@ public class BattleManager : MonoBehaviour
                 // 이미 선택된 몬스터는 스킵
                 Debug.Log("이미 선택된 몬스터입니다.");
             }
+            // 각 몬스터 이동 후 delay 만큼 대기
+            yield return new WaitForSeconds(delay);
         }
+
 
         // 선택된 몬스터들 초기화(버그 예방 차원) 
         selectedMonsters.Clear();
