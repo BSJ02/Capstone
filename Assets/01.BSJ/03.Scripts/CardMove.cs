@@ -11,7 +11,6 @@ using UnityEngine.UIElements;
 public class CardMove : MonoBehaviour
 {
     private CardProcessing cardProcessing;
-    private CameraController cameraController;
 
     private Vector3 offset;
     private float distanceToCamera;
@@ -22,14 +21,13 @@ public class CardMove : MonoBehaviour
     private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
-    private int index;
+    public Vector3 cardOffset;
 
     private void Start()
     {
         DOTween.Init();
 
         cardProcessing = FindObjectOfType<CardProcessing>();
-        cameraController = FindObjectOfType<CameraController>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
@@ -38,28 +36,19 @@ public class CardMove : MonoBehaviour
     {
         if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
         {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-            MoveCardToScale(scaleFactor);
+            int index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            MoveCardToPosAndScale(originalPosition + Vector3.up * 0.5f, scaleFactor);
             gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
         }
-        else if (CardManager.instance.isMainCameraMoving)
+        else
         {
-            cameraController.UpdatePositions();
-        }
-        else if (!IsMouseOverCard(gameObject))
-        {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-            if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
+            int index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            if (index > 0)
             {
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
-                MoveCardToPosAndScale(originalPosition ,1f);
+                MoveCardToPosAndScale(originalPosition, 1f);
             }
         }
-    }
-
-    public void UpdateOriginalPosition()
-    {
-        originalPosition = this.transform.position;
     }
 
     private void MoveCardToPosAndScale(Vector3 position, float scale)
@@ -97,7 +86,6 @@ public class CardMove : MonoBehaviour
         return false;
     }
 
-
     // 카드패널 충돌 확인
     private void CardPanelCollision()
     {
@@ -116,7 +104,6 @@ public class CardMove : MonoBehaviour
             }
         }
     }
-
 
     // 카드 처리 과정
     private void ProcessingCard()
@@ -139,9 +126,8 @@ public class CardMove : MonoBehaviour
                 }
             }
         }
-        
-    }
 
+    }
 
     private void OnMouseUp()
     {
@@ -179,7 +165,7 @@ public class CardMove : MonoBehaviour
             {
                 CardManager.instance.ChoiceCard(this.gameObject);
             }
-            else if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && cardProcessing.isCardMoving && card.isCardMoveEnabled)
+            else if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled)
             {
                 CardManager.instance.FindPanelGroupChildObject("Use Card Panel(Clone)").SetActive(true);
             }
@@ -189,7 +175,7 @@ public class CardMove : MonoBehaviour
     private void OnMouseDrag()
     {
         int index = CardManager.instance.handCardObject.IndexOf(this.gameObject);
-        Card card = null;
+        Card card;
 
         if (index >= 0 && index < CardManager.instance.handCardList.Count)
         {
@@ -206,7 +192,7 @@ public class CardMove : MonoBehaviour
             ComparePlayerTypeWithCardType(playerObj, card);
         }
 
-        if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && cardProcessing.isCardMoving && card.isCardMoveEnabled)
+        if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
@@ -232,7 +218,7 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = true;
         }
-        else if (player == GameObject.Find("Warrior") && card.cardType == CardType.WarriorCard)
+        else if ((player == GameObject.Find("Warrior(HP)") || player == GameObject.Find("Warrior(ATK)")) && card.cardType == CardType.WarriorCard)
         {
             card.isCardMoveEnabled = true;
         }
@@ -248,6 +234,6 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = false;
         }
-        
+
     }
 }

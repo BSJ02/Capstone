@@ -52,7 +52,7 @@ public class WizardCardData : MonoBehaviour
     public void UseTeleport(Card card, GameObject selectedTarget)
     {
         Tile tile = selectedTarget.GetComponent<Tile>();
-        if (tile != null)
+        if (tile != null && !tile.coord.isWall)
         {
             targetPos = tile.transform.position + new Vector3(0, 0.35f, 0);
 
@@ -167,7 +167,7 @@ public class WizardCardData : MonoBehaviour
     {
         Tile tile = selectedTarget.GetComponent<Tile>();
         Player player = cardProcessing.currentPlayer;
-        if (tile != null)
+        if (tile != null && !tile.coord.isWall)
         {
             targetPos = tile.transform.position;
 

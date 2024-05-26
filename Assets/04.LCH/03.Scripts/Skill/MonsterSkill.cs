@@ -13,7 +13,6 @@ public class MonsterSkill : MonoBehaviour
         skill.Initialize(spawnPosition);
     }
 
-
     public void UseSkill()
     {
         skill.Use();

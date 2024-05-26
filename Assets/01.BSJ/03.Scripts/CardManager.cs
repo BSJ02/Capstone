@@ -20,6 +20,9 @@ public class CardManager : MonoBehaviour
     private Vector3 addCardPos = new Vector3(0, 10f, 0);
     private Vector3 spawDeckPos = new Vector3(-4f, -3.3f, -4f);
 
+    [HideInInspector] public Vector3 deckOffset = new Vector3(2f, -11.3f, 2f);
+    [HideInInspector] public Vector3 panelOffset = new Vector3(6f, -8f, 6f);
+
     private float handCardDistance = 0.9f;
     private float addCardDistance = 3f;
 
@@ -44,7 +47,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public bool waitAddCard = false;
     [HideInInspector] public bool isCardSorting = false;
-    [HideInInspector] public bool isMainCameraMoving = false;
+    [HideInInspector] public bool isSettingCards = false;
 
     [HideInInspector] public Card useCard = null;
 
@@ -86,11 +89,26 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
+
+    }
+
+    public void StartSettingCards()
+    {
         handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
         handCardCount = handCardList.Count;
+
+        if (handCardCount < 8)
+        {
+            CreateRandomCard();
+        }
+        else
+        {
+            Debug.Log("카드가 너무 많음");
+        }
+        isSettingCards = true;
     }
 
     public GameObject FindPanelGroupChildObject(string childObjectName)
@@ -342,7 +360,7 @@ public class CardManager : MonoBehaviour
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
-        float deltaTime = Time.deltaTime; 
+        float deltaTime = Time.deltaTime;
 
         for (int i = 0; i < card.Count; i++)
         {
@@ -365,9 +383,14 @@ public class CardManager : MonoBehaviour
                 elapsedTime += deltaTime;  
                 yield return null;
             }
+
             cardObject[i].SetActive(true);
-            cardObject[i].transform.position = targetPosition;  
-            cardObject[i].GetComponent<CardMove>().originalPosition = targetPosition;
+            cardObject[i].GetComponent<CardMove>().cardOffset = deckObject.transform.position - targetPosition;
+            
+            Vector3 newCardPos = deckObject.transform.position - cardObject[i].GetComponent<CardMove>().cardOffset;
+
+            cardObject[i].transform.position = newCardPos;
+            cardObject[i].GetComponent<CardMove>().originalPosition = newCardPos;
         }
 
         isCardSorting = false;
