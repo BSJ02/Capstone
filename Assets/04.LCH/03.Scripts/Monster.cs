@@ -13,7 +13,7 @@ public enum MonsterState
     Moving = 1, 
     Attack = 2,
     GetHit = 3,
-    CritcalAttack = 4 
+    Skill = 4 
 }
 
 
@@ -49,7 +49,6 @@ public class Monster : MonoBehaviour
     void Start()
     {
         Init();
-        
     }
 
     // [0] 애니메이션 초기화
@@ -59,7 +58,6 @@ public class Monster : MonoBehaviour
         anim.SetInteger("State", (int)state);
 
         attack = AttackState.GeneralAttack;
-
     }
 
     // [1] 몬스터 공격력 
@@ -78,11 +76,10 @@ public class Monster : MonoBehaviour
             case AttackState.SkillAttack:
                 player.GetHit(monsterData.CurrentDamage);
 
-                state = MonsterState.CritcalAttack; // 애니메이션(파티클 + 사운드)
+                state = MonsterState.Skill; // 애니메이션(파티클 + 사운드)
                 anim.SetInteger("State", (int)state);
 
                 monster_UI.GetMonsterDamage(); // UI 업데이트
-
                 break;
 
             // 일반 공격 
@@ -102,8 +99,6 @@ public class Monster : MonoBehaviour
     {
         if (!isLive)
             return;
-
-        //damage = FindObjectOfType<Player>().playerData.Damage;
 
         float finalDamage = damage - monsterData.Amor;
         monsterData.Hp -= Mathf.FloorToInt(finalDamage);

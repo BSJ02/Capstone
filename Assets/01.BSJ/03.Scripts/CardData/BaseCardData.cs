@@ -140,29 +140,4 @@ public class BaseCardData : MonoBehaviour
         }
     }
 
-    // Rest
-    public void UseRest(Card card, GameObject selectedTarget)
-    {
-        Player player = cardProcessing.currentPlayer;
-        if (player != null)
-        {
-            player.ChargeAnim(selectedTarget);
-
-            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
-
-            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
-            {
-                player.playerData.Hp = player.playerData.MaxHp;
-            }
-            else
-            {
-                player.playerData.Hp += card.cardPower[0];
-            }
-        }
-        else
-        {
-            cardProcessing.waitForInput = true;
-        }
-    }
-
 }

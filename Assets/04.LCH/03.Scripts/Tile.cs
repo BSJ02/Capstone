@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     public Coord coord;
+    private Color color;
 
     // 타일 변수 설정
     public void SetCoord(int x, int y, bool isWall)
@@ -18,6 +19,19 @@ public class Tile : MonoBehaviour
         coord = new Coord(x, y, coord.isWall);
     }
 
+    public void SetColor(Color color)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = color;
+        }
+    }
+
+    public Color GetColor()
+    {
+        return color;
+    }
 }
 
 [System.Serializable]

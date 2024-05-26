@@ -65,8 +65,8 @@
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_TextParsingUtilities.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_SpriteCharacter.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_ObjectPool.cs" />
-    <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\ITextPreProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_SubMesh.cs" />
+    <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\ITextPreProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_EditorResourceManager.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMP_InputValidator.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@3.0.8\Scripts\Runtime\TMPro_ExtensionMethods.cs" />
