@@ -60,8 +60,8 @@ public class CameraController : MonoBehaviour
             }
             else if (cardProcessing.currentPlayerObj != null)
             {
-                CameraFollowObject();
                 FollowTarget(cardProcessing.currentPlayerObj);
+                CameraFollowObject();
             }
             if (Input.GetMouseButton(0) && isMainCameraMoving)
             {

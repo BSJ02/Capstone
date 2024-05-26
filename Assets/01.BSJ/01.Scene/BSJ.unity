@@ -23862,8 +23862,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleState: 0
   players:
-  - {fileID: 1995961298}
   - {fileID: 885093493}
+  - {fileID: 1995961298}
   - {fileID: 374080099}
   - {fileID: 1229610214}
   playerList: 
