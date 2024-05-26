@@ -155,6 +155,7 @@ public class CardManager : MonoBehaviour
     {
         addCardObject[0].SetActive(true);
         Card card = cardInform.wizardCards[6]; // <- change
+        //Card card = cardInform.archerCards[7];
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 
