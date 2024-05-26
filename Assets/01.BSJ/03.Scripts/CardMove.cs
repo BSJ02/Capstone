@@ -6,7 +6,6 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using System;
 using static Card;
-using UnityEngine.UIElements;
 
 public class CardMove : MonoBehaviour
 {

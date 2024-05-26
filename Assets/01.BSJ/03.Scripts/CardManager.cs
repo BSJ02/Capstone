@@ -261,10 +261,10 @@ public class CardManager : MonoBehaviour
         {
             randomList = cardInform.wizardCards;
         }
-        else if (randNum <= cardInform.rarePercent)
-        {
-            randomList = cardInform.archerCards;
-        }
+        //else if (randNum <= cardInform.rarePercent)
+        //{
+        //    randomList = cardInform.archerCards;
+        //}
         else
         {
             randomList = cardInform.baseCards;
@@ -333,7 +333,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-
     public void ApplyCardInfrom(Card card, GameObject gameObject)
     {
         gameObject.name = card.cardName;
@@ -351,7 +350,6 @@ public class CardManager : MonoBehaviour
 
         gameObject.GetComponent<CardColorChanger>().ChangeCardColors(card);
     }
-
 
     public IEnumerator CardSorting(List<Card> card, List<GameObject> cardObject, Vector3 cardPos, float cardToDistance)
     {

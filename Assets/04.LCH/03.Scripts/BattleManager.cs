@@ -41,6 +41,7 @@ public class BattleManager : MonoBehaviour
     public Button turnEnd_Btn; // Turn End 버튼
     public GameObject stageEnd; // StageEnd 이미지
     public GameObject[] controlAllUI; // 스테이지 클리어 후 모든 UI 끄기
+    public GameObject selectedMonster;
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
@@ -274,7 +275,7 @@ public class BattleManager : MonoBehaviour
             // 선택되지 않은 몬스터 중 랜덤하게 선택
             int randIndex = Random.Range(0, availableMonsters.Count);
             int selectedIndex = availableMonsters[randIndex];
-            GameObject selectedMonster = monsters[selectedIndex];
+            selectedMonster = monsters[selectedIndex];
 
             //// 몬스터 중 랜덤하게 선택(중복 가능)
             //int randIndex = Random.Range(0, monsters.Count - 1);
@@ -284,8 +285,9 @@ public class BattleManager : MonoBehaviour
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
+                yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 1f);
+
                 // 선택된 몬스터의 특정 메서드 실행
-                //yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.3f);
 
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();

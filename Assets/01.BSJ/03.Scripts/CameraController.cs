@@ -74,6 +74,10 @@ public class CameraController : MonoBehaviour
                 ZoomCamera(false);
             }
         }
+        else if (BattleManager.instance.battleState == BattleState.MonsterTurn)
+        {
+            CameraController.instance.FollowTarget(BattleManager.instance.selectedMonster);
+        }
     }
 
     private void HasTransition()
