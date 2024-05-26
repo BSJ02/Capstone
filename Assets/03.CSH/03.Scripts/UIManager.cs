@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,9 +12,22 @@ public class UIManager : MonoBehaviour
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
+
     public GameObject gameOverUI;
 
-    public PlayerData playerData;
+    private PlayerMove playerMove;
+
+    //버튼 그룹 제어 선언
+    public RectTransform buttonLayoutGroup;
+    public GameObject inGroupButton;
+    public GameObject outGroupButton;
+
+    private int maxActivePoint = 4;
+    private int minActivePoint = 0;
+    private bool changeBar = false;
+
+    public ScriptableObject playerData;
+
 
     public CardProcessing cardProcessing;
    
@@ -48,14 +62,18 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-
+        playerMove = FindObjectOfType<PlayerMove>();
         cardProcessing = FindObjectOfType<CardProcessing>();
+
+
+        energyFillMaterial.SetFloat("_FillLevel", 1f);
+        energyValue.text = maxActivePoint.ToString();
 
 
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -68,14 +86,29 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-
-        if(cardProcessing.selectedTarget != null)
-        {
-            energyFillMaterial.SetFloat("_FillLevel", playerData.activePoint * 0.2f);
-            energyValue.text = playerData.activePoint.ToString();
-
-        }
         /*
+        if(cardProcessing.selectedTarget != null) 
+        {
+            energyFillMaterial.SetFloat("_FillLevel", cardProcessing.currentPlayer.playerData.activePoint * 0.2f);
+            energyValue.text = cardProcessing.currentPlayer.playerData.activePoint.ToString();
+        }
+      
+        */
+
+        if (cardProcessing.currentPlayer!= null && playerMove.isMoving == true)
+        {
+            NTest();
+        }
+        else if(changeBar == true)
+        {
+            energyFillMaterial.DOFloat(0f, "_FillLevel", 1f);
+            energyValue.text = minActivePoint.ToString();
+            changeBar = false;
+        }
+
+
+        /*
+        
         
         if(GameManager.Instance.isGameOver)
         {
@@ -87,9 +120,25 @@ public class UIManager : MonoBehaviour
 
         //Energy Bar Material
 
-        
-        
 
+
+
+    }
+
+    public void NTest()
+    {
+        Player player = cardProcessing.currentPlayer;
+
+        energyFillMaterial.DOFloat(player.playerData.activePoint * 0.25f, "_FillLevel", 1f);
+        //energyFillMaterial.SetFloat("_FillLevel", player.playerData.activePoint * 0.2f);
+        energyValue.text = player.playerData.activePoint.ToString();
+        
+        if(player.playerData.activePoint == 1)
+        {
+            changeBar = true;
+        }
+
+        
     }
 
     public void ShowLayerWindow(int index)
@@ -157,8 +206,28 @@ public class UIManager : MonoBehaviour
     */
 
 
-    public void SetEnergyText()
+    public void ButtonLayoutGroupBarMove()
     {
-        
+        buttonLayoutGroup.DOAnchorPos(new Vector3(710, 470, 0), 1);
+        inGroupButton.SetActive(false);
+        outGroupButton.SetActive(true);
+
+    }
+
+    public void ButtonLayoutGroupBarMoveExit()
+    {
+        buttonLayoutGroup.DOAnchorPos(new Vector3(1180, 470, 0), 1);
+        inGroupButton.SetActive(true);
+        outGroupButton.SetActive(false);
+    }
+
+    public void ButtonInformWindowMove()
+    {
+
+    }
+
+    public void ButtonInformWindowMoveExit()
+    {
+     
     }
 }

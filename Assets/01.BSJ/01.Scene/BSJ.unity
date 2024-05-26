@@ -18108,7 +18108,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2079279731}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -18127,7 +18127,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCardButtonClick
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -23403,7 +23403,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2079279732}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -23432,7 +23432,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMove, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -23862,8 +23862,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleState: 0
   players:
-  - {fileID: 1995961298}
   - {fileID: 885093493}
+  - {fileID: 1995961298}
   - {fileID: 374080099}
   - {fileID: 1229610214}
   playerList: 
@@ -23879,6 +23879,7 @@ MonoBehaviour:
   turnEnd_Btn: {fileID: 350077607}
   stageEnd: {fileID: 0}
   controlAllUI: []
+  selectedMonster: {fileID: 0}
   MaximumOfMonster: 3
   monsterObj: {fileID: 0}
   isPlayerMove: 0
@@ -25868,7 +25869,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2079279732}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -25897,7 +25898,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMove, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -27435,6 +27436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickedPlayer: {fileID: 0}
+  detectionRange: 1
+  detectedMonsters: []
 --- !u!4 &2079279733
 Transform:
   m_ObjectHideFlags: 0

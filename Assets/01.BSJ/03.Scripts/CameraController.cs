@@ -60,8 +60,8 @@ public class CameraController : MonoBehaviour
             }
             else if (cardProcessing.currentPlayerObj != null)
             {
-                CameraFollowObject();
                 FollowTarget(cardProcessing.currentPlayerObj);
+                CameraFollowObject();
             }
             if (Input.GetMouseButton(0) && isMainCameraMoving)
             {
@@ -73,6 +73,10 @@ public class CameraController : MonoBehaviour
 
                 ZoomCamera(false);
             }
+        }
+        else if (BattleManager.instance.battleState == BattleState.MonsterTurn)
+        {
+            CameraController.instance.FollowTarget(BattleManager.instance.selectedMonster);
         }
     }
 
