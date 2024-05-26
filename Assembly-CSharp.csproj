@@ -119,7 +119,6 @@
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\FadeController.cs" />
-    <Compile Include="Assets\Asset\GothicUI\Scripts\DayDurationController.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\WarriorAnimationEvent.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />

@@ -127,7 +127,7 @@ public class PlayerMove : MonoBehaviour
                     if (hit.collider.CompareTag("Player"))
                     {
                         mapGenerator.ClearHighlightedTiles();
-                        detectedMonsters.Clear();
+                        playerManager.detectedMonsters.Clear();
                         playerChoice.SetActive(true);
                         playerManager.clickedPlayer = hit.collider.gameObject;
 
@@ -145,7 +145,7 @@ public class PlayerMove : MonoBehaviour
                     {
                         clickedMonster = hit.collider.GetComponent<Monster>();
 
-                        if (detectedMonsters.Contains(clickedMonster))
+                        if (playerManager.detectedMonsters.Contains(clickedMonster))
                         {
                             Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
                             if (clickPlayer.isAttack == false)
@@ -170,7 +170,7 @@ public class PlayerMove : MonoBehaviour
     private void ResetSelection()
     {
         mapGenerator.ClearHighlightedTiles();
-        detectedMonsters.Clear();
+        playerManager.detectedMonsters.Clear();
         //playerManager.clickedPlayer = null;
         clickedMonster = null;
         playerChoice.SetActive(false);
@@ -191,7 +191,7 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    // Clicked MoveButton
+/*    // Clicked MoveButton
     public void OnMoveButtonClick()
     {
         // Code
@@ -224,7 +224,7 @@ public class PlayerMove : MonoBehaviour
             Vector2Int finalPosition = new Vector2Int((int)playerManager.clickedPlayer.transform.position.x, (int)playerManager.clickedPlayer.transform.position.z);
             GetSurroundingTiles(finalPosition);
         }
-    }
+    }*/
 
     public void OnCardButtonClick()
     {
@@ -383,7 +383,7 @@ public class PlayerMove : MonoBehaviour
     //    }
     //}
 
-    // 몬스터 감지
+/*    // 몬스터 감지
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
         detectedMonsters.Clear();
@@ -406,5 +406,5 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log(m);
             }
         }
-    }
+    }*/
 }
