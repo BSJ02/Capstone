@@ -139,7 +139,16 @@ public class GameManager : MonoBehaviour
 
     public void LoadSceneButton()
     {
-        LoadingSceneController.Instance.LoadScene("Select");
+        LoadingSceneController.Instance.LoadScene("SelectTest");
+    }
+
+    public void GameExitButton()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; ;
+#else
+        Application.Quit();
+#endif
     }
 
 }

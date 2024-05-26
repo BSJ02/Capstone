@@ -40,7 +40,7 @@ public class LoadingSceneController : MonoBehaviour
             Destroy(gameObject);
             return;
         }        
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     [SerializeField]

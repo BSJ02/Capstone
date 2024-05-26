@@ -103,6 +103,6 @@ public class CharacterSelector : MonoBehaviour
 
     public void GameStart()
     {
-        SceneManager.LoadScene("KMH1");
+        SceneManager.LoadScene("TestCSH");
     }
 }
