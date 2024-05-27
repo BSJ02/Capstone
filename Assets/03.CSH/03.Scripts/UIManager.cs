@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class UIManager : MonoBehaviour
     public Material energyFillMaterial;
 
 
+    //Data Display
+    public Text hpText;
+    public Text distanceText;
 
     public static UIManager Instance
     {
@@ -95,6 +99,22 @@ public class UIManager : MonoBehaviour
       
         */
 
+
+        /*if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                PlayerData playerData = hit.collider.GetComponent<Player>()?.playerData;
+                if (playerData != null)
+                {
+                    DisplayData(playerData);
+                }
+            }
+        }
+        */
+
         if (cardProcessing.currentPlayer!= null && playerMove.isMoving == true)
         {
             NTest();
@@ -119,11 +139,13 @@ public class UIManager : MonoBehaviour
         */
 
         //Energy Bar Material
-
-
-
-
     }
+    /*
+    void DisplayData(PlayerData data)
+    {
+        hpText.text = "HP: " + data.Hp;
+        distanceText.text = "Distance: " + data.activePoint;
+    }*/
 
     public void NTest()
     {
