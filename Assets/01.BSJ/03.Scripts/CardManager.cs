@@ -47,6 +47,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public bool waitAddCard = false;
     [HideInInspector] public bool isCardSorting = false;
+    [HideInInspector] public bool isSettingCards = false;
 
     [HideInInspector] public Card useCard = null;
 
@@ -73,7 +74,6 @@ public class CardManager : MonoBehaviour
         }
         deckObject.transform.position = spawDeckPos;
         deckObject.transform.rotation = Quaternion.Euler(0, 45, 0);
-        Debug.Log(deckObject.transform.position);
 
         panelObject_Group = GameObject.Find("PanelObject_Group");
         if (panelObject_Group == null)
@@ -89,11 +89,26 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
+
+    }
+
+    public void StartSettingCards()
+    {
         handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
         handCardCount = handCardList.Count;
+
+        if (handCardCount < 8)
+        {
+            CreateRandomCard();
+        }
+        else
+        {
+            Debug.Log("카드가 너무 많음");
+        }
+        isSettingCards = true;
     }
 
     public GameObject FindPanelGroupChildObject(string childObjectName)
@@ -140,6 +155,7 @@ public class CardManager : MonoBehaviour
     {
         addCardObject[0].SetActive(true);
         Card card = cardInform.wizardCards[6]; // <- change
+        //Card card = cardInform.archerCards[7];
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 
@@ -246,10 +262,10 @@ public class CardManager : MonoBehaviour
         {
             randomList = cardInform.wizardCards;
         }
-        else if (randNum <= cardInform.rarePercent)
-        {
-            randomList = cardInform.archerCards;
-        }
+        //else if (randNum <= cardInform.rarePercent)
+        //{
+        //    randomList = cardInform.archerCards;
+        //}
         else
         {
             randomList = cardInform.baseCards;
@@ -318,7 +334,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-
     public void ApplyCardInfrom(Card card, GameObject gameObject)
     {
         gameObject.name = card.cardName;
@@ -337,7 +352,6 @@ public class CardManager : MonoBehaviour
         gameObject.GetComponent<CardColorChanger>().ChangeCardColors(card);
     }
 
-
     public IEnumerator CardSorting(List<Card> card, List<GameObject> cardObject, Vector3 cardPos, float cardToDistance)
     {
         isCardSorting = true;
@@ -345,7 +359,7 @@ public class CardManager : MonoBehaviour
         float totalCardWidth = card.Count * cardToDistance;
         float startingPosX = -totalCardWidth / 2f + cardToDistance / 2f;
 
-        float deltaTime = Time.deltaTime; 
+        float deltaTime = Time.deltaTime;
 
         for (int i = 0; i < card.Count; i++)
         {
@@ -373,8 +387,8 @@ public class CardManager : MonoBehaviour
             cardObject[i].GetComponent<CardMove>().cardOffset = deckObject.transform.position - targetPosition;
             
             Vector3 newCardPos = deckObject.transform.position - cardObject[i].GetComponent<CardMove>().cardOffset;
-            
-            cardObject[i].transform.position = newCardPos;  
+
+            cardObject[i].transform.position = newCardPos;
             cardObject[i].GetComponent<CardMove>().originalPosition = newCardPos;
         }
 

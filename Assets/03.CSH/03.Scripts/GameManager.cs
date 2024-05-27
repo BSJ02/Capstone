@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     public Text remainingDistance;
 
+    //UI
+
+    [SerializeField] Texture2D cursorImg;
+
     public GameObject[] windowUI;
     public GameObject objectUIPanel;
     private GameObject currentlyActiveWindow;
@@ -28,7 +32,7 @@ public class GameManager : MonoBehaviour
     //게임 턴 판별 private 으로 바꿔주기 
     public bool isGameOver = false; // 게임 오버 상태
 
-
+    
 
 
     private static GameManager instance;
@@ -54,7 +58,7 @@ public class GameManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -63,13 +67,18 @@ public class GameManager : MonoBehaviour
        
     }
 
+    private void Start()
+    {
+        UnityEngine.Cursor.SetCursor(cursorImg, Vector2.zero, CursorMode.ForceSoftware);
+    }
+    
     private void Update()
     {
         //remainingDistance.text = player.playerData.activePoint.ToString();
-        if(playerData.Hp == 0 && !isGameOver)
-        {
-            isGameOver = true;
-        }
+        //if(playerData.Hp == 0 && !isGameOver)
+        //{
+        //    isGameOver = true;
+        //}
 
     }
 
@@ -128,5 +137,18 @@ public class GameManager : MonoBehaviour
     public void Start, Save ...
      */
 
+    public void LoadSceneButton()
+    {
+        LoadingSceneController.Instance.LoadScene("03.Select");
+    }
+
+    public void GameExitButton()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; ;
+#else
+        Application.Quit();
+#endif
+    }
 
 }

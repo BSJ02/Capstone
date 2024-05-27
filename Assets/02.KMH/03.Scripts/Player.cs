@@ -189,6 +189,9 @@ public class Player : MonoBehaviour
 
     public void ReadyToAttack(Monster monster)
     {
+        SoundManager.instance.PlaySoundEffect("AttackPlayer");
+        SoundManager.instance.PlaySoundEffect("AttackSword");
+
         float monsterHp = monster.monsterData.Hp;
         float randDamage = Random.Range(playerData.Damage, playerData.Damage);
         //float critcalDamage = monsterData.MinDamage + addDamage;
@@ -219,6 +222,8 @@ public class Player : MonoBehaviour
 
     public void GetHit(float damage)
     {
+        SoundManager.instance.PlaySoundEffect("Hit");
+
         if (!isLive)
             return;
 
@@ -250,6 +255,7 @@ public class Player : MonoBehaviour
     {
         /*if (isLive) 
             return;*/
+        SoundManager.instance.PlaySoundEffect("Death");
 
         anim.SetTrigger("Die");
         Destroy(gameObject, 3.5f);

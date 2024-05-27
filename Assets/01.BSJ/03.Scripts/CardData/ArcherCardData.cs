@@ -63,7 +63,6 @@ public class ArcherCardData : MonoBehaviour
         }
     }
 
-
     public void UseConcealment(Card card, GameObject selectedTarget)
     {
         Monster monster = selectedTarget.GetComponent<Monster>();

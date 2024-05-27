@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     private MapGenerator mapGenerator;
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
+    private PlayerManager playerManager;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -26,10 +27,10 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
-    [SerializeField]
-    private GameObject clickedPlayer;
+/*    [SerializeField]
+    private GameObject clickedPlayer;*/
 
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isActionSelect = false;
 
     private void Awake()
@@ -37,6 +38,7 @@ public class PlayerMove : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
         battleManager = FindObjectOfType<BattleManager>();
         mapGenerator = FindObjectOfType<MapGenerator>();
+        playerManager = FindObjectOfType<PlayerManager>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
     }
 
@@ -47,7 +49,7 @@ public class PlayerMove : MonoBehaviour
 
     private void SetDestination(Vector2Int clickedTargetPos)
     {
-        playerPos = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+        playerPos = new Vector2Int((int)playerManager.clickedPlayer.transform.position.x, (int)playerManager.clickedPlayer.transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
 
         StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
@@ -124,12 +126,12 @@ public class PlayerMove : MonoBehaviour
                     if (hit.collider.CompareTag("Player"))
                     {
                         mapGenerator.ClearHighlightedTiles();
-                        detectedMonsters.Clear();
+                        playerManager.detectedMonsters.Clear();
                         playerChoice.SetActive(true);
-                        clickedPlayer = hit.collider.gameObject;
+                        playerManager.clickedPlayer = hit.collider.gameObject;
 
-                        cardProcessing.currentPlayerObj = clickedPlayer;
-                        cardProcessing.currentPlayer = clickedPlayer.GetComponent<Player>();
+                        cardProcessing.currentPlayerObj = playerManager.clickedPlayer;
+                        cardProcessing.currentPlayer = playerManager.clickedPlayer.GetComponent<Player>();
 
                         isActionSelect = true;
                     }
@@ -142,9 +144,9 @@ public class PlayerMove : MonoBehaviour
                     {
                         clickedMonster = hit.collider.GetComponent<Monster>();
 
-                        if (detectedMonsters.Contains(clickedMonster))
+                        if (playerManager.detectedMonsters.Contains(clickedMonster))
                         {
-                            Player clickPlayer = clickedPlayer.GetComponent<Player>();
+                            Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
                             if (clickPlayer.isAttack == false)
                             {
                                 clickPlayer.ReadyToAttack(clickedMonster);
@@ -167,8 +169,8 @@ public class PlayerMove : MonoBehaviour
     private void ResetSelection()
     {
         mapGenerator.ClearHighlightedTiles();
-        detectedMonsters.Clear();
-        clickedPlayer = null;
+        playerManager.detectedMonsters.Clear();
+        //playerManager.clickedPlayer = null;
         clickedMonster = null;
         playerChoice.SetActive(false);
 
@@ -188,11 +190,11 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    // Clicked MoveButton
+/*    // Clicked MoveButton
     public void OnMoveButtonClick()
     {
         // Code
-        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+        Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
 
         if (clickPlayer.playerData.activePoint <= 0)
         {
@@ -201,14 +203,14 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            mapGenerator.HighlightPlayerRange(clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
+            mapGenerator.HighlightPlayerRange(playerManager.clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
         }
     }
 
     // Clicked AttackButton
     public void OnAttackButtonClick()
     {
-        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+        Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
 
         // Code
         if (clickPlayer.isAttack == true)
@@ -218,10 +220,10 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
+            Vector2Int finalPosition = new Vector2Int((int)playerManager.clickedPlayer.transform.position.x, (int)playerManager.clickedPlayer.transform.position.z);
             GetSurroundingTiles(finalPosition);
         }
-    }
+    }*/
 
     public void OnCardButtonClick()
     {
@@ -292,8 +294,11 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
         isMoving = true;
-        clickedPlayer.layer = LayerMask.NameToLayer("Ignore Raycast");
-        Player clickPlayer = clickedPlayer.GetComponent<Player>();
+        for (int i = 0; i < 2; i++)
+        {
+            battleManager.players[i].layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
+        Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
         clickPlayer.playerState = PlayerState.Moving;
         playerChoice.SetActive(false);
 
@@ -302,8 +307,8 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < path.Count - 1; i++)
         {
-            Vector3 playerPos = new Vector3(path[i].x, clickedPlayer.transform.position.y, path[i].y);
-            Vector3 nextPosition = new Vector3(path[i + 1].x, clickedPlayer.transform.position.y, path[i + 1].y);
+            Vector3 playerPos = new Vector3(path[i].x, playerManager.clickedPlayer.transform.position.y, path[i].y);
+            Vector3 nextPosition = new Vector3(path[i + 1].x, playerManager.clickedPlayer.transform.position.y, path[i + 1].y);
 
             float startTime = Time.time;
 
@@ -312,12 +317,12 @@ public class PlayerMove : MonoBehaviour
                 float currentTime = (Time.time - startTime) * moveSpeed;
                 float weight = currentTime / lerpMaxTime;
 
-                clickedPlayer.transform.position = Vector3.Lerp(playerPos, nextPosition, weight);
-                clickedPlayer.transform.LookAt(nextPosition);
+                playerManager.clickedPlayer.transform.position = Vector3.Lerp(playerPos, nextPosition, weight);
+                playerManager.clickedPlayer.transform.LookAt(nextPosition);
                 yield return null;
             }
 
-            clickedPlayer.transform.position = nextPosition;
+            playerManager.clickedPlayer.transform.position = nextPosition;
 
 
             clickPlayer.playerData.activePoint--;
@@ -328,11 +333,14 @@ public class PlayerMove : MonoBehaviour
 
         isMoving = false;
         isActionSelect = false;
-        clickedPlayer.layer = LayerMask.NameToLayer("Player");
+        for (int i = 0; i < 2; i++)
+        {
+            battleManager.players[i].layer = LayerMask.NameToLayer("Player");
+        }
         clickPlayer.playerState = PlayerState.Idle;
 
 
-        clickedPlayer = null;
+        playerManager.clickedPlayer = null;
 
         yield break;
     }
@@ -374,7 +382,7 @@ public class PlayerMove : MonoBehaviour
     //    }
     //}
 
-    // 몬스터 감지
+/*    // 몬스터 감지
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
         detectedMonsters.Clear();
@@ -397,5 +405,5 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log(m);
             }
         }
-    }
+    }*/
 }

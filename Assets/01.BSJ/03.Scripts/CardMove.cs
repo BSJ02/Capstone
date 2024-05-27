@@ -6,7 +6,6 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using System;
 using static Card;
-using UnityEngine.UIElements;
 
 public class CardMove : MonoBehaviour
 {
@@ -21,8 +20,6 @@ public class CardMove : MonoBehaviour
     private const float scaleFactor = 1.2f; // 카드 확대 배율
     private const float animationDuration = 0.1f;   // 애니메이션 속도
 
-    private int index;
-
     public Vector3 cardOffset;
 
     private void Start()
@@ -36,28 +33,27 @@ public class CardMove : MonoBehaviour
 
     private void Update()
     {
-        UpdateOriginalPosition(CardManager.instance.deckObject.transform.position - cardOffset);
-
         if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
         {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            int index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
             MoveCardToPosAndScale(originalPosition + Vector3.up * 0.5f, scaleFactor);
             gameObject.GetComponent<CardOrder>().SetOrder(index * 10);
         }
         else
         {
-            index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
-            if (CardManager.instance.handCardObject.IndexOf(gameObject) >= 0)
+            int index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
+            if (index > 0)
             {
                 gameObject.GetComponent<CardOrder>().SetOrder(index);
+                UpdateOriginalPos();
                 MoveCardToPosAndScale(originalPosition, 1f);
             }
         }
     }
 
-    public void UpdateOriginalPosition(Vector3 position)
+    private void UpdateOriginalPos()
     {
-        originalPosition = position;
+        originalPosition = CardManager.instance.deckObject.transform.position - cardOffset;
     }
 
     private void MoveCardToPosAndScale(Vector3 position, float scale)
@@ -135,7 +131,7 @@ public class CardMove : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     private void OnMouseUp()
@@ -243,6 +239,6 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = false;
         }
-        
+
     }
 }
