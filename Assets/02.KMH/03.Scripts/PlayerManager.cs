@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("No remaining ActivePoints");
             playerChoice.SetActive(false);
+            SoundManager.instance.PlaySoundEffect("Impossible");
         }
         else
         {
@@ -72,6 +73,7 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("Already Attack");
             playerChoice.SetActive(false);
+            SoundManager.instance.PlaySoundEffect("Impossible");
         }
         else
         {
