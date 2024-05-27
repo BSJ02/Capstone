@@ -133,11 +133,6 @@ public class BattleManager : MonoBehaviour
         MapGenerator.instance.CreateMap(MapGenerator.instance.garo, MapGenerator.instance.sero);
 
         PlayerTurn();
-        
-     
-        
-
-       
     }
     
     // 스테이지 종료 감지

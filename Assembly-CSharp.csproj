@@ -60,14 +60,17 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\ArcherAnimationEvent.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\AbnormalConditionData.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WizardCardData.cs" />
+    <Compile Include="Assets\Asset\Sound\Karugamo\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Skill\MageSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\PlatformMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\UIManager.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
+    <Compile Include="Assets\Asset\Sound\Karugamo\Sample\Scripts\Sample.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\ArcherCardData.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardProcessing.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Tile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Monster.cs" />
+    <Compile Include="Assets\Asset\Sound\Karugamo\Scripts\Audio\Audio.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\ShowText.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\PlayerSelectList.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Assets\04.LCH\03.Scripts\Skill\MonsterSkill.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\BattleManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MapEditor.cs" />
+    <Compile Include="Assets\01.BSJ\03.Scripts\FadeController.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\WarriorAnimationEvent.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\ProjectileHitEffect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterUI.cs" />
@@ -149,6 +154,7 @@
     <None Include="Assets\Particle\Cartoon FX Remaster\Readme Cartoon FX Remaster BUNDLE.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Asset\Sound\Karugamo\BGM\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Asset\Card_Icon\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />

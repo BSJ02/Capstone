@@ -15,7 +15,6 @@ public class PlayerMove : MonoBehaviour
     private BattleManager battleManager;
     private CardProcessing cardProcessing;
 
-
     Vector2Int playerPos;
     Vector2Int targetPos;
 
