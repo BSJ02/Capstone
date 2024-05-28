@@ -104,13 +104,21 @@ public class CameraController : MonoBehaviour
 
         mainCamera.orthographicSize = 2f;
 
-        if (mousePos.x < edgeSize || mousePos.y < edgeSize)
+        if (mousePos.x < edgeSize)
         {
             move.x = -moveSpeed * time;
         }
-        else if (mousePos.x > Screen.width - edgeSize || mousePos.y > Screen.height - edgeSize)
+        else if (mousePos.y < edgeSize)
+        {
+            move.z = -moveSpeed * time;
+        }
+        else if (mousePos.x > Screen.width - edgeSize)
         {
             move.x = moveSpeed * time;
+        }
+        else if (mousePos.y > Screen.height - edgeSize)
+        {
+            move.z = moveSpeed * time;
         }
 
         if (mainCamera.transform.position == virtualCamera.transform.position)
