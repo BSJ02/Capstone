@@ -75,7 +75,7 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        SoundManager.instance.PlayBackgroundMusic("BGM");
+        //SoundManager.instance.PlayBackgroundMusic("BGM");
 
         cardManager = FindObjectOfType<CardManager>();
         //players = characterSelector.playerSelectList.players;

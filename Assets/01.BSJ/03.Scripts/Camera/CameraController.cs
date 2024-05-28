@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        characterOffset = new Vector3(-9f, 7.65f, -9f);
+        characterOffset = new Vector3(-15f, 15.65f, -15f);
         originalOrthographicSize = 6f;
     }
 
@@ -200,6 +200,6 @@ public class CameraController : MonoBehaviour
 
         ZoomCamera(false);
 
-        yield return new WaitForSeconds(1f);
+        yield return null;
     }
 }
