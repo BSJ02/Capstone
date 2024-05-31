@@ -3,10 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class CardManager : MonoBehaviour
 {
@@ -363,6 +361,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < card.Count; i++)
         {
+            SoundManager.instance.PlaySoundEffect("PullingCard");
+
             float elapsedTime = 0f;
             float duration = 0.2f;  
 

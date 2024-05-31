@@ -38,6 +38,8 @@ public class BaseCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
+            SoundManager.instance.PlaySoundEffect("Healing");
+
             player.ChargeAnim(selectedTarget);
 
             particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
@@ -50,6 +52,7 @@ public class BaseCardData : MonoBehaviour
             {
                 player.playerData.Hp += card.cardPower[0];
             }
+
         }
         else
         {
