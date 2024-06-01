@@ -7,7 +7,6 @@ public class WizardAnimationEvent : MonoBehaviour
 {
     private CardManager cardManager;
     private CardProcessing cardProcessing;
-    private ParticleController particleController;
 
     private bool isFireball = false;
     private bool isTeleport = false;
@@ -20,7 +19,6 @@ public class WizardAnimationEvent : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
-        particleController = FindObjectOfType<ParticleController>();
     }
     
     private void Update()
@@ -56,14 +54,18 @@ public class WizardAnimationEvent : MonoBehaviour
 
         if (isFireball)
         {
-            GameObject particlePrefab = particleController.fireballEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.fireballEffectPrefab;
             GameObject playerObj = cardProcessing.currentPlayerObj;
             GameObject targetObj = cardProcessing.selectedTarget;
             Card useCard = cardManager.useCard;
 
-            StartCoroutine(particleController.ProjectileEffect(particlePrefab, playerObj, targetObj));
+            StartCoroutine(ParticleController.instance.ProjectileEffect(particlePrefab, playerObj, targetObj));
+
             Monster monster = targetObj.GetComponent<Monster>();
             monster.GetHit(useCard.cardPower[0]);
+
+            CharacterStatusEffect characterStatusEffect = targetObj.GetComponent<CharacterStatusEffect>();
+            StatusEffectManager.instance.ApplyBurnEffect(characterStatusEffect);
 
             WizardCardData.instance.shouldFireball = false;
             isFireball = false;
@@ -73,12 +75,12 @@ public class WizardAnimationEvent : MonoBehaviour
         {
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
-                GameObject particlePrefab = particleController.flamePillarEffectPrefab;
+                GameObject particlePrefab = ParticleController.instance.flamePillarEffectPrefab;
                 Quaternion particleRot = Quaternion.Euler(270f, 0f, 0f);
                 Vector3 targetObjPos = monster.gameObject.transform.position + new Vector3(0, 0.15f, 0);
                 Card useCard = cardManager.useCard;
 
-                particleController.ApplyTargetEffect(particlePrefab, targetObjPos, particleRot, 0.5f);
+                ParticleController.instance.ApplyTargetEffect(particlePrefab, targetObjPos, particleRot, 0.5f);
 
                 monster.GetHit(useCard.cardPower[0]);
             }
@@ -95,11 +97,11 @@ public class WizardAnimationEvent : MonoBehaviour
 
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
-                GameObject particlePrefab = particleController.lifeDrainEffectPrefab;
+                GameObject particlePrefab = ParticleController.instance.lifeDrainEffectPrefab;
                 Quaternion particleRot = Quaternion.Euler(0f, 0f, 0f);
                 Vector3 targetObjPos = monster.gameObject.transform.position + new Vector3(0, 0.15f, 0);
 
-                particleController.ApplyTargetEffect(particlePrefab, targetObjPos, particleRot, 0.5f);
+                ParticleController.instance.ApplyTargetEffect(particlePrefab, targetObjPos, particleRot, 0.5f);
 
                 monster.GetHit(useCard.cardPower[0]);
                 healAmount += useCard.cardPower[0] / 7f;
@@ -123,7 +125,7 @@ public class WizardAnimationEvent : MonoBehaviour
             Vector3 tilePos = WizardCardData.instance.targetPos;
             Vector3 goalPosition = tilePos + new Vector3(0, 0.35f, 0);
 
-            StartCoroutine(particleController.ObjectElevateEffect(tilePos, goalPosition));
+            StartCoroutine(ParticleController.instance.ObjectElevateEffect(tilePos, goalPosition));
 
             Tile tile = MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.z];
             tile.SetCoord((int)tilePos.x, (int)tilePos.z, true);

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
+    public static ParticleController instance;
+
     // Group
     private GameObject obstacle_Group;
     private GameObject particle_Group;
@@ -54,6 +56,18 @@ public class ParticleController : MonoBehaviour
     private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
     private Queue<GameObject> flamePillarEffectPool = new Queue<GameObject>();
     private Queue<GameObject> lifeDrainEffectPool = new Queue<GameObject>();
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(instance);
+        }
+    }
 
     private void Start()
     {
