@@ -58,7 +58,7 @@ MonoBehaviour:
     cardSprite: {fileID: 21300000, guid: 8a24eaff207b05c49b8aeb365a4e9c73, type: 3}
     cardPercent: 35
     cardType: 0
-    cardTarget: 1
+    cardTarget: 3
     isCardMoveEnabled: 0
   - cardName: Limit Break
     cardDescription: "\uB79C\uB364\uD55C \uC2A4\uD0EF \uD68D\uB4DD"

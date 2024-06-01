@@ -100,6 +100,7 @@ public class CardMove : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("CardPanel"))
             {
+                SoundManager.instance.PlaySoundEffect("ThrowCard");
                 cardProcessing.usingCard = true;
                 ProcessingCard();
             }
@@ -170,7 +171,7 @@ public class CardMove : MonoBehaviour
             {
                 CardManager.instance.ChoiceCard(this.gameObject);
             }
-            else if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled)
+            else if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled && CardManager.instance.isCardButtonClicked)
             {
                 CardManager.instance.FindPanelGroupChildObject("Use Card Panel(Clone)").SetActive(true);
             }
@@ -197,7 +198,7 @@ public class CardMove : MonoBehaviour
             ComparePlayerTypeWithCardType(playerObj, card);
         }
 
-        if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled)
+        if (!cardProcessing.waitForInput && !CardManager.instance.waitAddCard && card.isCardMoveEnabled && CardManager.instance.isCardButtonClicked)
         {
             transform.DOKill();
             transform.position = GetMouseWorldPosition() + offset;
@@ -205,7 +206,7 @@ public class CardMove : MonoBehaviour
             if (cardProcessing.currentPlayer != null)
             {
                 int cardUseDistance = (int)CardManager.instance.CardDrag(this.gameObject).cardDistance;
-                cardProcessing.ShowCardRange(cardUseDistance);
+                cardProcessing.ShowPlayerCardRange(cardUseDistance);
             }
         }
     }

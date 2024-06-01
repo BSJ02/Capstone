@@ -85,6 +85,7 @@ public class Card
     {
         Player,
         SingleTarget,
-        AreaTarget
+        AreaTarget,
+        TargetPosition
     }
 }

@@ -43,6 +43,7 @@ public class CardManager : MonoBehaviour
     public GameObject useCardPanelPrefab;
     public GameObject handCardPanelPrefab;
 
+    [HideInInspector] public bool isCardButtonClicked = false;
     [HideInInspector] public bool waitAddCard = false;
     [HideInInspector] public bool isCardSorting = false;
     [HideInInspector] public bool isSettingCards = false;
@@ -87,12 +88,11 @@ public class CardManager : MonoBehaviour
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
 
-
     }
 
     public void StartSettingCards()
     {
-        handCardList.AddRange(cardInform.wizardCards);
+        handCardList.AddRange(cardInform.warriorCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 
@@ -153,7 +153,6 @@ public class CardManager : MonoBehaviour
     {
         addCardObject[0].SetActive(true);
         Card card = cardInform.wizardCards[6]; // <- change
-        //Card card = cardInform.archerCards[7];
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 

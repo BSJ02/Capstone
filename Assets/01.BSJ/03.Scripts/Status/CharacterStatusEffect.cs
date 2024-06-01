@@ -6,6 +6,11 @@ public class CharacterStatusEffect : MonoBehaviour
 {
     public List<StatusEffect> ActiveStatusEffects { get; private set; } = new List<StatusEffect>();
 
+    public void SetActiveStatusEffects(List<StatusEffect> newStatusEffects)
+    {
+        ActiveStatusEffects = new List<StatusEffect>(newStatusEffects);
+    }
+
     public void ApplyStatusEffect(StatusEffect statusEffect)
     {
         statusEffect.ApplyEffect(this, statusEffect.EffectValue);
@@ -18,7 +23,7 @@ public class CharacterStatusEffect : MonoBehaviour
         ActiveStatusEffects.Remove(statusEffect);
     }
 
-    public void TakeTurn()
+    public IEnumerator TakeTurn()
     {
         for (int i = ActiveStatusEffects.Count - 1; i >= 0; i--)
         {
@@ -28,6 +33,15 @@ public class CharacterStatusEffect : MonoBehaviour
             {
                 RemoveStatusEffect(ActiveStatusEffects[i]);
             }
+            yield return new WaitForSeconds(0.8f);
+        }
+    }
+
+    public void ResetStatusEffects()
+    {
+        for (int i = ActiveStatusEffects.Count - 1; i >= 0; i--)
+        {
+            RemoveStatusEffect(ActiveStatusEffects[i]);
         }
     }
 
@@ -39,7 +53,8 @@ public class CharacterStatusEffect : MonoBehaviour
             {
                 if (statusEffect.ParticleEffect != null)
                 {
-                    ParticleController.instance.ApplyTargetEffect(statusEffect.ParticleEffect, transform.position, Quaternion.identity, 1);
+                    ParticleController.instance.ApplyTargetEffect(statusEffect.ParticleEffect, transform.position, Quaternion.identity, -0.4f);
+                    SoundManager.instance.PlaySoundEffect(statusEffect.SoundName);
                 }
             }
         }

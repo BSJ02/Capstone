@@ -18,9 +18,11 @@ public class StatusEffect
     public Action<CharacterStatusEffect, int> ApplyEffect { get; private set; }
     public Action<CharacterStatusEffect, int> RemoveEffect { get; private set; }
     public GameObject ParticleEffect { get; private set; }
+    public string SoundName { get; private set; }
 
     public StatusEffect(StatusEffectType effectType, int duration, int effectValue,
-                Action<CharacterStatusEffect, int> applyEffect, Action<CharacterStatusEffect, int> removeEffect, GameObject particleEffect)
+                        Action<CharacterStatusEffect, int> applyEffect, Action<CharacterStatusEffect, int> removeEffect, 
+                        GameObject particleEffect, string soundName)
     {
         EffectType = effectType;
         Duration = duration;
@@ -28,6 +30,7 @@ public class StatusEffect
         ApplyEffect = applyEffect;
         RemoveEffect = removeEffect;
         ParticleEffect = particleEffect;
+        SoundName = soundName;
     }
 
     public void DecreaseDuration()

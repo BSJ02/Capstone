@@ -1145,8 +1145,40 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8da9e61733370445588eb6b6e3146a61, type: 3}
   - name: PullingCard
     clip: {fileID: 8300000, guid: f070e04988228b04ca50755a17548f24, type: 3}
+  - name: ThrowCard
+    clip: {fileID: 8300000, guid: 5dcc1dc5954cf7346b085bb3ac33ef81, type: 3}
   - name: Healing
     clip: {fileID: 8300000, guid: 2b4bd7f57c2df644c95c0f8e615bbbe2, type: 3}
+  - name: UseLimitBreak
+    clip: {fileID: 8300000, guid: d2243ed887104f3408c62deb9138340f, type: 3}
+  - name: RemoveAilments
+    clip: {fileID: 8300000, guid: 6cbde4450973c574ebe234da4f3e4771, type: 3}
+  - name: EvasionBoost
+    clip: {fileID: 8300000, guid: 3eecc28a3f5d2c04f998615d774dbd8b, type: 3}
+  - name: Transmission
+    clip: {fileID: 8300000, guid: 4dc17c8fdad6cc94294f1036a9f503d5, type: 3}
+  - name: SpinAttack
+    clip: {fileID: 8300000, guid: 9eddec4d91733eb4da54f9d931b37ff2, type: 3}
+  - name: Burn
+    clip: {fileID: 8300000, guid: 19a1b6fb76f00f941ad65caab55f99be, type: 3}
+  - name: Teleport
+    clip: {fileID: 8300000, guid: 3845aa1185dc66b49a784e988df51dcb, type: 3}
+  - name: Fireball
+    clip: {fileID: 8300000, guid: b876fbe699b574243a0b283661c59751, type: 3}
+  - name: FlamePillar
+    clip: {fileID: 8300000, guid: 779b8de9c5dd84f47ab583225419e280, type: 3}
+  - name: LifeDrain
+    clip: {fileID: 8300000, guid: 5063fd1cc6d83934a95e98e9da630962, type: 3}
+  - name: SummonObstacle
+    clip: {fileID: 8300000, guid: d90adaec72135b24282915786e40073a, type: 3}
+  - name: WarriorsRoar
+    clip: {fileID: 8300000, guid: 0083e944abf4b49a0bedb17810e04de4, type: 3}
+  - name: Dash
+    clip: {fileID: 8300000, guid: e7e6d8331b1adc241a7c69a71c68cebe, type: 3}
+  - name: ShieldBash
+    clip: {fileID: 8300000, guid: 91e689b3ceb898e4a8966138c386d79f, type: 3}
+  - name: DesperateStrike
+    clip: {fileID: 8300000, guid: 1b956e0b434882f49af3cab515670b3e, type: 3}
 --- !u!1 &116387265
 GameObject:
   m_ObjectHideFlags: 0
@@ -4589,7 +4621,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 374080099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Script: {fileID: 11500000, guid: 24027a0917f771c40982fcf61aa04a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &376714946
@@ -4966,6 +4998,7 @@ MonoBehaviour:
     type: 3}
   handCardPanelPrefab: {fileID: 7289520757176262495, guid: cfe53505b43bec9428c52ee4b3659838,
     type: 3}
+  isCardButtonClicked: 0
   waitAddCard: 0
   isCardSorting: 0
   isSettingCards: 0
@@ -5644,7 +5677,6 @@ GameObject:
   - component: {fileID: 432558536}
   - component: {fileID: 432558535}
   - component: {fileID: 432558541}
-  - component: {fileID: 432558542}
   m_Layer: 8
   m_Name: 'Bat '
   m_TagString: Monster
@@ -5756,18 +5788,6 @@ Transform:
   m_Father: {fileID: 1854516080}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &432558541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432558534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &432558542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7969,6 +7989,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardProcessing: {fileID: 1497366972}
+  shouldRemoveAilments: 0
+  shouldEvasionBoost: 0
+  shouldTransmission: 0
 --- !u!114 &615802237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11184,7 +11207,6 @@ GameObject:
   - component: {fileID: 850452628}
   - component: {fileID: 850452627}
   - component: {fileID: 850452633}
-  - component: {fileID: 850452634}
   m_Layer: 8
   m_Name: TurtleShell
   m_TagString: Monster
@@ -11296,18 +11318,6 @@ Transform:
   m_Father: {fileID: 1854516080}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &850452633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850452626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &850452634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11770,7 +11780,6 @@ GameObject:
   - component: {fileID: 882541840}
   - component: {fileID: 882541839}
   - component: {fileID: 882541846}
-  - component: {fileID: 882541847}
   m_Layer: 8
   m_Name: Mage
   m_TagString: Monster
@@ -11886,7 +11895,7 @@ Transform:
   m_GameObject: {fileID: 882541838}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7, y: 0.35, z: 7}
+  m_LocalPosition: {x: 7, y: 0.35, z: 5}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11897,18 +11906,6 @@ Transform:
   m_Father: {fileID: 1854516080}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &882541846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 882541838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &882541847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12087,7 +12084,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 885093493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Script: {fileID: 11500000, guid: 24027a0917f771c40982fcf61aa04a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &891455551
@@ -16072,7 +16069,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1229610214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Script: {fileID: 11500000, guid: 24027a0917f771c40982fcf61aa04a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1232103139
@@ -19698,7 +19695,6 @@ GameObject:
   - component: {fileID: 1409608990}
   - component: {fileID: 1409608989}
   - component: {fileID: 1409608995}
-  - component: {fileID: 1409608996}
   m_Layer: 8
   m_Name: Skeleton
   m_TagString: Monster
@@ -19810,18 +19806,6 @@ Transform:
   m_Father: {fileID: 1854516080}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1409608995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409608988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1409608996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21858,7 +21842,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2079279731}
+      objectReference: {fileID: 2079279732}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -21877,7 +21861,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: OnCardButtonClick
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -21887,7 +21871,7 @@ PrefabInstance:
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMove, Assembly-CSharp
+      value: PlayerManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3339495502609998168, guid: d946df9677d4529419d2f5ac86d4eb12,
         type: 3}
@@ -27091,7 +27075,6 @@ GameObject:
   - component: {fileID: 1919193075}
   - component: {fileID: 1919193074}
   - component: {fileID: 1919193080}
-  - component: {fileID: 1919193081}
   m_Layer: 8
   m_Name: Orc
   m_TagString: Monster
@@ -27214,18 +27197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1919193081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919193073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1926790809
 GameObject:
   m_ObjectHideFlags: 0
@@ -27242,7 +27213,6 @@ GameObject:
   - component: {fileID: 1926790811}
   - component: {fileID: 1926790810}
   - component: {fileID: 1926790817}
-  - component: {fileID: 1926790818}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: Monster
@@ -27369,18 +27339,6 @@ Transform:
   m_Father: {fileID: 1854516080}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1926790817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926790809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1926790818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27938,7 +27896,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995961298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Script: {fileID: 11500000, guid: 24027a0917f771c40982fcf61aa04a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2001016939

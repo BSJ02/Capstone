@@ -30,8 +30,8 @@ public class WizardAnimationEvent : MonoBehaviour
 
             cardProcessing.currentPlayerObj.transform.position = tilePos; // Player => TilePos
 
-            MapGenerator.instance.totalMap[(int)playerPos.x, (int)playerPos.y].SetCoord((int)playerPos.x, (int)playerPos.y, false);
-            MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y].SetCoord((int)tilePos.x, (int)tilePos.y, true);
+            MapGenerator.instance.totalMap[(int)playerPos.x, (int)playerPos.y].SetCoord((int)playerPos.x, (int)playerPos.z, false);
+            MapGenerator.instance.totalMap[(int)tilePos.x, (int)tilePos.y].SetCoord((int)tilePos.x, (int)tilePos.z, true);
 
             WizardCardData.instance.shouldTeleport = false;
             isTeleport = false;
@@ -59,6 +59,8 @@ public class WizardAnimationEvent : MonoBehaviour
             GameObject targetObj = cardProcessing.selectedTarget;
             Card useCard = cardManager.useCard;
 
+            SoundManager.instance.PlaySoundEffect("Fireball");
+
             StartCoroutine(ParticleController.instance.ProjectileEffect(particlePrefab, playerObj, targetObj));
 
             Monster monster = targetObj.GetComponent<Monster>();
@@ -73,6 +75,8 @@ public class WizardAnimationEvent : MonoBehaviour
 
         if (isFlamePillar)
         {
+            SoundManager.instance.PlaySoundEffect("FlamePillar");
+
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
                 GameObject particlePrefab = ParticleController.instance.flamePillarEffectPrefab;

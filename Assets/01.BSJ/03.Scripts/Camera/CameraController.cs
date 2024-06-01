@@ -65,6 +65,7 @@ public class CameraController : MonoBehaviour
             }
             if (Input.GetMouseButton(0) && isMainCameraMoving)
             {
+                cardProcessing.currentPlayerObj = null;
                 hasTransitioned = false;
                 HasTransition();
 

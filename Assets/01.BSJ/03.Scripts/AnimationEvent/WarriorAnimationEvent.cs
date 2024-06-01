@@ -34,6 +34,8 @@ public class WarriorAnimationEvent : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(90, 0, 0);
             float height = 0.85f;
 
+            SoundManager.instance.PlaySoundEffect("SpinAttack");
+
             ParticleController.instance.ApplyPlayerEffect(particlePrefab, playerObj, height, rotation, 1.3f);
 
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
@@ -54,6 +56,8 @@ public class WarriorAnimationEvent : MonoBehaviour
 
             Vector3 targetObjPos = monster.transform.position + new Vector3(0, 0.5f, 0);
 
+            SoundManager.instance.PlaySoundEffect("ShieldBash");
+
             ParticleController.instance.ApplyTargetEffect(particlePrefab, targetObjPos, Quaternion.identity, 0.5f);
 
             monster.GetHit(damage);
@@ -72,6 +76,8 @@ public class WarriorAnimationEvent : MonoBehaviour
             Vector3 targetPos = monster.transform.position + new Vector3(0, 0.5f, 0);
 
             float damage = (player.playerData.MaxHp - player.playerData.Hp + 1) / player.playerData.MaxHp * 200;
+
+            SoundManager.instance.PlaySoundEffect("DesperateStrike");
 
             ParticleController.instance.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
 
@@ -107,6 +113,8 @@ public class WarriorAnimationEvent : MonoBehaviour
 
             ParticleController.instance.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0.2f);
 
+            SoundManager.instance.PlaySoundEffect("Dash");
+
             monster.GetHit(useCard.cardPower[0]);
         
             WarriorCardData.instance.shouldDash = false;
@@ -121,6 +129,8 @@ public class WarriorAnimationEvent : MonoBehaviour
 
             float height = 1.2f;
             float scale = 0.45f;
+
+            SoundManager.instance.PlaySoundEffect("WarriorsRoar");
 
             ParticleController.instance.ApplyPlayerEffect(particlePrefab_Player, player.gameObject, height, Quaternion.identity, scale);
 

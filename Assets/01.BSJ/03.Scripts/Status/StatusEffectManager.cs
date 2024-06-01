@@ -47,7 +47,8 @@ public class StatusEffectManager : MonoBehaviour
             10, // Damage
             (type, value) => type.TakeDamage(value),
             (type, value) => { },
-            ParticleController.instance.fireballEffectPrefab
+            ParticleController.instance.fireballEffectPrefab,
+            "Burn"
         );
 
         target.ApplyStatusEffect(poisonEffect);
@@ -61,7 +62,8 @@ public class StatusEffectManager : MonoBehaviour
             20, // Damage
             (type, value) => type.TakeDamage(value),
             (type, value) => { },
-            ParticleController.instance.fireballEffectPrefab
+            ParticleController.instance.fireballEffectPrefab,
+            "Burn"
         );
 
         target.ApplyStatusEffect(burnEffect);
@@ -75,7 +77,8 @@ public class StatusEffectManager : MonoBehaviour
             0,  // Damage
             (type, value) => type.Stun(),
             (type, value) => { },
-            ParticleController.instance.fireballEffectPrefab
+            ParticleController.instance.fireballEffectPrefab,
+            "Burn"
         );
 
         target.ApplyStatusEffect(stunEffect);
@@ -83,25 +86,20 @@ public class StatusEffectManager : MonoBehaviour
 
     public IEnumerator PlayerTurnSimulation()
     {
-        while (true)
+        foreach (CharacterStatusEffect character in Characters_Player)
         {
-            foreach (CharacterStatusEffect character in Characters_Player)
-            {
-                character.TakeTurn();
-            }
-            yield return new WaitForSeconds(1f); // 턴마다 1초 대기
+            yield return StartCoroutine(character.TakeTurn());
         }
+
+        yield return new WaitForSeconds(0.8f);
     }
 
-    public IEnumerator MonsterTurnSimulation()
+    public IEnumerator MonsterTurnSimulation(GameObject monsterObj)
     {
-        while (true)
-        {
-            foreach (CharacterStatusEffect character in Characters_Monster)
-            {
-                character.TakeTurn();
-            }
-            yield return new WaitForSeconds(1f); // 턴마다 1초 대기
-        }
+        CharacterStatusEffect character = monsterObj.GetComponent<CharacterStatusEffect>();
+
+        yield return StartCoroutine(character.TakeTurn());
+
+        yield return new WaitForSeconds(0.8f);
     }
 }
