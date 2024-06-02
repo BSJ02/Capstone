@@ -12,7 +12,6 @@ public class PlayerMove : MonoBehaviour
     private GameObject playerChoice;
 
     private MapGenerator mapGenerator;
-    private BattleManager battleManager;
     private CardProcessing cardProcessing;
     private PlayerManager playerManager;
 
@@ -37,7 +36,6 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
-        battleManager = FindObjectOfType<BattleManager>();
         mapGenerator = FindObjectOfType<MapGenerator>();
         playerManager = FindObjectOfType<PlayerManager>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
@@ -139,7 +137,7 @@ public class PlayerMove : MonoBehaviour
                 }
 
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && battleManager.isPlayerTurn == true && isActionSelect == true)
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity) && BattleManager.instance.isPlayerTurn == true && isActionSelect == true)
                 {
                     if (hit.collider.CompareTag("Monster") && !cardProcessing.usingCard)
                     {
@@ -159,7 +157,7 @@ public class PlayerMove : MonoBehaviour
             }
 
 
-            if (battleManager.isPlayerTurn == false)
+            if (BattleManager.instance.isPlayerTurn == false)
             {
                 playerChoice.SetActive(false);
             }
@@ -189,42 +187,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
-
-/*    // Clicked MoveButton
-    public void OnMoveButtonClick()
-    {
-        // Code
-        Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
-
-        if (clickPlayer.playerData.activePoint <= 0)
-        {
-            Debug.Log("No remaining ActivePoints");
-            playerChoice.SetActive(false);
-        }
-        else
-        {
-            mapGenerator.HighlightPlayerRange(playerManager.clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
-        }
-    }
-
-    // Clicked AttackButton
-    public void OnAttackButtonClick()
-    {
-        Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
-
-        // Code
-        if (clickPlayer.isAttack == true)
-        {
-            Debug.Log("Already Attack");
-            playerChoice.SetActive(false);
-        }
-        else
-        {
-            Vector2Int finalPosition = new Vector2Int((int)playerManager.clickedPlayer.transform.position.x, (int)playerManager.clickedPlayer.transform.position.z);
-            GetSurroundingTiles(finalPosition);
-        }
-    }*/
 
     public void OnCardButtonClick()
     {
@@ -297,7 +259,7 @@ public class PlayerMove : MonoBehaviour
         isMoving = true;
         for (int i = 0; i < 2; i++)
         {
-            battleManager.players[i].layer = LayerMask.NameToLayer("Ignore Raycast");
+            BattleManager.instance.players[i].layer = LayerMask.NameToLayer("Ignore Raycast");
         }
         Player clickPlayer = playerManager.clickedPlayer.GetComponent<Player>();
         clickPlayer.playerState = PlayerState.Moving;
@@ -336,7 +298,7 @@ public class PlayerMove : MonoBehaviour
         isActionSelect = false;
         for (int i = 0; i < 2; i++)
         {
-            battleManager.players[i].layer = LayerMask.NameToLayer("Player");
+            BattleManager.instance.players[i].layer = LayerMask.NameToLayer("Player");
         }
         clickPlayer.playerState = PlayerState.Idle;
 
