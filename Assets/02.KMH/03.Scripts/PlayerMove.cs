@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     private CardProcessing cardProcessing;
     private PlayerManager playerManager;
 
+    Vector2Int currentPlayerPos;
 
     Vector2Int playerPos;
     Vector2Int targetPos;
@@ -46,6 +47,7 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         playerChoice.SetActive(false);
+        currentPlayerPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
     }
 
     private void SetDestination(Vector2Int clickedTargetPos)
@@ -55,6 +57,7 @@ public class PlayerMove : MonoBehaviour
 
         StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
         EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
+
     }
 
     private void Update()
@@ -81,6 +84,8 @@ public class PlayerMove : MonoBehaviour
                             List<Vector2Int> move = PathFinding();
                             StartCoroutine(MoveSmoothly(move));
                             mapGenerator.ResetTotalMap();
+
+
                         }
                         else
                         {
@@ -126,6 +131,8 @@ public class PlayerMove : MonoBehaviour
 
                     if (hit.collider.CompareTag("Player"))
                     {
+                        MapGenerator.instance.totalMap[currentPlayerPos.x, currentPlayerPos.y].SetCoord(currentPlayerPos.x, currentPlayerPos.y, true);
+
                         mapGenerator.ClearHighlightedTiles();
                         playerManager.detectedMonsters.Clear();
                         playerChoice.SetActive(true);

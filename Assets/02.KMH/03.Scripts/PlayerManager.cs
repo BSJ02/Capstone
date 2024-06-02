@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public GameObject clickedPlayer;
+    private GameObject unclickedPlayer;
+
+    private List<GameObject> playerList = new List<GameObject>();
+
     private GameObject playerChoice;
 
     private PlayerMove playerMove;
@@ -16,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     {
         playerMove = FindObjectOfType<PlayerMove>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
+        playerList = BattleManager.instance.players;
     }
 
     void Start()
@@ -37,9 +42,7 @@ public class PlayerManager : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
-                    //playerMove.playerChoice.SetActive(true);
                     clickedPlayer = hit.collider.gameObject;
-                    //playerMove.isActionSelect = true;
                 }
             }
         }

@@ -90,4 +90,14 @@ public class SoundManager : MonoBehaviour
     {
         soundEffectsSource.Stop();
     }
+
+    public void SetBackgroundMusicVolume(float volume)
+    {
+        backgroundMusicSource.volume = Mathf.Clamp(volume, 0f, 1f);
+    }
+
+    public void SetSoundEffectsVolume(float volume)
+    {
+        soundEffectsSource.volume = Mathf.Clamp(volume, 0f, 1f);
+    }
 }
