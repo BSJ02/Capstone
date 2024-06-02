@@ -61,6 +61,8 @@ public class PlayerManager : MonoBehaviour
         {
             MapGenerator.instance.HighlightPlayerRange(clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
         }
+
+        CardManager.instance.isCardButtonClicked = false;
     }
 
     // Clicked AttackButton
@@ -80,6 +82,13 @@ public class PlayerManager : MonoBehaviour
             Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
             GetSurroundingTiles(finalPosition);
         }
+
+        CardManager.instance.isCardButtonClicked = false;
+    }
+
+    public void OnCardButtonClick()
+    {
+        CardManager.instance.isCardButtonClicked = true;
     }
 
     // 몬스터 감지

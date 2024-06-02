@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Victory_Warrior
+  m_Name: Victory
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -47168,7 +47168,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.6333333
-    functionName: WarriorsRoarAnimationEvent
+    functionName: RemoveAilmentsAnimationEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6333333
+    functionName: EvasionBoostAnimationEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6333333
+    functionName: TransmissionAnimationEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

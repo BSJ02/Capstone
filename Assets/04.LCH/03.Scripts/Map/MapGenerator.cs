@@ -121,20 +121,19 @@ public class MapGenerator : MonoBehaviour
     }
 
     // 카드 사용 범위
-    public void CardUseRange(Vector3 playerPosition, int cardDistance)
+    public void CardUseRange(Vector3 objectPosition, int cardDistance)
     {
         ClearHighlightedTiles();
         rangeInMonsters.Clear();
         rangeInPlayers.Clear();
 
-        int playerX = Mathf.RoundToInt(playerPosition.x);
-        int playerZ = Mathf.RoundToInt(playerPosition.z);
-        Tile playerTile = totalMap[playerX, playerZ];
+        int objectX = Mathf.RoundToInt(objectPosition.x);
+        int objectZ = Mathf.RoundToInt(objectPosition.z);
+        Tile objectTile = totalMap[objectX, objectZ];
 
         Queue<PathNode> queue = new Queue<PathNode>();
         HashSet<Tile> visited = new HashSet<Tile>();
-        queue.Enqueue(new PathNode(playerTile, 0));
-        visited.Add(playerTile);
+        queue.Enqueue(new PathNode(objectTile, 0));
 
         while (queue.Count > 0)
         {
@@ -144,7 +143,7 @@ public class MapGenerator : MonoBehaviour
 
             if (currentDistance <= cardDistance)
             {
-                if (currentTile != playerTile)
+                if (currentTile != objectTile)
                 {
                     currentTile.GetComponent<Renderer>().material.color = Color.black;
                     highlightedTiles.Add(currentTile);
@@ -156,6 +155,7 @@ public class MapGenerator : MonoBehaviour
             }
             CheckAdjacentTiles(currentTile, queue, visited, cardDistance, currentDistance + 1);
         }
+        highlightedTiles.Add(objectTile);
         TileOnObject(highlightedTiles);
         selectingTarget = false;
     }

@@ -7,12 +7,15 @@ public class BaseCardData : MonoBehaviour
     public static BaseCardData instance;
 
     private WeaponController weaponController;
-    private ParticleController particleController;
 
     [Header(" # CardProcessing")]
     public CardProcessing cardProcessing;
 
     private PlayerState playerState;
+
+    [HideInInspector] public bool shouldRemoveAilments;
+    [HideInInspector] public bool shouldEvasionBoost;
+    [HideInInspector] public bool shouldTransmission;
 
     private void Awake()
     {
@@ -26,11 +29,6 @@ public class BaseCardData : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        particleController = FindObjectOfType<ParticleController>();
-    }
-
     // Base Cards --------------------------------
     // Healing Potion
     public void UseHealingPotion(Card card, GameObject selectedTarget)
@@ -38,9 +36,11 @@ public class BaseCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
+            SoundManager.instance.PlaySoundEffect("Healing");
+
             player.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            ParticleController.instance.ApplyPlayerEffect(ParticleController.instance.healEffectPrefab, selectedTarget);
 
             if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
             {
@@ -50,6 +50,7 @@ public class BaseCardData : MonoBehaviour
             {
                 player.playerData.Hp += card.cardPower[0];
             }
+
         }
         else
         {
@@ -61,11 +62,14 @@ public class BaseCardData : MonoBehaviour
     public void UseRemoveAilments(Card card, GameObject selectedTarget)
     {
         Player player = cardProcessing.currentPlayer;
+
         if (player != null)
         {
-            player.ChargeAnim(selectedTarget);
+            shouldRemoveAilments = true;
 
-            player.playerData.Hp += card.cardPower[0];
+            player.VictoryAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -79,9 +83,11 @@ public class BaseCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
-            player.ChargeAnim(selectedTarget);
+            shouldEvasionBoost = true;
 
-            player.playerData.activePoint += (int)card.cardPower[0] + cardProcessing.TempActivePoint;
+            player.VictoryAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -92,12 +98,16 @@ public class BaseCardData : MonoBehaviour
     // Transmission
     public void UseTransmission(Card card, GameObject selectedTarget)
     {
-        Monster monster = selectedTarget.GetComponent<Monster>();
-        if (monster != null)
-        {
-            cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
+        Player player = cardProcessing.currentPlayer;
+        CharacterStatusEffect character = selectedTarget.GetComponent<CharacterStatusEffect>();
 
-            monster.GetHit(card.cardPower[0]);
+        if (character != null)
+        {
+            shouldTransmission = true;
+
+            player.VictoryAnim(selectedTarget);
+
+            cardProcessing.cardUseDistance = card.cardDistance;
         }
         else
         {
@@ -111,9 +121,11 @@ public class BaseCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (player != null)
         {
+            SoundManager.instance.PlaySoundEffect("RemoveAilments");
+
             player.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.buffEffectPrefab, selectedTarget);
+            ParticleController.instance.ApplyPlayerEffect(ParticleController.instance.buffEffectPrefab, selectedTarget);
 
             int randNum = Random.Range(0, 3);
             switch (randNum)

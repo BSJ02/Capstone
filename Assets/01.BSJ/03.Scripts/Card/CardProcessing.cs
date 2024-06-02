@@ -32,14 +32,39 @@ public class CardProcessing : MonoBehaviour
     {
         if (usingCard)
         {
-            ShowCardRange((int)cardUseDistance);
+            if (CardManager.instance.useCard.cardTarget == CardTarget.TargetPosition)
+            {
+                ShowTargetCardRange((int)cardUseDistance);
+            }
+            else
+            {
+                ShowPlayerCardRange((int)cardUseDistance);
+            }
         }
     }
 
-    public void ShowCardRange(int cardUseDistance)
+    public void ShowPlayerCardRange(int cardUseDistance)
     {
         MapGenerator.instance.selectingTarget = true;
         MapGenerator.instance.CardUseRange(currentPlayer.transform.position, (int)cardUseDistance);
+    }
+
+    public void ShowTargetCardRange(int cardUseDistance)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            GameObject target = hit.collider.gameObject;
+
+            if (target.CompareTag("Monster") || target.layer == LayerMask.NameToLayer("Player"))
+            {
+                MapGenerator.instance.selectingTarget = true;
+                MapGenerator.instance.CardUseRange(target.transform.position, (int)cardUseDistance);
+            }
+        }
+        
     }
 
     public void UseCardAndSelectTarget(Card card, GameObject gameObject)

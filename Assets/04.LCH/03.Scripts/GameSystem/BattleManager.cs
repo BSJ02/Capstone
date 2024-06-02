@@ -69,7 +69,7 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
-        /*SoundManager.instance.PlayBackgroundMusic("BGM");*/
+        //SoundManager.instance.PlayBackgroundMusic("BGM");
 
         cardManager = FindObjectOfType<CardManager>();
         //players = characterSelector.playerSelectList.players;
@@ -178,6 +178,7 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.PlayerTurn;
         isPlayerTurn = true;
+        CardManager.instance.isCardButtonClicked = false;
 
         StartCoroutine(StartPlayerTurn());
 
@@ -204,24 +205,28 @@ public class BattleManager : MonoBehaviour
             playerScripts.isAttack = false;
         }
 
+        yield return StartCoroutine(StatusEffectManager.instance.PlayerTurnSimulation());
+
         if (CameraController.instance.startGame)
         {
             CardManager.instance.StartSettingCards();
             CameraController.instance.startGame = false;
         }
-
-        if (cardManager.handCardCount < 8)
-        {
-            cardManager.CreateRandomCard();
-        }
         else
         {
-            Debug.Log("카드가 너무 많음");
-        }
+            if (cardManager.handCardCount < 8)
+            {
+                cardManager.CreateRandomCard();
+            }
+            else
+            {
+                Debug.Log("카드가 너무 많음");
+            }
 
-        foreach (GameObject player in players)
-        {
-            player.gameObject.layer = LayerMask.NameToLayer("Player");
+            foreach (GameObject player in players)
+            {
+                player.gameObject.layer = LayerMask.NameToLayer("Player");
+            }
         }
 
         yield return null;
@@ -274,8 +279,9 @@ public class BattleManager : MonoBehaviour
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
-                yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 1f);
+                yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.7f);
 
+                yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
                 // 선택된 몬스터의 특정 메서드 실행
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
