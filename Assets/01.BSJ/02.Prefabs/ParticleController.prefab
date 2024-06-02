@@ -50,6 +50,10 @@ MonoBehaviour:
     type: 3}
   buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
     type: 3}
+  removeAilmentEffectPrefab: {fileID: 1844191813266838, guid: b5d915aa91cd2fe4cbfdde9a542b0d8a,
+    type: 3}
+  transmissionEffectPrefab: {fileID: 100002, guid: 361b28d6bde59f1438cc3980a976fdcc,
+    type: 3}
   spinAttackEffectPrefab: {fileID: 2360655870356088562, guid: 5875c03c506435d458a7673ac2130bfe,
     type: 3}
   shieldBashEffectPrefab: {fileID: 100004, guid: ebd5d12fc93ffe04e9bb2dc83a4e091c,

@@ -8,7 +8,6 @@ public class WarriorAnimationEvent : MonoBehaviour
 {
     private CardManager cardManager;
     private CardProcessing cardProcessing;
-    private ParticleController particleController;
 
     private bool isSpinAttack = false;
     private bool isShieldBash = false;
@@ -21,7 +20,6 @@ public class WarriorAnimationEvent : MonoBehaviour
     {
         cardManager = FindObjectOfType<CardManager>();
         cardProcessing = FindObjectOfType<CardProcessing>();
-        particleController = FindObjectOfType<ParticleController>();
     }
 
 
@@ -29,14 +27,16 @@ public class WarriorAnimationEvent : MonoBehaviour
     {
         if (isSpinAttack)
         {
-            GameObject particlePrefab = particleController.spinAttackEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.spinAttackEffectPrefab;
             GameObject playerObj = cardProcessing.currentPlayerObj;
             Card useCard = cardManager.useCard;
 
             Quaternion rotation = Quaternion.Euler(90, 0, 0);
             float height = 0.85f;
 
-            particleController.ApplyPlayerEffect(particlePrefab, playerObj, height, rotation, 1.3f);
+            SoundManager.instance.PlaySoundEffect("SpinAttack");
+
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab, playerObj, height, rotation, 1.3f);
 
             foreach (Monster monster in MapGenerator.instance.rangeInMonsters)
             {
@@ -49,14 +49,16 @@ public class WarriorAnimationEvent : MonoBehaviour
 
         if (isShieldBash)
         {
-            GameObject particlePrefab = particleController.shieldBashEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.shieldBashEffectPrefab;
             Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
 
             float damage = cardProcessing.currentPlayer.playerData.Armor;
 
             Vector3 targetObjPos = monster.transform.position + new Vector3(0, 0.5f, 0);
 
-            particleController.ApplyTargetEffect(particlePrefab, targetObjPos, Quaternion.identity, 0.5f);
+            SoundManager.instance.PlaySoundEffect("ShieldBash");
+
+            ParticleController.instance.ApplyTargetEffect(particlePrefab, targetObjPos, Quaternion.identity, 0.5f);
 
             monster.GetHit(damage);
             Debug.Log(damage);
@@ -67,7 +69,7 @@ public class WarriorAnimationEvent : MonoBehaviour
 
         if (isDesperateStrike)
         {
-            GameObject particlePrefab = particleController.desperateStrikeEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.desperateStrikeEffectPrefab;
             Player player = cardProcessing.currentPlayer;
             Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
 
@@ -75,7 +77,9 @@ public class WarriorAnimationEvent : MonoBehaviour
 
             float damage = (player.playerData.MaxHp - player.playerData.Hp + 1) / player.playerData.MaxHp * 200;
 
-            particleController.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
+            SoundManager.instance.PlaySoundEffect("DesperateStrike");
+
+            ParticleController.instance.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
 
             monster.GetHit(damage);
 
@@ -85,7 +89,7 @@ public class WarriorAnimationEvent : MonoBehaviour
 
         if (isDash)
         {
-            GameObject particlePrefab = particleController.dashEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.dashEffectPrefab;
             GameObject playerObj = cardProcessing.currentPlayerObj;
             Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
             Card useCard = cardManager.useCard;
@@ -105,9 +109,11 @@ public class WarriorAnimationEvent : MonoBehaviour
                 tile = MapGenerator.instance.totalMap[(int)goalPos.x, (int)goalPos.z];
             }
 
-            StartCoroutine(particleController.PlayerMoveEffect(playerObj, goalPos));
+            StartCoroutine(ParticleController.instance.PlayerMoveEffect(playerObj, goalPos));
 
-            particleController.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0.2f);
+            ParticleController.instance.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0.2f);
+
+            SoundManager.instance.PlaySoundEffect("Dash");
 
             monster.GetHit(useCard.cardPower[0]);
         
@@ -117,14 +123,16 @@ public class WarriorAnimationEvent : MonoBehaviour
 
         if (isWarriorsRoar)
         {
-            GameObject particlePrefab_Player = particleController.WarriorsRoarEffectPrefab;
-            GameObject particlePrefab_OtherPlayer = particleController.healEffectPrefab;
+            GameObject particlePrefab_Player = ParticleController.instance.WarriorsRoarEffectPrefab;
+            GameObject particlePrefab_OtherPlayer = ParticleController.instance.healEffectPrefab;
             Player player = cardProcessing.currentPlayerObj.GetComponent<Player>();
 
             float height = 1.2f;
             float scale = 0.45f;
 
-            particleController.ApplyPlayerEffect(particlePrefab_Player, player.gameObject, height, Quaternion.identity, scale);
+            SoundManager.instance.PlaySoundEffect("WarriorsRoar");
+
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab_Player, player.gameObject, height, Quaternion.identity, scale);
 
             player.playerData.Hp -= player.playerData.MaxHp * 0.1f;
 
@@ -134,7 +142,7 @@ public class WarriorAnimationEvent : MonoBehaviour
                 float healAmount = otherPlayer.playerData.Hp * 0.5f;
                 Vector3 targetPos = otherPlayer.transform.position + new Vector3(0, 0.5f, 0);
 
-                particleController.ApplyTargetEffect(particlePrefab_OtherPlayer, targetPos, Quaternion.identity, 0.2f);
+                ParticleController.instance.ApplyTargetEffect(particlePrefab_OtherPlayer, targetPos, Quaternion.identity, 0.2f);
 
                 if (player.playerData.Hp + healAmount >= player.playerData.MaxHp)
                 {
@@ -152,12 +160,12 @@ public class WarriorAnimationEvent : MonoBehaviour
 
         if (isArmorCrush)
         {
-            GameObject particlePrefab = particleController.ArmorCrushEffectPrefab;
+            GameObject particlePrefab = ParticleController.instance.ArmorCrushEffectPrefab;
             Monster monster = cardProcessing.selectedTarget.GetComponent<Monster>();
             Card useCard = cardManager.useCard;
             Vector3 targetPos = monster.transform.position + new Vector3(0, 0.5f, 0);
 
-            particleController.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
+            ParticleController.instance.ApplyTargetEffect(particlePrefab, targetPos, Quaternion.identity, 0f);
 
             monster.GetHit(useCard.cardPower[0]);
             monster.monsterData.Amor *= 9 / 10;

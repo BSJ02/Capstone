@@ -39,8 +39,7 @@ MonoBehaviour:
     cardTarget: 0
     isCardMoveEnabled: 0
   - cardName: Evasion Boost
-    cardDescription: "\uB2E4\uC74C \uACF5\uACA9 \uC77C\uC815\uD55C \uD655\uB960\uB85C
-      \uD68C\uD53C"
+    cardDescription: "\uCD94\uAC00 \uC774\uB3D9"
     cardDescription_Power: "(\uD655\uB960: 50%)"
     cardPower:
     - 0
@@ -59,7 +58,7 @@ MonoBehaviour:
     cardSprite: {fileID: 21300000, guid: 8a24eaff207b05c49b8aeb365a4e9c73, type: 3}
     cardPercent: 35
     cardType: 0
-    cardTarget: 1
+    cardTarget: 3
     isCardMoveEnabled: 0
   - cardName: Limit Break
     cardDescription: "\uB79C\uB364\uD55C \uC2A4\uD0EF \uD68D\uB4DD"
@@ -259,17 +258,17 @@ MonoBehaviour:
     cardTarget: 1
     isCardMoveEnabled: 0
   - cardName: Fireball
-    cardDescription: "\uB2E8\uC77C \uB300\uC0C1 \uACF5\uACA9, \uC77C\uC815\uD655\uB960\uB85C
-      \uD654\uC0C1 \uBD80\uC5EC"
+    cardDescription: "\uB2E8\uC77C \uB300\uC0C1 \uACF5\uACA9 \uBC0F \uD654\uC0C1
+      \uBD80\uC5EC"
     cardDescription_Power: 
     cardPower:
-    - 100
+    - 10
     cardDistance: 3
     cardSprite: {fileID: 21300000, guid: b227bc84d5a73df478000e171622c240, type: 3}
     cardPercent: 15
     cardType: 3
     cardTarget: 1
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   - cardName: Flame Pillar
     cardDescription: "\uC5EC\uB7EC\uBA85 \uD0C0\uACA9, \uC77C\uC815 \uD655\uB960\uB85C
       \uD654\uC0C1 \uBD80\uC5EC"
@@ -281,7 +280,7 @@ MonoBehaviour:
     cardPercent: 15
     cardType: 3
     cardTarget: 0
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   - cardName: Life Drain
     cardDescription: "\uB300\uC0C1\uC758 \uCCB4\uB825\uC744 \uAC15\uD0C8\uD568"
     cardDescription_Power: 
