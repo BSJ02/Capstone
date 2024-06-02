@@ -1695,6 +1695,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  deckOffset: {x: 2, y: -11.3, z: 2}
+  panelOffset: {x: 6, y: -8, z: 6}
   handCardList: []
   addCardList: []
   deckObject: {fileID: 0}
@@ -1712,7 +1714,7 @@ MonoBehaviour:
     type: 3}
   waitAddCard: 0
   isCardSorting: 0
-  isMainCameraMoving: 0
+  isSettingCards: 0
   useCard:
     cardName: 
     cardDescription: 
@@ -22428,7 +22430,6 @@ MonoBehaviour:
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
   cardUseDistanceInRange: 0
-  isCardMoving: 0
 --- !u!4 &1497366973
 Transform:
   m_ObjectHideFlags: 0
@@ -27323,8 +27324,10 @@ MonoBehaviour:
   - {fileID: 713792514}
   - {fileID: 1010511417}
   - {fileID: 1867723043}
+  playerList: 
   monsters:
   - {fileID: 1409608988}
+  selectedMonster: {fileID: 0}
   turn_UI:
   - {fileID: 569432191}
   - {fileID: 2134419612}
@@ -27335,6 +27338,7 @@ MonoBehaviour:
   - {fileID: 802947451}
   - {fileID: 1698842467}
   MaximumOfMonster: 3
+  monsterObj: {fileID: 0}
   isPlayerMove: 0
   isPlayerTurn: 0
   isRandomCard: 0

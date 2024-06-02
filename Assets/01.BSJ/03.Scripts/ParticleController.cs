@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ParticleController : MonoBehaviour
 {
+    public static ParticleController instance;
+
     // Group
     private GameObject obstacle_Group;
     private GameObject particle_Group;
@@ -13,9 +15,11 @@ public class ParticleController : MonoBehaviour
     public GameObject obstaclePrefab;
     private Queue<GameObject> obstacleQueue = new Queue<GameObject>();
 
-    [Header("# Particle Prefabs")]
+    [Header("# Base Particle Prefabs")]
     public GameObject healEffectPrefab;
     public GameObject buffEffectPrefab;
+    public GameObject removeAilmentEffectPrefab;
+    public GameObject transmissionEffectPrefab;
 
     [Header("# Warrior Particle Prefabs")]
     public GameObject spinAttackEffectPrefab;
@@ -25,7 +29,7 @@ public class ParticleController : MonoBehaviour
     public GameObject WarriorsRoarEffectPrefab;
     public GameObject ArmorCrushEffectPrefab;
 
-    [Header("# Archer Particle Prefabs")]
+    /*[Header("# Archer Particle Prefabs")]*/
 
 
     [Header("# Wizard Particle Prefabs")]
@@ -37,6 +41,8 @@ public class ParticleController : MonoBehaviour
     // Base Queue Pool
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
     private Queue<GameObject> buffEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> removeAilmentEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> transmissionEffectPool = new Queue<GameObject>();
 
     // Warrior Queue Pool
     private Queue<GameObject> spinAttackEffectPool = new Queue<GameObject>();
@@ -54,6 +60,18 @@ public class ParticleController : MonoBehaviour
     private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
     private Queue<GameObject> flamePillarEffectPool = new Queue<GameObject>();
     private Queue<GameObject> lifeDrainEffectPool = new Queue<GameObject>();
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(instance);
+        }
+    }
 
     private void Start()
     {
@@ -80,6 +98,8 @@ public class ParticleController : MonoBehaviour
         // Base
         InitializeParticlePool(healEffectPrefab, particle_Group);
         InitializeParticlePool(buffEffectPrefab, particle_Group);
+        InitializeParticlePool(removeAilmentEffectPrefab, particle_Group);
+        InitializeParticlePool(transmissionEffectPrefab, particle_Group);
 
         // Warrior
         InitializeParticlePool(spinAttackEffectPrefab, particle_Group);
@@ -180,6 +200,14 @@ public class ParticleController : MonoBehaviour
         else if (prefab == buffEffectPrefab)
         {
             return buffEffectPool;
+        }
+        else if (prefab == removeAilmentEffectPrefab)
+        {
+            return removeAilmentEffectPool;
+        }
+        else if (prefab == transmissionEffectPrefab)
+        {
+            return transmissionEffectPool;
         }
         else
         {

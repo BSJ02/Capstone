@@ -123,7 +123,7 @@ public class WarriorCardData : MonoBehaviour
         {
             shouldWarriorsRoar = true;
 
-            player.VictoryAnim(selectedTarget);
+            player.ChargeAnim(selectedTarget);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

@@ -56,6 +56,8 @@ public class WizardCardData : MonoBehaviour
         {
             targetPos = tile.transform.position + new Vector3(0, 0.35f, 0);
 
+            SoundManager.instance.PlaySoundEffect("Teleport");
+
             shouldTeleport = true;
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
@@ -74,6 +76,9 @@ public class WizardCardData : MonoBehaviour
         if (monster != null)
         {
             targetPos = monster.transform.position;
+
+            SoundManager.instance.PlaySoundEffect("Teleport");
+
             playerPos = cardProcessing.currentPlayerObj.transform.position;
 
             shouldPosSwap = true;
@@ -127,6 +132,8 @@ public class WizardCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (MapGenerator.instance.rangeInMonsters != null)
         {
+            SoundManager.instance.PlaySoundEffect("LifeDrain");
+
             shouldLifeDrain = true;
             player.MacigAttack03Anim(selectedTarget);
             cardProcessing.cardUseDistance = card.cardDistance;
@@ -174,6 +181,8 @@ public class WizardCardData : MonoBehaviour
             shouldSummon = true;
 
             player.ChargeAnim(selectedTarget);
+
+            SoundManager.instance.PlaySoundEffect("SummonObstacle");
 
             particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f, Quaternion.identity , 1);
 
