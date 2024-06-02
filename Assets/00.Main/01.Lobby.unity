@@ -197,6 +197,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 95706204029656638, guid: 1d8185d9435b4336992f61038cedcc35,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 577812341319f994bb4500eb1e7bac3c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -982,6 +987,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 46119455}
     m_Modifications:
+    - target: {fileID: 2602467069203210596, guid: b5b4314ecab5493dbb1a3a21af7dd612,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.025034066
+      objectReference: {fileID: 0}
+    - target: {fileID: 2602467069203210596, guid: b5b4314ecab5493dbb1a3a21af7dd612,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0012542872
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448478507045928542, guid: b5b4314ecab5493dbb1a3a21af7dd612,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.66664356
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448478507045928542, guid: b5b4314ecab5493dbb1a3a21af7dd612,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.39297143
+      objectReference: {fileID: 0}
     - target: {fileID: 3665188120438473366, guid: b5b4314ecab5493dbb1a3a21af7dd612,
         type: 3}
       propertyPath: m_IsActive
@@ -997,6 +1022,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7191100790416280148, guid: b5b4314ecab5493dbb1a3a21af7dd612,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 94298565cf926a24c9ce480b6399dfe7, type: 2}
     - target: {fileID: 7224149203388998861, guid: b5b4314ecab5493dbb1a3a21af7dd612,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1145,6 +1175,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4770589583017596640, guid: e501a05bda56467c85cbef9ed244329d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a16e1117818ff8148ab0d217d3d74387, type: 2}
     - target: {fileID: 5025507621782059129, guid: e501a05bda56467c85cbef9ed244329d,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1987,6 +2022,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MushroomAngryPADefault
       objectReference: {fileID: 0}
+    - target: {fileID: 5876949206263575393, guid: b19e63ffa2bd4f06a137cd7dd4b83a15,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7ace523a32ba26e4c92a7bc637460537, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2452,6 +2492,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeletonPADefault
       objectReference: {fileID: 0}
+    - target: {fileID: 6285209290506305774, guid: a604ffbac01747d6b33aff45d9e3dd8a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: acf3337290003c74681dac9aa29aaa68, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour
                 if (hit.collider.CompareTag("Player"))
                 {
                     //playerMove.playerChoice.SetActive(true);
+                    
                     clickedPlayer = hit.collider.gameObject;
                     //playerMove.isActionSelect = true;
                 }
