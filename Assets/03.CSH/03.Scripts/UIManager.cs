@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
 
     //버튼 그룹 제어 선언
     public RectTransform buttonLayoutGroup;
+    public RectTransform informPanelGroup;
+    public GameObject win_inGroupButton;
+    public GameObject win_outGroupButton;
     public GameObject inGroupButton;
     public GameObject outGroupButton;
 
@@ -47,8 +50,12 @@ public class UIManager : MonoBehaviour
 
 
     //Data Display
+    /*
     public Text hpText;
     public Text distanceText;
+    */
+    public Text TurnText;
+    public Text NumCardText;
 
     public static UIManager Instance
     {
@@ -90,6 +97,8 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
+        NumCardText.text = CardManager.handCardCount.ToString();
+        
         /*
         if(cardProcessing.selectedTarget != null) 
         {
@@ -245,11 +254,15 @@ public class UIManager : MonoBehaviour
 
     public void ButtonInformWindowMove()
     {
-
+        informPanelGroup.DOAnchorPos(new Vector3(-1100, -337, 0), 1);
+        win_inGroupButton.SetActive(false);
+        win_outGroupButton.SetActive(true);
     }
 
     public void ButtonInformWindowMoveExit()
     {
-     
+        informPanelGroup.DOAnchorPos(new Vector3(-799, -337, 0), 1);
+        win_inGroupButton.SetActive(true);
+        win_outGroupButton.SetActive(false);
     }
 }

@@ -33,7 +33,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> handCardObject;
     [HideInInspector] public List<GameObject> addCardObject;
 
-    [HideInInspector] public int handCardCount;
+    [HideInInspector] public static int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
