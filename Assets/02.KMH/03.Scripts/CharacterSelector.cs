@@ -8,7 +8,7 @@ public class CharacterSelector : MonoBehaviour
     public GameObject wizard;
     public GameObject archer;
 
-    public PlayerSelectList playerSelectList; // ScriptableObject ����
+    public PlayerSelectList playerSelectList; // ScriptableObject 
 
     void Start()
     {

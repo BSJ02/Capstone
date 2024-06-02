@@ -5,10 +5,6 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public GameObject clickedPlayer;
-    private GameObject unclickedPlayer;
-
-    private List<GameObject> playerList = new List<GameObject>();
-
     private GameObject playerChoice;
 
     private PlayerMove playerMove;
@@ -20,7 +16,6 @@ public class PlayerManager : MonoBehaviour
     {
         playerMove = FindObjectOfType<PlayerMove>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
-        playerList = BattleManager.instance.players;
     }
 
     void Start()
@@ -42,7 +37,10 @@ public class PlayerManager : MonoBehaviour
 
                 if (hit.collider.CompareTag("Player"))
                 {
+                    //playerMove.playerChoice.SetActive(true);
+                    
                     clickedPlayer = hit.collider.gameObject;
+                    //playerMove.isActionSelect = true;
                 }
             }
         }
@@ -64,6 +62,8 @@ public class PlayerManager : MonoBehaviour
         {
             MapGenerator.instance.HighlightPlayerRange(clickedPlayer.transform.position, clickPlayer.playerData.activePoint);
         }
+
+        CardManager.instance.isCardButtonClicked = false;
     }
 
     // Clicked AttackButton
@@ -83,6 +83,13 @@ public class PlayerManager : MonoBehaviour
             Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
             GetSurroundingTiles(finalPosition);
         }
+
+        CardManager.instance.isCardButtonClicked = false;
+    }
+
+    public void OnCardButtonClick()
+    {
+        CardManager.instance.isCardButtonClicked = true;
     }
 
     // 몬스터 감지
