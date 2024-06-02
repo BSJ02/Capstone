@@ -76,6 +76,7 @@ public class CameraController : MonoBehaviour
         }
         else if (BattleManager.instance.battleState == BattleState.MonsterTurn)
         {
+            
             CameraController.instance.FollowTarget(BattleManager.instance.selectedMonster);
         }
     }
