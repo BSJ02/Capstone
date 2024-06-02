@@ -78,7 +78,6 @@ public class UIManager : MonoBehaviour
 
 
         energyFillMaterial.SetFloat("_FillLevel", 1f);
-        energyValue.text = maxActivePoint.ToString();
 
 
         if (instance == null)
@@ -90,71 +89,12 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        
-
     }
 
     void Update()
     {
         NumCardText.text = CardManager.handCardCount.ToString();
-        
-        /*
-        if(cardProcessing.selectedTarget != null) 
-        {
-            energyFillMaterial.SetFloat("_FillLevel", cardProcessing.currentPlayer.playerData.activePoint * 0.2f);
-            energyValue.text = cardProcessing.currentPlayer.playerData.activePoint.ToString();
-        }
-      
-        */
-
-
-        /*if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                PlayerData playerData = hit.collider.GetComponent<Player>()?.playerData;
-                if (playerData != null)
-                {
-                    DisplayData(playerData);
-                }
-            }
-        }
-        */
-
-        if (cardProcessing.currentPlayer!= null && playerMove.isMoving == true)
-        {
-            NTest();
-        }
-        else if(changeBar == true)
-        {
-            energyFillMaterial.DOFloat(0f, "_FillLevel", 1f);
-            energyValue.text = minActivePoint.ToString();
-            changeBar = false;
-        }
-
-
-        /*
-        
-        
-        if(GameManager.Instance.isGameOver)
-        {
-            GameManager.Instance.isGameOver = false;
-            GameOverFade();
-            
-        }
-        */
-
-        //Energy Bar Material
     }
-    /*
-    void DisplayData(PlayerData data)
-    {
-        hpText.text = "HP: " + data.Hp;
-        distanceText.text = "Distance: " + data.activePoint;
-    }*/
 
     public void NTest()
     {
@@ -168,8 +108,6 @@ public class UIManager : MonoBehaviour
         {
             changeBar = true;
         }
-
-        
     }
 
     public void ShowLayerWindow(int index)
@@ -178,7 +116,6 @@ public class UIManager : MonoBehaviour
         {
             currentlyActiveWindow.SetActive(false);
         }
-
 
         windowUI[index].gameObject.SetActive(true);
         currentlyActiveWindow = windowUI[index];
@@ -189,13 +126,10 @@ public class UIManager : MonoBehaviour
         windowUI[index].gameObject.SetActive(false);
     }
 
-
-
     public void GameOverFade()
     {
         gameOverUI.SetActive(true);
         cg = gameOverUI.GetComponent<CanvasGroup>();
-        
 
         if (fadeCor != null)
         {
@@ -217,32 +151,13 @@ public class UIManager : MonoBehaviour
             accumTime += Time.deltaTime;
         }
         cg.alpha = 1f;
-
-        //StartCoroutine(FadeOut());
     }
-    /*
-    public IEnumerator FadeOut()
-    {
-        yield return new WaitForSeconds(3.0f);
-        accumTime = 0f;
-        while (accumTime < fadeTime)
-        {
-            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
-            yield return 0;
-            accumTime += Time.deltaTime;
-        }
-        cg.alpha = 0f;
-
-    }
-    */
-
 
     public void ButtonLayoutGroupBarMove()
     {
         buttonLayoutGroup.DOAnchorPos(new Vector3(710, 470, 0), 1);
         inGroupButton.SetActive(false);
         outGroupButton.SetActive(true);
-
     }
 
     public void ButtonLayoutGroupBarMoveExit()

@@ -58,7 +58,7 @@ public class MapGenerator : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item"))
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Player"))
                     {
                         tile.SetCoord(i, j, true);
                     }

@@ -92,7 +92,7 @@ public class CardManager : MonoBehaviour
 
     public void StartSettingCards()
     {
-        handCardList.AddRange(cardInform.warriorCards);
+        handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 

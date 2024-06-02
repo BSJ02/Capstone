@@ -52,6 +52,8 @@ public class PlayerMove : MonoBehaviour
 
         StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
         EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
+
+        MapGenerator.instance.totalMap[playerPos.x, playerPos.y].SetCoord(playerPos.x, playerPos.y, false);
     }
 
     private void Update()
@@ -76,7 +78,11 @@ public class PlayerMove : MonoBehaviour
                             CloseList.Clear();
                             SetDestination(targetPos);
                             List<Vector2Int> move = PathFinding();
+
+
                             StartCoroutine(MoveSmoothly(move));
+
+
                             mapGenerator.ResetTotalMap();
                         }
                         else
@@ -301,6 +307,7 @@ public class PlayerMove : MonoBehaviour
         }
         clickPlayer.playerState = PlayerState.Idle;
 
+        MapGenerator.instance.totalMap[targetPos.x, targetPos.y].SetCoord(playerPos.x, playerPos.y, true);
 
         playerManager.clickedPlayer = null;
 
