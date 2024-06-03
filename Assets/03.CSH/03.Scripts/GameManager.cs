@@ -5,14 +5,10 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerData playerData;
-    public Player player;
-
-    public Text remainingDistance;
 
     //UI
     public GameObject[] windowUI;
@@ -21,6 +17,11 @@ public class GameManager : MonoBehaviour
 
     public Text objectNameText;
     public Text objectHealthText;
+
+    public Slider bgm_slider;
+    public Slider efs_slider;
+
+    public GameObject optionUI;
 
     public GameObject[] cardList;
 
@@ -44,13 +45,31 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
 
-        if(instance == null)
+        bgm_slider = bgm_slider.GetComponent<Slider>();
+        efs_slider = efs_slider.GetComponent<Slider>();
+
+        bgm_slider.onValueChanged.AddListener(ChangeBgmSound);
+        bgm_slider.onValueChanged.AddListener(ChangeEfsSound);
+
+        if (instance == null)
         {
             instance = this;
         }
         else
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionUI != null)
+            {
+                bool isActive = optionUI.activeSelf;
+                optionUI.SetActive(!isActive);
+            }
         }
     }
 
@@ -120,4 +139,23 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+
+    void ChangeBgmSound(float value)
+    {
+        SoundManager.instance.backgroundMusicSource.volume = value;
+    }
+
+    void ChangeEfsSound(float value)
+    {
+        SoundManager.instance.soundEffectsSource.volume = value;
+    }
+
+    public void OptionWindow()
+    {
+        if (optionUI != null)
+        {
+            bool isActive = optionUI.activeSelf;
+            optionUI.SetActive(!isActive);
+        }
+    }
 }

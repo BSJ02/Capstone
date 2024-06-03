@@ -18,8 +18,8 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<string, AudioClip> backgroundMusicDictionary;
     private Dictionary<string, AudioClip> soundEffectsDictionary;
-    private AudioSource backgroundMusicSource;
-    private AudioSource soundEffectsSource;
+    public AudioSource backgroundMusicSource;
+    public AudioSource soundEffectsSource;
 
     void Awake()
     {
