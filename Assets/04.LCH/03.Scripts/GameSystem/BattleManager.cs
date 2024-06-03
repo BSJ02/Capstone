@@ -79,6 +79,7 @@ public class BattleManager : MonoBehaviour
 
 
         // 스테이지 오브젝트 활성화
+        // 1 = Warrior(HP) / 2 = Warrior(ATK) / 3 = Wizard / 4 = Archer
         foreach (int playerIndex in characterSelector.playerSelectList.playerList)
         {
             switch (playerIndex)
@@ -214,7 +215,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            if (cardManager.handCardCount < 8)
+            if (CardManager.handCardCount < 8)
             {
                 cardManager.CreateRandomCard();
             }

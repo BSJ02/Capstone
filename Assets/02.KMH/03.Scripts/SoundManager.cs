@@ -27,7 +27,7 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -89,5 +89,15 @@ public class SoundManager : MonoBehaviour
     public void StopSoundEffects()
     {
         soundEffectsSource.Stop();
+    }
+
+    public void SetBackgroundMusicVolume(float volume)
+    {
+        backgroundMusicSource.volume = Mathf.Clamp(volume, 0f, 1f);
+    }
+
+    public void SetSoundEffectsVolume(float volume)
+    {
+        soundEffectsSource.volume = Mathf.Clamp(volume, 0f, 1f);
     }
 }

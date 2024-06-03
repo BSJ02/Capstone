@@ -33,7 +33,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public List<GameObject> handCardObject;
     [HideInInspector] public List<GameObject> addCardObject;
 
-    [HideInInspector] public int handCardCount;
+    [HideInInspector] public static int handCardCount;
 
     [Header(" # Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
@@ -92,7 +92,7 @@ public class CardManager : MonoBehaviour
 
     public void StartSettingCards()
     {
-        handCardList.AddRange(cardInform.warriorCards);
+        handCardList.AddRange(cardInform.baseCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 

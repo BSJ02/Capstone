@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class UIManager : MonoBehaviour
 
     //버튼 그룹 제어 선언
     public RectTransform buttonLayoutGroup;
+    public RectTransform informPanelGroup;
+    public GameObject win_inGroupButton;
+    public GameObject win_outGroupButton;
     public GameObject inGroupButton;
     public GameObject outGroupButton;
 
@@ -45,6 +49,13 @@ public class UIManager : MonoBehaviour
     public Material energyFillMaterial;
 
 
+    //Data Display
+    /*
+    public Text hpText;
+    public Text distanceText;
+    */
+    public Text TurnText;
+    public Text NumCardText;
 
     public static UIManager Instance
     {
@@ -67,7 +78,6 @@ public class UIManager : MonoBehaviour
 
 
         energyFillMaterial.SetFloat("_FillLevel", 1f);
-        energyValue.text = maxActivePoint.ToString();
 
 
         if (instance == null)
@@ -79,50 +89,11 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-        
-
     }
 
     void Update()
     {
-        /*
-        if(cardProcessing.selectedTarget != null) 
-        {
-            energyFillMaterial.SetFloat("_FillLevel", cardProcessing.currentPlayer.playerData.activePoint * 0.2f);
-            energyValue.text = cardProcessing.currentPlayer.playerData.activePoint.ToString();
-        }
-      
-        */
-
-        if (cardProcessing.currentPlayer!= null && playerMove.isMoving == true)
-        {
-            NTest();
-        }
-        else if(changeBar == true)
-        {
-            energyFillMaterial.DOFloat(0f, "_FillLevel", 1f);
-            energyValue.text = minActivePoint.ToString();
-            changeBar = false;
-        }
-
-
-        /*
-        
-        
-        if(GameManager.Instance.isGameOver)
-        {
-            GameManager.Instance.isGameOver = false;
-            GameOverFade();
-            
-        }
-        */
-
-        //Energy Bar Material
-
-
-
-
+        NumCardText.text = CardManager.handCardCount.ToString();
     }
 
     public void NTest()
@@ -137,8 +108,6 @@ public class UIManager : MonoBehaviour
         {
             changeBar = true;
         }
-
-        
     }
 
     public void ShowLayerWindow(int index)
@@ -147,7 +116,6 @@ public class UIManager : MonoBehaviour
         {
             currentlyActiveWindow.SetActive(false);
         }
-
 
         windowUI[index].gameObject.SetActive(true);
         currentlyActiveWindow = windowUI[index];
@@ -158,13 +126,10 @@ public class UIManager : MonoBehaviour
         windowUI[index].gameObject.SetActive(false);
     }
 
-
-
     public void GameOverFade()
     {
         gameOverUI.SetActive(true);
         cg = gameOverUI.GetComponent<CanvasGroup>();
-        
 
         if (fadeCor != null)
         {
@@ -186,32 +151,13 @@ public class UIManager : MonoBehaviour
             accumTime += Time.deltaTime;
         }
         cg.alpha = 1f;
-
-        //StartCoroutine(FadeOut());
     }
-    /*
-    public IEnumerator FadeOut()
-    {
-        yield return new WaitForSeconds(3.0f);
-        accumTime = 0f;
-        while (accumTime < fadeTime)
-        {
-            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
-            yield return 0;
-            accumTime += Time.deltaTime;
-        }
-        cg.alpha = 0f;
-
-    }
-    */
-
 
     public void ButtonLayoutGroupBarMove()
     {
         buttonLayoutGroup.DOAnchorPos(new Vector3(710, 470, 0), 1);
         inGroupButton.SetActive(false);
         outGroupButton.SetActive(true);
-
     }
 
     public void ButtonLayoutGroupBarMoveExit()
@@ -223,11 +169,15 @@ public class UIManager : MonoBehaviour
 
     public void ButtonInformWindowMove()
     {
-
+        informPanelGroup.DOAnchorPos(new Vector3(-1100, -337, 0), 1);
+        win_inGroupButton.SetActive(false);
+        win_outGroupButton.SetActive(true);
     }
 
     public void ButtonInformWindowMoveExit()
     {
-     
+        informPanelGroup.DOAnchorPos(new Vector3(-799, -337, 0), 1);
+        win_inGroupButton.SetActive(true);
+        win_outGroupButton.SetActive(false);
     }
 }
