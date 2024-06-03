@@ -114,20 +114,6 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        /*        for (int i = 0; i < 2; i++)
-                {
-                    Instantiate(players[i], new Vector3(2 + i, 0.35f, 0), Quaternion.identity);
-                    players[i].gameObject.SetActive(true);
-                    playerScripts = players[i].GetComponent<Player>();
-                }*/
-
-        // 스테이지 오브젝트 활성화
-        /*        foreach (GameObject player in players)
-                {
-                    player.gameObject.SetActive(true);
-                    playerScripts = player.GetComponent<Player>();
-                }*/
-
         foreach (GameObject monster in monsters)
         {
             monster.gameObject.SetActive(true);
@@ -149,7 +135,6 @@ public class BattleManager : MonoBehaviour
             isEnd = true;
         }
     }
-
 
     IEnumerator EndStage()
     {
@@ -189,15 +174,21 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    IEnumerator StartPlayerTurn()
+    IEnumerator PlayerTurnUI()
     {
-        yield return StartCoroutine(CameraController.instance.StartCameraMoving());
-
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
+        yield return null;
+    }
 
-        turn_UI[0].gameObject.SetActive(false);
+    IEnumerator StartPlayerTurn()
+    {
+        selectedMonster = null;
+
+        //yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+
+        yield return StartCoroutine(PlayerTurnUI());
 
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
@@ -251,7 +242,6 @@ public class BattleManager : MonoBehaviour
         turnEnd_Btn.interactable = false;  
 
         StartCoroutine(NextMonster());
-
     }
 
     IEnumerator NextMonster()
@@ -276,6 +266,8 @@ public class BattleManager : MonoBehaviour
             int randIndex = Random.Range(0, availableMonsters.Count);
             int selectedIndex = availableMonsters[randIndex];
             selectedMonster = monsters[selectedIndex];
+
+            Debug.Log("몬스터 + :" + selectedMonster.name);
 
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))

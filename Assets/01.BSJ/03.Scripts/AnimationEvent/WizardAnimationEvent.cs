@@ -86,6 +86,9 @@ public class WizardAnimationEvent : MonoBehaviour
 
                 ParticleController.instance.ApplyTargetEffect(particlePrefab, targetObjPos, particleRot, 0.5f);
 
+                CharacterStatusEffect characterStatusEffect = monster.GetComponent<CharacterStatusEffect>();
+                StatusEffectManager.instance.ApplyBurnEffect(characterStatusEffect);
+
                 monster.GetHit(useCard.cardPower[0]);
             }
 

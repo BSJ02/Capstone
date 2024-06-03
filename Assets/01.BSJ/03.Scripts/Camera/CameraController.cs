@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
 
-        characterOffset = new Vector3(-8, 8f, -8);
+        characterOffset = new Vector3(-11, 11f, -11);
         originalOrthographicSize = 6f;
     }
 
