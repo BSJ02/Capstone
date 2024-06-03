@@ -18,9 +18,6 @@ public class GameManager : MonoBehaviour
     public Text objectNameText;
     public Text objectHealthText;
 
-    public Slider bgm_slider;
-    public Slider efs_slider;
-
     public GameObject optionUI;
 
     public GameObject[] cardList;
@@ -44,12 +41,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
-        bgm_slider = bgm_slider.GetComponent<Slider>();
-        efs_slider = efs_slider.GetComponent<Slider>();
-
-        bgm_slider.onValueChanged.AddListener(ChangeBgmSound);
-        bgm_slider.onValueChanged.AddListener(ChangeEfsSound);
 
         if (instance == null)
         {
@@ -139,16 +130,6 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-
-    void ChangeBgmSound(float value)
-    {
-        SoundManager.instance.backgroundMusicSource.volume = value;
-    }
-
-    void ChangeEfsSound(float value)
-    {
-        SoundManager.instance.soundEffectsSource.volume = value;
-    }
 
     public void OptionWindow()
     {
