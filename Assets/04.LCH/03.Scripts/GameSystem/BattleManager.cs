@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
+    public static int turncount = 1;
 
     bool isEnd;
 
@@ -307,6 +308,7 @@ public class BattleManager : MonoBehaviour
         // 대기 처리
         yield return new WaitForSeconds(3f);
         turn_UI[1].gameObject.SetActive(false);
+        turncount += 1;
         PlayerTurn();
     }
 

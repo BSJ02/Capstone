@@ -69,6 +69,7 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WizardCardData.cs" />
     <Compile Include="Assets\Asset\Sound\Karugamo\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\BaseAnimationEvent.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\VolumeControl.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardProcessing.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardColorChanger.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Windows\CloseTabEditorShortcut.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\04.LCH\03.Scripts\UI\MonsterUI.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\03.CSH\03.Scripts\BGMPlayer.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\SoundManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardInform.cs" />
