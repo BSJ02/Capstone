@@ -108,8 +108,8 @@
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WarriorCardData.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\UI\MonsterUI.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\MoveBackup.cs" />
-    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\BGMPlayer.cs" />
+    <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\SoundManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardInform.cs" />
