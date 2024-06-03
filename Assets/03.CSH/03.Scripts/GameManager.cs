@@ -15,28 +15,19 @@ public class GameManager : MonoBehaviour
     public Text remainingDistance;
 
     //UI
-
-    [SerializeField] Texture2D cursorImg;
-
     public GameObject[] windowUI;
     public GameObject objectUIPanel;
     private GameObject currentlyActiveWindow;
-
 
     public Text objectNameText;
     public Text objectHealthText;
 
     public GameObject[] cardList;
 
-
     //게임 턴 판별 private 으로 바꿔주기 
     public bool isGameOver = false; // 게임 오버 상태
 
-    
-
-
     private static GameManager instance;
-
 
     public static GameManager Instance
     {
@@ -50,36 +41,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void Awake()
     {
 
         if(instance == null)
         {
             instance = this;
-            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
         }
-       
-    }
-
-    private void Start()
-    {
-        UnityEngine.Cursor.SetCursor(cursorImg, Vector2.zero, CursorMode.ForceSoftware);
-    }
-    
-    private void Update()
-    {
-        //remainingDistance.text = player.playerData.activePoint.ToString();
-        //if(playerData.Hp == 0 && !isGameOver)
-        //{
-        //    isGameOver = true;
-        //}
-
     }
 
     public void ShowLayerWindow(int index)
@@ -88,7 +60,6 @@ public class GameManager : MonoBehaviour
         {
             currentlyActiveWindow.SetActive(false);
         }
-
 
         windowUI[index].gameObject.SetActive(true);
         currentlyActiveWindow = windowUI[index];
@@ -99,7 +70,6 @@ public class GameManager : MonoBehaviour
         windowUI[index].gameObject.SetActive(false);
     }
 
-
     public void cardUIEffect(bool boolean)
     {
         if (boolean == true)
@@ -108,7 +78,6 @@ public class GameManager : MonoBehaviour
             {
                 cardList[i].transform.localScale *= 1.2f;
             }
-                
         }
         else
         {

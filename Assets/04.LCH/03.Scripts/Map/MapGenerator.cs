@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 
@@ -32,6 +33,7 @@ public class MapGenerator : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     // ¸Ê »ý¼º
@@ -58,7 +60,7 @@ public class MapGenerator : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item"))
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Player"))
                     {
                         tile.SetCoord(i, j, true);
                     }
