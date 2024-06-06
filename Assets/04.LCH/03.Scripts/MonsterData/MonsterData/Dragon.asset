@@ -15,7 +15,7 @@ MonoBehaviour:
   MonsterName: "\uBD88\uAF43 \uB4DC\uB798\uACE4"
   Id: 1
   Hp: 0
-  MaxHp: 40
+  MaxHp: 20
   Amor: 2
   CurrentDamage: 0
   MoveDistance: 3

@@ -15,7 +15,7 @@ MonoBehaviour:
   MonsterName: "\uC804\uAE30 \uB9C8\uBC95\uC0AC"
   Id: 2
   Hp: 0
-  MaxHp: 25
+  MaxHp: 20
   Amor: 0
   CurrentDamage: 0
   MoveDistance: 2
@@ -24,4 +24,4 @@ MonoBehaviour:
   MinDamage: 10
   MaxDamage: 16
   Critical: 13
-  SkillDetectionRange: 7
+  SkillDetectionRange: 6

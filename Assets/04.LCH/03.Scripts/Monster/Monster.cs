@@ -51,6 +51,7 @@ public class Monster : MonoBehaviour
         Init();
     }
 
+
     // [0] 애니메이션 초기화
     public void Init()
     {
@@ -61,7 +62,7 @@ public class Monster : MonoBehaviour
     }
 
     // [1] 몬스터 공격력 
-    public void ReadyToAttack()
+    public void GetRandomDamage()
     {
         float randDamage = Random.Range(monsterData.MinDamage, monsterData.MaxDamage);
         monsterData.CurrentDamage = Mathf.RoundToInt(randDamage); 

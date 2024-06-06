@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\ArcherAnimationEvent.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\AbnormalConditionData.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\ProjectileEffect.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Map\PlatformMove.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\SkeletonSkill.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\Singleton.cs" />
     <Compile Include="Assets\OrcParticle\Trail\Trail.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\Monster\MoveTest.cs" />
+    <Compile Include="Assets\03.CSH\03.Scripts\FigureGen.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Monster\Monster.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\UI\ShowText.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Map\MapGenerator.cs" />

@@ -2758,6 +2758,7 @@ GameObject:
   - component: {fileID: 2305708610576964442}
   - component: {fileID: 6989486436089450685}
   - component: {fileID: 6536847123655995092}
+  - component: {fileID: 1656037274959329713}
   m_Layer: 8
   m_Name: Orc
   m_TagString: Monster
@@ -2868,6 +2869,18 @@ MonoBehaviour:
   hp: {fileID: 8217566868416040510}
   damage: {fileID: 4134766905210076311}
   amor: {fileID: 8689233469443779192}
+--- !u!114 &1656037274959329713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8610193762428852423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8814165999050852107
 GameObject:
   m_ObjectHideFlags: 0
