@@ -31,11 +31,14 @@ public class MonsterMove : MonoBehaviour
         OpenList.Clear();
         CloseList.Clear();
 
+        // 데미지 설정
+        monster.GetRandomDamage();
+
         // 초기 감지 시작
         (isMoving, player) = IsPlayerInRange();
 
         // 1. 감지 O
-        if(isMoving == true)
+        if (isMoving == true)
         {
             // 플레이어 및 몬스터 위치 세팅
             SetDestination();
@@ -50,7 +53,7 @@ public class MonsterMove : MonoBehaviour
             yield break;
         }
         // 2. 감지 X 
-        else if(isMoving == false)
+        else if (isMoving == false)
         {
             // 몬스터 플레이어 방향으로 움직이기
             Moving();
@@ -79,7 +82,7 @@ public class MonsterMove : MonoBehaviour
 
         // 최단 거리로 이동
         StartCoroutine(MoveSmoothly(move));
-        
+
     }
 
 
@@ -104,7 +107,7 @@ public class MonsterMove : MonoBehaviour
                 player = playerObj.GetComponent<Player>();
                 Vector2Int playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
 
-                if (tile == playerPos && monster.monsterData.CurrentDamage > monster.monsterData.Critical) // 플레이어가 범위 내에 존재 && 치명타 공격 일 때 
+                if (tile == playerPos && monster.monsterData.CurrentDamage >= monster.monsterData.Critical) // 플레이어가 범위 내에 존재 && 치명타 공격 일 때 
                 {
                     this.playerPos = playerPos;
                     monster.attack = AttackState.SkillAttack;
@@ -115,6 +118,7 @@ public class MonsterMove : MonoBehaviour
                 }
             }
         }
+
 
         // 현재 타일에서 일반 공격 범위 확인
         List<Vector2Int> attackTiles = AttackRangeChecking(monsterPos, attackDetectionRange, false);
@@ -309,7 +313,7 @@ public class MonsterMove : MonoBehaviour
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
-        
+
         // 애니메이션 및 상태 변경
         monster.state = MonsterState.Moving;
         monster.GetComponent<Animator>().SetInteger("State", (int)monster.state);
@@ -360,30 +364,26 @@ public class MonsterMove : MonoBehaviour
         // 2. 감지X 
         else if (isMoving == false)
         {
-            yield break; 
+            yield break;
         }
 
         yield break;
     }
 
     // 몬스터 공격 설정 
-    public bool SetAttackState(bool isMove, Player player) 
+    public bool SetAttackState(bool isMove, Player player)
     {
         switch (monster.attack)
         {
             // 일반 공격
             case AttackState.GeneralAttack:
                 transform.LookAt(player.transform);
-
-                monster.GetRandomDamage();
                 monster.Attack(player);
                 break;
 
             // 스킬 공격
             case AttackState.SkillAttack:
                 transform.LookAt(player.transform);
-
-                monster.GetRandomDamage();
                 monster.Attack(player);
                 break;
         }

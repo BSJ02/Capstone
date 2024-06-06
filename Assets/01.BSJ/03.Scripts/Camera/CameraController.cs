@@ -55,6 +55,7 @@ public class CameraController : MonoBehaviour
 
             if (!isMainCameraMoving && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
+                cardProcessing.currentPlayerObj = null;
                 HandleMouseMovement();
             }
             else if (cardProcessing.currentPlayerObj != null)
@@ -62,7 +63,6 @@ public class CameraController : MonoBehaviour
                 FollowTarget(cardProcessing.currentPlayerObj);
                 CameraFollowObject();
             }
-            
             else
             {
                 cardProcessing.currentPlayerObj = null;
