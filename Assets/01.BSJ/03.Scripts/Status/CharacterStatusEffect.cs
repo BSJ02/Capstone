@@ -28,7 +28,7 @@ public class CharacterStatusEffect : MonoBehaviour
         for (int i = ActiveStatusEffects.Count - 1; i >= 0; i--)
         {
             ActiveStatusEffects[i].ApplyEffect(this, ActiveStatusEffects[i].EffectValue);
-            ActiveStatusEffects[i].DecreaseDuration();
+            ActiveStatusEffects[i].DecreaseDuration();  // Duration--
             if (ActiveStatusEffects[i].Duration <= 0)
             {
                 RemoveStatusEffect(ActiveStatusEffects[i]);
@@ -51,29 +51,25 @@ public class CharacterStatusEffect : MonoBehaviour
         {
             if (statusEffect.EffectType == StatusEffectType.Poison || statusEffect.EffectType == StatusEffectType.Burn)
             {
-                if (statusEffect.ParticleEffect != null)
+                ParticleController.instance.ApplyTargetEffect(statusEffect.ParticleEffect, transform.position, Quaternion.identity, -0.4f);
+                SoundManager.instance.PlaySoundEffect(statusEffect.SoundName);
+             
+                if (gameObject.CompareTag("Monster"))
                 {
-                    ParticleController.instance.ApplyTargetEffect(statusEffect.ParticleEffect, transform.position, Quaternion.identity, -0.4f);
-                    SoundManager.instance.PlaySoundEffect(statusEffect.SoundName);
+                    Monster monster = gameObject.GetComponent<Monster>();
+                    monster.GetHit(damage);
+                }
+                else if (gameObject.CompareTag("Player"))
+                {
+                    Player player = gameObject.GetComponent<Player>();
+                    player.GetHit(damage);
                 }
             }
-        }
-
-        if (gameObject.CompareTag("Monster"))
-        {
-            Monster monster = gameObject.GetComponent<Monster>();
-            monster.GetHit(damage);
-        }
-        else if (gameObject.CompareTag("Player"))
-        {
-            Player player = gameObject.GetComponent<Player>();
-            player.GetHit(damage);
         }
     }
 
     public void Stun()
     {
-        // 胶畔 贸府 肺流
-        Debug.Log($"{gameObject.name} is stunned!");
+        // 胶畔 贸府
     }
 }

@@ -7,10 +7,10 @@ public enum StatusEffectType
     Poison,
     Burn,
     Stun
-    // 다른 상태이상 추가
+    // 추가 예정
 }
 
-public class StatusEffect
+public class StatusEffect   
 {
     public StatusEffectType EffectType { get; private set; }
     public int Duration { get; private set; }

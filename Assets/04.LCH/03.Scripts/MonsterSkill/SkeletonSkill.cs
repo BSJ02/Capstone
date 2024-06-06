@@ -15,10 +15,12 @@ public class SkeletonSkill : SkillData
 
     public override void Use()
     {
-        Vector3 particlePosition = startPosition.transform.position;
-        Quaternion particleRotation = startPosition.transform.rotation;
+        // startPosition을 월드 좌표로 설정
+        Vector3 particlePosition = startPosition.position; 
+        Quaternion particleRotation = startPosition.rotation;
 
         GameObject fire = Instantiate(effect, particlePosition, particleRotation);
+        fire.transform.SetParent(startPosition, true); // startPosition을 부모로 설정
 
     }
 }

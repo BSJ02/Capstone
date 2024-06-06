@@ -20,6 +20,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField]
     public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+
     public List<Monster> rangeInMonsters = new List<Monster>();
     public List<Player> rangeInPlayers = new List<Player>();
 
@@ -60,7 +61,7 @@ public class MapGenerator : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item") || hit.collider.CompareTag("Player"))
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item")) // || hit.collider.CompareTag("Player") <= Ghost Code(필요 시 추가 예정)
                     {
                         tile.SetCoord(i, j, true);
                     }
@@ -70,6 +71,15 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+
+    public void DeleteMap()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+    }
+    
 
     // 타일 정보 초기화(중복 방지)
     public void ResetTotalMap()

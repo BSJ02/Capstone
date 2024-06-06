@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6948710911455180305}
   - component: {fileID: 5354078683879165609}
   - component: {fileID: 8261719077326444025}
-  - component: {fileID: -5040779320778424760}
+  - component: {fileID: 8190549478262293648}
   m_Layer: 0
   m_Name: Electronic_Mage
   m_TagString: Untagged
@@ -5067,7 +5067,7 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 6940048550528074214}
---- !u!114 &-5040779320778424760
+--- !u!114 &8190549478262293648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5076,7 +5076,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2152964821982959313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c84720bd5fe7fe4a82d3da920670b93, type: 3}
+  m_Script: {fileID: 11500000, guid: 966ef399254666e42a28bfa9845868a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 9143690839393112205, guid: 0241917774036c74fbd8097a8b173557,
@@ -14877,7 +14877,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.7311321, g: 0.9361015, b: 1, a: 1}
-  m_Intensity: 1.5902779
+  m_Intensity: 2.0197403
   m_Range: 8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

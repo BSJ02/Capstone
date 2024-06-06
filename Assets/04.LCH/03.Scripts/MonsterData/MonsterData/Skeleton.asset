@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MonsterName: "\uC5B8\uB370\uB4DC \uC2A4\uCF08\uB808\uD1A4"
   Id: 4
-  Hp: 50
-  MaxHp: 1
+  Hp: 30
+  MaxHp: 30
   Amor: 2
-  CurrentDamage: 10
-  MoveDistance: 5
+  CurrentDamage: 7
+  MoveDistance: 4
   DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   MinDamage: 6

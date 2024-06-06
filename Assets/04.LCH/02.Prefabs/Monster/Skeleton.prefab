@@ -902,8 +902,9 @@ GameObject:
   - component: {fileID: 8936418376464323636}
   - component: {fileID: 7677374125316050667}
   - component: {fileID: 8298057683656190298}
-  - component: {fileID: 2747920861518072591}
   - component: {fileID: 5930998415036747080}
+  - component: {fileID: 2747920861518072591}
+  - component: {fileID: 8010370413541889660}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Monster
@@ -920,7 +921,7 @@ Transform:
   m_GameObject: {fileID: 4081441714895756914}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4, y: 0.35, z: 3}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1000,6 +1001,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {x: 0, y: 0}
+--- !u!114 &5930998415036747080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081441714895756914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb84ea51095d46744af078de20db9b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 49cda95be329f464bbe5da66f8a6ea04, type: 2}
+  spawnPosition: {fileID: 5269238403012628912}
 --- !u!114 &2747920861518072591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1015,7 +1030,7 @@ MonoBehaviour:
   hp: {fileID: 491285758456143656}
   damage: {fileID: 6045046469510007092}
   amor: {fileID: 737262502962038564}
---- !u!114 &5930998415036747080
+--- !u!114 &8010370413541889660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1024,11 +1039,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4081441714895756914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb84ea51095d46744af078de20db9b95, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: 49cda95be329f464bbe5da66f8a6ea04, type: 2}
-  spawnPosition: {fileID: 5269238403012628912}
 --- !u!1 &4099451842721156804
 GameObject:
   m_ObjectHideFlags: 0

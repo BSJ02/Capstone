@@ -2194,6 +2194,7 @@ GameObject:
   - component: {fileID: 1732269269955141949}
   - component: {fileID: 8953578595828971301}
   - component: {fileID: 3612087049482477816}
+  - component: {fileID: 3215813082879347169}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Monster
@@ -2319,6 +2320,18 @@ MonoBehaviour:
   hp: {fileID: 6797855178287479904}
   damage: {fileID: 9081708917646933810}
   amor: {fileID: 4443525274079823861}
+--- !u!114 &3215813082879347169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027815022578739848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7484470120968531929
 GameObject:
   m_ObjectHideFlags: 0

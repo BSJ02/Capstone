@@ -53,7 +53,7 @@ public class PlayerMove : MonoBehaviour
         StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
         EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
 
-        MapGenerator.instance.totalMap[playerPos.x, playerPos.y].SetCoord(playerPos.x, playerPos.y, false);
+        // MapGenerator.instance.totalMap[playerPos.x, playerPos.y].SetCoord(playerPos.x, playerPos.y, false); 이동하기 전에 플레이어의 타일을 isWall = false 하는 코드(Ghost Code)
     }
 
     private void Update()
@@ -95,8 +95,8 @@ public class PlayerMove : MonoBehaviour
                         Monster monster = hit.collider.GetComponent<Monster>();
                         if (monster != null)
                         {
-                            List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking
-                                (new Vector2Int((int)monster.transform.position.x, (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
+                            List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking(new Vector2Int((int)monster.transform.position.x, 
+                                (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
 
                             // Reset all tile colors to white
                             ResetTilesColor();
@@ -307,7 +307,7 @@ public class PlayerMove : MonoBehaviour
         }
         clickPlayer.playerState = PlayerState.Idle;
 
-        MapGenerator.instance.totalMap[targetPos.x, targetPos.y].SetCoord(playerPos.x, playerPos.y, true);
+        // MapGenerator.instance.totalMap[targetPos.x, targetPos.y].SetCoord(playerPos.x, playerPos.y, true); 최종 지점에 isWall = true 하는 코드(Ghost Code)
 
         playerManager.clickedPlayer = null;
 
