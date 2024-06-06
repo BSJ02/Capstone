@@ -69,7 +69,7 @@ public class Card
     public float cardDistance;  // 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public float cardPercent; // 카드 확률
-    public CardType cardType; // 카드 등급
+    public CardType cardType; // 카드 타입
     public CardTarget cardTarget;
     [HideInInspector] public bool isCardMoveEnabled = false;
 
@@ -82,6 +82,14 @@ public class Card
     }
 
     public enum CardTarget
+    {
+        Player,
+        SingleTarget,
+        AreaTarget,
+        TargetPosition
+    }
+
+    public enum CardRanke
     {
         Player,
         SingleTarget,

@@ -6,10 +6,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-
+    
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
@@ -94,6 +96,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         NumCardText.text = CardManager.handCardCount.ToString();
+        TurnText.text = BattleManager.turncount.ToString();
     }
 
     public void NTest()
@@ -179,5 +182,10 @@ public class UIManager : MonoBehaviour
         informPanelGroup.DOAnchorPos(new Vector3(-799, -337, 0), 1);
         win_inGroupButton.SetActive(true);
         win_outGroupButton.SetActive(false);
+    }
+
+    public void ExittoLobby()
+    {
+        SceneManager.LoadScene("01.Lobby");
     }
 }

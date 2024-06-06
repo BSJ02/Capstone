@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour
 
     public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
     private float delay = 1.5f;
+    public static int turncount = 1;
 
     bool isEnd;
 
@@ -143,7 +144,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-
     IEnumerator EndStage()
     {
         // Stage 종료가 종료될 때 실행되는 것들(사운드, UI, 페이드 인 & 아웃 애니메이션, 다음 씬 이동 등..)
@@ -182,15 +182,21 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    IEnumerator StartPlayerTurn()
+    IEnumerator PlayerTurnUI()
     {
-        yield return StartCoroutine(CameraController.instance.StartCameraMoving());
-
         turn_UI[0].gameObject.SetActive(true);
         turn_UI[0].gameObject.GetComponent<Animator>().Play("PlayerTurn", -1, 0f);
         turnEnd_Btn.interactable = true;
+        yield return null;
+    }
 
-        turn_UI[0].gameObject.SetActive(false);
+    IEnumerator StartPlayerTurn()
+    {
+        selectedMonster = null;
+
+        //yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+
+        yield return StartCoroutine(PlayerTurnUI());
 
         foreach (GameObject player in /*characterSelector.playerSelectList.*/players)
         {
@@ -244,7 +250,6 @@ public class BattleManager : MonoBehaviour
         turnEnd_Btn.interactable = false;  
 
         StartCoroutine(NextMonster());
-
     }
 
     IEnumerator NextMonster()
@@ -269,6 +274,8 @@ public class BattleManager : MonoBehaviour
             int randIndex = Random.Range(0, availableMonsters.Count);
             int selectedIndex = availableMonsters[randIndex];
             selectedMonster = monsters[selectedIndex];
+
+            Debug.Log("몬스터 + :" + selectedMonster.name);
 
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
@@ -309,6 +316,7 @@ public class BattleManager : MonoBehaviour
         // 대기 처리
         yield return new WaitForSeconds(3f);
         turn_UI[1].gameObject.SetActive(false);
+        turncount += 1;
         PlayerTurn();
     }
 
