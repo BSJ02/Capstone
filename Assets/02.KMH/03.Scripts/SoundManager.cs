@@ -46,6 +46,7 @@ public class SoundManager : MonoBehaviour
 
         backgroundMusicDictionary = new Dictionary<string, AudioClip>();
         soundEffectsDictionary = new Dictionary<string, AudioClip>();
+        
 
         foreach (var sound in backgroundMusic)
         {

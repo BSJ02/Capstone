@@ -183,7 +183,6 @@ public class UIManager : MonoBehaviour
         win_inGroupButton.SetActive(true);
         win_outGroupButton.SetActive(false);
     }
-
     public void ExittoLobby()
     {
         SceneManager.LoadScene("01.Lobby");
