@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     private float moveSpeed = 7f;
     private float edgeSize = 10f;
 
-    [HideInInspector] public bool isMainCameraMoving = false;
+    private bool isMainCameraMoving = false;
     private bool hasTransitioned = false;
 
     private Vector3 characterOffset;
@@ -53,32 +53,26 @@ public class CameraController : MonoBehaviour
         {
             CameraFollowObject();
 
-            if (isMainCameraMoving)
+            if (!isMainCameraMoving && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
                 HandleMouseMovement();
-                ZoomCamera(true);
             }
             else if (cardProcessing.currentPlayerObj != null)
             {
                 FollowTarget(cardProcessing.currentPlayerObj);
                 CameraFollowObject();
             }
-            if (Input.GetMouseButton(0) && isMainCameraMoving)
+            
+            else
             {
                 cardProcessing.currentPlayerObj = null;
-                hasTransitioned = false;
-                HasTransition();
-
-                hasTransitioned = false;
                 isMainCameraMoving = false;
-
-                ZoomCamera(false);
             }
         }
         else if (BattleManager.instance.battleState == BattleState.MonsterTurn)
         {
             
-            CameraController.instance.FollowTarget(BattleManager.instance.selectedMonster);
+            FollowTarget(BattleManager.instance.selectedMonster);
         }
     }
 
@@ -98,28 +92,27 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouseMovement()
     {
-        HasTransition();
-
-        Vector3 mousePos = Input.mousePosition;
         Vector3 move = Vector3.zero;
         float time = Time.deltaTime;
 
-        mainCamera.orthographicSize = 2f;
-
-        if (mousePos.x < edgeSize)
+        if (Input.GetKey(KeyCode.A))
+        {
+            move.x = -moveSpeed * time * 0.5f;
+            move.z = moveSpeed * time * 0.5f;
+        }
+        else if (Input.GetKey(KeyCode.S))
         {
             move.x = -moveSpeed * time;
-        }
-        else if (mousePos.y < edgeSize)
-        {
             move.z = -moveSpeed * time;
         }
-        else if (mousePos.x > Screen.width - edgeSize)
+        else if (Input.GetKey(KeyCode.D))
+        {
+            move.x = moveSpeed * time * 0.5f;
+            move.z = -moveSpeed * time * 0.5f;
+        }
+        else if (Input.GetKey(KeyCode.W))
         {
             move.x = moveSpeed * time;
-        }
-        else if (mousePos.y > Screen.height - edgeSize)
-        {
             move.z = moveSpeed * time;
         }
 
@@ -182,6 +175,7 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator StartCameraMoving()
     {
+        isMainCameraMoving = true;
         Vector3 originalCameraPos = mainCamera.transform.position;
 
         ZoomCamera(true);
@@ -205,11 +199,12 @@ public class CameraController : MonoBehaviour
 
             move.x = moveSpeed * time;
             virtualCamera.transform.position += move;
+
+            isMainCameraMoving = false;
             yield return null;
         }
 
         ZoomCamera(false);
-
         yield return null;
     }
 }

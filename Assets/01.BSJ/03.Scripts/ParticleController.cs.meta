@@ -4,15 +4,27 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - particle_Group: {instanceID: 0}
+  - obstaclePrefab: {instanceID: 0}
   - healEffectPrefab: {fileID: 9017484664307500583, guid: b6b60b986882e7e4e87bbff30371dc10,
       type: 3}
   - buffEffectPrefab: {fileID: 7155335147208632822, guid: e387edf74933aa44ea0ea9fb78fcfcda,
       type: 3}
-  - fireballEffectPrefab: {fileID: 1206498299807332555, guid: 5c393f8a8f497ae46a16e5bd69fb8f91,
+  - removeAilmentEffectPrefab: {fileID: 1844191813266838, guid: b5d915aa91cd2fe4cbfdde9a542b0d8a,
       type: 3}
+  - transmissionEffectPrefab: {fileID: 100002, guid: 361b28d6bde59f1438cc3980a976fdcc,
+      type: 3}
+  - spinAttackEffectPrefab: {instanceID: 0}
+  - shieldBashEffectPrefab: {instanceID: 0}
+  - desperateStrikeEffectPrefab: {instanceID: 0}
+  - dashEffectPrefab: {instanceID: 0}
+  - WarriorsRoarEffectPrefab: {instanceID: 0}
+  - ArmorCrushEffectPrefab: {instanceID: 0}
   - teleportEffectPrefab: {fileID: 3280519133390621005, guid: 572b9427b6736fe4b9e0408ee2b50889,
       type: 3}
+  - fireballEffectPrefab: {fileID: 1206498299807332555, guid: 5c393f8a8f497ae46a16e5bd69fb8f91,
+      type: 3}
+  - flamePillarEffectPrefab: {instanceID: 0}
+  - lifeDrainEffectPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
