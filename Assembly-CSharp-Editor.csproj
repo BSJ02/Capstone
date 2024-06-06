@@ -68,8 +68,8 @@
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Low Poly Support Files\Editor\ColorShiftRuntimeEditor.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Equipment System\Editor\EquipmentSystemStatic.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Equipment System\Editor\BlendShapesPresetManagerEditor.cs" />
-    <Compile Include="Assets\InfinityPBR - Magic Pig Games\Editor\AnimationEventCopier.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Low Poly Support Files\Editor\ColorShifterObjectEditor.cs" />
+    <Compile Include="Assets\InfinityPBR - Magic Pig Games\Editor\AnimationEventCopier.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Low Poly Support Files\Editor\ColorShifter.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Editor\SFB_LoadWelcome.cs" />
     <Compile Include="Assets\InfinityPBR - Magic Pig Games\Equipment System\Editor\EquipObjectMenu.cs" />

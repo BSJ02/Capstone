@@ -104,7 +104,7 @@ public class MonsterMove : MonoBehaviour
                 player = playerObj.GetComponent<Player>();
                 Vector2Int playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
 
-                if (tile == playerPos)
+                if (tile == playerPos && monster.monsterData.CurrentDamage > monster.monsterData.Critical) // 플레이어가 범위 내에 존재 && 치명타 공격 일 때 
                 {
                     this.playerPos = playerPos;
                     monster.attack = AttackState.SkillAttack;

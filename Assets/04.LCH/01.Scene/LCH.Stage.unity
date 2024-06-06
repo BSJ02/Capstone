@@ -284,12 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a316a601617a17a42a6f22e446208976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &45174851 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5762913926978943186, guid: 67b826e57d3c60c4591916dd931afb24,
-    type: 3}
-  m_PrefabInstance: {fileID: 603392682}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &47651811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4742,12 +4736,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642676368}
   m_CullTransparentMesh: 1
---- !u!1 &675822814 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7027815022578739848, guid: fa42ea19649f60f41a7ec450713ccd92,
-    type: 3}
-  m_PrefabInstance: {fileID: 787660785}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &676357651
 GameObject:
   m_ObjectHideFlags: 0
@@ -8688,7 +8676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1247779662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13150,8 +13138,6 @@ MonoBehaviour:
   - {fileID: 109348918}
   - {fileID: 226556233}
   - {fileID: 212851620}
-  - {fileID: 45174851}
-  - {fileID: 675822814}
   selectedMonster: {fileID: 0}
   turn_UI:
   - {fileID: 1595686701}
