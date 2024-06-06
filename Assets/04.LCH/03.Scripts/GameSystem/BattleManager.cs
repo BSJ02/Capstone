@@ -193,8 +193,12 @@ public class BattleManager : MonoBehaviour
     IEnumerator StartPlayerTurn()
     {
         selectedMonster = null;
+        CameraController.instance.ZoomCamera(false);
 
-        //yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+        if (turncount == 1)
+        {
+            yield return StartCoroutine(CameraController.instance.StartCameraMoving());
+        }
 
         yield return StartCoroutine(PlayerTurnUI());
 
