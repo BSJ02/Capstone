@@ -37,6 +37,7 @@ public class ParticleController : MonoBehaviour
     public GameObject fireballEffectPrefab;
     public GameObject flamePillarEffectPrefab;
     public GameObject lifeDrainEffectPrefab;
+    public GameObject magicShieldEffectPrefab;
 
     // Base Queue Pool
     private Queue<GameObject> healEffectPool = new Queue<GameObject>();
@@ -60,6 +61,7 @@ public class ParticleController : MonoBehaviour
     private Queue<GameObject> teleportEffectPool = new Queue<GameObject>();
     private Queue<GameObject> flamePillarEffectPool = new Queue<GameObject>();
     private Queue<GameObject> lifeDrainEffectPool = new Queue<GameObject>();
+    private Queue<GameObject> magicShieldEffectPool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -82,7 +84,6 @@ public class ParticleController : MonoBehaviour
         }
 
         InitializeParticlePool(obstaclePrefab, obstacle_Group);
-
 
         particle_Group = GameObject.Find("Particle_Group");
         if (particle_Group == null)
@@ -117,11 +118,12 @@ public class ParticleController : MonoBehaviour
         InitializeParticlePool(teleportEffectPrefab, particle_Group);
         InitializeParticlePool(flamePillarEffectPrefab, particle_Group);
         InitializeParticlePool(lifeDrainEffectPrefab, particle_Group);
+        InitializeParticlePool(magicShieldEffectPrefab, particle_Group);
     }
 
     public void InitializeParticlePool(GameObject prefab, GameObject parentObj)
     {
-        const int initialPoolSize = 2;
+        const int initialPoolSize = 1;
         for (int i = 0; i < initialPoolSize; i++)
         {
             GameObject particleObject = Instantiate(prefab, transform.position, Quaternion.identity);
@@ -279,6 +281,10 @@ public class ParticleController : MonoBehaviour
         else if (prefab == lifeDrainEffectPrefab)
         {
             return lifeDrainEffectPool;
+        }
+        else if (prefab == magicShieldEffectPrefab)
+        {
+            return magicShieldEffectPool;
         }
         else
         {

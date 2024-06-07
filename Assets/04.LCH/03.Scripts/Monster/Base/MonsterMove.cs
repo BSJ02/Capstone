@@ -14,7 +14,7 @@ public class MonsterMove : MonoBehaviour
     Vector2Int monsterPos;
     public Vector2Int playerPos;
 
-    public Player targetPlayer;
+    Player targetPlayer;
     bool isMoving;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class MonsterMove : MonoBehaviour
         (isMoving, targetPlayer) = IsPlayerInRange();
 
         // 1. 감지 O
-        if(isMoving == true)
+        if (isMoving == true)
         {
             // 플레이어 및 몬스터 위치 세팅
             SetDestination();
@@ -55,7 +55,7 @@ public class MonsterMove : MonoBehaviour
             yield break;
         }
         // 2. 감지 X 
-        else if(isMoving == false)
+        else if (isMoving == false)
         {
             // 몬스터 플레이어 방향으로 움직이기
             Moving();
@@ -84,7 +84,7 @@ public class MonsterMove : MonoBehaviour
 
         // 최단 거리로 이동
         StartCoroutine(MoveSmoothly(move));
-        
+
     }
 
 
@@ -337,7 +337,7 @@ public class MonsterMove : MonoBehaviour
 
         float moveSpeed = 1f;
         float lerpMaxTime = 0.2f;
-        
+
         // 애니메이션 및 상태 변경
         monster.state = MonsterState.Moving;
         monster.GetComponent<Animator>().SetInteger("State", (int)monster.state);
@@ -387,7 +387,7 @@ public class MonsterMove : MonoBehaviour
         // 2. 감지X 
         else if (isMoving == false)
         {
-            yield break; 
+            yield break;
         }
 
         yield break;

@@ -10,8 +10,11 @@ public class CardManager : MonoBehaviour
 {
     public static CardManager instance;
 
-    [Header(" # Card Inform")] public CardInform cardInform;
-    
+    [SerializeField]
+    [Header(" # Card Inform")] private CardInform cardInform;
+    [SerializeField]
+    [Header(" # Card Inform")] private PlayerSelectList playerSelectList;
+
     private CardProcessing cardProcessing;
 
     private Vector3 handCardPos = new Vector3(0, 4.3f, 0);
@@ -26,6 +29,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public List<Card> handCardList = new List<Card>();
     [HideInInspector] public List<Card> addCardList = new List<Card>();
+    [HideInInspector] public List<Card> cardDeck = new List<Card>();
 
     [HideInInspector] public GameObject deckObject;
     [HideInInspector] public GameObject panelObject_Group;
@@ -60,6 +64,28 @@ public class CardManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        cardDeck.Clear();
+
+        foreach (GameObject playerObj in playerSelectList.players)
+        {
+            if (playerObj.name == "Warrior(ATK)")
+            {
+                cardDeck.AddRange(cardInform.warriorCards);
+            }
+            if (playerObj.name == "Warrior(HP)")
+            {
+                cardDeck.AddRange(cardInform.warriorCards);
+            }
+            if (playerObj.name == "Wizard")
+            {
+                cardDeck.AddRange(cardInform.wizardCards);
+            }
+            if (playerObj.name == "Archer")
+            {
+                cardDeck.AddRange(cardInform.archerCards);
+            }
+        }
     }
 
     private void Start()
@@ -87,7 +113,7 @@ public class CardManager : MonoBehaviour
 
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
-
+        
     }
 
     public void StartSettingCards()
@@ -152,7 +178,7 @@ public class CardManager : MonoBehaviour
     public void CardGetTest()
     {
         addCardObject[0].SetActive(true);
-        Card card = cardInform.wizardCards[6]; // <- change
+        Card card = cardInform.wizardCards[5]; // <- change
 
         cardProcessing.currentPlayer.playerData.activePoint = cardProcessing.currentPlayer.playerData.MaxActivePoint;
 
@@ -243,39 +269,54 @@ public class CardManager : MonoBehaviour
         waitAddCard = false;
     }
 
+    public void FisherYatesShuffle<T>(List<T> list)
+    {
+        var rad = new System.Random();
+
+        int n = list.Count;
+        for (int i = n - 1; i > 0; i--)
+        {
+            int j = rad.Next(i + 1);
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+    }
 
     public Card GetRandomCard()
     {
-
         waitAddCard = true;
 
-        List<Card> randomList = null;
-        int randNum = UnityEngine.Random.Range(1, 101);
-        if (randNum <= cardInform.legendPercent)
+        cardDeck.AddRange(cardInform.baseCards);
+
+        FisherYatesShuffle(cardDeck);
+
+        int totalPercent = 0;
+        foreach (Card card in cardDeck)
         {
-            randomList = cardInform.warriorCards;
-        }
-        else if (randNum <= cardInform.epicPercent)
-        {
-            randomList = cardInform.wizardCards;
-        }
-        //else if (randNum <= cardInform.rarePercent)
-        //{
-        //    randomList = cardInform.archerCards;
-        //}
-        else
-        {
-            randomList = cardInform.baseCards;
+            totalPercent += (int)card.cardPercent;
         }
 
-        return randomList[UnityEngine.Random.Range(0, randomList.Count)];
+        int randValue = UnityEngine.Random.Range(1, totalPercent + 1);
+        int currentSum = 0;
+
+        foreach (Card card in cardDeck)
+        {
+            currentSum += (int)card.cardPercent;
+            if (randValue <= currentSum)
+            {
+                return card;
+            }
+        }
+
+        return null;
     }
 
     public void CreateRandomCard()
     {
         FindPanelGroupChildObject("Add Card Panel(Clone)").SetActive(true);
 
-        addCardList = new List<Card>();
+        addCardList.Clear();
 
         HashSet<Card> dedupeCard = new HashSet<Card>();
 

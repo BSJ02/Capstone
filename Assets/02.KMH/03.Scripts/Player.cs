@@ -223,13 +223,24 @@ public class Player : MonoBehaviour
 
     public void GetHit(float damage)
     {
-        SoundManager.instance.PlaySoundEffect("Hit");
-
         if (!isLive)
             return;
 
-        playerData.Hp -= damage;
+		if (WizardCardData.instance.usingMagicShield)
+        {
+            GameObject particlePrefab = ParticleController.instance.magicShieldEffectPrefab;
 
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab, gameObject);
+
+            WizardCardData.instance.usingMagicShield = false;
+        }
+        else
+        {
+        	SoundManager.instance.PlaySoundEffect("Hit");
+            playerData.Hp -= damage;    
+        }
+        
+        
         if (playerData.Hp <= 0)
         {
             Die();
