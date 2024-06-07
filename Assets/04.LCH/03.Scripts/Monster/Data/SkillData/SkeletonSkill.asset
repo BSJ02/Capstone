@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad44193da54b3e4f95c14faa12df2aa, type: 3}
+  m_Name: SkeletonSkill
+  m_EditorClassIdentifier: 
+  SkillName: "\uC57D\uC810 \uAD00\uD1B5"
+  Description: "\uB2E8\uC77C \uD0C0\uACA9\n1\uBC88 \uD53C\uACA9\n\uCD9C\uD608 \uD6A8\uACFC(\uCD94\uAC00
+    \uC608\uC815)"
+  effect: {fileID: 100000, guid: 323e7a89cf584da4093e1b703bcd4726, type: 3}

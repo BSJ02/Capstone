@@ -41,9 +41,10 @@ public class Player : MonoBehaviour
         cardProcessing = FindObjectOfType<CardProcessing>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
 
-        playerData.ResetWarriorData();
+        /*playerData.ResetWarriorData();*/
         ResetActivePoint();
 
+        playerData.Hp = playerData.MaxHp;
         isLive = true;
 
     }
@@ -227,24 +228,14 @@ public class Player : MonoBehaviour
         if (!isLive)
             return;
 
-        int randNum = Random.Range(0, 100);
-
-        if (randNum > playerData.CriticalHit)
-        {
-            Debug.Log("Critical!");
-            playerData.Hp -= damage * (float)1.5;
-        }
-        else
-        {
-            playerData.Hp -= damage;
-        }
-
-        Debug.Log("남은 체력 : " + (int)playerData.Hp);
+        playerData.Hp -= damage;
 
         if (playerData.Hp <= 0)
         {
             Die();
         }
+
+        Debug.Log($"{playerData.Name}의 체력:" + (int)playerData.Hp);
 
         playerState = PlayerState.GetHit;
         anim.SetInteger("State", (int)playerState);
