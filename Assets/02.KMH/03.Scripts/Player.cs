@@ -222,33 +222,43 @@ public class Player : MonoBehaviour
 
     public void GetHit(float damage)
     {
-        SoundManager.instance.PlaySoundEffect("Hit");
-
         if (!isLive)
             return;
 
         int randNum = Random.Range(0, 100);
 
-        if (randNum > playerData.CriticalHit)
+        if (WizardCardData.instance.usingMagicShield)
         {
-            Debug.Log("Critical!");
-            playerData.Hp -= damage * (float)1.5;
+            GameObject particlePrefab = ParticleController.instance.magicShieldEffectPrefab;
+
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab, gameObject);
+
+            WizardCardData.instance.usingMagicShield = false;
         }
         else
         {
-            playerData.Hp -= damage;
+            SoundManager.instance.PlaySoundEffect("Hit");
+
+            if (randNum > playerData.CriticalHit)
+            {
+                Debug.Log("Critical!");
+                playerData.Hp -= damage * (float)1.5;
+            }
+            else
+            {
+                playerData.Hp -= damage;
+            }
+
+            Debug.Log("남은 체력 : " + (int)playerData.Hp);
+
+            if (playerData.Hp <= 0)
+            {
+                Die();
+            }
+
+            playerState = PlayerState.GetHit;
+            anim.SetInteger("State", (int)playerState);
         }
-
-        Debug.Log("남은 체력 : " + (int)playerData.Hp);
-
-        if (playerData.Hp <= 0)
-        {
-            Die();
-        }
-
-        playerState = PlayerState.GetHit;
-        anim.SetInteger("State", (int)playerState);
-
     }
 
     public void Die()

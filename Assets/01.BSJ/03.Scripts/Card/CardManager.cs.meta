@@ -5,6 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  - playerSelectList: {fileID: 11400000, guid: 48dc325c320408d44a3ad24224d626f2, type: 2}
   - deckObject: {instanceID: 0}
   - panelObject_Group: {instanceID: 0}
   - cardPrefab: {fileID: 8317238898173453788, guid: fc41759a818988143a8b1fcd803ec190,
