@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using Unity.VisualScripting;
 using System.Collections.Generic;
@@ -8,19 +8,22 @@ using DG.Tweening;
 using TMPro;
 using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
+using Unity.Burst.CompilerServices;
 
 public class UIManager : MonoBehaviour
 {
-    
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
+    public Camera mainCamera;
+
+    //data players
+    public PlayerData warriorData;
+    public PlayerData wizardData;
 
     public GameObject gameOverUI;
 
-    private PlayerMove playerMove;
-
-    //πˆ∆∞ ±◊∑Ï ¡¶æÓ º±æ
+    //Î≤ÑÌäº Í∑∏Î£π Ï†úÏñ¥ ÏÑ†Ïñ∏
     public RectTransform buttonLayoutGroup;
     public RectTransform informPanelGroup;
     public GameObject win_inGroupButton;
@@ -28,17 +31,12 @@ public class UIManager : MonoBehaviour
     public GameObject inGroupButton;
     public GameObject outGroupButton;
 
-    private int maxActivePoint = 4;
-    private int minActivePoint = 0;
-    private bool changeBar = false;
-
     public ScriptableObject playerData;
-
 
     public CardProcessing cardProcessing;
    
 
-    //≈œ ∆‰¿ÃµÂ ¿Œ / æ∆øÙ
+    //ÌÑ¥ ÌéòÏù¥Îìú Ïù∏ / ÏïÑÏõÉ
     private CanvasGroup cg;
     public float fadeTime = 1f;
     float accumTime = 0f;
@@ -56,8 +54,23 @@ public class UIManager : MonoBehaviour
     public Text hpText;
     public Text distanceText;
     */
+
+    //text data
     public Text TurnText;
     public Text NumCardText;
+
+    public GameObject warriorDataText;
+    public GameObject wizardDataText;
+
+    public GameObject warriorProfile;
+    public GameObject wizardProfile;
+
+    public Text[] warriorTexts;
+    public Text[] wizardTexts;
+
+    public Material warriorHpFillMaterial;
+    public Material wizardHpFillMaterial;
+
 
     public static UIManager Instance
     {
@@ -75,13 +88,6 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        playerMove = FindObjectOfType<PlayerMove>();
-        cardProcessing = FindObjectOfType<CardProcessing>();
-
-
-        energyFillMaterial.SetFloat("_FillLevel", 1f);
-
-
         if (instance == null)
         {
             instance = this;
@@ -93,24 +99,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Start()
     {
-        NumCardText.text = CardManager.handCardCount.ToString();
-        TurnText.text = BattleManager.turncount.ToString();
+        cardProcessing = FindObjectOfType<CardProcessing>();
+        wizardDataText.SetActive(true);
     }
 
-    public void NTest()
+    void Update()
     {
-        Player player = cardProcessing.currentPlayer;
-
-        energyFillMaterial.DOFloat(player.playerData.activePoint * 0.25f, "_FillLevel", 1f);
-        //energyFillMaterial.SetFloat("_FillLevel", player.playerData.activePoint * 0.2f);
-        energyValue.text = player.playerData.activePoint.ToString();
-        
-        if(player.playerData.activePoint == 1)
+        if (cardProcessing.currentPlayerObj != null)
         {
-            changeBar = true;
+            wizardTexts[0].text = cardProcessing.currentPlayer.playerData.Hp.ToString();
+            wizardTexts[1].text = cardProcessing.currentPlayer.playerData.Damage.ToString();
+            wizardTexts[2].text = cardProcessing.currentPlayer.playerData.Armor.ToString();
+            wizardTexts[3].text = cardProcessing.currentPlayer.playerData.CriticalHit.ToString();
+
+            switch (cardProcessing.currentPlayerObj.name)
+            {
+                case "Wizard":
+                    wizardProfile.SetActive(true);
+                    warriorProfile.SetActive(false);
+                    break;
+                case "Warrior(HP)":
+                    warriorProfile.SetActive(true);
+                    wizardProfile.SetActive(false);
+                    break;
+            }
         }
+
+        NumCardText.text = CardManager.handCardCount.ToString();
+        TurnText.text = BattleManager.turncount.ToString();
     }
 
     public void ShowLayerWindow(int index)
@@ -183,7 +201,6 @@ public class UIManager : MonoBehaviour
         win_inGroupButton.SetActive(true);
         win_outGroupButton.SetActive(false);
     }
-
     public void ExittoLobby()
     {
         SceneManager.LoadScene("01.Lobby");

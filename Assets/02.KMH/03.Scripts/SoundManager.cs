@@ -43,6 +43,7 @@ public class SoundManager : MonoBehaviour
 
         backgroundMusicDictionary = new Dictionary<string, AudioClip>();
         soundEffectsDictionary = new Dictionary<string, AudioClip>();
+        
 
         foreach (var sound in backgroundMusic)
         {
@@ -112,4 +113,5 @@ public class SoundManager : MonoBehaviour
         soundEffectsSource.volume = Mathf.Clamp(volume, 0f, 1f);
         effectvolume = volume;  
     }
+
 }

@@ -19,11 +19,11 @@ public class CardProcessing : MonoBehaviour
 
     private WeaponController weaponController;
     [HideInInspector] public Player currentPlayer;
-    /*[HideInInspector] */public GameObject currentPlayerObj;
+    [HideInInspector] public GameObject currentPlayerObj;
 
     private PlayerState playerState;
 
-    public GameObject selectedTarget = null;
+    [HideInInspector] public GameObject selectedTarget = null;
 
     [HideInInspector] public float cardUseDistance = 0;
     [HideInInspector] public bool cardUseDistanceInRange = false;

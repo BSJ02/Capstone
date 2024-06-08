@@ -242,6 +242,5 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = false;
         }
-
     }
 }
