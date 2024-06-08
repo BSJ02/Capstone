@@ -79,7 +79,6 @@ public class PlayerMove : MonoBehaviour
                             SetDestination(targetPos);
                             List<Vector2Int> move = PathFinding();
 
-
                             StartCoroutine(MoveSmoothly(move));
 
 

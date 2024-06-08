@@ -218,7 +218,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            if (CardManager.handCardCount < 8)
+            if (CardManager.instance.handCardList.Count < 7)
             {
                 cardManager.CreateRandomCard();
             }

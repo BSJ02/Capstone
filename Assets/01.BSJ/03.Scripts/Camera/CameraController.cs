@@ -53,20 +53,21 @@ public class CameraController : MonoBehaviour
         {
             CameraFollowObject();
 
-            if (!isMainCameraMoving && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            if (!isMainCameraMoving && !CardManager.instance.isCardSorting && !CardManager.instance.waitAddCard
+                    && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
-                HandleMouseMovement();
+                cardProcessing.currentPlayerObj = null;
+                HandleMovement();
+                CameraFollowObject();
             }
             else if (cardProcessing.currentPlayerObj != null)
             {
                 FollowTarget(cardProcessing.currentPlayerObj);
                 CameraFollowObject();
             }
-            
             else
             {
                 cardProcessing.currentPlayerObj = null;
-                isMainCameraMoving = false;
             }
         }
         else if (BattleManager.instance.battleState == BattleState.MonsterTurn)
@@ -85,12 +86,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void CameraMoveButton()
-    {
-        isMainCameraMoving = true;
-    }
-
-    private void HandleMouseMovement()
+    private void HandleMovement()
     {
         Vector3 move = Vector3.zero;
         float time = Time.deltaTime;
@@ -194,13 +190,12 @@ public class CameraController : MonoBehaviour
                 ZoomCamera(false);
                 StartCoroutine(FadeController.instance.FadeInOut());
                 virtualCamera.transform.position = originalCameraPos;
+                isMainCameraMoving = false;
                 break;
             }
 
             move.x = moveSpeed * time;
             virtualCamera.transform.position += move;
-
-            isMainCameraMoving = false;
             yield return null;
         }
 
