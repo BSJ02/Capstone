@@ -2985,6 +2985,26 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2019426314150595861, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019426314150595861, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019426314150595861, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019426314150595861, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3120830489633122900, guid: 83f9358b8d4a5354586414638e2bc797,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3045,11 +3065,69 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4601129310942704567, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601129310942704567, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601129310942704567, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4601129310942704567, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082925276528684069, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082925276528684069, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082925276528684069, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082925276528684069, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5528001254623046702, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 222fa59917e1ebc41bce7ca8dfaa6dc1,
+        type: 3}
+    - target: {fileID: 7234758296118729517, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a0927967be2a884abab61ba7e67ea2c,
+        type: 3}
     - target: {fileID: 7677374125316050667, guid: 83f9358b8d4a5354586414638e2bc797,
         type: 3}
       propertyPath: state
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8074166013566522886, guid: 83f9358b8d4a5354586414638e2bc797,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fc3859706033b094a8c719232ae946e5,
+        type: 3}
     - target: {fileID: 8936418376464323636, guid: 83f9358b8d4a5354586414638e2bc797,
         type: 3}
       propertyPath: m_IsTrigger
@@ -4288,10 +4366,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  playerSelectList: {fileID: 11400000, guid: 48dc325c320408d44a3ad24224d626f2, type: 2}
   deckOffset: {x: 2, y: -11.3, z: 2}
   panelOffset: {x: 6, y: -8, z: 6}
   handCardList: []
   addCardList: []
+  cardDeck: []
   deckObject: {fileID: 0}
   panelObject_Group: {fileID: 0}
   handCardObject: []
@@ -4315,9 +4395,10 @@ MonoBehaviour:
     cardPower: []
     cardDistance: 0
     cardSprite: {fileID: 0}
+    cardTarget: 0
+    cardRanke: 0
     cardPercent: 0
     cardType: 0
-    cardTarget: 0
     isCardMoveEnabled: 0
 --- !u!4 &401504239
 Transform:
@@ -6053,6 +6134,7 @@ MonoBehaviour:
   shouldSummon: 0
   shouldFlamePillar: 0
   shouldLifeDrain: 0
+  usingMagicShield: 0
 --- !u!114 &615802236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7644,11 +7726,11 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 787660785}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &808529940 stripped
+--- !u!1 &790343735 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 7027815022578739848, guid: fa42ea19649f60f41a7ec450713ccd92,
+  m_CorrespondingSourceObject: {fileID: 4081441714895756914, guid: 83f9358b8d4a5354586414638e2bc797,
     type: 3}
-  m_PrefabInstance: {fileID: 787660785}
+  m_PrefabInstance: {fileID: 202564701}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &814960940
 GameObject:
@@ -11269,7 +11351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1247779662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13593,12 +13675,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1422784436 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7027815022578739848, guid: fa42ea19649f60f41a7ec450713ccd92,
-    type: 3}
-  m_PrefabInstance: {fileID: 868989495}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1422784444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6908237188234119209, guid: fa42ea19649f60f41a7ec450713ccd92,
@@ -15864,8 +15940,7 @@ MonoBehaviour:
   - {fileID: 1229610214}
   playerList: 
   monsters:
-  - {fileID: 1422784436}
-  - {fileID: 808529940}
+  - {fileID: 790343735}
   selectedMonster: {fileID: 0}
   turn_UI:
   - {fileID: 1595686701}
