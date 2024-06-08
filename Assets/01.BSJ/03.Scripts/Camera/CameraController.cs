@@ -45,6 +45,7 @@ public class CameraController : MonoBehaviour
 
         characterOffset = new Vector3(-11, 11f, -11);
         originalOrthographicSize = 6f;
+        virtualCamera.m_Lens.OrthographicSize = originalOrthographicSize;
     }
 
     private void Update()

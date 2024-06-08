@@ -135,6 +135,62 @@ public class CardManager : MonoBehaviour
         isSettingCards = true;
     }
 
+    public void HandCardFade()
+    {
+        for (int i = 0; i < handCardObject.Count; i++)
+        {
+
+            Transform canvasTransform = transform.Find("Canvas");
+            Transform FadeImageTransform = canvasTransform.Find("Fade Image");
+            GameObject FadeImageObj = FadeImageTransform.gameObject;
+            Card card = handCardList[i];
+
+            switch (cardProcessing.currentPlayerObj.name)
+            {
+                case "Warrior(ATK)":
+                    if (card.cardType == Card.CardType.WarriorCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Warrior(HP)":
+                    if (card.cardType == Card.CardType.WarriorCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Wizard":
+                    if (card.cardType == Card.CardType.WizardCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Archer":
+                    if (card.cardType == Card.CardType.ArcherCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+            }
+        }
+    }
+
     public GameObject FindPanelGroupChildObject(string childObjectName)
     {
         Transform childTransform = panelObject_Group.transform.Find(childObjectName);
