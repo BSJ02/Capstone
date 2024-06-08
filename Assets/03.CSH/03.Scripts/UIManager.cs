@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using Unity.VisualScripting;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using DG.Tweening;
 using TMPro;
 using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
+using Unity.Burst.CompilerServices;
 
 public class UIManager : MonoBehaviour
 {
-    
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
@@ -21,11 +21,9 @@ public class UIManager : MonoBehaviour
     public PlayerData warriorData;
     public PlayerData wizardData;
 
-
     public GameObject gameOverUI;
 
-
-    //πˆ∆∞ ±◊∑Ï ¡¶æÓ º±æ
+    //Î≤ÑÌäº Í∑∏Î£π Ï†úÏñ¥ ÏÑ†Ïñ∏
     public RectTransform buttonLayoutGroup;
     public RectTransform informPanelGroup;
     public GameObject win_inGroupButton;
@@ -33,15 +31,12 @@ public class UIManager : MonoBehaviour
     public GameObject inGroupButton;
     public GameObject outGroupButton;
 
-
-
     public ScriptableObject playerData;
-
 
     public CardProcessing cardProcessing;
    
 
-    //≈œ ∆‰¿ÃµÂ ¿Œ / æ∆øÙ
+    //ÌÑ¥ ÌéòÏù¥Îìú Ïù∏ / ÏïÑÏõÉ
     private CanvasGroup cg;
     public float fadeTime = 1f;
     float accumTime = 0f;
@@ -73,10 +68,8 @@ public class UIManager : MonoBehaviour
     public Text[] warriorTexts;
     public Text[] wizardTexts;
 
-
     public Material warriorHpFillMaterial;
     public Material wizardHpFillMaterial;
-
 
 
     public static UIManager Instance
@@ -106,75 +99,37 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        cardProcessing = FindObjectOfType<CardProcessing>();
+        wizardDataText.SetActive(true);
+    }
+
     void Update()
     {
-        warriorTexts[0].text = warriorData.Hp.ToString();
-        warriorTexts[1].text = warriorData.Damage.ToString();
-        warriorTexts[2].text = warriorData.Armor.ToString();
-        warriorTexts[3].text = warriorData.CriticalHit.ToString();
-
-        wizardTexts[0].text = wizardData.Hp.ToString();
-        wizardTexts[1].text = wizardData.Damage.ToString();
-        wizardTexts[2].text = wizardData.Armor.ToString();
-        wizardTexts[3].text = wizardData.CriticalHit.ToString();
-
-
-
-
-        if (Input.GetMouseButtonDown(0))
+        if (cardProcessing.currentPlayerObj != null)
         {
-            // ∏∂øÏΩ∫ ¿ßƒ°ø°º≠ ∑π¿Ãƒ≥Ω∫∆Æ∏¶ Ωı¥œ¥Ÿ
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            wizardTexts[0].text = cardProcessing.currentPlayer.playerData.Hp.ToString();
+            wizardTexts[1].text = cardProcessing.currentPlayer.playerData.Damage.ToString();
+            wizardTexts[2].text = cardProcessing.currentPlayer.playerData.Armor.ToString();
+            wizardTexts[3].text = cardProcessing.currentPlayer.playerData.CriticalHit.ToString();
 
-            if (Physics.Raycast(ray, out hit))
+            switch (cardProcessing.currentPlayerObj.name)
             {
-                // ∑π¿Ãƒ≥Ω∫∆Æ∞° ∏¬¿∫ ø¿∫Í¡ß∆Æ »Æ¿Œ
-                if (hit.transform != null)
-                {
-                    // ∏¬¿∫ ø¿∫Í¡ß∆Æ∞° ∆Ø¡§ ≈¬±◊∏¶ ∞°¡¯ ∞ÊøÏ √≥∏Æ
-                    if (hit.transform.name == "Warrior(HP)")
-                    {
-                        if (warriorDataText != null)
-                        {
-                            warriorDataText.SetActive(true);
-                            wizardDataText.SetActive(false);
-
-                            warriorProfile.SetActive(true);
-                            wizardProfile.SetActive(false);
-                        }
-                    }
-
-                    if (hit.transform.name == "Wizard")
-                    {
-                        if (wizardDataText != null)
-                        {
-                            wizardDataText.SetActive(true);
-                            warriorDataText.SetActive(false);
-
-                            wizardProfile.SetActive(true);
-                            warriorProfile.SetActive(false);
-
-                        }
-                    }
-                }
+                case "Wizard":
+                    wizardProfile.SetActive(true);
+                    warriorProfile.SetActive(false);
+                    break;
+                case "Warrior(HP)":
+                    warriorProfile.SetActive(true);
+                    wizardProfile.SetActive(false);
+                    break;
             }
         }
-
-     
-
-        
 
         NumCardText.text = CardManager.handCardCount.ToString();
         TurnText.text = BattleManager.turncount.ToString();
     }
-
-
-
-
-
-
-
 
     public void ShowLayerWindow(int index)
     {

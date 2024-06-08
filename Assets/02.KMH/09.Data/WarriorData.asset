@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: WarriorData
   m_EditorClassIdentifier: 
   Name: "\uC804\uC0AC"
-  Hp: 55
   ID: 0
   Hp: 100
   MaxHp: 100
@@ -22,6 +21,6 @@ MonoBehaviour:
   Armor: 100
   currentArmor: 100
   CriticalHit: 0
-  activePoint: 100
-  MaxActivePoint: 100
+  activePoint: 101
+  MaxActivePoint: 101
   detectionRange: 1

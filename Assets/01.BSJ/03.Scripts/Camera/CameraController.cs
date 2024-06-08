@@ -22,10 +22,10 @@ public class CameraController : MonoBehaviour
     [HideInInspector] public bool startGame = true;
 
     // Zoom
-    public GameObject canvas;
+    public GameObject panel;
     public GameObject zoomPanel;
     private float originalOrthographicSize;
-    private float zoomSize = 4f;
+    private float zoomSize;
 
     private void Awake()
     {
@@ -45,6 +45,7 @@ public class CameraController : MonoBehaviour
 
         characterOffset = new Vector3(-11, 11f, -11);
         originalOrthographicSize = 6f;
+        zoomSize = 4f;
         virtualCamera.m_Lens.OrthographicSize = originalOrthographicSize;
     }
 
@@ -166,7 +167,7 @@ public class CameraController : MonoBehaviour
 
         CardManager.instance.deckObject.SetActive(!zoomIn);
         CardManager.instance.panelObject_Group.SetActive(!zoomIn);
-        canvas.SetActive(!zoomIn);
+        panel.SetActive(!zoomIn);
         zoomPanel.SetActive(zoomIn);
     }
 
