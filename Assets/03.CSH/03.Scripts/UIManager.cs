@@ -94,6 +94,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         NumCardText.text = CardManager.handCardCount.ToString();
+        TurnText.text = BattleManager.turncount.ToString();
     }
 
     public void NTest()

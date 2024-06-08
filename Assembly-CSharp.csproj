@@ -65,10 +65,12 @@
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\CardsPile.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Map\PlatformMove.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\ParticleController.cs" />
+    <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\MonsterSkill.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\Player\PlayerManager.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\WizardCardData.cs" />
     <Compile Include="Assets\Asset\Sound\Karugamo\Scripts\Audio\AudioManager.cs" />
-    <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\MonsterSkill.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\AnimationEvent\BaseAnimationEvent.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\VolumeControl.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardProcessing.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardColorChanger.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Windows\CloseTabEditorShortcut.cs" />
@@ -77,13 +79,10 @@
     <Compile Include="Assets\04.LCH\03.Scripts\Monster\MonsterMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\RMovement.cs" />
     <Compile Include="Assets\Asset\Sound\Karugamo\Sample\Scripts\Sample.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\PlayerMove.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\PlayerData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\ArcherCardData.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\GameManager.cs" />
     <Compile Include="Assets\Asset\Sound\Karugamo\Scripts\Audio\Audio.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\PlayerSelectList.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\Player.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\CardData\BaseCardData.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Status\CharacterStatusEffect.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Status\StatusEffectManager.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\Player\CharacterSelector.cs" />
     <Compile Include="Assets\Asset\UI\GothicUI\Scripts\DayDurationController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\GameSystem\BattleManager.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
@@ -110,15 +110,15 @@
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\02.KMH\03.Scripts\SoundManager.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\Player\Player.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Card\CardInform.cs" />
     <Compile Include="Assets\Asset\Hand&amp;Deck\Scripts\DemoScript.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\PlayerManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\UI\LookAtCamera.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\DataBase\DataManager.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\Map\Tile.cs" />
-    <Compile Include="Assets\02.KMH\03.Scripts\CharacterSelector.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\SkillData.cs" />
     <Compile Include="Assets\Particle\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Asset\UI\GothicUI\Scripts\HPFlowController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\DataBase\CharacterSelect.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\SkeletonSkill.cs" />
@@ -135,6 +135,7 @@
     <Compile Include="Assets\02.KMH\03.Scripts\ChangeColor.cs" />
     <Compile Include="Assets\01.BSJ\03.Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\04.LCH\03.Scripts\MonsterSkill\DragonSkill.cs" />
+    <Compile Include="Assets\02.KMH\03.Scripts\Player\PlayerSelectList.cs" />
     <Compile Include="Assets\03.CSH\03.Scripts\CardTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +521,18 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

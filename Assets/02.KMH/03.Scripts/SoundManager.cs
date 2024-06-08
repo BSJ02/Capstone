@@ -100,4 +100,5 @@ public class SoundManager : MonoBehaviour
     {
         soundEffectsSource.volume = Mathf.Clamp(volume, 0f, 1f);
     }
+
 }
