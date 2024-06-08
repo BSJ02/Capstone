@@ -6,25 +6,31 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public string Name;
+    public int ID;
 
     public float Hp;
     public float MaxHp;
 
     public float Damage;
+    public float currentDamage;
+
     public float Armor;
+    public float currentArmor;
 
     public float CriticalHit;
 
     public int activePoint;
     public int MaxActivePoint;
-    
-    public void ResetWarriorData()
+
+    public int detectionRange;
+
+
+    public void ResetData()
     {
         Hp = MaxHp;
-        Damage = 20f;
-        Armor = 100f;
+        Damage = currentDamage;
+        Armor = currentArmor;
         CriticalHit = 0f;
-        MaxActivePoint = 100;
         activePoint = MaxActivePoint;
     }
 

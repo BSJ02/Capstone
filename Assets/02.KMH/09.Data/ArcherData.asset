@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: ArcherData
   m_EditorClassIdentifier: 
+  ID: 1
   Hp: 0
   MaxHp: 100
   Damage: 20

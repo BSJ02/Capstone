@@ -142,6 +142,12 @@ public class BattleManager : MonoBehaviour
             StartCoroutine(EndStage());
             isEnd = true;
         }
+
+        if(players.Count <= 0 && !isEnd)
+        {
+            StartCoroutine(EndStage());
+            isEnd = true;
+        }
     }
 
     IEnumerator EndStage()

@@ -11,7 +11,6 @@ public class PlayerMove : MonoBehaviour
 
     private GameObject playerChoice;
 
-    private MapGenerator mapGenerator;
     private CardProcessing cardProcessing;
     private PlayerManager playerManager;
 
@@ -26,16 +25,12 @@ public class PlayerMove : MonoBehaviour
     private List<Monster> detectedMonsters = new List<Monster>();
     private Monster clickedMonster;
 
-/*    [SerializeField]
-    private GameObject clickedPlayer;*/
-
     public bool isMoving = false;
     private bool isActionSelect = false;
 
     private void Awake()
     {
         cardProcessing = FindObjectOfType<CardProcessing>();
-        mapGenerator = FindObjectOfType<MapGenerator>();
         playerManager = FindObjectOfType<PlayerManager>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
     }
@@ -50,8 +45,8 @@ public class PlayerMove : MonoBehaviour
         playerPos = new Vector2Int((int)playerManager.clickedPlayer.transform.position.x, (int)playerManager.clickedPlayer.transform.position.z);
         targetPos = new Vector2Int(clickedTargetPos.x, clickedTargetPos.y);
 
-        StartNode = mapGenerator.totalMap[playerPos.x, playerPos.y];
-        EndNode = mapGenerator.totalMap[targetPos.x, targetPos.y];
+        StartNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
+        EndNode = MapGenerator.instance.totalMap[targetPos.x, targetPos.y];
 
         // MapGenerator.instance.totalMap[playerPos.x, playerPos.y].SetCoord(playerPos.x, playerPos.y, false); 이동하기 전에 플레이어의 타일을 isWall = false 하는 코드(Ghost Code)
     }
@@ -63,6 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !cardProcessing.usingCard)
             {
                 if (hit.collider != null)
@@ -70,7 +66,7 @@ public class PlayerMove : MonoBehaviour
                     if (hit.collider.CompareTag("Tile"))
                     {
                         Tile clickedTile = hit.collider.GetComponent<Tile>();
-                        if (clickedTile != null && mapGenerator.IsHighlightedTile(clickedTile))
+                        if (clickedTile != null && MapGenerator.instance.IsHighlightedTile(clickedTile))
                         {
                             Vector2Int targetPos = ReturnTargetPosition(clickedTile.coord);
 
@@ -82,7 +78,7 @@ public class PlayerMove : MonoBehaviour
                             StartCoroutine(MoveSmoothly(move));
 
 
-                            mapGenerator.ResetTotalMap();
+                            MapGenerator.instance.ResetTotalMap();
                         }
                         else
                         {
@@ -128,7 +124,7 @@ public class PlayerMove : MonoBehaviour
 
                     if (hit.collider.CompareTag("Player"))
                     {
-                        mapGenerator.ClearHighlightedTiles();
+                        MapGenerator.instance.ClearHighlightedTiles();
                         playerManager.detectedMonsters.Clear();
                         playerChoice.SetActive(true);
                         playerManager.clickedPlayer = hit.collider.gameObject;
@@ -171,7 +167,7 @@ public class PlayerMove : MonoBehaviour
 
     private void ResetSelection()
     {
-        mapGenerator.ClearHighlightedTiles();
+        MapGenerator.instance.ClearHighlightedTiles();
         playerManager.detectedMonsters.Clear();
         //playerManager.clickedPlayer = null;
         clickedMonster = null;
@@ -183,7 +179,7 @@ public class PlayerMove : MonoBehaviour
 
     private void ResetTilesColor()
     {
-        foreach (Tile tile in mapGenerator.totalMap)
+        foreach (Tile tile in MapGenerator.instance.totalMap)
         {
             if (tile != null)
             {
@@ -254,7 +250,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2Int ReturnTargetPosition(Coord destination)
     {
         Vector2Int clickedCoord = new Vector2Int(destination.x, destination.y);
-        mapGenerator.ClearHighlightedTiles();
+        MapGenerator.instance.ClearHighlightedTiles();
         return clickedCoord;
     }
 
@@ -315,63 +311,30 @@ public class PlayerMove : MonoBehaviour
 
     private void OpenListAdd(int checkX, int checkY)
     {
-        if (checkX < 0 || checkX >= mapGenerator.totalMap.GetLength(0) || checkY < 0 || checkY >= mapGenerator.totalMap.GetLength(1))
+        if (checkX < 0 || checkX >= MapGenerator.instance.totalMap.GetLength(0) || checkY < 0 || checkY >= MapGenerator.instance.totalMap.GetLength(1))
             return;
 
-        if (CloseList.Contains(mapGenerator.totalMap[checkX, checkY]))
+        if (CloseList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
             return;
 
-        if (mapGenerator.totalMap[checkX, checkY].coord.isWall)
+        if (MapGenerator.instance.totalMap[checkX, checkY].coord.isWall)
             return;
 
-        if (OpenList.Contains(mapGenerator.totalMap[checkX, checkY]))
+        if (OpenList.Contains(MapGenerator.instance.totalMap[checkX, checkY]))
         {
             int newG = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            if (newG < mapGenerator.totalMap[checkX, checkY].coord.G)
+            if (newG < MapGenerator.instance.totalMap[checkX, checkY].coord.G)
             {
-                mapGenerator.totalMap[checkX, checkY].coord.G = newG;
-                mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.G = newG;
+                MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
             }
         }
         else
         {
-            mapGenerator.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
-            mapGenerator.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - EndNode.coord.x) + Mathf.Abs(checkY - EndNode.coord.y)) * 10;
-            mapGenerator.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
-            OpenList.Add(mapGenerator.totalMap[checkX, checkY]);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.G = CurrentNode.coord.G + (Mathf.Abs(CurrentNode.coord.x - checkX) == 0 || Mathf.Abs(CurrentNode.coord.y - checkY) == 0 ? 10 : 14);
+            MapGenerator.instance.totalMap[checkX, checkY].coord.H = (Mathf.Abs(checkX - EndNode.coord.x) + Mathf.Abs(checkY - EndNode.coord.y)) * 10;
+            MapGenerator.instance.totalMap[checkX, checkY].coord.parentNode = CurrentNode;
+            OpenList.Add(MapGenerator.instance.totalMap[checkX, checkY]);
         }
     }
-
-    //private void OnMouseDown()
-    //{
-    //    if (!isMoving)
-    //    {
-    //        mapGenerator.HighlightPlayerRange(transform.position, player.playerData.activePoint);
-    //    }
-    //}
-
-/*    // 몬스터 감지
-    public void GetSurroundingTiles(Vector2Int playerPos)
-    {
-        detectedMonsters.Clear();
-
-        Monster[] monsters = FindObjectsOfType<Monster>();
-
-        foreach (Monster m in monsters)
-        {
-            Vector3 monsterPosition = m.transform.position;
-            Vector2Int monsterPos = new Vector2Int((int)monsterPosition.x, (int)monsterPosition.z);
-
-            //플레이어와 몬스터 거리 계산
-            int distanceX = Mathf.Abs(playerPos.x - monsterPos.x);
-            int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
-
-            //몬스터가 감지 범위 안에 있으면 실행
-            if (distanceX <= detectionRange && distanceY <= detectionRange)
-            {
-                detectedMonsters.Add(m);
-                Debug.Log(m);
-            }
-        }
-    }*/
 }
