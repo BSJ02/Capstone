@@ -11,6 +11,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
+  - {fileID: 4833769218129379975}
   - {fileID: 2742662471206577739}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
@@ -125,6 +126,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &4833769218129379975
 --- !u!1101 &2742662471206577739
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

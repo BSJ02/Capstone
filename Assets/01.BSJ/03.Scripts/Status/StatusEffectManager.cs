@@ -47,8 +47,8 @@ public class StatusEffectManager : MonoBehaviour
             10, // Damage
             (type, value) => type.TakeDamage(value),
             (type, value) => { },
-            ParticleController.instance.fireballEffectPrefab,
-            "Burn"
+            ParticleController.instance.fireballEffectPrefab,   // Particle
+            "Burn"  // SoundName
         );
 
         target.ApplyStatusEffect(poisonEffect);
@@ -62,8 +62,8 @@ public class StatusEffectManager : MonoBehaviour
             20, // Damage
             (type, value) => type.TakeDamage(value),
             (type, value) => { },
-            ParticleController.instance.fireballEffectPrefab,
-            "Burn"
+            ParticleController.instance.fireballEffectPrefab,   // Particle
+            "Burn"  // SoundName
         );
 
         target.ApplyStatusEffect(burnEffect);

@@ -171,6 +171,9 @@ GameObject:
   - component: {fileID: 4002613661230772334}
   - component: {fileID: 608373676603901999}
   - component: {fileID: 7127357808619581529}
+  - component: {fileID: 1216162319827503920}
+  - component: {fileID: 294322751810918084}
+  - component: {fileID: 7201808494531031324}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -243,6 +246,66 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1216162319827503920
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747909244101185547}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.112253845, y: 0.60841054, z: 1.8515875}
+  m_Center: {x: 0.008464313, y: -0.003397574, z: 0.65336275}
+--- !u!54 &294322751810918084
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747909244101185547}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &7201808494531031324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747909244101185547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34130d3fa0eb4344984b8536de684478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820590354948077001
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,15 +965,17 @@ GameObject:
   - component: {fileID: 8936418376464323636}
   - component: {fileID: 7677374125316050667}
   - component: {fileID: 8298057683656190298}
-  - component: {fileID: 2747920861518072591}
   - component: {fileID: 5930998415036747080}
+  - component: {fileID: 2747920861518072591}
+  - component: {fileID: 8010370413541889660}
+  - component: {fileID: 7346140423243440025}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3120830489633122900
 Transform:
   m_ObjectHideFlags: 0
@@ -920,7 +985,7 @@ Transform:
   m_GameObject: {fileID: 4081441714895756914}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4, y: 0.35, z: 3}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -966,7 +1031,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1000,6 +1065,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {x: 0, y: 0}
+--- !u!114 &5930998415036747080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081441714895756914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb84ea51095d46744af078de20db9b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 49cda95be329f464bbe5da66f8a6ea04, type: 2}
 --- !u!114 &2747920861518072591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1015,7 +1093,7 @@ MonoBehaviour:
   hp: {fileID: 491285758456143656}
   damage: {fileID: 6045046469510007092}
   amor: {fileID: 737262502962038564}
---- !u!114 &5930998415036747080
+--- !u!114 &8010370413541889660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1024,11 +1102,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 4081441714895756914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb84ea51095d46744af078de20db9b95, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a8d98cf2b3276b4a8d731389d89769b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: 49cda95be329f464bbe5da66f8a6ea04, type: 2}
-  spawnPosition: {fileID: 5269238403012628912}
+--- !u!114 &7346140423243440025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4081441714895756914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5214e7844dceb22499de521d655013cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack_effect: {fileID: 0}
+  getHit_effect: {fileID: 0}
+  die_effect: {fileID: 1280141305896002, guid: 358860e1f94f3de47972f6cd7cc123f2, type: 3}
 --- !u!1 &4099451842721156804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1931,7 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

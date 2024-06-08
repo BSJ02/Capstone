@@ -1,12 +1,9 @@
-
 using UnityEngine;
 using UnityEditor;
-
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
 {
-
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -16,6 +13,11 @@ public class MapGeneratorEditor : Editor
         if (GUILayout.Button("Bake Map"))
         {
             mapGenerator.CreateMap(mapGenerator.garo, mapGenerator.sero);
+        }
+
+        if (GUILayout.Button("Delete Map"))
+        {
+            mapGenerator.DeleteMap();
         }
     }
 
@@ -36,5 +38,4 @@ public class MapGeneratorEditor : Editor
 
         Handles.EndGUI();
     }
-
 }

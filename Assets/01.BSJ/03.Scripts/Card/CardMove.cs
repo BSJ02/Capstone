@@ -10,6 +10,7 @@ using static Card;
 public class CardMove : MonoBehaviour
 {
     private CardProcessing cardProcessing;
+    private PlayerMove playerMove;
 
     private Vector3 offset;
     private float distanceToCamera;
@@ -27,13 +28,14 @@ public class CardMove : MonoBehaviour
         DOTween.Init();
 
         cardProcessing = FindObjectOfType<CardProcessing>();
+        playerMove = FindObjectOfType<PlayerMove>();
 
         originalScale = this.transform.localScale;   // 기본 크기 저장
     }
 
     private void Update()
     {
-        if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard)
+        if (IsMouseOverCard(gameObject) && !CardManager.instance.waitAddCard && !playerMove.isMoving)
         {
             int index = CardManager.instance.handCardObject.IndexOf(gameObject) + 1;
             MoveCardToPosAndScale(originalPosition + Vector3.up * 0.5f, scaleFactor);

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: WizardData
   m_EditorClassIdentifier: 
+  Name: "\uB9C8\uBC95\uC0AC"
+  Hp: 106
+  MaxHp: 120
   ID: 2
   Hp: 80
   MaxHp: 80

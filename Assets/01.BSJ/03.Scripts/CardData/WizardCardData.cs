@@ -11,7 +11,6 @@ public class WizardCardData : MonoBehaviour
     public static WizardCardData instance;
 
     private WeaponController weaponController;
-    private ParticleController particleController;
 
     [Header(" # CardProcessing")]
     public CardProcessing cardProcessing;
@@ -29,6 +28,7 @@ public class WizardCardData : MonoBehaviour
     [HideInInspector] public bool shouldSummon = false;
     [HideInInspector] public bool shouldFlamePillar = false;
     [HideInInspector] public bool shouldLifeDrain = false;
+    [HideInInspector] public bool usingMagicShield = false;
 
     private void Awake()
     {
@@ -40,11 +40,6 @@ public class WizardCardData : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        particleController = FindObjectOfType<ParticleController>();
     }
 
     // Wizard Cards --------------------------------
@@ -61,7 +56,7 @@ public class WizardCardData : MonoBehaviour
             shouldTeleport = true;
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
+            ParticleController.instance.ApplyPlayerEffect(ParticleController.instance.teleportEffectPrefab, cardProcessing.currentPlayerObj);
         }
         else
         {
@@ -85,8 +80,8 @@ public class WizardCardData : MonoBehaviour
 
             cardProcessing.currentPlayer.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, cardProcessing.currentPlayerObj);
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget);
+            ParticleController.instance.ApplyPlayerEffect(ParticleController.instance.teleportEffectPrefab, cardProcessing.currentPlayerObj);
+            ParticleController.instance.ApplyPlayerEffect(ParticleController.instance.teleportEffectPrefab, selectedTarget);
         }
         else
         {
@@ -148,20 +143,16 @@ public class WizardCardData : MonoBehaviour
     public void UseMagicShield(Card card, GameObject selectedTarget)
     {
         Player player = cardProcessing.currentPlayer;
+        GameObject playerObj = cardProcessing.currentPlayerObj;
         if (player != null)
         {
+            GameObject particlePrefab = ParticleController.instance.magicShieldEffectPrefab;
+
             player.ChargeAnim(selectedTarget);
 
-            particleController.ApplyPlayerEffect(particleController.healEffectPrefab, selectedTarget);
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab, playerObj);
 
-            if (player.playerData.Hp + card.cardPower[0] >= player.playerData.MaxHp)
-            {
-                player.playerData.Hp = player.playerData.MaxHp;
-            }
-            else
-            {
-                player.playerData.Hp += card.cardPower[0];
-            }
+            usingMagicShield = true;
         }
         else
         {
@@ -176,15 +167,16 @@ public class WizardCardData : MonoBehaviour
         Player player = cardProcessing.currentPlayer;
         if (tile != null && !tile.coord.isWall)
         {
-            targetPos = tile.transform.position;
-
             shouldSummon = true;
+
+            targetPos = tile.transform.position;
 
             player.ChargeAnim(selectedTarget);
 
+            GameObject particlePrefab = ParticleController.instance.teleportEffectPrefab;
             SoundManager.instance.PlaySoundEffect("SummonObstacle");
 
-            particleController.ApplyPlayerEffect(particleController.teleportEffectPrefab, selectedTarget, 0.35f, Quaternion.identity , 1);
+            ParticleController.instance.ApplyPlayerEffect(particlePrefab, selectedTarget, 0.35f, Quaternion.identity , 1);
 
             cardProcessing.cardUseDistance = card.cardDistance;
         }

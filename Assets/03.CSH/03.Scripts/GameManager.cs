@@ -5,14 +5,10 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerData playerData;
-    public Player player;
-
-    public Text remainingDistance;
 
     //UI
     public GameObject[] windowUI;
@@ -21,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public Text objectNameText;
     public Text objectHealthText;
+
+    public GameObject optionUI;
 
     public GameObject[] cardList;
 
@@ -44,13 +42,25 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
 
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
         else
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionUI != null)
+            {
+                bool isActive = optionUI.activeSelf;
+                optionUI.SetActive(!isActive);
+            }
         }
     }
 
@@ -120,4 +130,13 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+
+    public void OptionWindow()
+    {
+        if (optionUI != null)
+        {
+            bool isActive = optionUI.activeSelf;
+            optionUI.SetActive(!isActive);
+        }
+    }
 }

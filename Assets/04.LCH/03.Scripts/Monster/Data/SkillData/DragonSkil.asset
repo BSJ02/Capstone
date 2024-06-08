@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d837b76b53ccf94681028b533e15f0f, type: 3}
+  m_Name: DragonSkil
+  m_EditorClassIdentifier: 
+  SkillName: "\uBD88\uC774\uC57C!"
+  Description: "\uC2A4\uD50C\uB798\uC26C \uB370\uBBF8\uC9C0\n3\uBC88 \uD53C\uACA9\n\uD654\uC0C1
+    \uD6A8\uACFC(\uCD94\uAC00 \uC608\uC815) "
+  effect: {fileID: 1013337392893380462, guid: 374257c2496d98042bc9d343d1d951ce, type: 3}

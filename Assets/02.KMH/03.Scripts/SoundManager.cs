@@ -16,6 +16,9 @@ public class SoundManager : MonoBehaviour
     public Sound[] backgroundMusic;
     public Sound[] soundEffects;
 
+    private float bgmvolume = 0.5f;
+    private float effectvolume = 0.5f;
+
     private Dictionary<string, AudioClip> backgroundMusicDictionary;
     private Dictionary<string, AudioClip> soundEffectsDictionary;
     private AudioSource backgroundMusicSource;
@@ -23,7 +26,6 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
@@ -54,6 +56,14 @@ public class SoundManager : MonoBehaviour
 
         // BGM loop
         backgroundMusicSource.loop = true;
+    }
+
+    void Start()
+    {
+        PlayBackgroundMusic("BGM");
+        backgroundMusicSource.volume = bgmvolume;
+        soundEffectsSource.volume = effectvolume;
+        
     }
 
     public void PlayBackgroundMusic(string musicName)
@@ -94,11 +104,13 @@ public class SoundManager : MonoBehaviour
     public void SetBackgroundMusicVolume(float volume)
     {
         backgroundMusicSource.volume = Mathf.Clamp(volume, 0f, 1f);
+        bgmvolume = volume;
     }
 
     public void SetSoundEffectsVolume(float volume)
     {
         soundEffectsSource.volume = Mathf.Clamp(volume, 0f, 1f);
+        effectvolume = volume;  
     }
 
 }

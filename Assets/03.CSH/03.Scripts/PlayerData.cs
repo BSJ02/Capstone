@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObject/PlayerData", order = 2)]
 public class PlayerData : ScriptableObject
 {
+    public string Name;
     public int ID;
 
     public float Hp;
