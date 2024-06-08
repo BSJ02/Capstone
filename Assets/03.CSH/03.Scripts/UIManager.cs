@@ -15,10 +15,15 @@ public class UIManager : MonoBehaviour
     public GameObject[] windowUI;
     private GameObject currentlyActiveWindow;
 
+    public Camera mainCamera;
+
+    //data players
+    public PlayerData warriorData;
+    public PlayerData wizardData;
+
 
     public GameObject gameOverUI;
 
-    private PlayerMove playerMove;
 
     //버튼 그룹 제어 선언
     public RectTransform buttonLayoutGroup;
@@ -28,9 +33,7 @@ public class UIManager : MonoBehaviour
     public GameObject inGroupButton;
     public GameObject outGroupButton;
 
-    private int maxActivePoint = 4;
-    private int minActivePoint = 0;
-    private bool changeBar = false;
+
 
     public ScriptableObject playerData;
 
@@ -56,8 +59,25 @@ public class UIManager : MonoBehaviour
     public Text hpText;
     public Text distanceText;
     */
+
+    //text data
     public Text TurnText;
     public Text NumCardText;
+
+    public GameObject warriorDataText;
+    public GameObject wizardDataText;
+
+    public GameObject warriorProfile;
+    public GameObject wizardProfile;
+
+    public Text[] warriorTexts;
+    public Text[] wizardTexts;
+
+
+    public Material warriorHpFillMaterial;
+    public Material wizardHpFillMaterial;
+
+
 
     public static UIManager Instance
     {
@@ -75,13 +95,6 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        playerMove = FindObjectOfType<PlayerMove>();
-        cardProcessing = FindObjectOfType<CardProcessing>();
-
-
-        energyFillMaterial.SetFloat("_FillLevel", 1f);
-
-
         if (instance == null)
         {
             instance = this;
@@ -95,23 +108,73 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
+        warriorTexts[0].text = warriorData.Hp.ToString();
+        warriorTexts[1].text = warriorData.Damage.ToString();
+        warriorTexts[2].text = warriorData.Armor.ToString();
+        warriorTexts[3].text = warriorData.CriticalHit.ToString();
+
+        wizardTexts[0].text = wizardData.Hp.ToString();
+        wizardTexts[1].text = wizardData.Damage.ToString();
+        wizardTexts[2].text = wizardData.Armor.ToString();
+        wizardTexts[3].text = wizardData.CriticalHit.ToString();
+
+
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 마우스 위치에서 레이캐스트를 쏩니다
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 레이캐스트가 맞은 오브젝트 확인
+                if (hit.transform != null)
+                {
+                    // 맞은 오브젝트가 특정 태그를 가진 경우 처리
+                    if (hit.transform.name == "Warrior(HP)")
+                    {
+                        if (warriorDataText != null)
+                        {
+                            warriorDataText.SetActive(true);
+                            wizardDataText.SetActive(false);
+
+                            warriorProfile.SetActive(true);
+                            wizardProfile.SetActive(false);
+                        }
+                    }
+
+                    if (hit.transform.name == "Wizard")
+                    {
+                        if (wizardDataText != null)
+                        {
+                            wizardDataText.SetActive(true);
+                            warriorDataText.SetActive(false);
+
+                            wizardProfile.SetActive(true);
+                            warriorProfile.SetActive(false);
+
+                        }
+                    }
+                }
+            }
+        }
+
+     
+
+        
+
         NumCardText.text = CardManager.handCardCount.ToString();
         TurnText.text = BattleManager.turncount.ToString();
     }
 
-    public void NTest()
-    {
-        Player player = cardProcessing.currentPlayer;
 
-        energyFillMaterial.DOFloat(player.playerData.activePoint * 0.25f, "_FillLevel", 1f);
-        //energyFillMaterial.SetFloat("_FillLevel", player.playerData.activePoint * 0.2f);
-        energyValue.text = player.playerData.activePoint.ToString();
-        
-        if(player.playerData.activePoint == 1)
-        {
-            changeBar = true;
-        }
-    }
+
+
+
+
+
 
     public void ShowLayerWindow(int index)
     {

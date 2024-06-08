@@ -2306,7 +2306,7 @@ PrefabInstance:
     - target: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2570,10 +2570,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInform: {fileID: 11400000, guid: a882231901c2a284c9f45cdd05c449fb, type: 2}
+  playerSelectList: {fileID: 0}
   deckOffset: {x: 2, y: -11.3, z: 2}
   panelOffset: {x: 6, y: -8, z: 6}
   handCardList: []
   addCardList: []
+  cardDeck: []
   deckObject: {fileID: 0}
   panelObject_Group: {fileID: 0}
   handCardObject: []
@@ -2597,9 +2599,10 @@ MonoBehaviour:
     cardPower: []
     cardDistance: 0
     cardSprite: {fileID: 0}
+    cardTarget: 0
+    cardRanke: 0
     cardPercent: 0
     cardType: 0
-    cardTarget: 0
     isCardMoveEnabled: 0
 --- !u!4 &401504239
 Transform:
@@ -4357,6 +4360,7 @@ MonoBehaviour:
   shouldSummon: 0
   shouldFlamePillar: 0
   shouldLifeDrain: 0
+  usingMagicShield: 0
 --- !u!114 &615802236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6158,7 +6162,7 @@ PrefabInstance:
     - target: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12965,7 +12969,6 @@ MonoBehaviour:
   - {fileID: 1860442235}
   - {fileID: 1114047009}
   MaximumOfMonster: 3
-  monsterObj: {fileID: 0}
   isPlayerMove: 0
   isPlayerTurn: 0
   isRandomCard: 0
@@ -13423,7 +13426,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1209350605}
   virtualCamera: {fileID: 1247779662}
-  isMainCameraMoving: 0
   startGame: 1
   canvas: {fileID: 1075539877}
   zoomPanel: {fileID: 1723633692}
