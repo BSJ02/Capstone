@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2731819411037792229}
   - component: {fileID: 5760483068190111454}
   - component: {fileID: 7630173356838617963}
+  - component: {fileID: 3649505848822092540}
   m_Layer: 6
   m_Name: Tile1_Grace
   m_TagString: Tile
@@ -126,6 +127,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9986063, y: 0.3521199, z: 0.9980943}
   m_Center: {x: -0.00015632808, y: 0.17605995, z: -0.0005260557}
+--- !u!114 &3649505848822092540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266675414417209022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f4015b2e8510ff4bb4d8647dd9da913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: []
 --- !u!1001 &1006250477099520050
 PrefabInstance:
   m_ObjectHideFlags: 0

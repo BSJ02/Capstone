@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager instance;
+
     public GameObject clickedPlayer;
     private GameObject playerChoice;
 
-    private PlayerMove playerMove;
-
-    public int detectionRange = 1;
     public List<Monster> detectedMonsters = new List<Monster>();
 
     private void Awake()
     {
-        playerMove = FindObjectOfType<PlayerMove>();
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     void Start()
@@ -78,6 +86,13 @@ public class PlayerManager : MonoBehaviour
             playerChoice.SetActive(false);
             SoundManager.instance.PlaySoundEffect("Impossible");
         }
+/*        else if (detectedMonsters.Count == 0)
+        {
+            Debug.Log("No target to attack");
+            playerChoice.SetActive(false);
+            SoundManager.instance.PlaySoundEffect("Impossible");
+        }*/
+
         else
         {
             Vector2Int finalPosition = new Vector2Int((int)clickedPlayer.transform.position.x, (int)clickedPlayer.transform.position.z);
@@ -95,6 +110,8 @@ public class PlayerManager : MonoBehaviour
     // 몬스터 감지
     public void GetSurroundingTiles(Vector2Int playerPos)
     {
+        Player player = clickedPlayer.GetComponent<Player>();
+
         detectedMonsters.Clear();
 
         Monster[] monsters = FindObjectsOfType<Monster>();
@@ -109,7 +126,7 @@ public class PlayerManager : MonoBehaviour
             int distanceY = Mathf.Abs(playerPos.y - monsterPos.y);
 
             //몬스터가 감지 범위 안에 있으면 실행
-            if (distanceX <= detectionRange && distanceY <= detectionRange)
+            if (distanceX <= player.playerData.detectionRange && distanceY <= player.playerData.detectionRange)
             {
                 detectedMonsters.Add(m);
                 Debug.Log(m);

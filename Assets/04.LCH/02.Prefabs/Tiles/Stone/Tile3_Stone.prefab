@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8217056499130996315}
   - component: {fileID: 624648965016542229}
   - component: {fileID: 2402281146829660614}
+  - component: {fileID: -868610138771355490}
   m_Layer: 6
   m_Name: Tile3_Stone
   m_TagString: Tile
@@ -126,6 +127,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0086181, y: 0.35583952, z: 1.0132363}
   m_Center: {x: -0.00001692772, y: 0.17949657, z: -0.00012129545}
+--- !u!114 &-868610138771355490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604094881553903605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f4015b2e8510ff4bb4d8647dd9da913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: []
 --- !u!1 &8541951444496687524
 GameObject:
   m_ObjectHideFlags: 0

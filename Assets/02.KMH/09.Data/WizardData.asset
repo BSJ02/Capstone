@@ -15,8 +15,14 @@ MonoBehaviour:
   Name: "\uB9C8\uBC95\uC0AC"
   Hp: 106
   MaxHp: 120
+  ID: 2
+  Hp: 80
+  MaxHp: 80
   Damage: 20
+  currentDamage: 10
   Armor: 100
+  currentArmor: 100
   CriticalHit: 0
-  activePoint: 4
-  MaxActivePoint: 4
+  activePoint: 100
+  MaxActivePoint: 100
+  detectionRange: 2
