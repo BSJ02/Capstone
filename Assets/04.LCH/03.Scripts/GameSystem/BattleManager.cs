@@ -286,7 +286,8 @@ public class BattleManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.7f);
 
-                yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
+                //yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
+
                 // 선택된 몬스터의 특정 메서드 실행
                 Debug.Log("선택된 몬스터:" + selectedMonster);
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();

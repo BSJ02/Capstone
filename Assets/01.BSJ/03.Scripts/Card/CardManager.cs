@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public List<Card> handCardList = new List<Card>();
     [HideInInspector] public List<Card> addCardList = new List<Card>();
-    [HideInInspector] public List<Card> cardDeck = new List<Card>();
+    /*[HideInInspector]*/ public List<Card> cardDeck = new List<Card>();
 
     [HideInInspector] public GameObject deckObject;
     [HideInInspector] public GameObject panelObject_Group;
@@ -249,6 +249,7 @@ public class CardManager : MonoBehaviour
         if (index >= 0 && index < addCardList.Count)
         {
             Card card = addCardList[index]; 
+            cardDeck.Remove(card);
 
             handCardList.Add(card);
             addCardList.Clear();
@@ -286,8 +287,6 @@ public class CardManager : MonoBehaviour
     public Card GetRandomCard()
     {
         waitAddCard = true;
-
-        cardDeck.AddRange(cardInform.baseCards);
 
         FisherYatesShuffle(cardDeck);
 
