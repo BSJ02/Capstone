@@ -65,11 +65,11 @@ public class ShowText : MonoBehaviour
                 {
                     Camera.main.transform.DOMove(new Vector3(32, 0, -8), 1f);
                 }
-            }
-            else // 마지막 텍스트 O
-            {
-                int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene(currentSceneIndex + 1);
+                else if (temp == "과연, 이들은 아에테리아 섬을 지키고 과거의 평화를 되찾을 수 있을까요?")
+                {
+                    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                    SceneManager.LoadScene(currentSceneIndex + 1);
+                }
             }
 
             StartCoroutine(Typing(temp));
