@@ -21,6 +21,9 @@ public class CardProcessing : MonoBehaviour
     [HideInInspector] public Player currentPlayer;
     [HideInInspector] public GameObject currentPlayerObj;
 
+    [Header(" # cardCanelButton")]
+    public GameObject cardCanelButton;
+
     private PlayerState playerState;
 
     [HideInInspector] public GameObject selectedTarget = null;
@@ -32,6 +35,8 @@ public class CardProcessing : MonoBehaviour
     {
         if (usingCard)
         {
+            cardCanelButton.SetActive(true);
+
             if (CardManager.instance.useCard.cardTarget == CardTarget.TargetPosition)
             {
                 ShowTargetCardRange((int)cardUseDistance);
@@ -40,6 +45,10 @@ public class CardProcessing : MonoBehaviour
             {
                 ShowPlayerCardRange((int)cardUseDistance);
             }
+        }
+        else
+        {
+            cardCanelButton.SetActive(false);
         }
     }
 

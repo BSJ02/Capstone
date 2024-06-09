@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1118813982218620538}
   - component: {fileID: 3271932261241090964}
   - component: {fileID: -2594115651253428264}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Tile1_Stone
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 2497169811686198181}
   - component: {fileID: 4416130836653808642}
   - component: {fileID: 4002400111823022917}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: DownPlatform1_LP (2)
   m_TagString: Tile
   m_Icon: {fileID: 0}

@@ -53,8 +53,6 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public bool isSettingCards = false;
 
     [HideInInspector] public Card useCard = null;
-    [Header(" # cardCanelButton")]
-    public GameObject cardCanelButtonl;
 
     private void Awake()
     {
@@ -115,19 +113,11 @@ public class CardManager : MonoBehaviour
 
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
-        
     }
 
     private void Update()
     {
-        if (useCard != null)
-        {
-            cardCanelButtonl.SetActive(true);
-        }
-        else
-        {
-            cardCanelButtonl.SetActive(false);
-        }
+        HandCardFade();
     }
 
     public void StartSettingCards()

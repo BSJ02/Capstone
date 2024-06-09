@@ -118,7 +118,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadSceneButton()
     {
-        LoadingSceneController.Instance.LoadScene("03.Select");
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
     public void GameExitButton()
