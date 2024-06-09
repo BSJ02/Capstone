@@ -171,7 +171,7 @@ public class PlayerMove : MonoBehaviour
         playerManager.detectedMonsters.Clear();
         //playerManager.clickedPlayer = null;
         clickedMonster = null;
-        playerChoice.SetActive(false);
+        //playerChoice.SetActive(false);
 
         // Reset all tile colors to white
         ResetTilesColor();
