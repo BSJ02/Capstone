@@ -111,12 +111,12 @@ public class BattleManager : MonoBehaviour
                 players.RemoveAt(i);
             }
         }
-
-        //players[0].gameObject.SetActive(true);
-        //playerScripts = players[0].GetComponent<Player>();
-        //players[2].gameObject.SetActive(true);
-        //playerScripts = players[2].GetComponent<Player>();
-
+/*
+        players[0].gameObject.SetActive(true);
+        playerScripts = players[0].GetComponent<Player>();
+        players[2].gameObject.SetActive(true);
+        playerScripts = players[2].GetComponent<Player>();
+*/
 
         foreach (GameObject monster in monsters)
         {
@@ -290,7 +290,7 @@ public class BattleManager : MonoBehaviour
 
                 //yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
 
-                // 선택된 몬스터의 특정 메서드 실행
+                // 선택된 몬스터의 행동 실행
                 Debug.Log("선택된 몬스터:" + selectedMonster);
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
