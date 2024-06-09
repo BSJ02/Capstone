@@ -113,6 +113,7 @@ public class CardMove : MonoBehaviour
                 else
                 {
                     CardManager.instance.FindPanelGroupChildObject("Use Card Panel(Clone)").SetActive(false);
+                    MapGenerator.instance.ClearHighlightedTiles();
                 }
             }
         }
@@ -147,7 +148,6 @@ public class CardMove : MonoBehaviour
         if (BattleManager.instance.isPlayerTurn)
         {
             CardPanelCollision();
-            MapGenerator.instance.ClearHighlightedTiles();
         }
     }
 
