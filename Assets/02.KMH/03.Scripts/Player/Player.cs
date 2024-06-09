@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
 
         playerData.ResetData();
-        ResetActivePoint();
 
         isLive = true;
 

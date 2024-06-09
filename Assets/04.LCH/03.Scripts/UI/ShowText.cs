@@ -28,6 +28,11 @@ public class ShowText : MonoBehaviour
         {
             NextText();
         }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex + 1);
+        }
     }
 
     private void NextText()

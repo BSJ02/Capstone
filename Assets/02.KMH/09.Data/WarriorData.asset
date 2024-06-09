@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\uC804\uC0AC"
   ID: 0
-  Hp: 100
+  Hp: 72
   MaxHp: 100
   Damage: 20
   currentDamage: 20
   Armor: 100
   currentArmor: 100
   CriticalHit: 0
-  activePoint: 101
-  MaxActivePoint: 101
+  activePoint: 96
+  MaxActivePoint: 4
   detectionRange: 1

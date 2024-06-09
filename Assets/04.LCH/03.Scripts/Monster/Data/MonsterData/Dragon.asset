@@ -20,8 +20,8 @@ MonoBehaviour:
   MoveDistance: 3
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
   CurrentDamage: 9
-  MinDamage: 8
-  MaxDamage: 14
-  Critical: 8
+  MinDamage: 15
+  MaxDamage: 25
+  Critical: 20
   DetectionRagne: 1
   SkillDetectionRange: 4
