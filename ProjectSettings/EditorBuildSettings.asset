@@ -6,6 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/04.LCH/01.Scene/LCH.Select.unity
+    guid: 6241a8759557b58478b37f1c6dc70678
+  - enabled: 1
+    path: Assets/04.LCH/01.Scene/LCH.Stage.unity
+    guid: 1127db917f977df468be5de128a0855b
     path: Assets/00.Main/01.Lobby.unity
     guid: f11b9cb4e87594744b55ff7f3e0994c4
   - enabled: 1
