@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
     public Sound[] backgroundMusic;
     public Sound[] soundEffects;
 
-    private float bgmvolume = 0.5f;
+    private float bgmvolume = 0.3f;
     private float effectvolume = 0.5f;
 
     private Dictionary<string, AudioClip> backgroundMusicDictionary;
@@ -43,6 +43,7 @@ public class SoundManager : MonoBehaviour
 
         backgroundMusicDictionary = new Dictionary<string, AudioClip>();
         soundEffectsDictionary = new Dictionary<string, AudioClip>();
+        
 
         foreach (var sound in backgroundMusic)
         {
@@ -113,4 +114,13 @@ public class SoundManager : MonoBehaviour
         effectvolume = volume;  
     }
 
+    public void SaveSoundVolume(float volume)
+    {
+        PlayerPrefs.SetFloat("SoundVolume", volume);
+    }
+
+    public float LoadSoundVolume()
+    {
+        return PlayerPrefs.GetFloat("SoundVolume");
+    }
 }

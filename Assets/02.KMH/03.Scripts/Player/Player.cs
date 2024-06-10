@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
         playerChoice = GameObject.FindGameObjectWithTag("PlayerChoice");
 
         playerData.ResetData();
-        ResetActivePoint();
 
         isLive = true;
 
@@ -56,12 +55,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateAnimation();
-
-        //test
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            GetHit(1);
-        }
     }
 
     // ActivePoint 초기화

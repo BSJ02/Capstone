@@ -100,8 +100,8 @@ public class WarriorCardData : MonoBehaviour
     public void UseDash(Card card, GameObject selectedTarget)
     {
         Player player = cardProcessing.currentPlayer;
-
-        if (MapGenerator.instance.rangeInMonsters != null)
+        Monster monster = selectedTarget.GetComponent<Monster>();
+        if (monster != null)
         {
             shouldDash = true;
 

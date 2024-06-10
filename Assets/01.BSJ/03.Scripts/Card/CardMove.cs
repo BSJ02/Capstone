@@ -80,10 +80,11 @@ public class CardMove : MonoBehaviour
     private bool IsMouseOverCard(GameObject obj)
     {
         // 마우스 포인터 위치를 기준으로 Ray를 쏘아 충돌 체크
+        int layerMask = 1 << LayerMask.NameToLayer("Card");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             if (hit.collider.gameObject == obj && hit.collider.CompareTag("Card"))
             {
@@ -96,19 +97,24 @@ public class CardMove : MonoBehaviour
     // 카드패널 충돌 확인
     private void CardPanelCollision()
     {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit) && !cardProcessing.waitForInput)
+        if (CardManager.instance.isCardButtonClicked)
         {
-            if (hit.collider.gameObject.CompareTag("CardPanel"))
+            int layerMask = 1 << LayerMask.NameToLayer("Card");
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && !cardProcessing.waitForInput)
             {
-                SoundManager.instance.PlaySoundEffect("ThrowCard");
-                cardProcessing.usingCard = true;
-                ProcessingCard();
-            }
-            else
-            {
-                CardManager.instance.FindPanelGroupChildObject("Use Card Panel(Clone)").SetActive(false);
+                if (hit.collider.gameObject.CompareTag("CardPanel"))
+                {
+                    SoundManager.instance.PlaySoundEffect("ThrowCard");
+                    cardProcessing.usingCard = true;
+                    ProcessingCard();
+                }
+                else
+                {
+                    CardManager.instance.FindPanelGroupChildObject("Use Card Panel(Clone)").SetActive(false);
+                    MapGenerator.instance.ClearHighlightedTiles();
+                }
             }
         }
     }
@@ -142,7 +148,6 @@ public class CardMove : MonoBehaviour
         if (BattleManager.instance.isPlayerTurn)
         {
             CardPanelCollision();
-            MapGenerator.instance.ClearHighlightedTiles();
         }
     }
 
@@ -242,6 +247,5 @@ public class CardMove : MonoBehaviour
         {
             card.isCardMoveEnabled = false;
         }
-
     }
 }

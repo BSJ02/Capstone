@@ -17,11 +17,11 @@ MonoBehaviour:
   Hp: 30
   MaxHp: 30
   Amor: 2
-  CurrentDamage: 7
   MoveDistance: 4
-  DetectionRagne: 1
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  MinDamage: 6
-  MaxDamage: 10
-  Critical: 8
+  CurrentDamage: 7
+  MinDamage: 14
+  MaxDamage: 20
+  Critical: 18
+  DetectionRagne: 1
   SkillDetectionRange: 2

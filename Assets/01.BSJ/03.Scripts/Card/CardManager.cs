@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
 
     [HideInInspector] public List<Card> handCardList = new List<Card>();
     [HideInInspector] public List<Card> addCardList = new List<Card>();
-    [HideInInspector] public List<Card> cardDeck = new List<Card>();
+    /*[HideInInspector]*/ public List<Card> cardDeck = new List<Card>();
 
     [HideInInspector] public GameObject deckObject;
     [HideInInspector] public GameObject panelObject_Group;
@@ -113,7 +113,11 @@ public class CardManager : MonoBehaviour
 
         handCardObject = new List<GameObject>();
         addCardObject = new List<GameObject>();
-        
+    }
+
+    private void Update()
+    {
+        HandCardFade();
     }
 
     public void StartSettingCards()
@@ -133,6 +137,62 @@ public class CardManager : MonoBehaviour
             Debug.Log("카드가 너무 많음");
         }
         isSettingCards = true;
+    }
+
+    public void HandCardFade()
+    {
+        for (int i = 0; i < handCardObject.Count; i++)
+        {
+
+            Transform canvasTransform = transform.Find("Canvas");
+            Transform FadeImageTransform = canvasTransform.Find("Fade Image");
+            GameObject FadeImageObj = FadeImageTransform.gameObject;
+            Card card = handCardList[i];
+
+            switch (cardProcessing.currentPlayerObj.name)
+            {
+                case "Warrior(ATK)":
+                    if (card.cardType == Card.CardType.WarriorCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Warrior(HP)":
+                    if (card.cardType == Card.CardType.WarriorCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Wizard":
+                    if (card.cardType == Card.CardType.WizardCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+                case "Archer":
+                    if (card.cardType == Card.CardType.ArcherCard)
+                    {
+                        FadeImageObj.SetActive(false);
+                    }
+                    else
+                    {
+                        FadeImageObj.SetActive(true);
+                    }
+                    break;
+            }
+        }
     }
 
     public GameObject FindPanelGroupChildObject(string childObjectName)
@@ -249,6 +309,7 @@ public class CardManager : MonoBehaviour
         if (index >= 0 && index < addCardList.Count)
         {
             Card card = addCardList[index]; 
+            cardDeck.Remove(card);
 
             handCardList.Add(card);
             addCardList.Clear();
@@ -286,8 +347,6 @@ public class CardManager : MonoBehaviour
     public Card GetRandomCard()
     {
         waitAddCard = true;
-
-        cardDeck.AddRange(cardInform.baseCards);
 
         FisherYatesShuffle(cardDeck);
 

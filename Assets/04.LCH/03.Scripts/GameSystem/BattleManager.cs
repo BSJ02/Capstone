@@ -53,9 +53,6 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int IsBurned = 0;
     [HideInInspector] public int IsBleeding = 0;
 
-    
-
-
     private void Awake()
     {
         if(instance == null)
@@ -80,9 +77,9 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.Start;
 
 
-        // 스테이지 오브젝트 활성화
-        // 1 = Warrior(HP) / 2 = Warrior(ATK) / 3 = Wizard / 4 = Archer
-        /*foreach (int playerIndex in characterSelector.playerSelectList.playerList)
+        //스테이지 오브젝트 활성화
+        //1 = Warrior(HP) / 2 = Warrior(ATK) / 3 = Wizard / 4 = Archer
+        foreach (int playerIndex in characterSelector.playerSelectList.playerList)
         {
             switch (playerIndex)
             {
@@ -105,8 +102,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-
-        // 비활성화된 오브젝트 삭제
+        //비활성화된 오브젝트 삭제
         for (int i = players.Count - 1; i >= 0; i--)
         {
             if (!players[i].activeSelf)
@@ -114,13 +110,13 @@ public class BattleManager : MonoBehaviour
                 Destroy(players[i]);
                 players.RemoveAt(i);
             }
-        }*/
-
+        }
+/*
         players[0].gameObject.SetActive(true);
         playerScripts = players[0].GetComponent<Player>();
         players[2].gameObject.SetActive(true);
         playerScripts = players[2].GetComponent<Player>();
-
+*/
 
         foreach (GameObject monster in monsters)
         {
@@ -285,15 +281,16 @@ public class BattleManager : MonoBehaviour
             int selectedIndex = availableMonsters[randIndex];
             selectedMonster = monsters[selectedIndex];
 
-            Debug.Log("몬스터 + :" + selectedMonster.name);
+            Debug.Log("몬스터 :" + selectedMonster.name);
 
             // 선택된 몬스터가 이미 움직였는지 확인
             if (!selectedMonsters.Contains(selectedIndex))
             {
                 yield return new WaitForSeconds(FadeController.instance.totalFadeDuration + 0.7f);
 
-                yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
-                // 선택된 몬스터의 특정 메서드 실행
+                //yield return StartCoroutine(StatusEffectManager.instance.MonsterTurnSimulation(selectedMonster));
+
+                // 선택된 몬스터의 행동 실행
                 Debug.Log("선택된 몬스터:" + selectedMonster);
                 MonsterMove monsterMove = selectedMonster.GetComponent<MonsterMove>();
                 IEnumerator detectionCoroutine = monsterMove.StartDetection();
@@ -302,7 +299,8 @@ public class BattleManager : MonoBehaviour
                 selectedMonsters.Add(selectedIndex);
 
                 // 선택된 몬스터 추가 및 스킬을 쓰는 동안 대기
-                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack)
+                while (selectedMonster.GetComponent<Monster>().attack == AttackState.SkillAttack
+                    && selectedMonster.GetComponent<Monster>().state == MonsterState.Skill)
                     yield return null;
 
                 // 각 몬스터 이동 후 delay 만큼 대기

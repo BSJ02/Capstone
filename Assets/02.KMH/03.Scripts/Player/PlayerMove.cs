@@ -80,17 +80,13 @@ public class PlayerMove : MonoBehaviour
 
                             MapGenerator.instance.ResetTotalMap();
                         }
-                        else
-                        {
-                            ResetSelection();
-                        }
                     }
                     else if (hit.collider.CompareTag("Monster"))
                     {
                         Monster monster = hit.collider.GetComponent<Monster>();
                         if (monster != null)
                         {
-                            List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking(new Vector2Int((int)monster.transform.position.x, 
+                            List<Vector2Int> tiles = monster.GetComponent<MonsterMove>().AttackRangeChecking(new Vector2Int((int)monster.transform.position.x,
                                 (int)monster.transform.position.z), monster.monsterData.SkillDetectionRange, true);
 
                             // Reset all tile colors to white
@@ -171,7 +167,7 @@ public class PlayerMove : MonoBehaviour
         playerManager.detectedMonsters.Clear();
         //playerManager.clickedPlayer = null;
         clickedMonster = null;
-        playerChoice.SetActive(false);
+        //playerChoice.SetActive(false);
 
         // Reset all tile colors to white
         ResetTilesColor();

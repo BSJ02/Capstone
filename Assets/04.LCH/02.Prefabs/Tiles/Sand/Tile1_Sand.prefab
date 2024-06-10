@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4648602613556972353}
   - component: {fileID: 787945643101259635}
   - component: {fileID: -2688845791420185185}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Tile1_Sand
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 94bd9f5d8ce33e34b9b782fd12261d13,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 94bd9f5d8ce33e34b9b782fd12261d13,
         type: 3}
