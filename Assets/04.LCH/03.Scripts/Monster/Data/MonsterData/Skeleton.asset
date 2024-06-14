@@ -16,10 +16,10 @@ MonoBehaviour:
   Id: 4
   Hp: 30
   MaxHp: 30
-  Amor: 2
+  Amor: 0
   MoveDistance: 4
   Description: "\uC77C\uBC18 \uBAAC\uC2A4\uD130"
-  CurrentDamage: 7
+  CurrentDamage: 15
   MinDamage: 14
   MaxDamage: 20
   Critical: 18

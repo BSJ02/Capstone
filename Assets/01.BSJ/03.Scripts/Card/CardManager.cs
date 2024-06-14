@@ -117,12 +117,12 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        HandCardFade();
+        //HandCardFade();
     }
 
     public void StartSettingCards()
     {
-        handCardList.AddRange(cardInform.baseCards);
+        handCardList.AddRange(cardInform.warriorCards);
         CreateCard(handCardList);
         StartCoroutine(CardSorting(handCardList, handCardObject, handCardPos, handCardDistance));
 

@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour
     // Zoom
     public GameObject panel;
     public GameObject zoomPanel;
-    private float originalOrthographicSize;
-    private float zoomSize;
+    private float originalOrthographicSize = 6f;
+    private float zoomSize = 4f;
 
     private void Awake()
     {
@@ -37,10 +37,7 @@ public class CameraController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         cardProcessing = FindObjectOfType<CardProcessing>();
 
         characterOffset = new Vector3(-11, 11f, -11);

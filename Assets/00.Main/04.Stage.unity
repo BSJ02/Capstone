@@ -5570,6 +5570,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 763267219}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &763267221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 935748159365302720, guid: e5dba74232d25134f9a8a3ce998ee922,
+    type: 3}
+  m_PrefabInstance: {fileID: 763267219}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &772131822
 GameObject:
   m_ObjectHideFlags: 0
@@ -6251,7 +6257,7 @@ PrefabInstance:
     - target: {fileID: 7027815022578739848, guid: fa42ea19649f60f41a7ec450713ccd92,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161033588017177862, guid: fa42ea19649f60f41a7ec450713ccd92,
         type: 3}
@@ -11945,7 +11951,7 @@ MonoBehaviour:
   TempActivePoint: 0
   currentPlayer: {fileID: 0}
   currentPlayerObj: {fileID: 0}
-  cardCanelButton: {fileID: 0}
+  cardCanelButton: {fileID: 763267221}
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
   cardUseDistanceInRange: 0

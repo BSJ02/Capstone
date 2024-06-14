@@ -20,9 +20,9 @@ public class CardInform : ScriptableObject
     public int legendPercent = 10;
 
     [Header(" # 등급별 색상")]
-    public Color commonColor = Color.green;
-    public Color rareColor = Color.blue;
-    public Color epicColor = Color.red;
+    public Color WarriorColor = Color.green;
+    public Color ArcherColor = Color.blue;
+    public Color WizardColor = Color.red;
     public Color legendColor = Color.yellow;
 
     // 확률 값 설정
