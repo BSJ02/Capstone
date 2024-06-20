@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314efd769b2603e4093ba18edaebe002, type: 3}
   m_Name: Warrior(ATK)Data
   m_EditorClassIdentifier: 
+  Name: 
   ID: 3
   Hp: 0
   MaxHp: 100
   Damage: 20
+  currentDamage: 0
   Armor: 100
+  currentArmor: 0
   CriticalHit: 0
-  activePoint: 0
-  MaxActivePoint: 100
+  activePoint: 4
+  MaxActivePoint: 4
+  detectionRange: 0

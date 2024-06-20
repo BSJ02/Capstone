@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7284856300908179813}
   - component: {fileID: 5600648936275667360}
   - component: {fileID: 5124995267763585119}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Tile3_Grace
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ PrefabInstance:
     - target: {fileID: 6206921368633187459, guid: eb9113dfee18ea2478a782ea18a2dae9,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6206921368633187459, guid: eb9113dfee18ea2478a782ea18a2dae9,
         type: 3}
@@ -294,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 8712022509305961556, guid: 050f3df7dcfaa484189eaa24083b7966,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8712022509305961556, guid: 050f3df7dcfaa484189eaa24083b7966,
         type: 3}
@@ -378,7 +378,7 @@ PrefabInstance:
     - target: {fileID: 2230901405192875545, guid: cbe0668368b662042bf2eaec80c286c1,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2230901405192875545, guid: cbe0668368b662042bf2eaec80c286c1,
         type: 3}
@@ -412,7 +412,7 @@ PrefabInstance:
     - target: {fileID: 8535876519024956939, guid: 62f375ac238bc124cb5d906f7bce2234,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8535876519024956939, guid: 62f375ac238bc124cb5d906f7bce2234,
         type: 3}
@@ -551,7 +551,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f065419884badc64c94527e303813004,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f065419884badc64c94527e303813004,
         type: 3}

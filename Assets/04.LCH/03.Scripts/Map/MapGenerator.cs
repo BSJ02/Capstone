@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour
 {
     public static MapGenerator instance;
 
-    public Tile[,] totalMap; // 2Â÷¿ø ¹è¿­ ÁÂÇ¥
+    public Tile[,] totalMap; // 2ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½Ç¥
     public Tile[] tilePrefab;
 
     public int garo;
@@ -18,9 +18,11 @@ public class MapGenerator : MonoBehaviour
 
     [HideInInspector] public bool selectingTarget;
 
-    [HideInInspector] public List<Tile> highlightedTiles = new List<Tile>(); // ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ Å¸ÀÏ ¸®½ºÆ®
-    [HideInInspector] public List<Monster> rangeInMonsters = new List<Monster>();
-    [HideInInspector] public List<Player> rangeInPlayers = new List<Player>();
+    [SerializeField]
+    public List<Tile> highlightedTiles = new List<Tile>(); // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+
+    public List<Monster> rangeInMonsters = new List<Monster>();
+    public List<Player> rangeInPlayers = new List<Player>();
 
     private void Awake()
     {
@@ -35,7 +37,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    // ¸Ê »ý¼º
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void CreateMap(int x, int y)
     {
         totalMap = new Tile[x, y];
@@ -49,17 +51,17 @@ public class MapGenerator : MonoBehaviour
 
                 int randValue = Mathf.FloorToInt(Random.Range(0, tilePrefab.Length));
 
-                var tile = GameObject.Instantiate(tilePrefab[randValue], transform); // MapGenerator¸¦ ºÎ¸ð·Î ¼³Á¤
+                var tile = GameObject.Instantiate(tilePrefab[randValue], transform); // MapGeneratorï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 tile.transform.localPosition = new Vector3(i * 1, 0, j * 1);
 
-                // ÀüÃ¼ ÁÂÇ¥ ¼³Á¤
+                // ï¿½ï¿½Ã¼ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
                 tile.SetCoord(i, j, false);
 
-                // Å¸ÀÏ À§¿¡ ¸ó½ºÅÍ°¡ ÀÖÀ» °æ¿ì(¸ó½ºÅÍ °ãÄ§ ¹æÁö)
+                // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä§ ï¿½ï¿½ï¿½ï¿½)
                 RaycastHit hit;
                 if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
                 {
-                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item")) // || hit.collider.CompareTag("Player") <= Ghost Code(ÇÊ¿ä ½Ã Ãß°¡ ¿¹Á¤)
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item")) // || hit.collider.CompareTag("Player") <= Ghost Code(ï¿½Ê¿ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½)
                     {
                         tile.SetCoord(i, j, true);
                     }
@@ -79,7 +81,7 @@ public class MapGenerator : MonoBehaviour
     }
     
 
-    // Å¸ÀÏ Á¤º¸ ÃÊ±âÈ­(Áßº¹ ¹æÁö)
+    // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­(ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½)
     public void ResetTotalMap()
     {
         for (int i = 0; i < totalMap.GetLength(0); i++)
@@ -91,18 +93,18 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ Ç¥½Ã
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
     public void HighlightPlayerRange(Vector3 playerPosition, int maxDistance)
     {
-        // ÃÊ±âÈ­
+        // ï¿½Ê±ï¿½È­
         ClearHighlightedTiles();
 
-        // ÇÃ·¹ÀÌ¾î À§Ä¡ÀÇ Å¸ÀÏÀ» Ã£À½
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
         int playerX = Mathf.RoundToInt(playerPosition.x);
         int playerZ = Mathf.RoundToInt(playerPosition.z);
         Tile playerTile = totalMap[playerX, playerZ];
 
-        // BFS¸¦ ÀÌ¿ëÇÏ¿© ÇÃ·¹ÀÌ¾î ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ Ã£±â
+        // BFSï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï¿ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
         Queue<PathNode> queue = new Queue<PathNode>();
         HashSet<Tile> visited = new HashSet<Tile>();
         queue.Enqueue(new PathNode(playerTile, 0));
@@ -114,10 +116,10 @@ public class MapGenerator : MonoBehaviour
             Tile currentTile = currentNode.tile;
             int currentDistance = currentNode.distance;
 
-            // ÇöÀç Å¸ÀÏÀÌ ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ ³»¿¡ ÀÖ´Â °æ¿ì¿¡¸¸ Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Ã³ï¿½ï¿½
             if (currentDistance <= maxDistance)
             {
-                // ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ ³»¿¡ ÀÖ´Â Å¸ÀÏÀÌ¸é¼­ isWallÀÌ falseÀÎ °æ¿ì¿¡¸¸ »ö»óÀ» º¯°æÇÏ°í Å¥¿¡ Ãß°¡
+                // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ Å¸ï¿½ï¿½ï¿½Ì¸é¼­ isWallï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ Å¥ï¿½ï¿½ ï¿½ß°ï¿½
                 if (!currentTile.coord.isWall && currentTile != playerTile)
                 {
                     currentTile.GetComponent<Renderer>().material.color = Color.red;
@@ -125,12 +127,12 @@ public class MapGenerator : MonoBehaviour
                 }
             }
 
-            // »óÇÏÁÂ¿ì ÀÌµ¿ °¡´ÉÇÑ Å¸ÀÏ È®ÀÎ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ È®ï¿½ï¿½
             CheckAdjacentTiles(currentTile, queue, visited, maxDistance, currentDistance + 1);
         }
     }
 
-    // Ä«µå »ç¿ë ¹üÀ§
+    // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void CardUseRange(Vector3 objectPosition, int cardDistance)
     {
         ClearHighlightedTiles();
@@ -200,26 +202,26 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // »óÇÏÁÂ¿ì ÀÌµ¿ °¡´ÉÇÑ Å¸ÀÏ È®ÀÎ ¹× Å¥¿¡ Ãß°¡
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ Å¥ï¿½ï¿½ ï¿½ß°ï¿½
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
     {
         int x = currentTile.coord.x;
         int y = currentTile.coord.y;
 
-        // »óÇÏÁÂ¿ì Å¸ÀÏ È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ Å¸ï¿½ï¿½ È®ï¿½ï¿½
         TryEnqueue(totalMap, x - 1, y, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x + 1, y, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x, y - 1, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x, y + 1, queue, visited, maxDistance, nextDistance);
     }
 
-    // Å¸ÀÏÀ» Å¥¿¡ Ãß°¡ÇÏ´Â ¸Þ¼­µå ¼öÁ¤
+    // Å¸ï¿½ï¿½ï¿½ï¿½ Å¥ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void TryEnqueue(Tile[,] map, int x, int y, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
     {
         if (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1))
         {
             Tile tile = map[x, y];
-            // º®ÀÌ ¾Æ´Ï°í, ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§¸¦ ÃÊ°úÇÏÁö ¾Ê´Â °æ¿ì¿¡¸¸ Å¥¿¡ Ãß°¡
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï°ï¿½, ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Å¥ï¿½ï¿½ ï¿½ß°ï¿½
             if (selectingTarget)
             {
                 if (!visited.Contains(tile) && nextDistance <= maxDistance)
@@ -235,7 +237,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    // ÀÌµ¿ °æ·Î¸¦ ³ªÅ¸³»´Â ³ëµå Å¬·¡½º
+    // ï¿½Ìµï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     private class PathNode
     {
         public Tile tile;
@@ -248,7 +250,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ Å¸ÀÏ ÃÊ±âÈ­
+    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½Ê±ï¿½È­
     public void ClearHighlightedTiles()
     {
         foreach (Tile tile in highlightedTiles)
@@ -258,7 +260,7 @@ public class MapGenerator : MonoBehaviour
         highlightedTiles.Clear();
     }
 
-    // Å¬¸¯ÇÑ Å¸ÀÏÀÌ ÀÌµ¿ °¡´ÉÇÑ ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+    // Å¬ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     public bool IsHighlightedTile(Tile tile)
     {
         return highlightedTiles.Contains(tile);

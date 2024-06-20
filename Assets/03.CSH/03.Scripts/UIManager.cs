@@ -126,9 +126,6 @@ public class UIManager : MonoBehaviour
                     break;
             }
         }
-
-        NumCardText.text = CardManager.handCardCount.ToString();
-        TurnText.text = BattleManager.turncount.ToString();
     }
 
     public void ShowLayerWindow(int index)
