@@ -18,11 +18,9 @@ public class MapGenerator : MonoBehaviour
 
     [HideInInspector] public bool selectingTarget;
 
-    [SerializeField]
-    public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
-
-    public List<Monster> rangeInMonsters = new List<Monster>();
-    public List<Player> rangeInPlayers = new List<Player>();
+    [HideInInspector] public List<Tile> highlightedTiles = new List<Tile>(); // 이동 가능한 범위 타일 리스트
+    [HideInInspector] public List<Monster> rangeInMonsters = new List<Monster>();
+    [HideInInspector] public List<Player> rangeInPlayers = new List<Player>();
 
     private void Awake()
     {

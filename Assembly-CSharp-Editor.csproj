@@ -1163,6 +1163,14 @@
       <Project>{58EF43A0-8EDE-577F-1383-359EA30A7F3A}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Recorder.Editor.csproj">
+      <Project>{0CDA7A4B-78E6-9F71-A24A-FCC15FE11CC2}</Project>
+      <Name>Unity.Recorder.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Recorder.csproj">
+      <Project>{22B671AB-E3A4-7F84-8E34-7C9B7CFC3041}</Project>
+      <Name>Unity.Recorder</Name>
+    </ProjectReference>
     <ProjectReference Include="KinoBloom.Runtime.csproj">
       <Project>{2EB0A03E-1693-41A6-950A-A8DF1729ADE7}</Project>
       <Name>KinoBloom.Runtime</Name>
@@ -1202,6 +1210,10 @@
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Recorder.Base.csproj">
+      <Project>{952B84C4-A8BD-80A6-7AF2-CF96D31D1EFE}</Project>
+      <Name>Unity.Recorder.Base</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Core.csproj">
       <Project>{92CE7846-4FBB-84BE-240C-DF20FEA8E892}</Project>

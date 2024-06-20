@@ -11,7 +11,6 @@ public enum BattleState
     MonsterTurn,
     Won,
     Lost,
-    EndStage
 }
 
 public class BattleManager : MonoBehaviour
@@ -23,10 +22,13 @@ public class BattleManager : MonoBehaviour
 
     [Header("# 스테이지 몬스터 및 플레이어")]
     public List<GameObject> players = new List<GameObject>();
-    public List<int> playerList = new List<int>();
+    [HideInInspector] public List<int> playerList = new List<int>();
     public List<GameObject> monsters = new List<GameObject>();
     [HideInInspector] public GameObject selectedMonster;
     private Player playerScripts;
+
+    [Header("# 행동 할 몬스터 개수")]
+    public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
 
     // 랜덤으로 선택된 몬스터를 HashSet에 저장
     HashSet<int> selectedMonsters = new HashSet<int>();
@@ -37,9 +39,9 @@ public class BattleManager : MonoBehaviour
     public GameObject stageEnd; // StageEnd 이미지
     public GameObject[] controlAllUI; // 스테이지 클리어 후 모든 UI 끄기
 
-    public int MaximumOfMonster = 3; // 선택된 몬스터 마릿수
+  
     private float delay = 1.5f;
-    public static int turncount = 1;
+    [HideInInspector] public static int turncount = 1;
 
     bool isEnd;
 
@@ -151,7 +153,7 @@ public class BattleManager : MonoBehaviour
         // Stage 종료가 종료될 때 실행되는 것들(사운드, UI, 페이드 인 & 아웃 애니메이션, 다음 씬 이동 등..)
         yield return new WaitForSeconds(delay);
 
-        battleState = BattleState.EndStage;
+        battleState = BattleState.Won;
 
         // UI 오브젝트 제어
         CameraController.instance.startGame = true;
