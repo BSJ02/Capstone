@@ -1167,10 +1167,6 @@
       <Project>{0CDA7A4B-78E6-9F71-A24A-FCC15FE11CC2}</Project>
       <Name>Unity.Recorder.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Recorder.csproj">
-      <Project>{22B671AB-E3A4-7F84-8E34-7C9B7CFC3041}</Project>
-      <Name>Unity.Recorder</Name>
-    </ProjectReference>
     <ProjectReference Include="KinoBloom.Runtime.csproj">
       <Project>{2EB0A03E-1693-41A6-950A-A8DF1729ADE7}</Project>
       <Name>KinoBloom.Runtime</Name>
@@ -1207,13 +1203,13 @@
       <Project>{4A7DCDA0-412C-E24C-2B81-02A1EC641570}</Project>
       <Name>OccaSoftware.SuperSimpleSkybox.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
-      <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
-      <Name>Unity.VisualStudio.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Recorder.Base.csproj">
       <Project>{952B84C4-A8BD-80A6-7AF2-CF96D31D1EFE}</Project>
       <Name>Unity.Recorder.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
+      <Project>{D211C2B7-2734-D97A-E55E-B95DB78F487A}</Project>
+      <Name>Unity.VisualStudio.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Core.csproj">
       <Project>{92CE7846-4FBB-84BE-240C-DF20FEA8E892}</Project>
@@ -1275,13 +1271,9 @@
       <Project>{CCABE9F5-A600-E2F0-7815-E0F7B194F035}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
-      <Project>{7EE499AB-519D-DFE8-EF82-394B7EEF8DEF}</Project>
-      <Name>Unity.TextMeshPro.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Searcher.Editor.csproj">
-      <Project>{5A018995-AC8C-FB7C-2A88-814FC5F78DDF}</Project>
-      <Name>Unity.Searcher.Editor</Name>
+    <ProjectReference Include="Unity.Recorder.csproj">
+      <Project>{22B671AB-E3A4-7F84-8E34-7C9B7CFC3041}</Project>
+      <Name>Unity.Recorder</Name>
     </ProjectReference>
     <ProjectReference Include="OccaSoftware.SuperSimpleSkybox.Demo.csproj">
       <Project>{63BB7A0B-B52A-9364-9933-C7378882FB90}</Project>
@@ -1294,6 +1286,10 @@
     <ProjectReference Include="CFXRDemo.csproj">
       <Project>{B8C3C6D3-11E0-B9B9-2BDD-1B8D296D86A1}</Project>
       <Name>CFXRDemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
+      <Project>{7EE499AB-519D-DFE8-EF82-394B7EEF8DEF}</Project>
+      <Name>Unity.TextMeshPro.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
       <Project>{270D5960-7AA4-9615-C6BC-FF649A782134}</Project>
@@ -1310,6 +1306,10 @@
     <ProjectReference Include="ToonyColorsPro.Demo.Editor.csproj">
       <Project>{83B3661C-02A0-F445-5D90-6930A87D213C}</Project>
       <Name>ToonyColorsPro.Demo.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Searcher.Editor.csproj">
+      <Project>{5A018995-AC8C-FB7C-2A88-814FC5F78DDF}</Project>
+      <Name>Unity.Searcher.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
