@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -37,7 +37,6 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // AudioSource add
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
         soundEffectsSource = gameObject.AddComponent<AudioSource>();
 
@@ -64,7 +63,6 @@ public class SoundManager : MonoBehaviour
         PlayBackgroundMusic("BGM");
         backgroundMusicSource.volume = bgmvolume;
         soundEffectsSource.volume = effectvolume;
-        
     }
 
     public void PlayBackgroundMusic(string musicName)
@@ -80,6 +78,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlayFightBackgroundMusic(string musicName)
+    {
+        if (backgroundMusicDictionary.ContainsKey(musicName))
+        {
+            backgroundMusicSource.clip = backgroundMusicDictionary[musicName];
+            backgroundMusicSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Background music: " + musicName + " not found");
+        }
+    }
+
+    // BGM ����
     public void StopBackgroundMusic()
     {
         backgroundMusicSource.Stop();

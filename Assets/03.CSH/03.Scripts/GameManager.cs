@@ -1,18 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
 
-    //UI
+    // UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public GameObject[] windowUI;
-    public GameObject objectUIPanel;
     private GameObject currentlyActiveWindow;
 
     public Text objectNameText;
@@ -22,46 +18,39 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] cardList;
 
-    //°ÔÀÓ ÅÏ ÆÇº° private À¸·Î ¹Ù²ãÁÖ±â 
-    public bool isGameOver = false; // °ÔÀÓ ¿À¹ö »óÅÂ
-
-    private static GameManager instance;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
-            return instance;
-        }
-    }
+    public bool isGameOver = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+            return;
         }
     }
 
-    public void Update()
+    #region UI Methods
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½
+    public void LoadScene()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (optionUI != null)
-            {
-                bool isActive = optionUI.activeSelf;
-                optionUI.SetActive(!isActive);
-            }
-        }
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
+    }
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½
+    public void RetryGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // ï¿½ï¿½ï¿½ï¿½
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     public void ShowLayerWindow(int index)
@@ -80,6 +69,18 @@ public class GameManager : MonoBehaviour
         windowUI[index].gameObject.SetActive(false);
     }
 
+    // ï¿½É¼ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½
+    public void OpenOptionWindow()
+    {
+        optionUI?.SetActive(true);
+    }
+
+    // ï¿½É¼ï¿½ Ã¢ ï¿½Ý±ï¿½
+    public void CloseOptionWindow()
+    {
+        optionUI?.SetActive(false);
+    }
+
     public void cardUIEffect(bool boolean)
     {
         if (boolean == true)
@@ -93,51 +94,10 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < cardList.Length; i++)
             {
-                // ¿ÀºêÁ§Æ® Å©±â¸¦ ¿ø·¡ Å©±â·Î º¯°æ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 cardList[i].transform.localScale = new Vector3(18f, 18f, 18f);
             }
         }
     }
-
-    public void RetryGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
-        //SceneManager.LoadScene(MainScene);
-    }
-
-    /* ±â´É
-
-
-    public void Start, Save ...
-     */
-
-    public void LoadSceneButton()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
-    }
-
-    public void GameExitButton()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; ;
-#else
-        Application.Quit();
-#endif
-    }
-
-
-    public void OptionWindow()
-    {
-        if (optionUI != null)
-        {
-            bool isActive = optionUI.activeSelf;
-            optionUI.SetActive(!isActive);
-        }
-    }
+    #endregion
 }

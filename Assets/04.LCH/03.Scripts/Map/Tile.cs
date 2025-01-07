@@ -7,13 +7,13 @@ public class Tile : MonoBehaviour
     public Coord coord;
     private Color color;
 
-    // Å¸ÀÏ º¯¼ö ¼³Á¤
+    // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetCoord(int x, int y, bool isWall)
     {
         coord = new Coord(x, y, isWall);
     }
 
-    // ¿À¹ö ·Îµù 
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ 
     public void SetCoord(int x, int y)
     {
         coord = new Coord(x, y, coord.isWall);

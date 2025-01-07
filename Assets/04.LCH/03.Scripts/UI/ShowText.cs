@@ -91,6 +91,5 @@ public class ShowText : MonoBehaviour
 
         isTyping = false; // 텍스트 애니메이션 종료
         pressSpaceBar.gameObject.SetActive(true);
-
     }
 }

@@ -8,13 +8,12 @@ using UnityEngine;
 
 public enum MonsterState
 {
-    Idle = 0, 
-    Moving = 1, 
+    Idle = 0,
+    Moving = 1,
     Attack = 2,
     GetHit = 3,
-    Skill = 4 
+    Skill = 4
 }
-
 
 public enum AttackState
 {
@@ -76,8 +75,8 @@ public class Monster : MonoBehaviour
                 // 플레이어 GetHit 처리는 각 몬스터 콜라이더 이벤트에서 처리 
 
                 // 상태 및 애니메이션 제어
-                state = MonsterState.Skill; 
-                anim.SetInteger("State", (int)state); 
+                state = MonsterState.Skill;
+                anim.SetInteger("State", (int)state);
 
                 monster_UI.GetMonsterDamage(); // UI 업데이트
                 break;
@@ -85,10 +84,10 @@ public class Monster : MonoBehaviour
             // 일반 공격 
             case AttackState.GeneralAttack:
                 player.GetHit(monsterData.CurrentDamage);
-                 
+
                 // 상태 및 애니메이션 제어
                 state = MonsterState.Attack;
-                anim.SetInteger("State", (int)state); 
+                anim.SetInteger("State", (int)state);
 
                 monster_UI.GetMonsterDamage(); // UI 업데이트
                 break;
@@ -132,10 +131,5 @@ public class Monster : MonoBehaviour
         anim.SetTrigger("Die");
 
         Destroy(gameObject, 4f);
-    }
-
-    public void HitPlayerEvent()
-    {
-        
     }
 }

@@ -15,4 +15,4 @@ MonoBehaviour:
   players:
   - {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012, type: 3}
   - {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6, type: 3}
-  playerList: 
+  playerList: 0000000002000000

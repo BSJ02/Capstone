@@ -17,8 +17,7 @@ MonoBehaviour:
     cardDescription: "\uD3EC\uC158\uC744 \uC0AC\uC6A9\uD558\uC5EC \uCCB4\uB825\uC744
       \uD68C\uBCF5\uD569\uB2C8\uB2E4."
     cardDescription_Power: "(\uD68C\uBCF5\uB7C9: 15)"
-    cardPower:
-    - 15
+    cardPower: 0f000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 2a28e21868ecdee4fa4d31c60830ad80, type: 3}
     cardTarget: 0
@@ -29,8 +28,7 @@ MonoBehaviour:
   - cardName: Remove Ailments
     cardDescription: "\uBAA8\uB4E0 \uC0C1\uD0DC\uC774\uC0C1 \uD574\uC81C\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 0
+    cardPower: 00000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 32a0f7a49b785fd40a22154721b5e3e7, type: 3}
     cardTarget: 0
@@ -41,8 +39,7 @@ MonoBehaviour:
   - cardName: Evasion Boost
     cardDescription: "\uCD94\uAC00 \uC774\uB3D9\uB825\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 0
+    cardPower: 00000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
     cardTarget: 0
@@ -53,7 +50,7 @@ MonoBehaviour:
   - cardName: Transmission
     cardDescription: "\uC0C1\uD0DC\uC774\uC0C1\uC744 \uC804\uC774\uC2DC\uD0B5\uB2C8\uB2E4."
     cardDescription_Power: "(\uBC94\uC704: 3)"
-    cardPower: []
+    cardPower: 
     cardDistance: 3
     cardSprite: {fileID: 21300000, guid: 8a24eaff207b05c49b8aeb365a4e9c73, type: 3}
     cardTarget: 3
@@ -65,8 +62,7 @@ MonoBehaviour:
     cardDescription: "\uB79C\uB364\uD55C \uC2A4\uD0EF \uD68D\uB4DD\uD569\uB2C8\uB2E4."
     cardDescription_Power: "(\uCCB4\uB825, \uBC29\uC5B4\uB825, \uCD5C\uB300 \uC774\uB3D9\uAC70\uB9AC
       \uC911)"
-    cardPower:
-    - 2
+    cardPower: 02000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 9a3c93b2af430a845a79644a585592cc, type: 3}
     cardTarget: 0
@@ -78,34 +74,19 @@ MonoBehaviour:
   - cardName: Spin Attack
     cardDescription: "\uC8FC\uC704 \uC801\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
     cardDescription_Power: "(\uACF5\uACA9: 20)"
-    cardPower:
-    - 20
+    cardPower: 14000000
     cardDistance: 2
     cardSprite: {fileID: 21300000, guid: c61764d9951f75a46ae3d35af4a358df, type: 3}
     cardTarget: 2
     cardRanke: 1
     cardPercent: 20
     cardType: 1
-    isCardMoveEnabled: 0
-  - cardName: Shield Bash
-    cardDescription: "\uBC29\uC5B4\uB825\uC5D0 \uBE44\uB840\uD574 \uD53C\uD574\uB97C
-      \uC785\uD799\uB2C8\uB2E4."
-    cardDescription_Power: 
-    cardPower:
-    - 0
-    cardDistance: 1
-    cardSprite: {fileID: 21300000, guid: 9157b4b8fd959164e84aa97f0c7d0bce, type: 3}
-    cardTarget: 1
-    cardRanke: 2
-    cardPercent: 15
-    cardType: 1
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   - cardName: Desperate Strike
     cardDescription: "\uC783\uC740 \uCCB4\uB825\uC5D0 \uBE44\uB840\uD574 \uD53C\uD574\uB97C
       \uC785\uD799\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 0
+    cardPower: 00000000
     cardDistance: 1
     cardSprite: {fileID: 0}
     cardTarget: 1
@@ -117,22 +98,20 @@ MonoBehaviour:
     cardDescription: "\uC0C1\uB300\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD788\uACE0
       \uB4A4\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 20
+    cardPower: 14000000
     cardDistance: 2
     cardSprite: {fileID: 21300000, guid: 3a492feaef7469444813ae653f41e376, type: 3}
     cardTarget: 1
     cardRanke: 1
     cardPercent: 20
     cardType: 1
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   - cardName: Warrior's Roar
     cardDescription: "\uCD5C\uB300\uCCB4\uB825\uC758 10%\uB9CC\uD07C \uC18C\uBAA8\uD558\uC5EC
       \uC8FC\uBCC0 \uC544\uAD70\uC744 \uD604\uC7AC \uCCB4\uB825\uC758 50%\uB9CC\uD07C
       \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 10
+    cardPower: 0a000000
     cardDistance: 2
     cardSprite: {fileID: 21300000, guid: c581884bb67a44545bff4bf976c04cf4, type: 3}
     cardTarget: 2
@@ -143,20 +122,19 @@ MonoBehaviour:
   - cardName: Armor Crush
     cardDescription: "\uC801\uC758 \uBC29\uC5B4\uB825\uC744 \uAC10\uC18C\uC2DC\uD0B5\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 20
+    cardPower: 14000000
     cardDistance: 1
     cardSprite: {fileID: 21300000, guid: 22b34e0d638fa7046906320f5ec7b36c, type: 3}
     cardTarget: 1
     cardRanke: 0
     cardPercent: 25
     cardType: 1
-    isCardMoveEnabled: 0
+    isCardMoveEnabled: 1
   archerCards:
   - cardName: Wall Jump
     cardDescription: "\uBCBD \uB118\uAE30"
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -167,7 +145,7 @@ MonoBehaviour:
   - cardName: Concealment
     cardDescription: "\uC801\uC5D0\uAC8C \uAC10\uC9C0\uC548\uB418\uAC8C \uC228\uC74C"
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -179,7 +157,7 @@ MonoBehaviour:
     cardDescription: "\uB0A8\uC740 \uC774\uB3D9\uAC70\uB9AC\uB9CC\uD07C \uCD94\uAC00\uD53C\uD574\uB97C
       \uC785\uD798"
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -190,10 +168,7 @@ MonoBehaviour:
   - cardName: Power Of Turn
     cardDescription: "\uD134 \uC99D\uAC00\uD560 \uC218\uB85D \uB370\uBBF8\uC9C0 \uC99D\uAC00"
     cardDescription_Power: 
-    cardPower:
-    - 0
-    - 0
-    - 0
+    cardPower: 000000000000000000000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 0333e5c19862fdf45b4965cbbde56d16, type: 3}
     cardTarget: 0
@@ -205,10 +180,7 @@ MonoBehaviour:
     cardDescription: "\uD45C\uC2DD\uC744 \uB0A8\uACA8 \uB2E4\uC74C \uACF5\uACA9\uC2DC
       \uCD94\uAC00 \uD53C\uD574"
     cardDescription_Power: 
-    cardPower:
-    - 0
-    - 0
-    - 0
+    cardPower: 000000000000000000000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: 31206e3ab58bc394b960f9a53c6972b1, type: 3}
     cardTarget: 0
@@ -220,7 +192,7 @@ MonoBehaviour:
     cardDescription: "2\uAC1C\uC758 \uD654\uC0B4\uC744 \uB0A0\uB824 \uD53C\uD574\uB97C
       \uC785\uD798"
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -231,8 +203,7 @@ MonoBehaviour:
   - cardName: Poison Attack
     cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower:
-    - 0
+    cardPower: 00000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: d226ba675fbb16f4f8fb598ec67e78c8, type: 3}
     cardTarget: 0
@@ -243,9 +214,7 @@ MonoBehaviour:
   - cardName: Aimed Shot
     cardDescription: "\uC8FC\uC704 \uC801\uC5D0\uAC8C \uB9F9\uB3C5 \uBD80\uC5EC"
     cardDescription_Power: 
-    cardPower:
-    - 0
-    - 0
+    cardPower: 0000000000000000
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: c09272fb26b43764e8ec8f8711085ffb, type: 3}
     cardTarget: 0
@@ -258,7 +227,7 @@ MonoBehaviour:
     cardDescription: "\uC6D0\uD558\uB294 \uACF3\uC73C\uB85C \uC21C\uAC04\uC774\uB3D9
       \uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 3
     cardSprite: {fileID: 21300000, guid: 0ad28630a5cd17948966d487491b7432, type: 3}
     cardTarget: 1
@@ -269,7 +238,7 @@ MonoBehaviour:
   - cardName: Position Swap
     cardDescription: "\uC6D0\uD558\uB294 \uB300\uC0C1\uACFC \uC704\uCE58\uB97C \uBCC0\uACBD\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 4
     cardSprite: {fileID: 21300000, guid: 86e8af0758da7ac4caf8101ae5bda8ef, type: 3}
     cardTarget: 1
@@ -281,8 +250,7 @@ MonoBehaviour:
     cardDescription: "\uD654\uC5FC\uAD6C\uB97C \uB358\uC838\uD53C\uD574\uB97C \uC785\uD788\uACE0
       \uD654\uC0C1\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 10
+    cardPower: 0a000000
     cardDistance: 3
     cardSprite: {fileID: 21300000, guid: b227bc84d5a73df478000e171622c240, type: 3}
     cardTarget: 1
@@ -294,8 +262,7 @@ MonoBehaviour:
     cardDescription: "\uBD88\uAE30\uB465\uC744 \uC18C\uD658\uD558\uC5EC \uD53C\uD574\uB97C
       \uC785\uD788\uACE0, \uD654\uC0C1\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 15
+    cardPower: 0f000000
     cardDistance: 4
     cardSprite: {fileID: 21300000, guid: 931ae8816e9fc694aaac730cd1c0d0d6, type: 3}
     cardTarget: 0
@@ -306,9 +273,7 @@ MonoBehaviour:
   - cardName: Life Drain
     cardDescription: "\uC8FC\uBCC0 \uB300\uC0C1\uC758 \uCCB4\uB825\uC744 \uAC15\uD0C8\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower:
-    - 20
-    - 10
+    cardPower: 140000000a000000
     cardDistance: 4
     cardSprite: {fileID: 21300000, guid: faf3c54d2a2ca7f418437b0fb8ff9152, type: 3}
     cardTarget: 2
@@ -319,7 +284,7 @@ MonoBehaviour:
   - cardName: Magic Shield
     cardDescription: "\uBAAC\uC2A4\uD130 \uC2A4\uD0AC 1\uD68C \uBC29\uC5B4"
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 21300000, guid: a7a6bf065a5534843be999a79ed724a9, type: 3}
     cardTarget: 0
@@ -330,7 +295,7 @@ MonoBehaviour:
   - cardName: Summon Obstacle
     cardDescription: "\uC6D0\uD558\uB294 \uC704\uCE58\uC5D0 \uBCBD\uC744 \uC18C\uD658\uD569\uB2C8\uB2E4."
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 5
     cardSprite: {fileID: 21300000, guid: 2385d0b60df8ba94982b7dcc78a9cc3f, type: 3}
     cardTarget: 1
@@ -342,7 +307,7 @@ MonoBehaviour:
   rarePercent: 20
   epicPercent: 15
   legendPercent: 5
-  commonColor: {r: 0.47843137, g: 1, b: 0.47843137, a: 1}
-  rareColor: {r: 0.3137255, g: 0.50980395, b: 1, a: 1}
-  epicColor: {r: 0.50980395, g: 0.50980395, b: 1, a: 1}
+  WarriorColor: {r: 0, g: 1, b: 0, a: 1}
+  ArcherColor: {r: 0, g: 0, b: 1, a: 1}
+  WizardColor: {r: 1, g: 0, b: 0, a: 1}
   legendColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

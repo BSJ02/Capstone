@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,7 +132,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Ä«µå°¡ ³Ê¹« ¸¹À½");
+            Debug.Log("Ä«ï¿½å°¡ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
         isSettingCards = true;
     }

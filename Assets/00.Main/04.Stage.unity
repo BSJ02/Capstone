@@ -2774,7 +2774,8 @@ MonoBehaviour:
   handCardList: []
   addCardList: []
   cardDeck: []
-  deckObject: {fileID: 0}
+  deckObject: {fileID: 154716392489267949, guid: 9d4e56682334b604cb7a721795e6c3f8,
+    type: 3}
   panelObject_Group: {fileID: 0}
   handCardObject: []
   addCardObject: []
@@ -2794,7 +2795,7 @@ MonoBehaviour:
     cardName: 
     cardDescription: 
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -3181,12 +3182,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f9358b8d4a5354586414638e2bc797, type: 3}
---- !u!1 &413043612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4081441714895756914, guid: 83f9358b8d4a5354586414638e2bc797,
-    type: 3}
-  m_PrefabInstance: {fileID: 413043611}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &413043613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3120830489633122900, guid: 83f9358b8d4a5354586414638e2bc797,
@@ -3705,8 +3700,8 @@ MonoBehaviour:
   - {fileID: 4008368103816103496, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
   - {fileID: 624648965016542229, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
   - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
-  garo: 30
-  sero: 8
+  garo: 40
+  sero: 10
   selectingTarget: 0
   highlightedTiles: []
   rangeInMonsters: []
@@ -3812,7 +3807,7 @@ PrefabInstance:
     - target: {fileID: 8798182602620954411, guid: 0c9aee736da25de4283538ab26fb560d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8798182602620954411, guid: 0c9aee736da25de4283538ab26fb560d,
         type: 3}
@@ -4073,7 +4068,7 @@ PrefabInstance:
     - target: {fileID: 5373995719872523646, guid: 9320907498e4b87408596c43544498e8,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5373995719872523646, guid: 9320907498e4b87408596c43544498e8,
         type: 3}
@@ -5273,7 +5268,7 @@ PrefabInstance:
     - target: {fileID: 7116004687027578196, guid: 2e8a9fe5ebbdff94fb7b7e44fd053c1b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7116004687027578196, guid: 2e8a9fe5ebbdff94fb7b7e44fd053c1b,
         type: 3}
@@ -7896,7 +7891,7 @@ PrefabInstance:
     - target: {fileID: 8798182602620954411, guid: 0c9aee736da25de4283538ab26fb560d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8798182602620954411, guid: 0c9aee736da25de4283538ab26fb560d,
         type: 3}
@@ -10772,7 +10767,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1339090270}
-  - component: {fileID: 1339090271}
   m_Layer: 5
   m_Name: PlayerChoice
   m_TagString: PlayerChoice
@@ -10802,18 +10796,6 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 187}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1339090271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1339090269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e230040321f5304aa3343bb53dffd25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1356468403
 GameObject:
   m_ObjectHideFlags: 0
@@ -11253,7 +11235,7 @@ MonoBehaviour:
   inGroupButton: {fileID: 1368067529}
   outGroupButton: {fileID: 141043275}
   playerData: {fileID: 0}
-  cardProcessing: {fileID: 0}
+  cardProcessing: {fileID: 1497366972}
   fadeTime: 1
   energyValue: {fileID: 0}
   energyFillMaterial: {fileID: 2100000, guid: 29f6cfff30361c840a8bd71b1127af1d, type: 2}
@@ -11649,7 +11631,7 @@ PrefabInstance:
     - target: {fileID: 7116004687027578196, guid: 2e8a9fe5ebbdff94fb7b7e44fd053c1b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7116004687027578196, guid: 2e8a9fe5ebbdff94fb7b7e44fd053c1b,
         type: 3}
@@ -14615,12 +14597,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1770065929}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1770065931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5762913926978943186, guid: 67b826e57d3c60c4591916dd931afb24,
-    type: 3}
-  m_PrefabInstance: {fileID: 1770065929}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1770065932 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 644688152894104407, guid: 67b826e57d3c60c4591916dd931afb24,
@@ -14907,9 +14883,8 @@ MonoBehaviour:
   playerList: 
   monsters:
   - {fileID: 807956002}
-  - {fileID: 1770065931}
-  - {fileID: 413043612}
   selectedMonster: {fileID: 0}
+  MaximumOfMonster: 2
   turn_UI:
   - {fileID: 1595686701}
   - {fileID: 1836686751}
@@ -14920,7 +14895,6 @@ MonoBehaviour:
   - {fileID: 1382591389}
   - {fileID: 1860442235}
   - {fileID: 1114047009}
-  MaximumOfMonster: 3
   isPlayerMove: 0
   isPlayerTurn: 0
   isRandomCard: 0

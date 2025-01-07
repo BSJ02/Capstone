@@ -81,8 +81,8 @@ public class Card
     public string cardName; // 카드 이름
     public string cardDescription;  // 카드 설명
     public string cardDescription_Power;
-    public float[] cardPower;   // 공격력, 힐량
-    public float cardDistance;  // 이동거리
+    public int[] cardPower;   // 공격력, 힐량
+    public int cardDistance;  // 이동거리
     public Sprite cardSprite;   // 카드 이미지
     public CardTarget cardTarget;   // 카드 적용 대상
     public CardRank cardRanke;  // 카드 등급

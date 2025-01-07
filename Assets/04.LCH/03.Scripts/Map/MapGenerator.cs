@@ -1,16 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
 
 public class MapGenerator : MonoBehaviour
 {
     public static MapGenerator instance;
 
-    public Tile[,] totalMap; // 2���� �迭 ��ǥ
+    public Tile[,] totalMap;
+    public Tile[,] EdgeTile;
+
     public Tile[] tilePrefab;
 
     public int garo;
@@ -18,8 +15,8 @@ public class MapGenerator : MonoBehaviour
 
     [HideInInspector] public bool selectingTarget;
 
-    [SerializeField]
-    public List<Tile> highlightedTiles = new List<Tile>(); // �̵� ������ ���� Ÿ�� ����Ʈ
+    public List<Tile> highlightedTiles = new List<Tile>();
+    public List<Tile[,]> EdgeTiles = new List<Tile[,]>();
 
     public List<Monster> rangeInMonsters = new List<Monster>();
     public List<Player> rangeInPlayers = new List<Player>();
@@ -37,7 +34,9 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    // �� ����
+
+    #region Attribute Methods
+    // 실시간 맵 생성
     public void CreateMap(int x, int y)
     {
         totalMap = new Tile[x, y];
@@ -51,17 +50,15 @@ public class MapGenerator : MonoBehaviour
 
                 int randValue = Mathf.FloorToInt(Random.Range(0, tilePrefab.Length));
 
-                var tile = GameObject.Instantiate(tilePrefab[randValue], transform); // MapGenerator�� �θ�� ����
+                var tile = GameObject.Instantiate(tilePrefab[randValue], transform); 
                 tile.transform.localPosition = new Vector3(i * 1, 0, j * 1);
 
-                // ��ü ��ǥ ����
                 tile.SetCoord(i, j, false);
 
-                // Ÿ�� ���� ���Ͱ� ���� ���(���� ��ħ ����)
                 RaycastHit hit;
-                if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f))
+                if(Physics.Raycast(tile.transform.position, Vector3.up, out hit, 1f)) 
                 {
-                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item")) // || hit.collider.CompareTag("Player") <= Ghost Code(�ʿ� �� �߰� ����)
+                    if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("Item")) // isWall 체크
                     {
                         tile.SetCoord(i, j, true);
                     }
@@ -70,8 +67,15 @@ public class MapGenerator : MonoBehaviour
                 totalMap[i, j] = tile;
             }
         }
+
+        int amount = 0;
+        for (int k = 0; k <= EdgeTiles.Count; k++)
+        {
+            amount += 1;
+        }
     }
 
+    // 실시간 맵 삭제
     public void DeleteMap()
     {
         for (int i = transform.childCount - 1; i >= 0; i--)
@@ -79,9 +83,52 @@ public class MapGenerator : MonoBehaviour
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
-    
+    #endregion
 
-    // Ÿ�� ���� �ʱ�ȭ(�ߺ� ����)
+
+    #region Main Methods
+    // 모서리에 있는 타일의 좌표를 저장(미완성)
+    // 몬스터 이동 알고리즘에 쓰일 메소드
+    private void GetEdgeTiles(int x, int y)
+    {
+        // 좌
+        if (x == 0 && y >= 0)
+        {
+            Tile[,] EdgeTile = new Tile[x, y];
+            EdgeTiles.Add(EdgeTile);
+
+            return;
+        }
+
+        // 우
+        if (x == garo - 1 && y >= 0)
+        {
+            Tile[,] EdgeTile = new Tile[x, y];
+            EdgeTiles.Add(EdgeTile);
+
+            return;
+        }
+
+        // 상
+        if (x >= 0 && y == sero - 1)
+        {
+            Tile[,] EdgeTile = new Tile[x, y];
+            EdgeTiles.Add(EdgeTile);
+
+            return;
+        }
+
+        // 하
+        if (x >= 0 && y == 0)
+        {
+            Tile[,] EdgeTile = new Tile[x, y];
+            EdgeTiles.Add(EdgeTile);
+
+            return;
+        }
+    }
+
+    // 맵 좌표 초기화
     public void ResetTotalMap()
     {
         for (int i = 0; i < totalMap.GetLength(0); i++)
@@ -93,20 +140,19 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // �÷��̾� �̵� ������ ���� ǥ��
+    // 이동 범위 
     public void HighlightPlayerRange(Vector3 playerPosition, int maxDistance)
     {
-        // �ʱ�ȭ
         ClearHighlightedTiles();
 
-        // �÷��̾� ��ġ�� Ÿ���� ã��
         int playerX = Mathf.RoundToInt(playerPosition.x);
         int playerZ = Mathf.RoundToInt(playerPosition.z);
+
         Tile playerTile = totalMap[playerX, playerZ];
 
-        // BFS�� �̿��Ͽ� �÷��̾� �̵� ������ ���� ã��
         Queue<PathNode> queue = new Queue<PathNode>();
         HashSet<Tile> visited = new HashSet<Tile>();
+
         queue.Enqueue(new PathNode(playerTile, 0));
         visited.Add(playerTile);
 
@@ -116,10 +162,8 @@ public class MapGenerator : MonoBehaviour
             Tile currentTile = currentNode.tile;
             int currentDistance = currentNode.distance;
 
-            // ���� Ÿ���� �̵� ������ ���� ���� �ִ� ��쿡�� ó��
             if (currentDistance <= maxDistance)
             {
-                // �̵� ������ ���� ���� �ִ� Ÿ���̸鼭 isWall�� false�� ��쿡�� ������ �����ϰ� ť�� �߰�
                 if (!currentTile.coord.isWall && currentTile != playerTile)
                 {
                     currentTile.GetComponent<Renderer>().material.color = Color.red;
@@ -127,12 +171,11 @@ public class MapGenerator : MonoBehaviour
                 }
             }
 
-            // �����¿� �̵� ������ Ÿ�� Ȯ��
             CheckAdjacentTiles(currentTile, queue, visited, maxDistance, currentDistance + 1);
         }
     }
 
-    // ī�� ��� ����
+    // 카드 범위
     public void CardUseRange(Vector3 objectPosition, int cardDistance)
     {
         ClearHighlightedTiles();
@@ -172,6 +215,22 @@ public class MapGenerator : MonoBehaviour
         selectingTarget = false;
     }
 
+    // 타일 색 변경
+    public bool IsHighlightedTile(Tile tile)
+    {
+        return highlightedTiles.Contains(tile);
+    }
+
+    // 타일 색 초기화
+    public void ClearHighlightedTiles()
+    {
+        foreach (Tile tile in highlightedTiles)
+        {
+            tile.GetComponent<Renderer>().material.color = Color.white;
+        }
+        highlightedTiles.Clear();
+    }
+
     public void TileOnObject(List<Tile> tiles)
     {
         Monster[] monsters = FindObjectsOfType<Monster>();
@@ -202,26 +261,23 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    // �����¿� �̵� ������ Ÿ�� Ȯ�� �� ť�� �߰�
     private void CheckAdjacentTiles(Tile currentTile, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
     {
         int x = currentTile.coord.x;
         int y = currentTile.coord.y;
 
-        // �����¿� Ÿ�� Ȯ��
         TryEnqueue(totalMap, x - 1, y, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x + 1, y, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x, y - 1, queue, visited, maxDistance, nextDistance);
         TryEnqueue(totalMap, x, y + 1, queue, visited, maxDistance, nextDistance);
     }
 
-    // Ÿ���� ť�� �߰��ϴ� �޼��� ����
     private void TryEnqueue(Tile[,] map, int x, int y, Queue<PathNode> queue, HashSet<Tile> visited, int maxDistance, int nextDistance)
     {
         if (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1))
         {
             Tile tile = map[x, y];
-            // ���� �ƴϰ�, �̵� ������ ������ �ʰ����� �ʴ� ��쿡�� ť�� �߰�
+
             if (selectingTarget)
             {
                 if (!visited.Contains(tile) && nextDistance <= maxDistance)
@@ -237,7 +293,8 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    // �̵� ��θ� ��Ÿ���� ��� Ŭ����
+    #endregion
+
     private class PathNode
     {
         public Tile tile;
@@ -249,21 +306,4 @@ public class MapGenerator : MonoBehaviour
             this.distance = distance;
         }
     }
-
-    // �̵� ������ ���� Ÿ�� �ʱ�ȭ
-    public void ClearHighlightedTiles()
-    {
-        foreach (Tile tile in highlightedTiles)
-        {
-            tile.GetComponent<Renderer>().material.color = Color.white;
-        }
-        highlightedTiles.Clear();
-    }
-
-    // Ŭ���� Ÿ���� �̵� ������ ���� ���� �ִ��� Ȯ��
-    public bool IsHighlightedTile(Tile tile)
-    {
-        return highlightedTiles.Contains(tile);
-    }
-
 }

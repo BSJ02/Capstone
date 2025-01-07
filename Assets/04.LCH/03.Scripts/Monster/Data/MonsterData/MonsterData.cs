@@ -7,18 +7,18 @@ public class MonsterData : ScriptableObject
     [Header("# Monster Info")]
     public string MonsterName;
     public int Id;
-    public float Hp; 
-    public float MaxHp = 100f;
-    public float Amor;
+    public int Hp; 
+    public int MaxHp = 100;
+    public int Amor;
     public int MoveDistance; 
     [TextArea] public string Description;
 
 
     [Header("# Attack")]
-    public float CurrentDamage;
-    public float MinDamage;
-    public float MaxDamage;
-    public float Critical;
+    public int CurrentDamage;
+    public int MinDamage;
+    public int MaxDamage;
+    public int Critical;
     public int DetectionRagne;
     public int SkillDetectionRange;
 }

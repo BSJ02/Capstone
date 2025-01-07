@@ -2794,7 +2794,7 @@ MonoBehaviour:
     cardName: 
     cardDescription: 
     cardDescription_Power: 
-    cardPower: []
+    cardPower: 
     cardDistance: 0
     cardSprite: {fileID: 0}
     cardTarget: 0
@@ -2802,7 +2802,6 @@ MonoBehaviour:
     cardPercent: 0
     cardType: 0
     isCardMoveEnabled: 0
-  cardCanelButtonl: {fileID: 763267221}
 --- !u!4 &401504239
 Transform:
   m_ObjectHideFlags: 0
@@ -3182,12 +3181,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f9358b8d4a5354586414638e2bc797, type: 3}
---- !u!1 &413043612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4081441714895756914, guid: 83f9358b8d4a5354586414638e2bc797,
-    type: 3}
-  m_PrefabInstance: {fileID: 413043611}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &413043613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3120830489633122900, guid: 83f9358b8d4a5354586414638e2bc797,
@@ -3706,8 +3699,8 @@ MonoBehaviour:
   - {fileID: 4008368103816103496, guid: 90072a47261eb46439b7817ce4d0a18b, type: 3}
   - {fileID: 624648965016542229, guid: 7d5bbf4a4ec0f674ba307301f45dcbc6, type: 3}
   - {fileID: 4231238709624337377, guid: bff9ae32c4816d6468f3fc7f8147e41f, type: 3}
-  garo: 30
-  sero: 8
+  garo: 40
+  sero: 10
   selectingTarget: 0
   highlightedTiles: []
   rangeInMonsters: []
@@ -4461,7 +4454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &577604741
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6576,9 +6569,9 @@ RectTransform:
   - {fileID: 1829396811}
   m_Father: {fileID: 1812553159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &857313505
@@ -10723,9 +10716,9 @@ RectTransform:
   - {fileID: 409527535}
   m_Father: {fileID: 1812553159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 180, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1356468405
@@ -11573,9 +11566,9 @@ RectTransform:
   - {fileID: 1759164149}
   m_Father: {fileID: 1812553159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 310, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1442908567
@@ -11825,6 +11818,7 @@ MonoBehaviour:
   TempActivePoint: 0
   currentPlayer: {fileID: 0}
   currentPlayerObj: {fileID: 0}
+  cardCanelButton: {fileID: 763267221}
   selectedTarget: {fileID: 0}
   cardUseDistance: 0
   cardUseDistanceInRange: 0
@@ -13728,12 +13722,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1770065929}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1770065931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5762913926978943186, guid: 67b826e57d3c60c4591916dd931afb24,
-    type: 3}
-  m_PrefabInstance: {fileID: 1770065929}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1773495724
 GameObject:
   m_ObjectHideFlags: 0
@@ -13984,9 +13972,8 @@ MonoBehaviour:
   playerList: 
   monsters:
   - {fileID: 807956002}
-  - {fileID: 1770065931}
-  - {fileID: 413043612}
   selectedMonster: {fileID: 0}
+  MaximumOfMonster: 3
   turn_UI:
   - {fileID: 1595686701}
   - {fileID: 1836686751}
@@ -13997,7 +13984,6 @@ MonoBehaviour:
   - {fileID: 1382591389}
   - {fileID: 1860442235}
   - {fileID: 1114047009}
-  MaximumOfMonster: 3
   isPlayerMove: 0
   isPlayerTurn: 0
   isRandomCard: 0
@@ -14076,7 +14062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1826002813
 RectTransform:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ public class MonsterMove : MonoBehaviour
         playerPos = Vector2Int.zero;
     }
 
-
+    // 초기 감지
     public IEnumerator StartDetection()
     {
         // 초기화
@@ -46,7 +46,7 @@ public class MonsterMove : MonoBehaviour
             SetDestination();
 
             // 공격 설정
-            SetAttackState(isMoving, targetPlayer);
+            AttackState(isMoving, targetPlayer);
 
             // 현재 위치를 isWall로 유지
             MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, true);
@@ -67,7 +67,7 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-    // 몬스터 움직인 후 감지
+    // 움직인 후 감지
     public void Moving()
     {
         // 가장 가까운 플레이어 찾기
@@ -84,162 +84,70 @@ public class MonsterMove : MonoBehaviour
 
         // 최단 거리로 이동
         StartCoroutine(MoveSmoothly(move));
-
     }
 
-
-    // 스킬 범위 및 공격 범위 감지
-    public (bool, Player) IsPlayerInRange()
+    // 몬스터 물리적 움직임 계산
+    public IEnumerator MoveSmoothly(List<Vector2Int> path)
     {
-        // 기본 값 세팅
-        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
-        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        // 몬스터 이동 거리
+        int maxMoveDistance = monster.monsterData.MoveDistance;
 
-        int attackDetectionRange = monster.monsterData.DetectionRagne;
-        int skillDetectionRange = monster.monsterData.SkillDetectionRange;
+        float moveSpeed = 1f;
+        float lerpMaxTime = 0.2f;
 
-        Player detectedPlayer = null;
+        // 애니메이션 및 상태 변경
+        monster.state = MonsterState.Moving;
+        monster.GetComponent<Animator>().SetInteger("State", (int)monster.state);
 
-        // 현재 타일에서 스킬 범위 확인
-        List<Vector2Int> skillTiles = AttackRangeChecking(monsterPos, skillDetectionRange, true);
-        foreach (Vector2Int tile in skillTiles)
+        for (int i = 0; i < path.Count - 1; i++)
         {
-            foreach (GameObject playerObj in playersObj)
-            {
-                targetPlayer = playerObj.GetComponent<Player>();
-                Vector2Int _playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
-
-                if (tile == _playerPos && monster.monsterData.CurrentDamage >= monster.monsterData.Critical) // 플레이어가 범위 내에 존재 && 치명타 공격 일 때 
-                {
-                    this.playerPos = _playerPos;
-                    monster.attack = AttackState.SkillAttack;
-
-                    Debug.Log("스킬 공격 범위 감지!");
-                    detectedPlayer = targetPlayer;
-                    return (true, detectedPlayer);
-                }
-            }
-        }
-
-
-        // 현재 타일에서 일반 공격 범위 확인
-        List<Vector2Int> attackTiles = AttackRangeChecking(monsterPos, attackDetectionRange, false);
-        foreach (Vector2Int tile in attackTiles)
-        {
-            foreach (GameObject playerObj in playersObj)
-            {
-                targetPlayer = playerObj.GetComponent<Player>();
-                Vector2Int _playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
-
-                if (tile == _playerPos)
-                {
-                    this.playerPos = _playerPos;
-                    monster.attack = AttackState.GeneralAttack;
-
-                    Debug.Log("일반 공격 범위 감지!");
-                    detectedPlayer = targetPlayer;
-                    return (true, detectedPlayer);
-                }
-            }
-        }
-
-        // 범위 내에 없음 
-        Debug.Log("감지 실패!");
-        return (false, detectedPlayer);
-    }
-
-    // 몬스터 공격 설정 
-    public bool SetAttackState(bool isMove, Player player)
-    {
-        switch (monster.attack)
-        {
-            // 일반 공격
-            case AttackState.GeneralAttack:
-                transform.LookAt(player.transform);
-                monster.Attack(player);
+            // 몬스터의 moveDistacne 값이 최대이면 종료
+            if (i >= maxMoveDistance)
                 break;
 
-            // 스킬 공격
-            case AttackState.SkillAttack:
-                transform.LookAt(player.transform);
-                monster.Attack(player);
-                break;
-        }
+            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y);
+            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y);
 
-        return isMoving;
-    }
+            float startTime = Time.time;
 
-    public Player FindClosestPlayer(Vector2Int monsterPos)
-    {
-        // 기본 값 세팅
-        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
-        Player closestPlayer = null;
-        float closestDistance = float.MaxValue;
-
-        foreach (GameObject playerObj in playersObj)
-        {
-            Player target = playerObj.GetComponent<Player>();
-            Vector2Int targetPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
-            float distance = Vector2Int.Distance(monsterPos, targetPos);
-
-            // 가장 가까운 플레이어인 경우
-            if (distance < closestDistance)
+            // 프레임 계산
+            while (Time.time < startTime + lerpMaxTime)
             {
-                closestDistance = distance;
-                closestPlayer = target;
+                float currentTime = (Time.time - startTime) * moveSpeed;
+                float weight = currentTime / lerpMaxTime;
 
-                this.playerPos = targetPos;
-                targetPlayer = target; 
+                transform.position = Vector3.Lerp(monsterPosition, nextPosition, weight);
+                transform.LookAt(nextPosition);
+                yield return null;
             }
+
+            // 포지션 값 보정
+            transform.position = nextPosition;
         }
 
-        if (closestPlayer != null)
+        // 최종 플레이어 좌표
+        Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+
+        monster.Init();
+
+        // 최종 좌표 isWall = true 설정
+        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true);
+
+        // 도착한 위치에서 감지
+        (isMoving, targetPlayer) = IsPlayerInRange();
+
+        // 1. 감지O
+        if (isMoving == true)
         {
-            Debug.Log("가장 가까운 적은:" + closestPlayer.name);
+            AttackState(isMoving, targetPlayer);
         }
-        else
+        // 2. 감지X 
+        else if (isMoving == false)
         {
-            Debug.Log("가장 가까운 적을 찾을 수 없습니다.");
+            yield break;
         }
 
-        return closestPlayer;
-    }
-
-
-    // Ghost Code 
-    /*// 플레이어 체력 비교 
-    public Player PlayerHealthPriority()
-    {
-        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
-        int playerLength = playersObj.Length;
-
-        // 플레이어가 모든 공격 범위 내에 존재 X, 체력이 낮은 적 감지
-        Player player1 = playersObj.Length >= 1 ? playersObj[0].GetComponent<Player>() : null; // 첫 번째 플레이어
-        Player player2 = playersObj.Length >= 2 ? playersObj[1].GetComponent<Player>() : null; // 두 번째 플레이어
-
-        Player target = null;
-
-        if (player1 != null && player2 != null)
-        {
-            target = player1.playerData.Hp > player2.playerData.Hp ? player2 : player1;
-        }
-
-        monster.attack = AttackState.None;
-        return target;
-    }*/
-
-
-    // 플레이어 및 몬스터 좌표 설정
-    public void SetDestination()
-    {
-        // 몬스터 포지션 설정
-        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
-        playerPos = new Vector2Int(playerPos.x, playerPos.y);
-
-        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false);
-
-        StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
-        TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
+        yield break;
     }
 
     // 길찾기 시작
@@ -329,71 +237,101 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
-    // 몬스터 물리적 움직임 계산
-    public IEnumerator MoveSmoothly(List<Vector2Int> path)
+    // 스킬 범위 및 공격 범위 감지
+    public (bool, Player) IsPlayerInRange()
     {
-        // 몬스터 이동 거리
-        int maxMoveDistance = monster.monsterData.MoveDistance;
+        // 기본 값 세팅
+        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
+        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        float moveSpeed = 1f;
-        float lerpMaxTime = 0.2f;
+        int attackDetectionRange = monster.monsterData.DetectionRagne;
+        int skillDetectionRange = monster.monsterData.SkillDetectionRange;
 
-        // 애니메이션 및 상태 변경
-        monster.state = MonsterState.Moving;
-        monster.GetComponent<Animator>().SetInteger("State", (int)monster.state);
+        Player detectedPlayer = null;
 
-        for (int i = 0; i < path.Count - 1; i++)
+        // 현재 타일에서 스킬 범위 확인
+        List<Vector2Int> skillTiles = AttackRangeChecking(monsterPos, skillDetectionRange, true);
+        foreach (Vector2Int tile in skillTiles)
         {
-            // 몬스터의 moveDistacne 값이 최대이면 종료
-            if (i >= maxMoveDistance)
-                break;
-
-            Vector3 monsterPosition = new Vector3(path[i].x, transform.position.y, path[i].y);
-            Vector3 nextPosition = new Vector3(path[i + 1].x, transform.position.y, path[i + 1].y);
-
-            float startTime = Time.time;
-
-            // 프레임 계산
-            while (Time.time < startTime + lerpMaxTime)
+            foreach (GameObject playerObj in playersObj)
             {
-                float currentTime = (Time.time - startTime) * moveSpeed;
-                float weight = currentTime / lerpMaxTime;
+                targetPlayer = playerObj.GetComponent<Player>();
+                Vector2Int _playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
 
-                transform.position = Vector3.Lerp(monsterPosition, nextPosition, weight);
-                transform.LookAt(nextPosition);
-                yield return null;
+                if (tile == _playerPos && monster.monsterData.CurrentDamage >= monster.monsterData.Critical) // 플레이어가 범위 내에 존재 && 치명타 공격 일 때 
+                {
+                    this.playerPos = _playerPos;
+                    monster.attack = global::AttackState.SkillAttack;
+
+                    Debug.Log("스킬 공격 범위 감지!");
+                    detectedPlayer = targetPlayer;
+                    return (true, detectedPlayer);
+                }
             }
-
-            // 포지션 값 보정
-            transform.position = nextPosition;
         }
 
-        // 최종 플레이어 좌표
-        Vector2Int finalPosition = new Vector2Int((int)transform.position.x, (int)transform.position.z);
 
-        monster.Init();
-
-        // 최종 좌표 isWall = true 설정
-        MapGenerator.instance.totalMap[finalPosition.x, finalPosition.y].SetCoord(finalPosition.x, finalPosition.y, true);
-
-        // 도착한 위치에서 감지
-        (isMoving, targetPlayer) = IsPlayerInRange();
-
-        // 1. 감지O
-        if (isMoving == true)
+        // 현재 타일에서 일반 공격 범위 확인
+        List<Vector2Int> attackTiles = AttackRangeChecking(monsterPos, attackDetectionRange, false);
+        foreach (Vector2Int tile in attackTiles)
         {
-            SetAttackState(isMoving, targetPlayer);
-        }
-        // 2. 감지X 
-        else if (isMoving == false)
-        {
-            yield break;
+            foreach (GameObject playerObj in playersObj)
+            {
+                targetPlayer = playerObj.GetComponent<Player>();
+                Vector2Int _playerPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
+
+                if (tile == _playerPos)
+                {
+                    this.playerPos = _playerPos;
+                    monster.attack = global::AttackState.GeneralAttack;
+
+                    Debug.Log("일반 공격 범위 감지!");
+                    detectedPlayer = targetPlayer;
+                    return (true, detectedPlayer);
+                }
+            }
         }
 
-        yield break;
+        // 범위 내에 없음 
+        Debug.Log("감지 실패!");
+        return (false, detectedPlayer);
     }
 
- 
+    // 가장 가까운 플레이어 찾기
+    public Player FindClosestPlayer(Vector2Int monsterPos)
+    {
+        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
+        Player closestPlayer = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (GameObject playerObj in playersObj)
+        {
+            Player target = playerObj.GetComponent<Player>();
+            Vector2Int targetPos = new Vector2Int((int)playerObj.transform.position.x, (int)playerObj.transform.position.z);
+            float distance = Vector2Int.Distance(monsterPos, targetPos);
+
+            // 가장 가까운 플레이어인 경우
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlayer = target;
+
+                this.playerPos = targetPos;
+                targetPlayer = target; 
+            }
+        }
+
+        if (closestPlayer != null)
+        {
+            Debug.Log("가장 가까운 적은:" + closestPlayer.name);
+        }
+        else
+        {
+            Debug.Log("가장 가까운 적을 찾을 수 없습니다.");
+        }
+
+        return closestPlayer;
+    }
 
     // 범위 내의 타일 가져오기 (스킬 및 공격 범위)
     public List<Vector2Int> AttackRangeChecking(Vector2Int center, int range, bool isSkill)
@@ -432,4 +370,70 @@ public class MonsterMove : MonoBehaviour
         return tilesWithinRange;
     }
 
+    // 몬스터의 목표 좌표 설정
+    public void SetDestination()
+    {
+        // 몬스터 포지션 설정
+        monsterPos = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        playerPos = new Vector2Int(playerPos.x, playerPos.y);
+
+        MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y].SetCoord(monsterPos.x, monsterPos.y, false);
+
+        StartNode = MapGenerator.instance.totalMap[monsterPos.x, monsterPos.y];
+        TargetNode = MapGenerator.instance.totalMap[playerPos.x, playerPos.y];
+    }
+
+
+
+    #region Monster Behaviour 
+    // 공격 행동 설정
+    public bool AttackState(bool isMove, Player player)
+    {
+        switch (monster.attack)
+        {
+            // 일반 공격
+            case global::AttackState.GeneralAttack:
+                transform.LookAt(player.transform);
+                monster.Attack(player);
+                break;
+
+            // 스킬 공격
+            case global::AttackState.SkillAttack:
+                transform.LookAt(player.transform);
+                monster.Attack(player);
+                break;
+        }
+
+        return isMoving;
+    }
+
+    // 회피 행동 설정
+    public void FleeState()
+    {
+
+      
+    }
+
+    // Ghost Code 
+    /*// 사냥 행동 설정
+    public Player PlayerHealthPriority()
+    {
+        GameObject[] playersObj = GameObject.FindGameObjectsWithTag("Player");
+        int playerLength = playersObj.Length;
+
+        // 플레이어가 모든 공격 범위 내에 존재 X, 체력이 낮은 적 감지
+        Player player1 = playersObj.Length >= 1 ? playersObj[0].GetComponent<Player>() : null; // 첫 번째 플레이어
+        Player player2 = playersObj.Length >= 2 ? playersObj[1].GetComponent<Player>() : null; // 두 번째 플레이어
+
+        Player target = null;
+
+        if (player1 != null && player2 != null)
+        {
+            target = player1.playerData.Hp > player2.playerData.Hp ? player2 : player1;
+        }
+
+        monster.attack = AttackState.None;
+        return target;
+    }*/
+    #endregion
 }

@@ -1502,9 +1502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bd06fde5983074a849d96c1b6b9373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: {fileID: 0}
-  damage: {fileID: 0}
-  amor: {fileID: 0}
+  hp: {fileID: 6349777206232297959}
+  damage: {fileID: 1615705965423095435}
+  amor: {fileID: 644688152894104407}
 --- !u!114 &2316216080801890815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2200,7 +2200,7 @@ GameObject:
   - component: {fileID: 3449963097977759670}
   - component: {fileID: 644688152894104407}
   m_Layer: 0
-  m_Name: AmorText
+  m_Name: Amor_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

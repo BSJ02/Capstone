@@ -3413,12 +3413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03492f07f3d1df44cb5f0482689504f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkWarrior: {fileID: 9209080811384397480, guid: 7072d6c33eb6c8945b0d630d732a6620,
-    type: 3}
-  hpWarrior: {fileID: 8001354749718593143, guid: e77bc5b981553b942a305281b23b4012,
-    type: 3}
-  wizard: {fileID: 3247294876424170745, guid: e62c217a469170c4f88a8025dcb09cf6, type: 3}
-  archer: {fileID: 5689700144625623747, guid: 8a684c72f58c16e42bf4dafb2b89daf6, type: 3}
+  Warrior: {fileID: 0}
+  Archer: {fileID: 0}
+  Wizard: {fileID: 0}
+  Paladin: {fileID: 0}
   playerSelectList: {fileID: 11400000, guid: 48dc325c320408d44a3ad24224d626f2, type: 2}
 --- !u!1 &1453866958
 GameObject:
